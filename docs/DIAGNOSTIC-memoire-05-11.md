@@ -177,7 +177,7 @@ d'apprentissage (1), soit le code du forward (2), soit la portée du verdict (3)
 
 ---
 
-## 8. Run v5 — 2 000 pas de zéro, batch 16 (en cours, 7 relevés)
+## 8. Run v5 — 2 000 pas de zéro, batch 16 (relevés à mi-run ; fin et verdict au §10)
 
 Commande : `python mycelia/train.py --steps 2000 --report-every 100`
 Log : `logs_toy_v5_2000_batch16.txt` — PID 33648, vivant au dernier relevé (21 h 38).
@@ -232,3 +232,41 @@ donc :
 > débordement WDDM) et documentée.
 
 Sans le second terme, le critère aurait été vert sur un run mourant.
+
+## 10. Correction du 6 novembre — le run v5 est allé au bout, la prédiction du §8 était fausse
+
+Le run s'est terminé proprement à 22 h 38, verrou relâché, checkpoint final écrit
+(`data/genome.pt`), chemin de circulation `0 -> 2 -> 1`. Durée : 5 273 s.
+
+| Pas | Perte | Arêtes | Nœuds | RAM (Mo) | Commit (Mo) | VRAM rés. (Mo) | ms/pas |
+|---|---|---|---|---|---|---|---|
+| 1 000 | 0,0016 | 4 977 | 516 | 1 748 | 8 187 | 5 012 | 2 931 |
+| 1 300 | 0,0365 | 5 553 | 517 | 1 729 | 8 632 | 5 478 | 2 826 |
+| 1 500 | 0,0008 | **5 835** | 518 | 1 761 | 8 870 | 5 682 | 3 165 |
+| 1 600 | 0,0008 | 5 700 | 520 | 1 736 | 8 862 | 5 702 | 2 832 |
+| 1 800 | 0,0332 | 5 544 | 520 | 1 742 | 8 886 | 5 702 | 2 819 |
+| 2 000 | 0,0004 | 5 433 | 520 | 1 783 | 8 928 | **5 702** | 2 934 |
+
+**La prédiction du §8 est fausse et doit être lue comme telle.** J'y annonçais un mur vers
+8 000–10 000 arêtes et une mort WDDM entre les pas 1 400 et 1 700, à partir d'une pente de
+0,76 Mo/arête extrapolée. Ce qui s'est réellement passé : l'élagage a stabilisé la table
+entre 5 400 et 5 800 arêtes dès le pas 1 500, donc la pente n'a jamais été parcourue, et la
+VRAM s'est posée à 5 702 Mo — plate sur les 400 derniers pas. Extrapoler une pente sans
+modèle du plateau était l'erreur ; le plateau est expliqué par lecture de code dans
+`docs/PLATEAU-croissance.md`.
+
+**Verdict des sept critères, lus dans le log fini :**
+
+| Critère | Verdict |
+|---|---|
+| (a) perte qui baisse | ✔ 3,0484 → 0,0004 |
+| (b) `arêtes_nées` ≠ `nœuds_nés` | ✔ 13 542 vs 8 |
+| (c) nœuds vivants < pool | ✔ 520 vivants / pool 861 |
+| (d) ms/pas < 2 000 en régime | ✗ 2 819–3 567 sur la seconde moitié |
+| (e) fin propre | ✔ checkpoint final, aucun OOM, verrou relâché |
+| (f) RAM stable + commit attribuable | ✔ RAM 1 783 Mo (pic 1 783) ; commit 8 928 Mo, ~4 Mo/pas, cache CUDA, pas de débordement WDDM |
+| (g) VRAM fin de run < 6 Go | ✔ **5 702 Mo** |
+
+Six critères sur sept. Le seul manqué, (d), l'était déjà au pas 700 : le débit réel du pas
+complet tourne autour de 2,8–2,9 s, pas 2 000 ms. Le levier de mémoire testé le 6 novembre
+(checkpointing par tour) ne change pas ce chiffre et est refusé : `docs/RAPPORT-levier-2-06-11.md`.
