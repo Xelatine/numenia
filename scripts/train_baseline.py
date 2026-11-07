@@ -90,7 +90,15 @@ def main() -> None:
         x, y = dataset.sample_batch(args.batch_size, generator=generator)
         x, y = x.to(device), y.to(device)
         logits = model(x)
-        loss = F.cross_entropy(logits.reshape(-1, vocab), y.reshape(-1))
+        # The shift the colony does not need. ``TextDataset`` returns (x, x)
+        # because the brain reads its prediction *before* injecting token t, so
+        # position t never sees its own target. A causal Transformer is not in
+        # that position: with attn_mask = triu(diagonal=1), position t still
+        # attends to itself, so training against x would teach the identity (and
+        # it did: loss 0.0000, validation perplexity 1.000 at step 50). The
+        # baseline therefore predicts x[t+1] from positions <= t, which is the
+        # usual next-token shift.
+        loss = F.cross_entropy(logits[:, :-1].reshape(-1, vocab), y[:, 1:].reshape(-1))
         optimiser.zero_grad(set_to_none=True)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -107,7 +115,11 @@ def main() -> None:
     with torch.no_grad():
         for x, y in dataset.windows(8, "val"):
             logits = model(x.to(device))
-            total += float(F.cross_entropy(logits.reshape(-1, vocab), y.reshape(-1).to(device)))
+            total += float(
+                F.cross_entropy(
+                    logits[:, :-1].reshape(-1, vocab), y[:, 1:].reshape(-1).to(device)
+                )
+            )
             count += 1
     ppl = math.exp(min(total / max(1, count), 20))
     args.out.write_text(
@@ -115,7 +127,7 @@ def main() -> None:
         f"steps {args.steps} | seed {args.seed} | validation perplexity {ppl:.3f}\n",
         encoding="utf-8",
     )
-    print(f"validation perplexity: {ppl:.3f} → {args.out}")
+    print(f"validation perplexity: {ppl:.3f} -> {args.out}")
 
 
 if __name__ == "__main__":
