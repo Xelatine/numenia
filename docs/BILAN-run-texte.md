@@ -1,92 +1,89 @@
-# Bilan du run texte — 7 novembre 2026
+# Bilan du run texte — 8 novembre 2026
 
-**Aucun run texte long n'a été lancé.** Ce document dit pourquoi, avec les mesures,
-et ce qui a été mesuré à la place.
+**Aucun run texte long (3 000 pas) n'a été lancé.** Ce document dit pourquoi, avec les
+mesures, et ce qui a été mesuré à la place.
 
 ## 1. Où en est la décision des seuils
 
 Le plan prévoyait : observation de 300 pas en régime texte réel (seq 128, batch 16,
-tbptt 4) → ETA bornée → seuils automatiques. **L'observation n'a pas été lancée**, pour
-une raison mesurée et non négociable : pendant la session, `nvidia-smi` relève
-**7 929 Mo occupés sur 8 192 et 90 % d'utilisation**, par `SkyrimSE.exe` (PID 32564),
-un processus qui n'appartient pas à ce travail. À ce niveau d'occupation, un run
-seq 128 / batch 16 échoue en OOM dès les premières activations ; lancer quand même
-aurait produit un crash, pas une mesure.
+tbptt 4) → ETA bornée → seuils automatiques. **L'observation n'est toujours pas lancée**,
+et la raison est mesurée : la carte n'est pas libre.
+
+| relevé | mémoire utilisée | utilisation |
+|---|---:|---:|
+| 7 novembre, pendant le run | 7 929 Mo / 8 192 | 90 % (jeu, PID 32564) |
+| 8 novembre, début de session | 1 306 Mo / 8 192 | 18 % |
+| 8 novembre, après les bancs CPU | 1 297 Mo / 8 192 | 13 % |
+
+La consigne de session exige **< 1 Go et < 10 %** avant toute mesure : elle n'est pas
+remplie, donc aucun chronométrage n'a été pris et le run d'observation n'a pas été lancé.
+Un run seq 128 / batch 16 tiendrait probablement dans les 6,9 Go libres, mais « probablement
+tenir » n'est pas « mesurer sur une carte libre ».
 
 Conséquence assumée : les seuils **ne sont pas appliqués**, faute de la mesure qui les
-alimente. Décider sur une ETA non mesurée est exactement l'erreur que le §8 du
-diagnostic du 5 novembre a déjà coûtée une fois.
+alimente. L'ETA reste **estimée** : 3 000 pas ≈ 3,9–6,1 h, d'après `logs_text.txt`
+(3 novembre, carte libre, seq 128 / tbptt 16, 4 633 → 7 326 ms/pas). Le coût de `tbptt 4`
+n'est pas mesuré.
 
 ## 2. Ce qui a été mesuré à la place
 
-### 2.1 Preuve comparative 500 pas (seq 32, batch 8)
+### 2.1 La comparaison de 500 pas est terminée
 
-Voir `docs/COMPARAISON-500.md`. Résumé : le Transformer descend plus vite à ce budget
-(perte 7,94 contre 8,67 au pas 250 pour la colonie), et la comparaison a surtout servi
-à **trouver un bug du baseline** : il apprenait l'identité (perte 0,0000, ppl 1,000)
-parce que `TextDataset` renvoie `(x, x)`, ce qui est juste pour la colonie et faux pour
-un Transformer causal. Corrigé par un décalage `logits[:, :-1]` / `y[:, 1:]`.
+Contrairement à ce que disait le rapport du 7 novembre, le run **n'a pas été arrêté au pas
+250** : `MYCELIA_EXIT=0`, checkpoint de fin au pas 500, `history.json` complet. Courbe et
+lecture dans `docs/COMPARAISON-500.md`.
 
-### 2.2 Coût par pas de la colonie en régime texte, mesuré ce jour
+| pas | colonie perte | arêtes | Transformer perte |
+|---:|---:|---:|---:|
+| 100 | 9,0859 | 812 | 6,1718 |
+| 250 | 8,6679 | 2 011 | 5,5172 (interpolé) |
+| 500 | **7,4379** | **3 997** | **4,8725** |
 
-| pas | arêtes | ms/pas (moyenne 20) |
-|---:|---:|---:|
-| 50 | 413 | 3 832 |
-| 100 | 812 | 4 308 |
-| 150 | 1 212 | 5 062 |
-| 200 | 1 612 | 5 389 |
-| 250 | 2 011 | 8 242 |
+Perplexités de validation : **colonie 1 977,8** contre **Transformer 159,97**, à 128 000
+tokens chacun.
 
-Ces chiffres sont **contaminés** par le jeu qui partage la carte : ils ne décrivent pas
-la colonie seule. Ils montrent en revanche la forme de la courbe — le coût suit le
-nombre d'arêtes, pas le compteur de pas, ce que le profil du README annonçait déjà.
+### 2.2 Le baseline était faux deux fois
 
-### 2.3 Le seul point d'ancrage non contaminé pour seq 128
+1. **Identité** : cibles `(x, x)` contre un Transformer causal → perte 0,0000 et ppl 1,000
+   au pas 50. Corrigé par le décalage `logits[:, :-1]` / `y[:, 1:]`.
+2. **Échelle** : init par défaut (embeddings `N(0,1)`, tête liée) → perte initiale 21,90
+   pour un uniforme à 9,21. Corrigé par une init GPT-2 → **9,2349 au pas 0**.
 
-`logs_text.txt` (run réel du 3 novembre, carte libre, seq 128, batch 16, tbptt 16) :
-**4 633 → 7 326 ms/pas** entre les pas 25 et 150. Extrapolation, **étiquetée estimée** :
-3 000 pas à ce débit ≈ **3,9 à 6,1 h** ; 10 000 pas ≈ 13 à 20 h. Le coût de `tbptt 4`
-n'a **pas** été mesuré : il réduit la mémoire du pas, pas nécessairement son temps, et
-je ne prétends pas savoir lequel des deux effets domine.
+Les deux corrections vont dans le même sens : sans elles, la comparaison était soit
+truquée en faveur de la colonie, soit flattée dans les deux sens.
 
-## 3. Ce que le run 500 pas a produit et laisse en l'état
+### 2.3 Coût par pas de la colonie (contaminé)
 
-- `logs_mycelia_500.txt` : courbe de perte, arêtes, nœuds, échantillons aux pas 50 à 250.
-- `data/genome_comparaison.pt` : checkpoint toutes les 10 minutes, reprise par
-  `python mycelia/train.py --data text --resume data/genome_comparaison.pt`.
-- Le run de 500 pas **a été arrêté au pas 250 sur 500** au moment d'écrire ces lignes (dernier rapport
-  au pas 250, sur 500). La cause est consignée : en plus du jeu qui occupait la carte, la machine a épuisé
-  son fichier de pagination (`OSError WinError 1455` au chargement de
-  `cublas64_12.dll`), ce qui a empêché jusqu'à la relance des tests. Il est reprenable
-  tel quel (`data/genome_comparaison.pt`, écrit au pas 250) : ce n'est ni un crash du
-  modèle ni une décision d'architecture.
+3 832 ms/pas à 413 arêtes, 10 755 ms/pas à 3 997 : ces chiffres mesurent *colonie + jeu*,
+pas la colonie. Ils ne sont pas comparables au banc du 6 novembre (1 464 ms/pas à
+2 200 arêtes, carte libre).
+
+## 3. État final du cerveau (pas 500)
+
+| Grandeur | Mesuré |
+|---|---|
+| arêtes | 3 997 (4 006 naissances, 21 morts d'arêtes) |
+| nœuds vivants | 514 sur un pool de 532 |
+| nœuds nés d'un message | 2 |
+| morts-nœuds / résurrections | 30 / 30 (cimetière vide) |
+| E* prédit | ≈ 1 000 × naissances/pas ≈ 4 000 — **atteint à 3 997** |
+
+Le plateau documenté est donc cohérent avec la prédiction à ce budget : la table a crû
+linéairement (8 naissances/pas) jusqu'à ~4 000 arêtes, sans effondrement.
 
 ## 4. Verdict Palier 1 (échantillons)
 
-**Non**, sans ambiguïté. Les 42 tokens produits (`docs/echantillons-texte.md`) sont des
-mots français enchaînés sans syntaxe : « Il était une fois rencontraraient sœursifférent
-détestait brisé propreté brique… ». Aucune phrase grammaticale et compréhensible. C'est
-le résultat attendu à 250 pas sur un corpus de 24 M de caractères, et ce n'est pas un
-résultat sur l'architecture.
+**Non.** Les 42 tokens du pas 500 (`docs/echantillons-texte.md`) restent des mots français
+enchaînés sans syntaxe : « Il était une fois rivières voitures merveilleuses colis doué
+coucha perdre démêler seule autres rempli poires enneigée... ». Aucune phrase grammaticale.
+C'est le résultat attendu à 500 pas sur 24 M de caractères, et ce n'est pas un résultat sur
+l'architecture.
 
-## 5. État final du cerveau
+## 5. Recommandation
 
-| Grandeur | Valeur mesurée au pas 250 |
-|---|---|
-| arêtes | 2 011 (naissances 1 999, aucune mort) |
-| nœuds vivants | 514 (512 initiaux, 2 nés d'un message) |
-| morts-arêtes / morts-nœuds | 0 / 0 (l'élagage commence au pas 100, la mortalité n'a pas encore eu lieu) |
-| E* prédit | ≈ 1 000 × naissances/pas ; à 5 naissances/pas ≈ 5 000 arêtes — non atteint ici |
-
-Le plateau documenté (`docs/PLATEAU-croissance.md`) n'est pas encore observable à
-250 pas : la table n'a pas fini de croître.
-
-## 6. Recommandation
-
-1. **Ne rien lancer sur cette carte tant qu'elle est occupée.** Le premier chantier est
-   une machine libre, pas un hyperparamètre.
-2. Quand le GPU est libre : lancer l'observation telle que spécifiée (300 pas, seq 128,
-   batch 16, tbptt 4, `configs/config_observation.yaml`), puis appliquer les seuils sur
-   l'ETA mesurée, pas sur celle du §2.3.
-3. Terminer d'abord le run comparatif de 500 pas (`--resume`) pour clore la première
-   preuve comparative sur une courbe complète.
+1. **Libérer la carte** : c'est le seul blocage, aucun hyperparamètre ne le contourne.
+2. Lancer les deux arms de l'ablation (`docs/ABLATION-croissance.md`) : ils ne dépendent
+   plus que de la carte, le code est écrit et validé.
+3. Puis l'observation 300 pas en seq 128 / tbptt 4, et appliquer les seuils sur l'ETA
+   **mesurée**.
+4. Enfin, si l'ETA passe le seuil : 3 000 pas, baseline 10 000 pas en parallèle.

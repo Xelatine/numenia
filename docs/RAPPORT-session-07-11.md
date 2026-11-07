@@ -86,7 +86,11 @@ corrigé (32 → 43) ; commande `pytest tests` → `pytest -q`.
 conservés sur disque) ; `.gitignore` : `*.zip`, `archive/`. Arbre suivi : **57
 fichiers**, exactement le périmètre du ZIP.
 
-### Étape 3 — première preuve comparative : **FAITE À MOITIÉ (250 pas sur 500)**
+### Étape 3 — première preuve comparative : **FAITE** (500 pas sur 500, voir correction)
+> **Correction du 8 novembre 2026.** Le run comparatif n'a pas été arrêté au pas 250 :
+> il avait déjà franchi le pas 500 et écrit son checkpoint final (`MYCELIA_EXIT=0`).
+> Les chiffres du pas 250 restent justes ; c'est la phrase d'arrêt qui était fausse.
+
 
 **3.1 Le baseline était faux — mesuré.** Premier lancement : perte **0,0000**, ppl de
 validation **1,000 dès le pas 50**. Parfait, donc faux. Cause lue dans le code :
