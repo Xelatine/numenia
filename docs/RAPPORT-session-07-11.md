@@ -83,7 +83,7 @@ corrigé (32 → 43) ; commande `pytest tests` → `pytest -q`.
 
 **2.5 Git — fait.** Tag annoté `v5` (`Toy v5, 2 000 pas : 5 433 arêtes, 520 nœuds, VRAM
 5 702 Mo`) ; `archive/` et les six ZIP sortis du suivi (`git rm --cached`, fichiers
-conservés sur disque) ; `.gitignore` : `*.zip`, `archive/`. Arbre suivi : **56
+conservés sur disque) ; `.gitignore` : `*.zip`, `archive/`. Arbre suivi : **57
 fichiers**, exactement le périmètre du ZIP.
 
 ### Étape 3 — première preuve comparative : **FAITE À MOITIÉ (250 pas sur 500)**
@@ -225,9 +225,9 @@ Aucune phrase grammaticale et compréhensible. C'est le résultat attendu à 250
   fermeture des compteurs ; `c8067f0` chore — sortie d'`archive/` et des ZIP du suivi ;
   `293bfa0` docs — comparaison, échantillons, bilan ; `65ca610` docs — arrêt du run et
   sa cause. Tag annoté **`v5`**.
-- **Arbre** : `git status` propre, 56 fichiers suivis.
+- **Arbre** : `git status` propre, 57 fichiers suivis.
 - **ZIP complet horodaté** : `mycelia-v5-2026-11-07.zip`, reconstruit depuis
-  `git ls-files` (jamais un patch), 56 entrées.
+  `git ls-files` (jamais un patch), 57 entrées (ce rapport inclus).
 
 ## 8. Prochaine action recommandée, chiffrée, et ce qu'il faut trancher
 
