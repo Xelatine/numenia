@@ -87,7 +87,7 @@ chemin : 0 -> 2 -> 1
 - fin propre (checkpoint final écrit, verrou relâché, pas d'OOM, pas de mort WDDM) ;
 - la prédiction du §8 du diagnostic — « mur vers 8 000 arêtes », « mort entre les pas
   1 400 et 1 700 » — est **fausse** : l'élagage a stabilisé la table vers 5 400 arêtes et
-  le run est allé au bout. C'est corrigé au §9 du diagnostic.
+  le run est allé au bout. C'est corrigé au §10 du diagnostic.
 
 ## 7. Étape 4 — run texte : NON lancé
 
@@ -105,5 +105,5 @@ restantes sont à discuter avec l'humain, aucune n'est engagée ici :
 ## 8. État du dépôt après ce rapport
 
 `git status` propre, `pytest tests` → **41/41** en 67 s. Aucun fichier de code modifié par
-rapport au commit `4a6f673` ; ce rapport, `docs/PLATEAU-croissance.md` et le §9 du
+rapport au commit `4a6f673` ; ce rapport, `docs/PLATEAU-croissance.md` et le §10 du
 diagnostic sont les seuls ajouts.
