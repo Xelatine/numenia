@@ -117,15 +117,22 @@ du run. Or l'élagage, lui, continue toutes les 100 pas (`train.py` L501). Mesur
 −402 arêtes entre les pas 1 500 et 2 000. Ce n'est pas une instabilité, c'est
 l'application littérale de la règle « optimiser = laisser le graphe se tasser ».
 
-## 5. Un compteur qui ne se referme pas (question ouverte, non corrigée)
+## 5. Un compteur qui ne se refermait pas — **résolu le 6 novembre**
 
 Arithmétique du log au pas 2 000 : 512 nœuds initiaux + 8 nés − 64 morts = 456, alors que
-le run affiche **520 nœuds vivants**. Deux explications possibles, aucune vérifiée :
-les nœuds « morts » sont comptés une seconde fois après une résurrection
-(`revive_node` remet `node_alive` à vrai sans décrémenter `node_deaths`), ou les morts
-portent sur des slots hors des 512 initiaux. Je ne tranche pas : il faudrait une sonde,
-et la consigne était de ne rien modifier. À vérifier avant d'interpréter `morts-nœuds`
-comme une population.
+le run affiche **520 nœuds vivants**. La question est tranchée : il manquait un terme au
+**relevé**, pas à l'arithmétique. Le cimetière est vide à la fin alors que 64
+eutèrements ont eu lieu, et `revive_node` remet `node_alive` à vrai sans décrémenter
+`node_deaths` : les 64 nœuds sont revenus, et rien ne l'imprimait. L'identité est
+
+```
+vivants = slots − (morts − ressuscités)   →   520 − (64 − 64) = 520
+```
+
+Le compteur `node_revivals` existe désormais, s'affiche dans les vitals
+(`ressuscités 64`) et est vérifié par
+`tests/test_instrumentation.py::test_node_counters_close`. Détail complet :
+`docs/COMPTEURS-noeuds.md`. Les §1 à §4 de ce document n'en dépendent pas.
 
 ## 6. Ce que cela implique, sans rien changer
 

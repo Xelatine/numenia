@@ -21,6 +21,11 @@ Docs: [français](docs/README.fr.md) · [español](docs/README.es.md) ·
 [deutsch](docs/README.de.md) · [中文](docs/README.zh.md) · [日本語](docs/README.ja.md) ·
 [português](docs/README.pt.md) · [русский](docs/README.ru.md) · [العربية](docs/README.ar.md)
 
+**English and French are the authoritative versions** (`README.md`,
+`docs/README.fr.md`). The six other translations are frozen snapshots taken on
+5 November 2026 and are not kept in step with the code; where they disagree, the
+English text wins.
+
 ---
 
 ## The two levels
@@ -100,7 +105,8 @@ mycelia/
   train.py       Trainer (CLI, dashboard and tests share it), OOM handling, SIGINT
 scripts/         train_tokenizer, generate, train_baseline, dashboard
 dashboard/       runner.py (threaded), server.py (FastAPI + WS), static/index.html
-tests/           6 files, 32 tests
+tests/           7 files, 43 tests
+pytest.ini      collection limited to tests/, so a bare `pytest` is safe
 configs/         config.yaml — every threshold, loosenable without code
 docs/            README.fr.md + short translations (ES, DE, ZH, JA, PT, RU, AR)
 ```
@@ -132,7 +138,7 @@ python scripts/dashboard.py --train --data text --scale 0
 #    → http://127.0.0.1:8080
 
 # 7. everything must stay green
-python -m pytest tests -q
+pytest -q
 ```
 
 Interrupting training with Ctrl+C saves `data/genome.pt` between two steps and
@@ -148,7 +154,13 @@ losses after a reload with the uninterrupted run and requires 1e-6.
 | 0 | 512 | 3.3 M | prototype, RTX 3070 8 GB |
 | 1 | 302 | 1.9 M | wink at *C. elegans*, didactic |
 | 2 | 3 000 | 19.2 M | fly larva |
-| 3 | 140 000 | 896 M | the fly, long term |
+| 3 | 140 000 | 896 M | the fly — **roadmap, not a measured result** |
+
+Scale 1 has *fewer* nodes than scale 0 on purpose: 302 is the wink at
+*C. elegans*, a didactic size to compare against the literature, while 512 is the
+prototype that must fit an 8 GB card at batch 16. A smaller scale is not a
+degraded one, it is a different reference point; growth is driven by validation,
+so both can be pushed.
 
 At 140 000 the weights alone are ~3.6 GB in fp32 and AdamW doubles it, which does
 not fit in 8 GB: `mmap=True` and sampled sub-graphs are the declared path, not a
@@ -173,12 +185,13 @@ real machine (RTX 3070, torch 2.11+cu128). Anything not measured is marked.
 ### Test suite
 
 ```
-python -m pytest tests -q
-32 passed in ~60 s
+pytest -q
+43 passed in ~70 s
 ```
 
-Six files, one per stage: `test_brain`, `test_lifecycle`, `test_text`,
-`test_growth`, `test_checkpoint`, `test_dashboard`.
+Seven files: `test_brain`, `test_lifecycle`, `test_text`, `test_growth`,
+`test_checkpoint`, `test_dashboard`, plus `test_instrumentation` (the initial
+loss must start at ln(vocab), and the node counters must close).
 
 ### Toy run (delayed copy, `--scale 0`, batch 32, CUDA)
 
@@ -257,36 +270,12 @@ here, empty where it must be, rather than filled with invented numbers.
   reflection. Mycelia has no LLM underneath: memory is a decaying membrane, and
   what emerges is observed through circulation, not prompted.
 
-## The traps (from the real debugging log)
+## The traps
 
-Section 0 bis of the brief is a list of failures that already cost a run. They
-are general; the shortest useful version:
-
-1. **Test `ne`, not the buffer's shape.** A preallocated edge buffer has 20 000
-   columns whatever the wiring. Every test asserts on the used count.
-2. **Never write in place into a view saved by autograd.** Clone the source and
-   target views before a forward can add edges; append through the free slot;
-   compact only between two steps.
-3. **Retry OOM outside the `except`.** Inside it, the exception still pins the
-   graph that failed; release, `gc.collect()`, `empty_cache()`, *then* retry with
-   a smaller batch. Never fall back to a dense graph.
-4. **Group by node, not by (sample, node).** Copying weights per sample is the
-   most expensive mistake of the first version (~12.7 GB). The backward's saved
-   activations, not the forward, are the real cost.
-5. **Budget births and cool the start.** 8 births per *step*, `init_bias` −8,
-   20 000-edge cap, messages only from active sources. Otherwise the targets
-   become active, create more targets, and the graph explodes.
-6. **No `.item()` in the diffusion loop.** Values stay tensors; readings happen
-   after the loop.
-7. **Never loosen `test_resume_continuity`.** A 3.3e-6 gap once suggested the
-   tolerance was too tight. The cause was AdamW's scalar `step` being rejected by
-   a shape check, so no moment was restored. The test caught a real bug; it was
-   right to stay at 1e-6.
-8. **Ship complete fixes, not conversational patches.** The repository is the
-   source of truth; the ZIP is complete (code + tests).
-9. **Only a local `pytest` is evidence.** Any result not reproduced on the
-   machine is "unverified", including this README's unmeasured cells.
-10. **Do not send a shortcut or a half-written file.** It will be truncated.
+The ten failures that already cost a run — in-place buffers, the OOM retry, the
+birth budget, the 1e-6 tolerance, the RNG a parameter init may not consume — now
+live in [CONTRIBUTING.md](CONTRIBUTING.md#the-traps-from-the-real-debugging-log),
+together with the delivery rules. The architecture rules stay in this file.
 
 ## Debugging plan
 
@@ -302,7 +291,7 @@ are general; the shortest useful version:
 * **OOM** — the retry is already outside the `except`; verify the per-node
   grouping, and check that `edge_index` is still [2, max_edges].
 
-## Success tiers (to be judged by the designer on 20 generations)
+## Success tiers (judged on 20 generations)
 
 1. One grammatical, understandable French sentence.
 2. A coherent story of 3–5 sentences.

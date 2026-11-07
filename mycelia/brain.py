@@ -47,6 +47,13 @@ DEFAULT_VOCAB = 100
 DEFAULT_HOPS = 8
 DEFAULT_EDGES = 20_000
 MAX_POPULATION = 140_000
+# The readout starts almost uniform. A default uniform Linear gives logits of
+# std ~0.58 after the readout LayerNorm, so the very first loss is 9.35 on a
+# 10 000-token vocabulary where "knowing nothing" is ln(10 000) = 9.21: the
+# model would start *worse than uniform*, a warm start that disguises itself as
+# an early regression. std 0.02 puts the first loss at ln(V) + 0.006 (measured),
+# and stays non-zero so no gradient is cut (AdamW is scale-free per parameter).
+OUTPUT_INIT_STD = 0.02
 
 
 def _gumbel_like(tensor: torch.Tensor) -> torch.Tensor:
@@ -178,6 +185,14 @@ class Brain(nn.Module):
         # Tokens become signals here, and signals become token predictions here.
         self.embedding = nn.Embedding(self.vocab, self.dim)
         self.output_head = nn.Linear(self.dim, self.vocab)
+        with torch.no_grad():
+            # A *dedicated* generator: drawing from the global RNG here would
+            # shift every later draw (candidate sampling included) and silently
+            # change the trajectory of existing runs and tests. Parameter init
+            # must not be a hidden consumer of the training entropy.
+            generator = torch.Generator(device=self.output_head.weight.device).manual_seed(0)
+            self.output_head.weight.normal_(0.0, OUTPUT_INIT_STD, generator=generator)
+            self.output_head.bias.zero_()
         # The readout is normalised: node 1's membrane is a sum of everything it
         # ever received, so its scale must not depend on how long we trained.
         self.readout_norm = nn.LayerNorm(self.dim)
@@ -201,6 +216,10 @@ class Brain(nn.Module):
         self._edge_keys: set[int] = set()
         self.edge_deaths = 0
         self.node_deaths = 0
+        # A death that is undone: without this counter the live count cannot be
+        # reconciled with the two others (512 initial + births - deaths misses
+        # every node a message brought back), and the instrument lies.
+        self.node_revivals = 0
         self.clock = 0
         self.cemetery: dict[int, dict[str, torch.Tensor]] = {}
 
