@@ -85,3 +85,20 @@ identifiés :
 Tant que ces deux journaux n'existent pas, toute explication des pics serait une
 hypothèse déguisée en résultat. C'est écrit ici pour que personne ne la présente comme
 mesurée.
+
+## 5. Mise à jour du 8 novembre (soir) — le journal existe
+
+L'instrument manquant est livré : `mycelia/train.py` écrit `data/per_step.csv`, une
+ligne par pas, onze colonnes (`step, loss, edges, nodes, edge_births, node_births,
+edge_deaths, node_deaths, node_revivals, cemetery, lr`), en append sur reprise et
+tronqué sur run neuf. Vérifié sur un run jouet de 6 pas [mesuré] :
+
+```
+step,loss,edges,nodes,edge_births,node_births,edge_deaths,node_deaths,node_revivals,cemetery,lr
+1,4.6156816482543945,18,512,6,0,0,0,0,0,0.001
+2,4.592458724975586,28,514,16,2,0,0,0,0,0.001
+```
+
+Ce journal tranchera la question sur les runs **à venir**. Il ne rétro-instrumente pas
+le run v5, qui n'a écrit que des relevés au pas 100 : la cause des pics 1 300 et 1 800
+reste **non concluante**, et l'hypothèse « rafale d'élagage » reste une hypothèse.

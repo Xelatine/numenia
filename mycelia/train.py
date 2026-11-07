@@ -72,6 +72,23 @@ CHECKPOINT_PATH = ROOT / "data" / "genome.pt"
 LATEST_PATH = ROOT / "data" / "genome_latest.pt"
 LOCK_PATH = ROOT / "data" / "train.lock"
 HISTORY_PATH = ROOT / "history.json"
+# A.3 of the 8 November report: the journal was too coarse to explain the loss
+# spikes (100-step reports, no event counter between two of them). One line per
+# step costs nothing and makes the correlation testable instead of narrated.
+PER_STEP_PATH = ROOT / "data" / "per_step.csv"
+PER_STEP_KEYS = (
+    "step",
+    "loss",
+    "edges",
+    "nodes",
+    "edge_births",
+    "node_births",
+    "edge_deaths",
+    "node_deaths",
+    "node_revivals",
+    "cemetery",
+    "lr",
+)
 
 _DATASET_CACHE: dict[tuple, TextDataset] = {}
 
@@ -241,6 +258,11 @@ def write_history(history: list[dict], path: Path = HISTORY_PATH) -> None:
         json.dumps(history, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     os.replace(tmp, path)
+
+
+def per_step_line(metrics: dict) -> str:
+    """One CSV row per step: the series the spike analysis needs."""
+    return ",".join(str(metrics.get(key, "")) for key in PER_STEP_KEYS) + "\n"
 
 
 def seed_everything(seed: int) -> None:
@@ -826,6 +848,12 @@ def main(argv: list[str] | None = None) -> None:
     # only rise and hides every slow interval behind the fastest one.
     window: deque[float] = deque(maxlen=20)
     write_history(trainer.history)
+    # Append on resume, truncate on a fresh run: two runs must not share a file.
+    per_step_path = PER_STEP_PATH
+    per_step_path.parent.mkdir(parents=True, exist_ok=True)
+    per_step = per_step_path.open("a" if trainer.step > 0 else "w", encoding="utf-8", buffering=1)
+    if trainer.step == 0:
+        per_step.write(",".join(PER_STEP_KEYS) + "\n")
 
     def checkpoint(reason: str) -> None:
         nonlocal last_save
@@ -842,6 +870,7 @@ def main(argv: list[str] | None = None) -> None:
             step_started = time.perf_counter()
             metrics = trainer.train_step()
             window.append(time.perf_counter() - step_started)
+            per_step.write(per_step_line(metrics))
 
             if trainer.report_every and trainer.step % trainer.report_every == 0:
                 rolling = 1000.0 * sum(window) / len(window)
@@ -897,6 +926,7 @@ def main(argv: list[str] | None = None) -> None:
         print(f"reprenez avec : python mycelia/train.py --data {trainer.data_mode} --resume")
         return
     finally:
+        per_step.close()
         release_lock(lock)
 
     checkpoint("fin de run")

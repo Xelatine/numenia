@@ -34,17 +34,21 @@ le drapeau fait ce qu'il annonce.
 
 ## 3. Ce qui n'est pas encore mesuré, et pourquoi
 
-La condition posée en tête de session est explicite : `nvidia-smi` doit montrer
-**< 1 Go utilisé et < 10 % d'utilisation**, et aucune mesure ne doit être prise sur une
-carte contaminée. Relevés pendant la session :
+La règle de carte a été **révisée le 8 novembre** : un run est autorisé si (a) aucun
+processus étranger ne calcule à plus de 5 % et (b) la VRAM libre couvre le besoin du run
+plus 1,5 Go de marge. Besoin de l'arm grandi : **4 908 Mo réservés mesurés** au pas 500 du
+run comparatif (`GPU 85/4908 Mo`), arrondi à 5 000 Mo ; marge 1 500 Mo ; seuil **6 500 Mo
+libres**. Relevés de la session :
 
 ```
-1306 MiB, 18 %   (début de session)
-1297 MiB, 13 %   (après les bancs CPU)
+1 306 MiB utilisés, 18 % d'utilisation   (début de session, ancienne règle)
+1 297 MiB utilisés, 13 % d'utilisation   (après les bancs CPU)
+1 804 MiB utilisés, 6 224 MiB libres, 25 % d'utilisation, 29 processus étrangers  (lancement tenté)
 ```
 
-La carte n'est donc **pas libre** au sens de la consigne (bureautique et navigateurs,
-aucun processus de calcul étranger). Les deux arms restent à lancer :
+Verdict mesuré du lancement : **(a) faux**, 25 % d'utilisation avec 29 processus étrangers
+(navigateurs, Discord, Steam, overlays) ; **(b) faux**, 6 224 Mo libres pour 6 500 requis,
+soit **276 Mo manquants**. Aucun processus n'a été tué. Les deux arms restent à lancer :
 
 ```bash
 python scripts/ablate_growth.py --arm grown  --steps 500
@@ -55,6 +59,12 @@ Durée attendue, **estimée** d'après les 1 464 ms/pas du banc du 6 novembre à
 (carte libre) : l'arm figé a 3 997 arêtes, donc ~2 fois plus de travail par pas, soit
 ~3 s/pas → **25 min par arm**. Cette estimation n'est pas une mesure et ne doit pas être
 présentée comme telle.
+
+Ce qu'il faut pour débloquer, chiffré : libérer **≥ 300 Mo de VRAM** et faire tomber
+l'utilisation sous 5 % (fermer un navigateur à accélération matérielle suffit en général),
+puis relancer la mesure de condition. **Si l'écart entre les deux arms est ≤ 2 %**, la
+règle fixée d'avance impose de rejouer les deux à 2 000 pas avant de conclure — soit
+~2 h par arm **[estimé]**, et une seconde session de carte libre.
 
 ## 4. La règle de verdict, fixée d'avance
 
