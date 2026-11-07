@@ -62,7 +62,8 @@ lancée : à 7,9 Go déjà consommés, elle aurait échoué en OOM.
 
 ## 5. État du run
 
-Run de 500 pas : **en cours**, dernier rapport au pas 250.
+Run de 500 pas : **arrêté au pas 250 sur 500** — page épuisée (`WinError 1455`)
+avec la carte occupée par un jeu. Dernier rapport au pas 250.
 Checkpoint écrit toutes les 10 minutes dans `data/genome_comparaison.pt` ;
 reprise possible avec `--resume data/genome_comparaison.pt`.
 
