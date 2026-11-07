@@ -21,3 +21,8 @@ __pycache__/
 venv/
 .DS_Store
 mycelia_v2.zip
+
+# Deliveries ship as dated ZIPs, on disk and in Releases, never in the tree.
+*.zip
+# Frozen prototypes: history, not source. Read them, never import them.
+archive/
