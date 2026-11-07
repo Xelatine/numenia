@@ -56,6 +56,30 @@ class TinyTransformer(nn.Module):
         self.norm = nn.LayerNorm(dim)
         self.head = nn.Linear(dim, vocab, bias=False)
         self.head.weight = self.embed.weight  # tied: keeps the budget ~2 M
+        self.reset_parameters()
+
+    def reset_parameters(self) -> None:
+        """GPT-2-style init: the first loss must be ln(V), not twice it.
+
+        The default init draws the embeddings from N(0, 1) and the head is tied
+        to them, so the logits of an untrained model have a standard deviation
+        near 11 on a 128-wide readout. The first loss was 21.9 where "knowing
+        nothing" is ln(10 000) = 9.21: that is a broken scale, not a hard start,
+        and it turns the first hundred steps into a race back toward uniform.
+        """
+        for module in self.modules():
+            if isinstance(module, nn.Linear):
+                nn.init.normal_(module.weight, mean=0.0, std=0.02)
+                if module.bias is not None:
+                    nn.init.zeros_(module.bias)
+            elif isinstance(module, nn.Embedding):
+                nn.init.normal_(module.weight, mean=0.0, std=0.02)
+        nn.init.normal_(self.position.weight, mean=0.0, std=0.01)
+        # Residual branches are scaled so that depth does not change the scale.
+        scale = 0.02 / math.sqrt(2 * len(self.blocks))
+        for block in self.blocks:
+            nn.init.normal_(block.attn.out_proj.weight, mean=0.0, std=scale)
+            nn.init.normal_(block.mlp[2].weight, mean=0.0, std=scale)
 
     def forward(self, tokens: torch.Tensor) -> torch.Tensor:
         positions = torch.arange(tokens.shape[1], device=tokens.device)
@@ -74,16 +98,32 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--report-every", type=int, default=200)
     parser.add_argument("--out", type=Path, default=ROOT / "baseline_ppl.txt")
+    parser.add_argument("--device", default=None, help="cpu or cuda; default: cuda if available")
+    parser.add_argument("--save", type=Path, default=None, help="keep the weights (inference bench)")
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device(
+        args.device or ("cuda" if torch.cuda.is_available() else "cpu")
+    )
     dataset = get_text_dataset(args.seq_len)
     vocab = dataset.tokenizer.get_vocab_size()
     model = TinyTransformer(vocab, seq=args.seq_len).to(device)
     print(f"baseline: {sum(p.numel() for p in model.parameters()) / 1e6:.2f} M parameters | {device}")
     optimiser = torch.optim.AdamW(model.parameters(), lr=args.lr)
     generator = torch.Generator().manual_seed(args.seed)
+    # The first loss is a measurement, not a hope: it says whether the scale of
+    # the readout is right (ln 10 000 = 9.21) before any step is spent on it.
+    probe = torch.Generator().manual_seed(args.seed + 1)
+    with torch.no_grad():
+        probe_x, probe_y = dataset.sample_batch(args.batch_size, generator=probe)
+        probe_logits = model(probe_x.to(device))
+        initial = float(
+            F.cross_entropy(
+                probe_logits[:, :-1].reshape(-1, vocab), probe_y[:, 1:].reshape(-1).to(device)
+            )
+        )
+    print(f"init: perte au pas 0 {initial:.4f} | uniforme ln(V) {math.log(vocab):.4f}")
 
     started = time.time()
     for step in range(1, args.steps + 1):
@@ -127,6 +167,21 @@ def main() -> None:
         f"steps {args.steps} | seed {args.seed} | validation perplexity {ppl:.3f}\n",
         encoding="utf-8",
     )
+    if args.save is not None:
+        torch.save(
+            {
+                "model": model.state_dict(),
+                "vocab": vocab,
+                "dim": 128,
+                "heads": 4,
+                "layers": 2,
+                "seq": args.seq_len,
+                "steps": args.steps,
+                "val_ppl": ppl,
+            },
+            args.save,
+        )
+        print(f"weights: {args.save}")
     print(f"validation perplexity: {ppl:.3f} -> {args.out}")
 
 

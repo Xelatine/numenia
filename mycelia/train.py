@@ -48,7 +48,13 @@ from mycelia.checkpoint import (  # noqa: E402
     set_rng_state,
 )
 from mycelia.config import load_config, nodes_for_scale  # noqa: E402
-from mycelia.data import VOCAB, TextDataset, get_batch, load_tokenizer  # noqa: E402
+from mycelia.data import (  # noqa: E402
+    VOCAB,
+    TextDataset,
+    clean_text,
+    get_batch,
+    load_tokenizer,
+)
 from mycelia.growth import (  # noqa: E402
     GrowthManager,
     apply_growth,
@@ -334,6 +340,20 @@ class Trainer:
             self.brain = brain.to(self.device)
             self.tokenizer = tokenizer or (load_tokenizer() if data == "text" else None)
         self.brain.clock = self.step
+        # Ablation arm (docs/ABLATION-croissance.md): a fixed random graph of the
+        # same size as the grown one. Nothing is born, nothing dies. Only a
+        # fresh brain is frozen: a resumed one already carries its own wiring.
+        if brain is None and str(self.config["growth"].get("mode", "grown")) == "frozen_random":
+            from mycelia.ablation import freeze_random_graph
+
+            frozen = freeze_random_graph(
+                self.brain,
+                edges=int(self.config["growth"].get("frozen_edges", 2000)),
+                seed=self.seed,
+            )
+            self.enable_growth = False
+            self.enable_lifecycle = False
+            self.hparams["frozen_random"] = float(frozen["edges"])
 
         self.batch_size = int(
             batch_size
@@ -833,7 +853,10 @@ def main(argv: list[str] | None = None) -> None:
                     text, _ = trainer.speak(
                         tokens=int(training["text_seq"] // 3), seed=trainer.step
                     )
-                    trainer.log(f"  « {text.strip()} »")
+                    # clean_text at display time only: a byte-level BPE can end
+                    # on an incomplete UTF-8 sequence, and a raw U+FFFD in the
+                    # log made the samples look like a decoder bug (C8).
+                    trainer.log(f"  « {clean_text(text).strip()} »")
                 trainer.history.append(
                     {
                         "step": trainer.step,
