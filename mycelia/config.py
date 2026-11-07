@@ -80,6 +80,8 @@ DEFAULTS: dict[str, Any] = {
         "seed": 42,
     },
     "growth": {
+        "mode": "grown",
+        "frozen_edges": 3997,
         "check_every": 500,
         "grow_threshold": 0.01,
         "optimize_threshold": 0.005,
