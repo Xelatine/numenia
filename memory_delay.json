@@ -1,0 +1,36 @@
+{
+  "results": [
+    {
+      "delay": 5,
+      "steps": 80,
+      "first_loss": 4.6062,
+      "last_loss": 4.5869,
+      "accuracy": 0.0086,
+      "seconds": 250.8,
+      "edges": 200,
+      "nodes": 32,
+      "dim": 16,
+      "hops": 6
+    }
+  ],
+  "regime": {
+    "delays": [
+      5,
+      10,
+      25,
+      50,
+      100
+    ],
+    "steps": 80,
+    "seq_len": 110,
+    "batch_size": 4,
+    "nodes": 32,
+    "dim": 16,
+    "hops": 6,
+    "edges": 200,
+    "lr": 0.003,
+    "seed": 0,
+    "device": "cpu",
+    "out": "memory_delay.json"
+  }
+}
