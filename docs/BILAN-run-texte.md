@@ -54,9 +54,12 @@ je ne prétends pas savoir lequel des deux effets domine.
 - `logs_mycelia_500.txt` : courbe de perte, arêtes, nœuds, échantillons aux pas 50 à 250.
 - `data/genome_comparaison.pt` : checkpoint toutes les 10 minutes, reprise par
   `python mycelia/train.py --data text --resume data/genome_comparaison.pt`.
-- Le run de 500 pas **n'est pas terminé** au moment d'écrire ces lignes (dernier rapport
-  au pas 250, sur 500). Il n'a pas été interrompu pour une question : il continue, et
-  son débit est celui du GPU partagé.
+- Le run de 500 pas **a été arrêté au pas 250 sur 500** au moment d'écrire ces lignes (dernier rapport
+  au pas 250, sur 500). La cause est consignée : en plus du jeu qui occupait la carte, la machine a épuisé
+  son fichier de pagination (`OSError WinError 1455` au chargement de
+  `cublas64_12.dll`), ce qui a empêché jusqu'à la relance des tests. Il est reprenable
+  tel quel (`data/genome_comparaison.pt`, écrit au pas 250) : ce n'est ni un crash du
+  modèle ni une décision d'architecture.
 
 ## 4. Verdict Palier 1 (échantillons)
 
