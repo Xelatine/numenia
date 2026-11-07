@@ -1,0 +1,71 @@
+[
+  {
+    "file": "genome_comparaison.pt",
+    "step": 500,
+    "nodes": 514,
+    "pool": 532,
+    "edges": 3971,
+    "mean_in": 7.73,
+    "max_in": 16,
+    "max_out": 19,
+    "orphans_in": 1,
+    "gini_in": 0.2173,
+    "top1pct_share": 0.0199,
+    "cv_in": 0.386,
+    "histogram": {
+      "0": 74,
+      "5": 301,
+      "10": 129,
+      "15": 10,
+      "20": 0,
+      "30": 0,
+      "50": 0
+    }
+  },
+  {
+    "file": "genome_mort-pas1502.pt",
+    "step": 1502,
+    "nodes": 518,
+    "pool": 587,
+    "edges": 5265,
+    "mean_in": 10.16,
+    "max_in": 24,
+    "max_out": 27,
+    "orphans_in": 1,
+    "gini_in": 0.1953,
+    "top1pct_share": 0.0211,
+    "cv_in": 0.354,
+    "histogram": {
+      "0": 21,
+      "5": 216,
+      "10": 225,
+      "15": 47,
+      "20": 9,
+      "30": 0,
+      "50": 0
+    }
+  },
+  {
+    "file": "genome.pt",
+    "step": 2000,
+    "nodes": 519,
+    "pool": 861,
+    "edges": 4890,
+    "mean_in": 9.41,
+    "max_in": 24,
+    "max_out": 29,
+    "orphans_in": 1,
+    "gini_in": 0.2236,
+    "top1pct_share": 0.0227,
+    "cv_in": 0.405,
+    "histogram": {
+      "0": 44,
+      "5": 243,
+      "10": 177,
+      "15": 47,
+      "20": 8,
+      "30": 0,
+      "50": 0
+    }
+  }
+]
