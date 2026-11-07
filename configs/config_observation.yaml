@@ -1,0 +1,20 @@
+# Observation of the real text regime: seq 128, batch 16, truncated backprop 4.
+#
+# Why a config file and not flags: `--seq-len` and `--batch-size` exist, `tbptt`
+# does not — it is a training hyperparameter that must not be changed by accident
+# from a shell. `load_config` merges this file over `configs/config.yaml`, so
+# everything not repeated here keeps its default.
+#
+# The toy task stays at tbptt 16: 4 is a text-only decision (memory of 128
+# tokens is what makes 16 worth it, and 4 divides the peak memory of one step).
+
+training:
+  text_seq: 128
+  text_batch: 16
+  tbptt: 4
+
+lifecycle:
+  prune_every: 100
+
+growth:
+  check_every: 500
