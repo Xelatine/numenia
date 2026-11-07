@@ -479,6 +479,7 @@ class Trainer:
             "node_births": self.brain.node_births,
             "edge_deaths": self.brain.edge_deaths,
             "node_deaths": self.brain.node_deaths,
+            "node_revivals": self.brain.node_revivals,
             "cemetery": len(self.brain.cemetery),
             "identity": identity_value,
             "redundancy": redundancy_value,
@@ -616,7 +617,8 @@ class Trainer:
             f"arêtes {metrics['edges']:5d} | nœuds {metrics['nodes']:5d} | "
             f"arêtes_nées {metrics['edge_births']:5d} | nœuds_nés {metrics['node_births']:4d} | "
             f"morts-arêtes {metrics['edge_deaths']:4d} | "
-            f"morts-nœuds {metrics['node_deaths']:4d} | cimetière {metrics['cemetery']:4d} | "
+            f"morts-nœuds {metrics['node_deaths']:4d} | "
+            f"ressuscités {metrics['node_revivals']:4d} | cimetière {metrics['cemetery']:4d} | "
             f"RAM {metrics.get('ram_mb', 0.0):.0f} Mo "
             f"(pic {metrics.get('ram_peak_mb', 0.0):.0f}, commit {metrics.get('commit_mb', 0.0):.0f})"
             + (
