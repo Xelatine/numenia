@@ -4,12 +4,16 @@ This file holds what a contributor (human or agent) must know before touching th
 code. The project rules that shape the architecture are in [README.md](README.md);
 what follows is process and traps.
 
+Session reports, ablations and diagnostics live in `rapports/`, a local archive that
+`.gitignore` keeps out of this repository: a reference to it points at the owner's
+machine, not at a published path.
+
 ## The rules that are not negotiable
 
 1. **Measured ≠ estimated ≠ supposed.** Every claim in a document carries either a
    log line, a code line, or the word "hypothesis". A prediction that turns out
    wrong is corrected in place, visibly — see §10 of
-   `docs/DIAGNOSTIC-memoire-05-11.md`.
+   `rapports/DIAGNOSTIC-memoire-05-11.md`.
 2. **`test_resume_continuity` stays at 1e-6.** A gap is a signal, not a nuance.
    Never loosen it to make a change pass.
 3. **Complete deliveries, never conversational patches.** A fix ships as a dated,

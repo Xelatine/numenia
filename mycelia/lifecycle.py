@@ -189,7 +189,7 @@ def revive_node(brain: "Brain", node_id: int, source: int | None = None) -> bool
     brain.node_alive[node_id] = True
     # The closure of the population counters needs this: a node that comes back
     # was already counted as dead, so "initial + births - deaths" alone can
-    # never describe the living count (see docs/COMPTEURS-noeuds.md).
+    # never describe the living count (see rapports/COMPTEURS-noeuds.md).
     brain.node_revivals += 1
     brain.node_born_step[node_id] = brain.clock
     brain.node_frozen_until[node_id] = brain.clock + brain.node_freeze
