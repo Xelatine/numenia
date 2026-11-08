@@ -101,6 +101,8 @@ class Brain(nn.Module):
         redundancy_sample: int = 64,
         max_population: int = MAX_POPULATION,
         edge_chunk_size: int = 512,
+        birth_mode: str = "traffic",
+        birth_seed: int = 0,
         mmap: bool = False,
     ) -> None:
         super().__init__()
@@ -138,6 +140,8 @@ class Brain(nn.Module):
             "redundancy_sample": int(redundancy_sample),
             "max_population": int(max_population),
             "edge_chunk_size": int(edge_chunk_size),
+            "birth_mode": str(birth_mode),
+            "birth_seed": int(birth_seed),
             "mmap": bool(mmap),
         }
 
@@ -148,6 +152,17 @@ class Brain(nn.Module):
         self.max_edges = int(max_edges)
         self.max_births = int(max_births)
         self.max_node_births = int(max_node_births)
+        # Ablation arms. "traffic" is the only mode a real run uses: births are
+        # paid for by messages that passed. "schedule" keeps the same calendar
+        # (same per-step budget, same seed) but draws the identities at random,
+        # which is what separates routing from raw capacity.
+        if birth_mode not in ("traffic", "schedule"):
+            raise ValueError(f"unknown birth_mode {birth_mode!r}")
+        self.birth_mode = str(birth_mode)
+        # A birth must never consume the global RNG (the 8 November `speak()`
+        # trap): with its own generator, the same seed draws the same edges
+        # whatever the data did.
+        self.birth_generator = torch.Generator().manual_seed(int(birth_seed))
         self.birth_k = int(birth_k)
         self.birth_candidates = int(birth_candidates)
         self.init_bias = float(init_bias)
@@ -517,6 +532,45 @@ class Brain(nn.Module):
         self.births += created + revived
         return created + revived, []
 
+    @torch.no_grad()
+    def _birth_edges_random(self, budget: int) -> int:
+        """Open ``budget`` synapses between random peers, ignoring the traffic.
+
+        The third arm of the growth ablation. The calendar is the grown arm's
+        (the same per-step budget, the same seed), so the graph ends the run
+        the same *size*; only the identities are drawn at random instead of
+        being chosen from the messages that actually passed. Whatever this arm
+        matches, capacity explains; whatever it loses, routing explains.
+
+        The structural rules are unchanged on purpose: no synapse lands on
+        either door, the reader never speaks, no self-loop, and a buried node
+        is not resurrected here -- revival is a traffic event, not a calendar
+        one.
+        """
+        if budget <= 0 or self.ne >= self.max_edges:
+            return 0
+        n = self.n_nodes
+        created = 0
+        attempts = 0
+        # A bound, not a guard: 64 draws per wanted edge, and past that the
+        # pair space really is saturated.
+        while created < budget and attempts < 64 * budget:
+            attempts += 1
+            source = int(torch.randint(0, n, (1,), generator=self.birth_generator))
+            target = int(torch.randint(0, n, (1,), generator=self.birth_generator))
+            if source == target or source == OUTPUT_NODE:
+                continue
+            if target == INPUT_NODE or target == OUTPUT_NODE:
+                continue
+            if not bool(self.node_alive[target]):
+                continue
+            if self.has_edge(source, target):
+                continue
+            if self.add_edge(source, target, count=False):
+                created += 1
+        self.births += created
+        return created
+
     def forward(
         self,
         tokens: torch.Tensor,
@@ -695,7 +749,15 @@ class Brain(nn.Module):
         # (F3), and growth is a phase (F8), not a pulse in every tour. The pass
         # is already inside torch.no_grad (D1.1): the decision is discrete, the
         # new edge carries its trainable edge_mask like any other synapse.
-        if grow and births_left > 0 and bool(emitted.any()):
+        if grow and births_left > 0 and self.birth_mode == "schedule":
+            # Third arm: the calendar belongs to the step, the identities do not
+            # belong to the traffic. Nothing here reads the state or `emitted`.
+            created = self._birth_edges_random(births_left)
+            births_left -= created
+            created_total += created
+            if created:
+                self.birth_passes += 1
+        elif grow and births_left > 0 and bool(emitted.any()):
             senders = emitted.nonzero(as_tuple=True)[0]
             aggregate = self.mean_out[senders].unsqueeze(1)
             created, requests = self._birth_edges(state, aggregate, senders, births_left)

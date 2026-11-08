@@ -57,7 +57,7 @@ training:
   seed: 42
 
 growth:
-  mode: grown             # grown | frozen_random (ablation, rapports/ABLATION-croissance.md)
+  mode: grown             # grown | random_schedule | frozen_random (ablation, rapports/ABLATION-croissance.md)
   frozen_edges: 3997      # taille du graphe figé = arêtes du run comparatif au pas 500
   check_every: 500
   grow_threshold: 0.01    # > 1 % validation gain -> growth

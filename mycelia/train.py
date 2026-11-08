@@ -312,6 +312,9 @@ class Trainer:
         self.history = list(history or [])
         self.events: list[str] = []
         self.scale = int(scale)
+        # One flag for the ablation arms: "grown" (default), "random_schedule"
+        # (same calendar, random identities) or "frozen_random" (nothing moves).
+        self.growth_mode = str(self.config["growth"].get("mode", "grown"))
 
         training = self.config["training"]
         brain_cfg = self.config["brain"]
@@ -354,6 +357,8 @@ class Trainer:
                 "redundancy_cosine": float(life["redundancy_cosine"]),
                 "redundancy_sample": int(life["redundancy_sample"]),
                 "edge_chunk_size": int(brain_cfg.get("edge_chunk_size", 512)),
+                "birth_mode": "schedule" if self.growth_mode == "random_schedule" else "traffic",
+                "birth_seed": self.seed,
                 "mmap": self.scale == 3,
             }
             kwargs.update(brain_overrides)
@@ -365,7 +370,7 @@ class Trainer:
         # Ablation arm (rapports/ABLATION-croissance.md): a fixed random graph of the
         # same size as the grown one. Nothing is born, nothing dies. Only a
         # fresh brain is frozen: a resumed one already carries its own wiring.
-        if brain is None and str(self.config["growth"].get("mode", "grown")) == "frozen_random":
+        if brain is None and self.growth_mode == "frozen_random":
             from mycelia.ablation import freeze_random_graph
 
             frozen = freeze_random_graph(
