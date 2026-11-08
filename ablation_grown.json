@@ -1,0 +1,78 @@
+{
+  "arm": "grown",
+  "steps": 500,
+  "first_loss": 9.1964,
+  "final_loss": 7.6172,
+  "val_ppl": 1943.301,
+  "edges": 3983,
+  "nodes": 514,
+  "pool": 532,
+  "curve": [
+    {
+      "step": 1,
+      "loss": 9.1964,
+      "edges": 20,
+      "nodes": 512
+    },
+    {
+      "step": 50,
+      "loss": 9.1856,
+      "edges": 413,
+      "nodes": 514
+    },
+    {
+      "step": 100,
+      "loss": 9.0859,
+      "edges": 812,
+      "nodes": 514
+    },
+    {
+      "step": 150,
+      "loss": 8.988,
+      "edges": 1212,
+      "nodes": 514
+    },
+    {
+      "step": 200,
+      "loss": 8.8547,
+      "edges": 1612,
+      "nodes": 514
+    },
+    {
+      "step": 250,
+      "loss": 8.6679,
+      "edges": 2011,
+      "nodes": 514
+    },
+    {
+      "step": 300,
+      "loss": 8.5017,
+      "edges": 2411,
+      "nodes": 514
+    },
+    {
+      "step": 350,
+      "loss": 8.3188,
+      "edges": 2810,
+      "nodes": 500
+    },
+    {
+      "step": 400,
+      "loss": 8.0656,
+      "edges": 3210,
+      "nodes": 509
+    },
+    {
+      "step": 450,
+      "loss": 7.7753,
+      "edges": 3593,
+      "nodes": 511
+    },
+    {
+      "step": 500,
+      "loss": 7.6172,
+      "edges": 3993,
+      "nodes": 514
+    }
+  ]
+}

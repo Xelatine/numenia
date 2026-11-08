@@ -1,0 +1,7 @@
+1450 MiB, 6569 MiB, 18 %
+AUTORISÉ : libre 6575 Mo >= 6000
+1458 MiB, 6561 MiB
+=== ENTRE (fin grown, avant frozen) ===
+7913 MiB, 106 MiB
+=== APRES (fin frozen) ===
+1661 MiB, 6358 MiB
