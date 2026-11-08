@@ -1,7 +1,7 @@
 """Benchmark of one training step, on the *exact* path a run takes.
 
 Why this file exists: the acceptance figure ``0,283 s/pas à 2 000 arêtes``
-(docs/RAPPORT-v4.md §6.3) was produced by an ad-hoc measurement that no file in
+(rapports/RAPPORT-v4.md §6.3) was produced by an ad-hoc measurement that no file in
 the repository reproduces — it does not say whether it timed a forward, a
 forward with backward, or a whole step with the life cycle, the validation and
 the checkpoint. A number nobody can reproduce is not a measurement, it is a

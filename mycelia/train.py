@@ -362,7 +362,7 @@ class Trainer:
             self.brain = brain.to(self.device)
             self.tokenizer = tokenizer or (load_tokenizer() if data == "text" else None)
         self.brain.clock = self.step
-        # Ablation arm (docs/ABLATION-croissance.md): a fixed random graph of the
+        # Ablation arm (rapports/ABLATION-croissance.md): a fixed random graph of the
         # same size as the grown one. Nothing is born, nothing dies. Only a
         # fresh brain is frozen: a resumed one already carries its own wiring.
         if brain is None and str(self.config["growth"].get("mode", "grown")) == "frozen_random":
