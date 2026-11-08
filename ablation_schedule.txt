@@ -1,0 +1,1 @@
+ablation schedule | perte 9.1964 -> 7.6140 | validation perplexity 1996.584 | 3488 arêtes | 486 nœuds

@@ -1,0 +1,80 @@
+{
+  "arm": "schedule",
+  "steps": 500,
+  "seconds": 2627,
+  "first_loss": 9.1964,
+  "final_loss": 7.614,
+  "val_ppl": 1996.584,
+  "edges": 3488,
+  "nodes": 486,
+  "pool": 532,
+  "curve": [
+    {
+      "step": 1,
+      "loss": 9.1964,
+      "edges": 20,
+      "nodes": 512
+    },
+    {
+      "step": 50,
+      "loss": 9.1881,
+      "edges": 414,
+      "nodes": 514
+    },
+    {
+      "step": 100,
+      "loss": 9.1064,
+      "edges": 814,
+      "nodes": 514
+    },
+    {
+      "step": 150,
+      "loss": 9.026,
+      "edges": 1133,
+      "nodes": 514
+    },
+    {
+      "step": 200,
+      "loss": 8.8948,
+      "edges": 1533,
+      "nodes": 514
+    },
+    {
+      "step": 250,
+      "loss": 8.7193,
+      "edges": 1781,
+      "nodes": 514
+    },
+    {
+      "step": 300,
+      "loss": 8.5447,
+      "edges": 2181,
+      "nodes": 514
+    },
+    {
+      "step": 350,
+      "loss": 8.3554,
+      "edges": 2534,
+      "nodes": 487
+    },
+    {
+      "step": 400,
+      "loss": 7.9516,
+      "edges": 2942,
+      "nodes": 487
+    },
+    {
+      "step": 450,
+      "loss": 7.8639,
+      "edges": 3194,
+      "nodes": 486
+    },
+    {
+      "step": 500,
+      "loss": 7.614,
+      "edges": 3594,
+      "nodes": 486
+    }
+  ],
+  "genome": "data\\genome_schedule.pt"
+}
