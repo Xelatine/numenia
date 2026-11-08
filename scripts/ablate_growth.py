@@ -1,17 +1,19 @@
-"""Ablation: grown colony vs frozen random graph, same budget, same seed.
+"""Ablation: grown colony, random schedule, frozen graph, same budget, same seed.
 
-Two arms, one question. ``--arm grown`` is the comparison run (births and pruning
-on); ``--arm frozen`` starts from a random graph of the same size and never
-changes it. The only difference between the two is therefore whether the
-topology is *found* or *drawn*.
+Three arms, one question asked in two steps. ``--arm grown`` is the comparison
+run (births and pruning on, identities chosen by the traffic); ``--arm frozen``
+starts from a random graph of the same size and never changes it; ``--arm
+schedule`` keeps the grown arm's calendar (8 births per step) but draws the
+identities at random, so it separates *routing* from *capacity*.
 
-    python scripts/ablate_growth.py --arm grown  --steps 500
-    python scripts/ablate_growth.py --arm frozen --steps 500
+    python scripts/ablate_growth.py --arm grown    --steps 500
+    python scripts/ablate_growth.py --arm schedule --steps 500
+    python scripts/ablate_growth.py --arm frozen   --steps 500
 
 Each arm writes its curve to ``logs_ablation_<arm>.txt``, its per-step journal to
-``data/per_step_<arm>.csv`` and its final validation perplexity to
-``ablation_<arm>.txt``. Nothing is timed for a verdict: a loss curve does not
-care about the clock, only about the arithmetic.
+``data/per_step_<arm>.csv``, its final genome to ``data/genome_<arm>.pt`` and its
+final validation perplexity to ``ablation_<arm>.txt``. Nothing is timed for a
+verdict: a loss curve does not care about the clock, only about the arithmetic.
 """
 
 from __future__ import annotations
@@ -28,6 +30,7 @@ sys.path.insert(0, str(ROOT))
 
 import torch  # noqa: E402
 
+from mycelia.checkpoint import save_genome  # noqa: E402
 from mycelia.config import load_config  # noqa: E402
 from mycelia.train import PER_STEP_KEYS, Trainer, per_step_line  # noqa: E402
 
@@ -41,7 +44,7 @@ def main() -> None:
     except (AttributeError, OSError):
         pass
     parser = argparse.ArgumentParser(description="grown vs frozen-random ablation")
-    parser.add_argument("--arm", choices=["grown", "frozen"], required=True)
+    parser.add_argument("--arm", choices=["grown", "schedule", "frozen"], required=True)
     parser.add_argument("--steps", type=int, default=500)
     parser.add_argument("--seq-len", type=int, default=32)
     parser.add_argument("--batch-size", type=int, default=8)
@@ -53,7 +56,10 @@ def main() -> None:
     args = parser.parse_args()
 
     config = load_config()
-    config["growth"]["mode"] = "frozen_random" if args.arm == "frozen" else "grown"
+    config["growth"]["mode"] = {
+        "frozen": "frozen_random",
+        "schedule": "random_schedule",
+    }.get(args.arm, "grown")
     config["growth"]["frozen_edges"] = args.edges
 
     overrides = {}
@@ -69,8 +75,8 @@ def main() -> None:
         scale=0,
         seq_len=args.seq_len,
         batch_size=args.batch_size,
-        enable_growth=args.arm == "grown",
-        enable_lifecycle=args.arm == "grown",
+        enable_growth=args.arm != "frozen",
+        enable_lifecycle=args.arm != "frozen",
         **overrides,
     )
     brain = trainer.brain
@@ -128,7 +134,21 @@ def main() -> None:
         "nodes": int(brain.node_alive.sum()),
         "pool": brain.n_nodes,
         "curve": curve,
+        # Wall clock, for the cost line only: no verdict reads it.
+        "seconds": round(time.time() - started),
     }
+    # The genome is the evidence, not a by-product: the 8 November arm saved
+    # none, and its degree distribution had to be borrowed from a twin run.
+    genome_path = save_genome(
+        ROOT / "data" / f"genome_{args.arm}.pt",
+        brain,
+        step=trainer.step,
+        optimizer=trainer.optimizer,
+        growth=trainer.growth,
+        history=trainer.history,
+        extra={"arm": args.arm, "steps": args.steps, "seed": args.seed},
+    )
+    venv["genome"] = str(genome_path.relative_to(ROOT))
     (ROOT / f"ablation_{args.arm}.json").write_text(
         json.dumps(venv, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
@@ -140,7 +160,8 @@ def main() -> None:
     )
     print(
         f"FIN {args.arm} | perte {venv['first_loss']:.4f} -> {venv['final_loss']:.4f} | "
-        f"val ppl {val_ppl:.3f} | arêtes {brain.ne} | nœuds {venv['nodes']}",
+        f"val ppl {val_ppl:.3f} | arêtes {brain.ne} | nœuds {venv['nodes']} | "
+        f"génome {venv['genome']}",
         flush=True,
     )
 
