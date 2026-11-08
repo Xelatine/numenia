@@ -1,16 +1,17 @@
 """Ablation: grown colony vs frozen random graph, same budget, same seed.
 
-Two arms, one question. ``--arm grown`` is the comparison run (births and
-pruning on); ``--arm frozen`` starts from a random graph of the same size and
-never changes it. The only difference between the two is therefore whether the
+Two arms, one question. ``--arm grown`` is the comparison run (births and pruning
+on); ``--arm frozen`` starts from a random graph of the same size and never
+changes it. The only difference between the two is therefore whether the
 topology is *found* or *drawn*.
 
     python scripts/ablate_growth.py --arm grown  --steps 500
     python scripts/ablate_growth.py --arm frozen --steps 500
 
-Each arm writes its curve to ``logs_ablation_<arm>.txt`` and its final
-validation perplexity to ``ablation_<arm>.txt``. Nothing is timed for a
-verdict: the card may be shared, and a loss curve does not care.
+Each arm writes its curve to ``logs_ablation_<arm>.txt``, its per-step journal to
+``data/per_step_<arm>.csv`` and its final validation perplexity to
+``ablation_<arm>.txt``. Nothing is timed for a verdict: a loss curve does not
+care about the clock, only about the arithmetic.
 """
 
 from __future__ import annotations
@@ -28,10 +29,17 @@ sys.path.insert(0, str(ROOT))
 import torch  # noqa: E402
 
 from mycelia.config import load_config  # noqa: E402
-from mycelia.train import Trainer  # noqa: E402
+from mycelia.train import PER_STEP_KEYS, Trainer, per_step_line  # noqa: E402
 
 
 def main() -> None:
+    # Redirected stdout uses cp1252 on Windows: a single arrow in a growth
+    # message would kill a 25-minute arm with UnicodeEncodeError.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
     parser = argparse.ArgumentParser(description="grown vs frozen-random ablation")
     parser.add_argument("--arm", choices=["grown", "frozen"], required=True)
     parser.add_argument("--steps", type=int, default=500)
@@ -66,6 +74,13 @@ def main() -> None:
         **overrides,
     )
     brain = trainer.brain
+    # One journal per arm: a resumed arm must never overwrite the other's series,
+    # and each arm is a fresh run, so truncation is correct here.
+    per_step_path = ROOT / "data" / f"per_step_{args.arm}.csv"
+    per_step_path.parent.mkdir(parents=True, exist_ok=True)
+    per_step = per_step_path.open("w", encoding="utf-8", buffering=1)
+    per_step.write(",".join(PER_STEP_KEYS) + "\n")
+
     print(
         f"arm {args.arm} | device {trainer.device} | pool {brain.n_nodes} | "
         f"arêtes {brain.ne} | hops {brain.max_hops} | seq {trainer.seq_len} | "
@@ -81,6 +96,7 @@ def main() -> None:
         handle.write(f"# arm {args.arm} | steps {args.steps} | seed {args.seed}\n")
         for _ in range(args.steps):
             metrics = trainer.train_step()
+            per_step.write(per_step_line(metrics))
             first = metrics["loss"] if first is None else first
             if trainer.step % args.report_every == 0 or trainer.step == 1:
                 line = (
@@ -100,8 +116,9 @@ def main() -> None:
                     }
                 )
 
+    per_step.close()
     val_ppl = trainer.validate()
-    summary = {
+    venv = {
         "arm": args.arm,
         "steps": args.steps,
         "first_loss": round(float(first), 4),
@@ -113,17 +130,17 @@ def main() -> None:
         "curve": curve,
     }
     (ROOT / f"ablation_{args.arm}.json").write_text(
-        json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        json.dumps(venv, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     (ROOT / f"ablation_{args.arm}.txt").write_text(
-        f"ablation {args.arm} | perte {summary['first_loss']:.4f} -> "
-        f"{summary['final_loss']:.4f} | validation perplexity {val_ppl:.3f} | "
-        f"{brain.ne} arêtes | {summary['nodes']} nœuds\n",
+        f"ablation {args.arm} | perte {venv['first_loss']:.4f} -> "
+        f"{venv['final_loss']:.4f} | validation perplexity {val_ppl:.3f} | "
+        f"{brain.ne} arêtes | {venv['nodes']} nœuds\n",
         encoding="utf-8",
     )
     print(
-        f"FIN {args.arm} | perte {summary['first_loss']:.4f} -> {summary['final_loss']:.4f} | "
-        f"val ppl {val_ppl:.3f} | {math.exp(0):.0f}",
+        f"FIN {args.arm} | perte {venv['first_loss']:.4f} -> {venv['final_loss']:.4f} | "
+        f"val ppl {val_ppl:.3f} | arêtes {brain.ne} | nœuds {venv['nodes']}",
         flush=True,
     )
 
