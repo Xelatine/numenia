@@ -1,0 +1,1 @@
+ablation frozen | perte 9.1955 -> 7.6736 | validation perplexity 2071.823 | 3997 arêtes | 532 nœuds

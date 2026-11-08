@@ -1,0 +1,1 @@
+ablation grown | perte 9.1964 -> 7.6172 | validation perplexity 1943.301 | 3983 arêtes | 514 nœuds
