@@ -5,3 +5,8 @@ AUTORISÉ : libre 6575 Mo >= 6000
 7913 MiB, 106 MiB
 === APRES (fin frozen) ===
 1661 MiB, 6358 MiB
+
+=== 8 novembre (d) : troisieme arm, croissance sans routage ===
+2025 MiB utilises, 6167 MiB libres, 18 % (avant lancement, apres pytest)
+AUTORISE : libre 6167 Mo >= 6000 (classe resultat)
+REFUSE : classe chronometrage (2025 MiB utilises > 1000, 18 % > 10 %) -> banc non lance
