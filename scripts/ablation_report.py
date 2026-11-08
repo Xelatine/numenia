@@ -1,6 +1,6 @@
 """Turn the two arms into the verdict: curves, final perplexities, degrees.
 
-The decision rule was fixed before the runs (docs/ABLATION-croissance.md §5):
+The decision rule was fixed before the runs (rapports/ABLATION-croissance.md §5):
 an arm `frozen` within 2 % of `grown` means growth has not paid at this budget.
 This script only reads the artefacts -- no model is trained here.
 
@@ -115,7 +115,7 @@ def main() -> None:
         f"{grown['steps']} pas chacun, même carte, même session. Journal par pas :",
         "`data/per_step_grown.csv` et `data/per_step_frozen.csv` (500 lignes chacun).",
         "",
-        "## 1. Verdict (règle fixée d'avance, `docs/ABLATION-croissance.md` §5)",
+        "## 1. Verdict (règle fixée d'avance, `rapports/ABLATION-croissance.md` §5)",
         "",
         f"**{verdict}** — cas **{case}**.",
         "",
@@ -197,7 +197,11 @@ def main() -> None:
         "~4 000 arêtes).",
         "",
     ]
-    (ROOT / "docs" / "ABLATION-resultats.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # The reports live in the local archive, which Git ignores: a verdict must
+    # never land back in the published tree.
+    out_path = ROOT / "rapports" / "ABLATION-resultats.md"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"verdict: {verdict} | écart {gain:+.2%} | cas {case}")
     print(f"figé arêtes vues: {sorted(frozen_edges_seen)} | naissances {frozen_births}")
     print(f"génome grandi: {grown_degrees['mean_in']} moyen, max {grown_degrees['max_in']}, "
