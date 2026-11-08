@@ -26,3 +26,6 @@ mycelia_v2.zip
 *.zip
 # Frozen prototypes: history, not source. Read them, never import them.
 archive/
+
+# Rapports et comptes rendus : archive locale, jamais publiee (demande du 8 novembre).
+rapports/
