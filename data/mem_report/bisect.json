@@ -1,0 +1,108 @@
+{
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 757.0,
+      "free_mib": 7262.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": true,
+      "used_mib": 757.0,
+      "total_mib": 8192.0,
+      "free_mib": 7262.0,
+      "used_pct": 9.2,
+      "verdict": "chronométrage autorisé (carte quasi vide)"
+    }
+  },
+  "config": {
+    "nodes": 532,
+    "seq": 128,
+    "batch": 16
+  },
+  "max_edges_that_fit": 4250,
+  "attempts": [
+    {
+      "edges": 6000,
+      "ok": false,
+      "peak_mib": null,
+      "ms_per_step": null,
+      "error": "FAILED: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 8.00 GiB of which 0 bytes is free. Of the allocated memory 10.02 GiB is allocated by PyTorch, and 6.27 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda",
+      "gpu_after": null
+    },
+    {
+      "edges": 400,
+      "ok": true,
+      "peak_mib": 157.64,
+      "ms_per_step": 13706.7,
+      "error": null,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 741.0,
+        "free_mib": 7278.0
+      }
+    },
+    {
+      "edges": 3200,
+      "ok": true,
+      "peak_mib": 6840.06,
+      "ms_per_step": 29286.9,
+      "error": null,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 741.0,
+        "free_mib": 7278.0
+      }
+    },
+    {
+      "edges": 4600,
+      "ok": false,
+      "peak_mib": null,
+      "ms_per_step": null,
+      "error": "FAILED: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 8.00 GiB of which 0 bytes is free. Of the allocated memory 9.66 GiB is allocated by PyTorch, and 9.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-",
+      "gpu_after": null
+    },
+    {
+      "edges": 3900,
+      "ok": true,
+      "peak_mib": 8373.93,
+      "ms_per_step": 39600.1,
+      "error": null,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 758.0,
+        "free_mib": 7261.0
+      }
+    },
+    {
+      "edges": 4250,
+      "ok": true,
+      "peak_mib": 9173.28,
+      "ms_per_step": 49623.7,
+      "error": null,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 759.0,
+        "free_mib": 7260.0
+      }
+    },
+    {
+      "edges": 4425,
+      "ok": false,
+      "peak_mib": null,
+      "ms_per_step": null,
+      "error": "FAILED: CUDA out of memory. Tried to allocate 2.00 MiB. GPU 0 has a total capacity of 8.00 GiB of which 0 bytes is free. Of the allocated memory 9.22 GiB is allocated by PyTorch, and 15.22 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-",
+      "gpu_after": null
+    }
+  ],
+  "gpu": {
+    "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "total_mib": 8192.0,
+    "used_mib": 722.0,
+    "free_mib": 7297.0
+  }
+}

@@ -1,0 +1,4786 @@
+{
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 707.0,
+      "free_mib": 7312.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": true,
+      "used_mib": 707.0,
+      "total_mib": 8192.0,
+      "free_mib": 7312.0,
+      "used_pct": 8.6,
+      "verdict": "chronométrage autorisé (carte quasi vide)"
+    }
+  },
+  "points": [
+    {
+      "config": {
+        "nodes": 800,
+        "edges": 6000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7968.0,
+        "free_mib": 51.0
+      },
+      "baseline_allocated_mib": 494.71,
+      "baseline_reserved_mib": 686.0,
+      "steps": [
+        {
+          "ms": 14104.7,
+          "peak_mib": 8024.54,
+          "allocated_mib": 517.52,
+          "freed_mib": null,
+          "reserved_mib": 8054.0,
+          "loss": 9.20848,
+          "edges": 6018,
+          "nodes": 802
+        },
+        {
+          "ms": 9649.0,
+          "peak_mib": 8052.78,
+          "allocated_mib": 515.02,
+          "freed_mib": null,
+          "reserved_mib": 8102.0,
+          "loss": 9.20655,
+          "edges": 6026,
+          "nodes": 802
+        }
+      ],
+      "ms_per_step": 11876.9,
+      "peak_mib": 8052.78,
+      "oom": false,
+      "wall_seconds": 38.2,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": -30456.7,
+          "pic_mo": 8048.84,
+          "temps_ms": 15845.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "forward",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 30815.62,
+          "pic_mo": 8052.78,
+          "temps_ms": 7793.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 40.2,
+          "pic_mo": 548.24,
+          "temps_ms": 31.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "births",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 8019.66,
+          "temps_ms": 21.8,
+          "calls": 3,
+          "profondeur": 1,
+          "reserved_mo": 8054.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 14.9,
+          "pic_mo": 7999.53,
+          "temps_ms": 14.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8054.0
+        },
+        {
+          "phase": "clip",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 522.65,
+          "temps_ms": 11.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "loss",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 20.31,
+          "pic_mo": 8039.08,
+          "temps_ms": 8.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 522.64,
+          "temps_ms": 4.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8102.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": -27.72,
+          "pic_mo": 517.52,
+          "temps_ms": 1.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8054.0
+        }
+      ],
+      "seconds": 44.5,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 327.0,
+        "free_mib": 7692.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 1000,
+        "edges": 7500,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7959.0,
+        "free_mib": 60.0
+      },
+      "baseline_allocated_mib": 597.05,
+      "baseline_reserved_mib": 798.0,
+      "steps": [
+        {
+          "ms": 20472.1,
+          "peak_mib": 9798.1,
+          "allocated_mib": 621.72,
+          "freed_mib": null,
+          "reserved_mib": 9866.0,
+          "loss": 9.20848,
+          "edges": 7518,
+          "nodes": 1002
+        },
+        {
+          "ms": 20596.0,
+          "peak_mib": 9860.47,
+          "allocated_mib": 621.49,
+          "freed_mib": null,
+          "reserved_mib": 9912.0,
+          "loss": 9.20655,
+          "edges": 7526,
+          "nodes": 1002
+        }
+      ],
+      "ms_per_step": 20534.0,
+      "peak_mib": 9860.47,
+      "oom": false,
+      "wall_seconds": 65.8,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": -37293.6,
+          "pic_mo": 9854.15,
+          "temps_ms": 30774.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 9912.0
+        },
+        {
+          "phase": "forward",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 37740.83,
+          "pic_mo": 9860.47,
+          "temps_ms": 10107.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 9892.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 49.97,
+          "pic_mo": 658.59,
+          "temps_ms": 85.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 9912.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 18.23,
+          "pic_mo": 9812.25,
+          "temps_ms": 21.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 9866.0
+        },
+        {
+          "phase": "births",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 9855.34,
+          "temps_ms": 18.3,
+          "calls": 3,
+          "profondeur": 1,
+          "reserved_mo": 9892.0
+        },
+        {
+          "phase": "loss",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 9844.38,
+          "temps_ms": 13.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 9892.0
+        },
+        {
+          "phase": "clip",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 629.7,
+          "temps_ms": 11.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 9912.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 629.69,
+          "temps_ms": 7.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 9912.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 7500,
+          "tbptt": 16,
+          "allocated_mo": -31.07,
+          "pic_mo": 621.72,
+          "temps_ms": 2.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 9866.0
+        }
+      ],
+      "seconds": 72.4,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 308.0,
+        "free_mib": 7711.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 1000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 1073.0,
+        "free_mib": 6946.0
+      },
+      "baseline_allocated_mib": 81.87,
+      "baseline_reserved_mib": 196.0,
+      "steps": [
+        {
+          "ms": 2954.0,
+          "peak_mib": 363.66,
+          "allocated_mib": 99.88,
+          "freed_mib": null,
+          "reserved_mib": 402.0,
+          "loss": 9.20848,
+          "edges": 1018,
+          "nodes": 534
+        },
+        {
+          "ms": 2953.5,
+          "peak_mib": 402.16,
+          "allocated_mib": 100.16,
+          "freed_mib": null,
+          "reserved_mib": 464.0,
+          "loss": 9.20655,
+          "edges": 1026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 2953.8,
+      "peak_mib": 402.16,
+      "oom": false,
+      "wall_seconds": 9.5,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": -1089.37,
+          "pic_mo": 402.16,
+          "temps_ms": 3326.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 464.0
+        },
+        {
+          "phase": "forward",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 1114.83,
+          "pic_mo": 398.35,
+          "temps_ms": 2532.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 444.0
+        },
+        {
+          "phase": "births",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 362.49,
+          "temps_ms": 12.7,
+          "calls": 3,
+          "profondeur": 1,
+          "reserved_mo": 404.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 1.3,
+          "pic_mo": 367.17,
+          "temps_ms": 12.4,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 404.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 29.15,
+          "pic_mo": 123.4,
+          "temps_ms": 6.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 464.0
+        },
+        {
+          "phase": "loss",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 392.39,
+          "temps_ms": 5.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 444.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 105.23,
+          "temps_ms": 5.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 464.0
+        },
+        {
+          "phase": "clip",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 105.23,
+          "temps_ms": 3.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 464.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": -20.17,
+          "pic_mo": 99.88,
+          "temps_ms": 2.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 402.0
+        }
+      ],
+      "seconds": 15.3,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 444.0,
+        "free_mib": 7575.0
+      },
+      "sweep": "edges"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3151.0,
+        "free_mib": 4868.0
+      },
+      "baseline_allocated_mib": 181.81,
+      "baseline_reserved_mib": 378.0,
+      "steps": [
+        {
+          "ms": 4220.4,
+          "peak_mib": 2364.68,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2386.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 4059.5,
+          "peak_mib": 2418.63,
+          "allocated_mib": 201.32,
+          "freed_mib": null,
+          "reserved_mib": 2506.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 4139.9,
+      "peak_mib": 2418.63,
+      "oom": false,
+      "wall_seconds": 13.2,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -8804.03,
+          "pic_mo": 2418.63,
+          "temps_ms": 4740.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 8930.48,
+          "pic_mo": 2418.23,
+          "temps_ms": 3480.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.63,
+          "temps_ms": 16.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.31,
+          "temps_ms": 9.5,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.58,
+          "temps_ms": 6.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.4,
+          "temps_ms": 4.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 2408.87,
+          "temps_ms": 3.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 3.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.79,
+          "temps_ms": 2.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        }
+      ],
+      "seconds": 19.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 480.0,
+        "free_mib": 7539.0
+      },
+      "sweep": "edges"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 3000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 4936.0,
+        "free_mib": 3083.0
+      },
+      "baseline_allocated_mib": 280.54,
+      "baseline_reserved_mib": 460.0,
+      "steps": [
+        {
+          "ms": 5871.5,
+          "peak_mib": 4204.92,
+          "allocated_mib": 297.73,
+          "freed_mib": null,
+          "reserved_mib": 4224.0,
+          "loss": 9.20848,
+          "edges": 3018,
+          "nodes": 534
+        },
+        {
+          "ms": 5616.4,
+          "peak_mib": 4266.46,
+          "allocated_mib": 301.59,
+          "freed_mib": null,
+          "reserved_mib": 4286.0,
+          "loss": 9.20655,
+          "edges": 3026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 5743.9,
+      "peak_mib": 4266.46,
+      "oom": false,
+      "wall_seconds": 18.1,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -15902.79,
+          "pic_mo": 4265.64,
+          "temps_ms": 6774.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "forward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 16091.27,
+          "pic_mo": 4266.46,
+          "temps_ms": 4656.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 9.68,
+          "pic_mo": 4209.7,
+          "temps_ms": 12.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4224.0
+        },
+        {
+          "phase": "births",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 4201.16,
+          "temps_ms": 8.3,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 4224.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 29.42,
+          "pic_mo": 325.66,
+          "temps_ms": 6.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 308.25,
+          "temps_ms": 4.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "loss",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 4255.87,
+          "temps_ms": 3.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "clip",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 308.25,
+          "temps_ms": 3.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4286.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -20.59,
+          "pic_mo": 297.74,
+          "temps_ms": 2.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4224.0
+        }
+      ],
+      "seconds": 24.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 486.0,
+        "free_mib": 7533.0
+      },
+      "sweep": "edges"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6425.0,
+        "free_mib": 1594.0
+      },
+      "baseline_allocated_mib": 356.07,
+      "baseline_reserved_mib": 556.0,
+      "steps": [
+        {
+          "ms": 7617.0,
+          "peak_mib": 5669.67,
+          "allocated_mib": 375.49,
+          "freed_mib": null,
+          "reserved_mib": 5696.0,
+          "loss": 9.20848,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 8463.1,
+          "peak_mib": 5725.11,
+          "allocated_mib": 375.74,
+          "freed_mib": null,
+          "reserved_mib": 5752.0,
+          "loss": 9.20655,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 8040.1,
+      "peak_mib": 5725.11,
+      "oom": false,
+      "wall_seconds": 24.1,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -21546.81,
+          "pic_mo": 5723.87,
+          "temps_ms": 9759.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 21792.7,
+          "pic_mo": 5725.11,
+          "temps_ms": 6250.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5674.18,
+          "temps_ms": 11.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5665.28,
+          "temps_ms": 9.8,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 7.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 28.29,
+          "pic_mo": 400.3,
+          "temps_ms": 7.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 5714.11,
+          "temps_ms": 5.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 3.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -20.52,
+          "pic_mo": 375.5,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        }
+      ],
+      "seconds": 30.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 492.0,
+        "free_mib": 7527.0
+      },
+      "sweep": "edges"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 6000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7951.0,
+        "free_mib": 68.0
+      },
+      "baseline_allocated_mib": 521.95,
+      "baseline_reserved_mib": 762.0,
+      "steps": [
+        {
+          "ms": 15554.5,
+          "peak_mib": 8763.63,
+          "allocated_mib": 538.15,
+          "freed_mib": null,
+          "reserved_mib": 8794.0,
+          "loss": 9.20848,
+          "edges": 6018,
+          "nodes": 534
+        },
+        {
+          "ms": 13694.0,
+          "peak_mib": 8807.5,
+          "allocated_mib": 538.86,
+          "freed_mib": null,
+          "reserved_mib": 8842.0,
+          "loss": 9.20655,
+          "edges": 6026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 14624.2,
+      "peak_mib": 8807.5,
+      "oom": false,
+      "wall_seconds": 45.7,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": -33447.65,
+          "pic_mo": 8805.65,
+          "temps_ms": 20195.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8842.0
+        },
+        {
+          "phase": "forward",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 33807.04,
+          "pic_mo": 8807.5,
+          "temps_ms": 8924.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8822.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 28.87,
+          "pic_mo": 562.74,
+          "temps_ms": 39.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8842.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 11.62,
+          "pic_mo": 8764.75,
+          "temps_ms": 15.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8794.0
+        },
+        {
+          "phase": "clip",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 545.97,
+          "temps_ms": 13.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8842.0
+        },
+        {
+          "phase": "births",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 8755.34,
+          "temps_ms": 11.2,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 8794.0
+        },
+        {
+          "phase": "loss",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 8795.88,
+          "temps_ms": 10.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8822.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 545.96,
+          "temps_ms": 3.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8842.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 6000,
+          "tbptt": 16,
+          "allocated_mo": -20.28,
+          "pic_mo": 538.16,
+          "temps_ms": 2.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8794.0
+        }
+      ],
+      "seconds": 52.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 314.0,
+        "free_mib": 7705.0
+      },
+      "sweep": "edges"
+    },
+    {
+      "oom": true,
+      "returncode": 2,
+      "seconds": 13.1,
+      "error": "FAILED: CUDA error: out of memory | Search for `cudaErrorMemoryAllocation' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information. | CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect. | For debugging consider passing CUDA_LAUNCH_BLOCKING=1 | Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 314.0,
+        "free_mib": 7705.0
+      },
+      "sweep": "edges",
+      "config": {
+        "nodes": 532,
+        "edges": 8000,
+        "seq": 32,
+        "batch": 8
+      }
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 2985.0,
+        "free_mib": 5034.0
+      },
+      "baseline_allocated_mib": 181.81,
+      "baseline_reserved_mib": 378.0,
+      "steps": [
+        {
+          "ms": 4275.9,
+          "peak_mib": 2364.68,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2386.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 4089.1,
+          "peak_mib": 2418.63,
+          "allocated_mib": 201.32,
+          "freed_mib": null,
+          "reserved_mib": 2506.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 4182.5,
+      "peak_mib": 2418.63,
+      "oom": false,
+      "wall_seconds": 13.4,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -8804.03,
+          "pic_mo": 2418.63,
+          "temps_ms": 4835.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 8930.48,
+          "pic_mo": 2418.23,
+          "temps_ms": 3467.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.63,
+          "temps_ms": 18.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.31,
+          "temps_ms": 8.6,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.58,
+          "temps_ms": 7.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.4,
+          "temps_ms": 4.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 4.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 2408.87,
+          "temps_ms": 3.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.79,
+          "temps_ms": 2.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        }
+      ],
+      "seconds": 20.3,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 314.0,
+        "free_mib": 7705.0
+      },
+      "sweep": "seq"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 64,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3075.0,
+        "free_mib": 4944.0
+      },
+      "baseline_allocated_mib": 181.9,
+      "baseline_reserved_mib": 380.0,
+      "steps": [
+        {
+          "ms": 8384.9,
+          "peak_mib": 2475.34,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2496.0,
+          "loss": 9.20832,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 8083.3,
+          "peak_mib": 2525.95,
+          "allocated_mib": 201.32,
+          "freed_mib": null,
+          "reserved_mib": 2596.0,
+          "loss": 9.20626,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 8234.1,
+      "peak_mib": 2525.95,
+      "oom": false,
+      "wall_seconds": 25.4,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -17438.27,
+          "pic_mo": 2418.64,
+          "temps_ms": 9470.1,
+          "calls": 8,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 17685.77,
+          "pic_mo": 2525.95,
+          "temps_ms": 6907.9,
+          "calls": 8,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.63,
+          "temps_ms": 11.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.31,
+          "temps_ms": 10.4,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.58,
+          "temps_ms": 8.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.4,
+          "temps_ms": 7.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 39.04,
+          "pic_mo": 2408.87,
+          "temps_ms": 6.8,
+          "calls": 8,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 6.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.8,
+          "temps_ms": 2.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        }
+      ],
+      "seconds": 31.4,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 314.0,
+        "free_mib": 7705.0
+      },
+      "sweep": "seq"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3105.0,
+        "free_mib": 4914.0
+      },
+      "baseline_allocated_mib": 181.91,
+      "baseline_reserved_mib": 374.0,
+      "steps": [
+        {
+          "ms": 16271.9,
+          "peak_mib": 2475.35,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2496.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 16035.7,
+          "peak_mib": 2525.95,
+          "allocated_mib": 201.33,
+          "freed_mib": null,
+          "reserved_mib": 2596.0,
+          "loss": 9.20623,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 16153.8,
+      "peak_mib": 2525.95,
+      "oom": false,
+      "wall_seconds": 49.2,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -34706.75,
+          "pic_mo": 2418.64,
+          "temps_ms": 18902.3,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 35196.52,
+          "pic_mo": 2525.95,
+          "temps_ms": 13254.2,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 78.08,
+          "pic_mo": 2408.88,
+          "temps_ms": 16.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.64,
+          "temps_ms": 11.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.32,
+          "temps_ms": 10.2,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.59,
+          "temps_ms": 6.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 4.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.42,
+          "temps_ms": 3.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.81,
+          "temps_ms": 2.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        }
+      ],
+      "seconds": 55.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 349.0,
+        "free_mib": 7670.0
+      },
+      "sweep": "seq"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 256,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3111.0,
+        "free_mib": 4908.0
+      },
+      "baseline_allocated_mib": 181.91,
+      "baseline_reserved_mib": 374.0,
+      "steps": [
+        {
+          "ms": 31970.9,
+          "peak_mib": 2475.36,
+          "allocated_mib": 199.8,
+          "freed_mib": null,
+          "reserved_mib": 2496.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 31746.3,
+          "peak_mib": 2525.97,
+          "allocated_mib": 201.33,
+          "freed_mib": null,
+          "reserved_mib": 2596.0,
+          "loss": 9.20622,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 31858.6,
+      "peak_mib": 2525.97,
+      "oom": false,
+      "wall_seconds": 96.5,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -69243.71,
+          "pic_mo": 2418.66,
+          "temps_ms": 37151.9,
+          "calls": 32,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 70218.02,
+          "pic_mo": 2525.97,
+          "temps_ms": 26270.8,
+          "calls": 32,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 156.16,
+          "pic_mo": 2408.89,
+          "temps_ms": 31.9,
+          "calls": 32,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.34,
+          "temps_ms": 12.8,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.66,
+          "temps_ms": 12.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.43,
+          "temps_ms": 7.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.6,
+          "temps_ms": 6.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.43,
+          "temps_ms": 4.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.83,
+          "temps_ms": 2.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        }
+      ],
+      "seconds": 102.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 350.0,
+        "free_mib": 7669.0
+      },
+      "sweep": "seq"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 4
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 2825.0,
+        "free_mib": 5194.0
+      },
+      "baseline_allocated_mib": 156.43,
+      "baseline_reserved_mib": 346.0,
+      "steps": [
+        {
+          "ms": 16369.5,
+          "peak_mib": 1931.09,
+          "allocated_mib": 172.12,
+          "freed_mib": null,
+          "reserved_mib": 1958.0,
+          "loss": 9.20832,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 17767.6,
+          "peak_mib": 1982.51,
+          "allocated_mib": 174.37,
+          "freed_mib": null,
+          "reserved_mib": 2058.0,
+          "loss": 9.20626,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 17068.5,
+      "peak_mib": 1982.51,
+      "oom": false,
+      "wall_seconds": 52.9,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -26976.49,
+          "pic_mo": 1893.77,
+          "temps_ms": 19616.8,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 27347.3,
+          "pic_mo": 1982.51,
+          "temps_ms": 14363.6,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 39.04,
+          "pic_mo": 1888.88,
+          "temps_ms": 15.6,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 3.6,
+          "pic_mo": 1847.56,
+          "temps_ms": 11.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 1958.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 1843.98,
+          "temps_ms": 8.7,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 1958.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 28.83,
+          "pic_mo": 195.41,
+          "temps_ms": 6.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 177.41,
+          "temps_ms": 4.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 177.42,
+          "temps_ms": 3.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2058.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -18.76,
+          "pic_mo": 172.13,
+          "temps_ms": 2.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 1958.0
+        }
+      ],
+      "seconds": 58.8,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 598.0,
+        "free_mib": 7421.0
+      },
+      "sweep": "batch"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3390.0,
+        "free_mib": 4629.0
+      },
+      "baseline_allocated_mib": 181.91,
+      "baseline_reserved_mib": 374.0,
+      "steps": [
+        {
+          "ms": 21108.3,
+          "peak_mib": 2475.35,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2496.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 20470.2,
+          "peak_mib": 2525.95,
+          "allocated_mib": 201.33,
+          "freed_mib": null,
+          "reserved_mib": 2596.0,
+          "loss": 9.20623,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 20789.2,
+      "peak_mib": 2525.95,
+      "oom": false,
+      "wall_seconds": 63.6,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -34706.75,
+          "pic_mo": 2418.64,
+          "temps_ms": 24097.9,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 35196.52,
+          "pic_mo": 2525.95,
+          "temps_ms": 17290.7,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 78.08,
+          "pic_mo": 2408.88,
+          "temps_ms": 18.9,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.32,
+          "temps_ms": 14.8,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.64,
+          "temps_ms": 12.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.59,
+          "temps_ms": 9.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 7.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.42,
+          "temps_ms": 5.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2596.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.81,
+          "temps_ms": 3.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2496.0
+        }
+      ],
+      "seconds": 69.8,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 629.0,
+        "free_mib": 7390.0
+      },
+      "sweep": "batch"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 16
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 4462.0,
+        "free_mib": 3557.0
+      },
+      "baseline_allocated_mib": 230.86,
+      "baseline_reserved_mib": 466.0,
+      "steps": [
+        {
+          "ms": 21083.4,
+          "peak_mib": 3559.51,
+          "allocated_mib": 249.39,
+          "freed_mib": null,
+          "reserved_mib": 3588.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 20783.5,
+          "peak_mib": 3619.97,
+          "allocated_mib": 251.79,
+          "freed_mib": null,
+          "reserved_mib": 3708.0,
+          "loss": 9.20622,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 20933.5,
+      "peak_mib": 3619.97,
+      "oom": false,
+      "wall_seconds": 63.5,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -50149.81,
+          "pic_mo": 3462.69,
+          "temps_ms": 24012.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 50869.47,
+          "pic_mo": 3619.97,
+          "temps_ms": 17664.4,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 158.02,
+          "pic_mo": 3442.69,
+          "temps_ms": 21.2,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 14.4,
+          "pic_mo": 3402.81,
+          "temps_ms": 12.4,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3588.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 3387.95,
+          "temps_ms": 11.5,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 3588.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 27.74,
+          "pic_mo": 280.92,
+          "temps_ms": 9.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 263.95,
+          "temps_ms": 6.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 263.96,
+          "temps_ms": 5.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.12,
+          "pic_mo": 249.42,
+          "temps_ms": 3.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3588.0
+        }
+      ],
+      "seconds": 69.9,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 589.0,
+        "free_mib": 7430.0
+      },
+      "sweep": "batch"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 32
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7041.0,
+        "free_mib": 978.0
+      },
+      "baseline_allocated_mib": 331.29,
+      "baseline_reserved_mib": 630.0,
+      "steps": [
+        {
+          "ms": 20644.7,
+          "peak_mib": 5789.41,
+          "allocated_mib": 347.34,
+          "freed_mib": null,
+          "reserved_mib": 5824.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 20448.7,
+          "peak_mib": 5924.51,
+          "allocated_mib": 356.3,
+          "freed_mib": null,
+          "reserved_mib": 6244.0,
+          "loss": 9.2062,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 20546.7,
+      "peak_mib": 5924.51,
+      "oom": false,
+      "wall_seconds": 62.8,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -82272.72,
+          "pic_mo": 5665.82,
+          "temps_ms": 23553.1,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 83464.69,
+          "pic_mo": 5924.51,
+          "temps_ms": 17345.7,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 320.0,
+          "pic_mo": 5625.82,
+          "temps_ms": 23.5,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.31,
+          "pic_mo": 5520.31,
+          "temps_ms": 16.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5824.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5490.98,
+          "temps_ms": 14.1,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5824.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 28.31,
+          "pic_mo": 398.57,
+          "temps_ms": 9.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 381.1,
+          "temps_ms": 6.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 381.1,
+          "temps_ms": 5.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6244.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -19.46,
+          "pic_mo": 347.41,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5824.0
+        }
+      ],
+      "seconds": 69.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 632.0,
+        "free_mib": 7387.0
+      },
+      "sweep": "batch"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 1000,
+        "seq": 128,
+        "batch": 16
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 1427.0,
+        "free_mib": 6592.0
+      },
+      "baseline_allocated_mib": 87.68,
+      "baseline_reserved_mib": 216.0,
+      "steps": [
+        {
+          "ms": 15207.0,
+          "peak_mib": 522.81,
+          "allocated_mib": 104.88,
+          "freed_mib": null,
+          "reserved_mib": 556.0,
+          "loss": 9.20831,
+          "edges": 1018,
+          "nodes": 534
+        },
+        {
+          "ms": 14858.5,
+          "peak_mib": 562.58,
+          "allocated_mib": 104.98,
+          "freed_mib": null,
+          "reserved_mib": 616.0,
+          "loss": 9.20622,
+          "edges": 1026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 15032.8,
+      "peak_mib": 562.58,
+      "oom": false,
+      "wall_seconds": 45.7,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": -6460.99,
+          "pic_mo": 551.98,
+          "temps_ms": 16238.2,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "forward",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 6568.13,
+          "pic_mo": 562.58,
+          "temps_ms": 13683.7,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "loss",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 156.79,
+          "pic_mo": 531.98,
+          "temps_ms": 19.8,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "births",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 495.42,
+          "temps_ms": 16.8,
+          "calls": 3,
+          "profondeur": 1,
+          "reserved_mo": 556.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 2.58,
+          "pic_mo": 504.84,
+          "temps_ms": 12.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 556.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 28.41,
+          "pic_mo": 131.61,
+          "temps_ms": 8.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 115.12,
+          "temps_ms": 7.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "clip",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 115.12,
+          "temps_ms": 4.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 616.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 1000,
+          "tbptt": 16,
+          "allocated_mo": -20.0,
+          "pic_mo": 104.91,
+          "temps_ms": 3.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 556.0
+        }
+      ],
+      "seconds": 52.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 646.0,
+        "free_mib": 7373.0
+      },
+      "sweep": "cross"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 128,
+        "batch": 16
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 4505.0,
+        "free_mib": 3514.0
+      },
+      "baseline_allocated_mib": 230.86,
+      "baseline_reserved_mib": 466.0,
+      "steps": [
+        {
+          "ms": 20343.1,
+          "peak_mib": 3559.51,
+          "allocated_mib": 249.39,
+          "freed_mib": null,
+          "reserved_mib": 3588.0,
+          "loss": 9.20831,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 19929.9,
+          "peak_mib": 3619.97,
+          "allocated_mib": 251.79,
+          "freed_mib": null,
+          "reserved_mib": 3708.0,
+          "loss": 9.20622,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 20136.5,
+      "peak_mib": 3619.97,
+      "oom": false,
+      "wall_seconds": 61.3,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -50149.81,
+          "pic_mo": 3462.69,
+          "temps_ms": 22968.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 50869.47,
+          "pic_mo": 3619.97,
+          "temps_ms": 17124.5,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 158.02,
+          "pic_mo": 3442.69,
+          "temps_ms": 21.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 14.4,
+          "pic_mo": 3402.81,
+          "temps_ms": 15.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3588.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 3387.95,
+          "temps_ms": 13.3,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 3588.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 27.74,
+          "pic_mo": 280.92,
+          "temps_ms": 6.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 263.95,
+          "temps_ms": 4.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 263.96,
+          "temps_ms": 3.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3708.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.12,
+          "pic_mo": 249.42,
+          "temps_ms": 2.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3588.0
+        }
+      ],
+      "seconds": 70.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 637.0,
+        "free_mib": 7382.0
+      },
+      "sweep": "cross"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 3000,
+        "seq": 128,
+        "batch": 16
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7318.0,
+        "free_mib": 701.0
+      },
+      "baseline_allocated_mib": 376.37,
+      "baseline_reserved_mib": 658.0,
+      "steps": [
+        {
+          "ms": 27591.6,
+          "peak_mib": 6392.45,
+          "allocated_mib": 394.3,
+          "freed_mib": null,
+          "reserved_mib": 6420.0,
+          "loss": 9.20831,
+          "edges": 3018,
+          "nodes": 534
+        },
+        {
+          "ms": 27313.2,
+          "peak_mib": 6472.78,
+          "allocated_mib": 397.13,
+          "freed_mib": null,
+          "reserved_mib": 6516.0,
+          "loss": 9.20622,
+          "edges": 3026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 27452.4,
+      "peak_mib": 6472.78,
+      "oom": false,
+      "wall_seconds": 83.4,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -90860.19,
+          "pic_mo": 6168.01,
+          "temps_ms": 32879.9,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "forward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 91936.9,
+          "pic_mo": 6472.78,
+          "temps_ms": 21800.1,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "loss",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 157.26,
+          "pic_mo": 6148.01,
+          "temps_ms": 21.5,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "births",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 6068.91,
+          "temps_ms": 16.2,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 6420.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 19.36,
+          "pic_mo": 6086.71,
+          "temps_ms": 11.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 6420.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 28.91,
+          "pic_mo": 429.24,
+          "temps_ms": 7.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 410.45,
+          "temps_ms": 5.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "clip",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 410.45,
+          "temps_ms": 4.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6516.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -21.03,
+          "pic_mo": 394.33,
+          "temps_ms": 2.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6420.0
+        }
+      ],
+      "seconds": 91.4,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 637.0,
+        "free_mib": 7382.0
+      },
+      "sweep": "cross"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 128,
+        "batch": 16
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 7952.0,
+        "free_mib": 67.0
+      },
+      "baseline_allocated_mib": 491.11,
+      "baseline_reserved_mib": 798.0,
+      "steps": [
+        {
+          "ms": 39761.9,
+          "peak_mib": 8631.9,
+          "allocated_mib": 506.3,
+          "freed_mib": null,
+          "reserved_mib": 8676.0,
+          "loss": 9.20831,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 37255.5,
+          "peak_mib": 8707.09,
+          "allocated_mib": 510.88,
+          "freed_mib": null,
+          "reserved_mib": 8724.0,
+          "loss": 9.20622,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 38508.7,
+      "peak_mib": 8707.09,
+      "oom": false,
+      "wall_seconds": 120.3,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -122953.7,
+          "pic_mo": 8288.87,
+          "temps_ms": 46760.2,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 124373.37,
+          "pic_mo": 8707.09,
+          "temps_ms": 29946.7,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 162.43,
+          "pic_mo": 8269.33,
+          "temps_ms": 37.4,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 29.34,
+          "pic_mo": 542.9,
+          "temps_ms": 30.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 21.31,
+          "pic_mo": 8219.45,
+          "temps_ms": 16.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 8676.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 8201.37,
+          "temps_ms": 15.2,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 8676.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 525.51,
+          "temps_ms": 8.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 525.5,
+          "temps_ms": 5.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8724.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -20.51,
+          "pic_mo": 506.33,
+          "temps_ms": 2.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 8676.0
+        }
+      ],
+      "seconds": 127.3,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 615.0,
+        "free_mib": 7404.0
+      },
+      "sweep": "cross"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 32,
+        "batch": 8,
+        "clear_telemetry": false
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6548.0,
+        "free_mib": 1471.0
+      },
+      "baseline_allocated_mib": 356.07,
+      "baseline_reserved_mib": 556.0,
+      "steps": [
+        {
+          "ms": 8773.4,
+          "peak_mib": 5669.67,
+          "allocated_mib": 375.49,
+          "freed_mib": null,
+          "reserved_mib": 5696.0,
+          "loss": 9.20848,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 8446.2,
+          "peak_mib": 5725.11,
+          "allocated_mib": 375.74,
+          "freed_mib": null,
+          "reserved_mib": 5752.0,
+          "loss": 9.20655,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 8609.8,
+      "peak_mib": 5725.11,
+      "oom": false,
+      "wall_seconds": 26.8,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -21546.81,
+          "pic_mo": 5723.87,
+          "temps_ms": 10429.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 21792.7,
+          "pic_mo": 5725.11,
+          "temps_ms": 6712.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5665.28,
+          "temps_ms": 12.4,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5674.18,
+          "temps_ms": 10.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 28.29,
+          "pic_mo": 400.3,
+          "temps_ms": 7.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 5714.11,
+          "temps_ms": 6.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 6.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 4.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -20.52,
+          "pic_mo": 375.5,
+          "temps_ms": 3.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        }
+      ],
+      "seconds": 33.1,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 631.0,
+        "free_mib": 7388.0
+      },
+      "sweep": "telemetry"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 32,
+        "batch": 8,
+        "clear_telemetry": true
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6596.0,
+        "free_mib": 1423.0
+      },
+      "baseline_allocated_mib": 356.07,
+      "baseline_reserved_mib": 556.0,
+      "steps": [
+        {
+          "ms": 7420.4,
+          "peak_mib": 5669.67,
+          "allocated_mib": 375.49,
+          "freed_mib": 289.84,
+          "reserved_mib": 5696.0,
+          "loss": 9.20848,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 6291.4,
+          "peak_mib": 5725.11,
+          "allocated_mib": 375.74,
+          "freed_mib": 290.65,
+          "reserved_mib": 5752.0,
+          "loss": 9.20655,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 6855.9,
+      "peak_mib": 5725.11,
+      "oom": false,
+      "wall_seconds": 24.3,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -21546.81,
+          "pic_mo": 5723.87,
+          "temps_ms": 8176.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 22082.54,
+          "pic_mo": 5725.11,
+          "temps_ms": 5473.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5674.18,
+          "temps_ms": 11.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5665.28,
+          "temps_ms": 11.2,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5696.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 28.29,
+          "pic_mo": 400.3,
+          "temps_ms": 6.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 5714.11,
+          "temps_ms": 5.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 4.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.59,
+          "temps_ms": 4.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5752.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -20.52,
+          "pic_mo": 356.07,
+          "temps_ms": 2.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5696.0
+        }
+      ],
+      "seconds": 30.5,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 679.0,
+        "free_mib": 7340.0
+      },
+      "sweep": "telemetry"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 128,
+        "batch": 8,
+        "clear_telemetry": false
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6946.0,
+        "free_mib": 1073.0
+      },
+      "baseline_allocated_mib": 358.54,
+      "baseline_reserved_mib": 610.0,
+      "steps": [
+        {
+          "ms": 35274.8,
+          "peak_mib": 5957.65,
+          "allocated_mib": 373.52,
+          "freed_mib": null,
+          "reserved_mib": 5976.0,
+          "loss": 9.20831,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 34777.0,
+          "peak_mib": 6015.3,
+          "allocated_mib": 376.95,
+          "freed_mib": null,
+          "reserved_mib": 6034.0,
+          "loss": 9.20623,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 35025.9,
+      "peak_mib": 6015.3,
+      "oom": false,
+      "wall_seconds": 106.6,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -84659.02,
+          "pic_mo": 5726.38,
+          "temps_ms": 42311.5,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 85625.18,
+          "pic_mo": 6015.3,
+          "temps_ms": 27459.9,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 78.08,
+          "pic_mo": 5716.61,
+          "temps_ms": 25.3,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5665.29,
+          "temps_ms": 13.6,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5976.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5674.2,
+          "temps_ms": 13.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5976.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 28.8,
+          "pic_mo": 401.25,
+          "temps_ms": 8.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 383.8,
+          "temps_ms": 6.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 383.81,
+          "temps_ms": 3.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -19.3,
+          "pic_mo": 373.54,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5976.0
+        }
+      ],
+      "seconds": 113.9,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 747.0,
+        "free_mib": 7272.0
+      },
+      "sweep": "telemetry"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 4000,
+        "seq": 128,
+        "batch": 8,
+        "clear_telemetry": true
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6956.0,
+        "free_mib": 1063.0
+      },
+      "baseline_allocated_mib": 358.54,
+      "baseline_reserved_mib": 610.0,
+      "steps": [
+        {
+          "ms": 33376.1,
+          "peak_mib": 5957.65,
+          "allocated_mib": 373.52,
+          "freed_mib": 288.36,
+          "reserved_mib": 5976.0,
+          "loss": 9.20831,
+          "edges": 4018,
+          "nodes": 534
+        },
+        {
+          "ms": 32617.1,
+          "peak_mib": 6015.3,
+          "allocated_mib": 376.95,
+          "freed_mib": 291.13,
+          "reserved_mib": 6034.0,
+          "loss": 9.20623,
+          "edges": 4026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 32996.6,
+      "peak_mib": 6015.3,
+      "oom": false,
+      "wall_seconds": 100.7,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -84659.02,
+          "pic_mo": 5726.38,
+          "temps_ms": 40054.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "forward",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 85913.55,
+          "pic_mo": 6015.3,
+          "temps_ms": 25659.6,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "loss",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 78.08,
+          "pic_mo": 5716.61,
+          "temps_ms": 21.0,
+          "calls": 16,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5674.2,
+          "temps_ms": 17.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5976.0
+        },
+        {
+          "phase": "births",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5665.29,
+          "temps_ms": 11.8,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5976.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 28.8,
+          "pic_mo": 401.25,
+          "temps_ms": 8.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 383.8,
+          "temps_ms": 6.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "clip",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 383.81,
+          "temps_ms": 3.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 6034.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 4000,
+          "tbptt": 16,
+          "allocated_mo": -19.3,
+          "pic_mo": 358.56,
+          "temps_ms": 2.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5976.0
+        }
+      ],
+      "seconds": 107.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 757.0,
+        "free_mib": 7262.0
+      },
+      "sweep": "telemetry"
+    },
+    {
+      "config": {
+        "nodes": 200,
+        "edges": 1500,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3515.0,
+        "free_mib": 4504.0
+      },
+      "baseline_allocated_mib": 170.4,
+      "baseline_reserved_mib": 392.0,
+      "steps": [
+        {
+          "ms": 5424.9,
+          "peak_mib": 2467.43,
+          "allocated_mib": 177.48,
+          "freed_mib": null,
+          "reserved_mib": 2510.0,
+          "loss": 9.20848,
+          "edges": 1518,
+          "nodes": 202
+        },
+        {
+          "ms": 5418.9,
+          "peak_mib": 2482.13,
+          "allocated_mib": 178.13,
+          "freed_mib": null,
+          "reserved_mib": 2538.0,
+          "loss": 9.20655,
+          "edges": 1526,
+          "nodes": 202
+        }
+      ],
+      "ms_per_step": 5421.9,
+      "peak_mib": 2482.13,
+      "oom": false,
+      "wall_seconds": 17.0,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": -9251.05,
+          "pic_mo": 2482.13,
+          "temps_ms": 6225.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "forward",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 9346.69,
+          "pic_mo": 2479.83,
+          "temps_ms": 4553.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 4.54,
+          "pic_mo": 2445.81,
+          "temps_ms": 17.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2510.0
+        },
+        {
+          "phase": "births",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2439.13,
+          "temps_ms": 16.7,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2510.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 11.0,
+          "pic_mo": 192.13,
+          "temps_ms": 7.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 183.89,
+          "temps_ms": 6.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "clip",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 183.89,
+          "temps_ms": 5.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "loss",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": 20.13,
+          "pic_mo": 2472.37,
+          "temps_ms": 3.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2538.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 1500,
+          "tbptt": 16,
+          "allocated_mo": -10.98,
+          "pic_mo": 177.48,
+          "temps_ms": 3.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2510.0
+        }
+      ],
+      "seconds": 23.2,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 812.0,
+        "free_mib": 7207.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 300,
+        "edges": 2250,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 4487.0,
+        "free_mib": 3532.0
+      },
+      "baseline_allocated_mib": 222.83,
+      "baseline_reserved_mib": 468.0,
+      "steps": [
+        {
+          "ms": 6648.8,
+          "peak_mib": 3369.96,
+          "allocated_mib": 233.94,
+          "freed_mib": null,
+          "reserved_mib": 3480.0,
+          "loss": 9.20848,
+          "edges": 2268,
+          "nodes": 302
+        },
+        {
+          "ms": 6579.6,
+          "peak_mib": 3398.07,
+          "allocated_mib": 234.42,
+          "freed_mib": null,
+          "reserved_mib": 3516.0,
+          "loss": 9.20655,
+          "edges": 2276,
+          "nodes": 302
+        }
+      ],
+      "ms_per_step": 6614.2,
+      "peak_mib": 3398.07,
+      "oom": false,
+      "wall_seconds": 20.6,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": -12728.32,
+          "pic_mo": 3398.07,
+          "temps_ms": 7863.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3516.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 12867.97,
+          "pic_mo": 3396.56,
+          "temps_ms": 5280.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3514.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 6.23,
+          "pic_mo": 3369.04,
+          "temps_ms": 24.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3480.0
+        },
+        {
+          "phase": "births",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 3361.73,
+          "temps_ms": 11.3,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 3480.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 240.48,
+          "temps_ms": 10.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3516.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 16.67,
+          "pic_mo": 252.76,
+          "temps_ms": 7.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3516.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 240.49,
+          "temps_ms": 4.4,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3516.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 3388.07,
+          "temps_ms": 3.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3514.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2250,
+          "tbptt": 16,
+          "allocated_mo": -13.62,
+          "pic_mo": 233.94,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3480.0
+        }
+      ],
+      "seconds": 26.9,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 806.0,
+        "free_mib": 7213.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 400,
+        "edges": 3000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 5462.0,
+        "free_mib": 2557.0
+      },
+      "baseline_allocated_mib": 285.33,
+      "baseline_reserved_mib": 494.0,
+      "steps": [
+        {
+          "ms": 7646.8,
+          "peak_mib": 4407.13,
+          "allocated_mib": 298.17,
+          "freed_mib": null,
+          "reserved_mib": 4442.0,
+          "loss": 9.20848,
+          "edges": 3018,
+          "nodes": 402
+        },
+        {
+          "ms": 7493.7,
+          "peak_mib": 4441.52,
+          "allocated_mib": 298.43,
+          "freed_mib": null,
+          "reserved_mib": 4492.0,
+          "loss": 9.20655,
+          "edges": 3026,
+          "nodes": 402
+        }
+      ],
+      "ms_per_step": 7570.2,
+      "peak_mib": 4441.52,
+      "oom": false,
+      "wall_seconds": 23.7,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -16708.44,
+          "pic_mo": 4441.52,
+          "temps_ms": 8997.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4492.0
+        },
+        {
+          "phase": "forward",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 16892.01,
+          "pic_mo": 4441.39,
+          "temps_ms": 6076.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4472.0
+        },
+        {
+          "phase": "births",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 4404.48,
+          "temps_ms": 16.2,
+          "calls": 3,
+          "profondeur": 1,
+          "reserved_mo": 4442.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 8.17,
+          "pic_mo": 4412.53,
+          "temps_ms": 14.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4442.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 304.86,
+          "temps_ms": 6.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4492.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 20.94,
+          "pic_mo": 319.52,
+          "temps_ms": 6.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4492.0
+        },
+        {
+          "phase": "loss",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 4431.75,
+          "temps_ms": 3.4,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 4472.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": -16.14,
+          "pic_mo": 298.17,
+          "temps_ms": 3.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4442.0
+        },
+        {
+          "phase": "clip",
+          "edges": 3000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 304.86,
+          "temps_ms": 2.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 4492.0
+        }
+      ],
+      "seconds": 30.1,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 805.0,
+        "free_mib": 7214.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 3990,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 6714.0,
+        "free_mib": 1305.0
+      },
+      "baseline_allocated_mib": 355.8,
+      "baseline_reserved_mib": 560.0,
+      "steps": [
+        {
+          "ms": 8843.0,
+          "peak_mib": 5663.62,
+          "allocated_mib": 375.34,
+          "freed_mib": null,
+          "reserved_mib": 5690.0,
+          "loss": 9.20848,
+          "edges": 4008,
+          "nodes": 534
+        },
+        {
+          "ms": 8449.0,
+          "peak_mib": 5717.0,
+          "allocated_mib": 375.43,
+          "freed_mib": null,
+          "reserved_mib": 5746.0,
+          "loss": 9.20655,
+          "edges": 4016,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 8646.0,
+      "peak_mib": 5717.0,
+      "oom": false,
+      "wall_seconds": 27.0,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": -21521.19,
+          "pic_mo": 5715.76,
+          "temps_ms": 10400.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "forward",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 21766.88,
+          "pic_mo": 5717.0,
+          "temps_ms": 6808.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 10.48,
+          "pic_mo": 5668.17,
+          "temps_ms": 13.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5690.0
+        },
+        {
+          "phase": "births",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 5659.27,
+          "temps_ms": 11.6,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 5690.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.27,
+          "temps_ms": 8.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "loss",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 5705.99,
+          "temps_ms": 7.3,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 28.21,
+          "pic_mo": 400.06,
+          "temps_ms": 7.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "clip",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 382.28,
+          "temps_ms": 4.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5746.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 3990,
+          "tbptt": 16,
+          "allocated_mo": -20.71,
+          "pic_mo": 375.34,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 5690.0
+        }
+      ],
+      "seconds": 33.5,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 803.0,
+        "free_mib": 7216.0
+      },
+      "sweep": "nodes"
+    },
+    {
+      "config": {
+        "nodes": 200,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 4316.0,
+        "free_mib": 3703.0
+      },
+      "baseline_allocated_mib": 211.21,
+      "baseline_reserved_mib": 386.0,
+      "steps": [
+        {
+          "ms": 6346.7,
+          "peak_mib": 3209.56,
+          "allocated_mib": 219.02,
+          "freed_mib": null,
+          "reserved_mib": 3338.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 202
+        },
+        {
+          "ms": 6002.3,
+          "peak_mib": 3229.58,
+          "allocated_mib": 217.73,
+          "freed_mib": null,
+          "reserved_mib": 3348.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 202
+        }
+      ],
+      "ms_per_step": 6174.5,
+      "peak_mib": 3229.58,
+      "oom": false,
+      "wall_seconds": 19.4,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -12145.12,
+          "pic_mo": 3229.58,
+          "temps_ms": 7316.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 12267.77,
+          "pic_mo": 3227.37,
+          "temps_ms": 4964.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 4.7,
+          "pic_mo": 3202.99,
+          "temps_ms": 17.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3338.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 3196.24,
+          "temps_ms": 13.3,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 3338.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 11.03,
+          "pic_mo": 232.98,
+          "temps_ms": 6.1,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 3219.81,
+          "temps_ms": 5.0,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 223.53,
+          "temps_ms": 4.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 223.52,
+          "temps_ms": 4.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3348.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -11.15,
+          "pic_mo": 219.02,
+          "temps_ms": 2.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 3338.0
+        }
+      ],
+      "seconds": 25.7,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 803.0,
+        "free_mib": 7216.0
+      },
+      "sweep": "dense"
+    },
+    {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 3474.0,
+        "free_mib": 4545.0
+      },
+      "baseline_allocated_mib": 181.81,
+      "baseline_reserved_mib": 378.0,
+      "steps": [
+        {
+          "ms": 5158.7,
+          "peak_mib": 2364.68,
+          "allocated_mib": 199.79,
+          "freed_mib": null,
+          "reserved_mib": 2386.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 534
+        },
+        {
+          "ms": 5164.8,
+          "peak_mib": 2418.63,
+          "allocated_mib": 201.32,
+          "freed_mib": null,
+          "reserved_mib": 2506.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 534
+        }
+      ],
+      "ms_per_step": 5161.8,
+      "peak_mib": 2418.63,
+      "oom": false,
+      "wall_seconds": 16.1,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -8804.03,
+          "pic_mo": 2418.63,
+          "temps_ms": 5957.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 8930.48,
+          "pic_mo": 2418.23,
+          "temps_ms": 4293.8,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 7.18,
+          "pic_mo": 2369.63,
+          "temps_ms": 21.4,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 2362.31,
+          "temps_ms": 13.5,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 2386.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 30.42,
+          "pic_mo": 223.58,
+          "temps_ms": 8.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.4,
+          "temps_ms": 5.5,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 207.41,
+          "temps_ms": 4.6,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2506.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 19.52,
+          "pic_mo": 2408.87,
+          "temps_ms": 4.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 2486.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -20.53,
+          "pic_mo": 199.79,
+          "temps_ms": 3.0,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 2386.0
+        }
+      ],
+      "seconds": 22.4,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 803.0,
+        "free_mib": 7216.0
+      },
+      "sweep": "dense"
+    },
+    {
+      "config": {
+        "nodes": 1000,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 1410.0,
+        "free_mib": 6609.0
+      },
+      "baseline_allocated_mib": 111.87,
+      "baseline_reserved_mib": 222.0,
+      "steps": [
+        {
+          "ms": 3614.9,
+          "peak_mib": 322.01,
+          "allocated_mib": 139.11,
+          "freed_mib": null,
+          "reserved_mib": 398.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 1002
+        },
+        {
+          "ms": 3773.6,
+          "peak_mib": 391.89,
+          "allocated_mib": 140.5,
+          "freed_mib": null,
+          "reserved_mib": 442.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 1002
+        }
+      ],
+      "ms_per_step": 3694.2,
+      "peak_mib": 391.89,
+      "oom": false,
+      "wall_seconds": 11.9,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -749.04,
+          "pic_mo": 391.89,
+          "temps_ms": 4010.5,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 442.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 770.16,
+          "pic_mo": 372.64,
+          "temps_ms": 3313.4,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 422.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.83,
+          "pic_mo": 318.08,
+          "temps_ms": 18.6,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 400.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 313.61,
+          "temps_ms": 15.9,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 400.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 50.79,
+          "pic_mo": 173.19,
+          "temps_ms": 10.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 442.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 145.5,
+          "temps_ms": 6.3,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 442.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 20.46,
+          "pic_mo": 366.88,
+          "temps_ms": 4.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 422.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 145.51,
+          "temps_ms": 3.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 442.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -30.7,
+          "pic_mo": 139.12,
+          "temps_ms": 2.9,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 398.0
+        }
+      ],
+      "seconds": 18.0,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 803.0,
+        "free_mib": 7216.0
+      },
+      "sweep": "dense"
+    },
+    {
+      "config": {
+        "nodes": 2000,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8
+      },
+      "device": "cuda",
+      "amp": "f32",
+      "gpu": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 1416.0,
+        "free_mib": 6603.0
+      },
+      "baseline_allocated_mib": 183.74,
+      "baseline_reserved_mib": 270.0,
+      "steps": [
+        {
+          "ms": 3616.4,
+          "peak_mib": 299.22,
+          "allocated_mib": 234.91,
+          "freed_mib": null,
+          "reserved_mib": 414.0,
+          "loss": 9.20848,
+          "edges": 2018,
+          "nodes": 2002
+        },
+        {
+          "ms": 3618.5,
+          "peak_mib": 410.67,
+          "allocated_mib": 235.34,
+          "freed_mib": null,
+          "reserved_mib": 448.0,
+          "loss": 9.20655,
+          "edges": 2026,
+          "nodes": 2002
+        }
+      ],
+      "ms_per_step": 3617.4,
+      "peak_mib": 410.67,
+      "oom": false,
+      "wall_seconds": 11.6,
+      "phases": [
+        {
+          "phase": "backward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -260.69,
+          "pic_mo": 410.67,
+          "temps_ms": 3987.2,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 448.0
+        },
+        {
+          "phase": "forward",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 271.39,
+          "pic_mo": 348.97,
+          "temps_ms": 3173.1,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 428.0
+        },
+        {
+          "phase": "optimizer",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 99.09,
+          "pic_mo": 294.31,
+          "temps_ms": 20.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 448.0
+        },
+        {
+          "phase": "penalties",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.31,
+          "pic_mo": 278.12,
+          "temps_ms": 12.9,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 416.0
+        },
+        {
+          "phase": "births",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 274.71,
+          "temps_ms": 10.8,
+          "calls": 2,
+          "profondeur": 1,
+          "reserved_mo": 416.0
+        },
+        {
+          "phase": "freeze",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 240.31,
+          "temps_ms": 7.8,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 448.0
+        },
+        {
+          "phase": "clip",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 0.0,
+          "pic_mo": 240.32,
+          "temps_ms": 5.7,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 448.0
+        },
+        {
+          "phase": "loss",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": 19.68,
+          "pic_mo": 343.82,
+          "temps_ms": 4.7,
+          "calls": 4,
+          "profondeur": 0,
+          "reserved_mo": 428.0
+        },
+        {
+          "phase": "zero_grad",
+          "edges": 2000,
+          "tbptt": 16,
+          "allocated_mo": -57.75,
+          "pic_mo": 234.91,
+          "temps_ms": 3.2,
+          "calls": 2,
+          "profondeur": 0,
+          "reserved_mo": 414.0
+        }
+      ],
+      "seconds": 17.7,
+      "gpu_after": {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "total_mib": 8192.0,
+        "used_mib": 803.0,
+        "free_mib": 7216.0
+      },
+      "sweep": "dense"
+    }
+  ]
+}

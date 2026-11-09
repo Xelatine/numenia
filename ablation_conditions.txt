@@ -10,3 +10,61 @@ AUTORISÉ : libre 6575 Mo >= 6000
 2025 MiB utilises, 6167 MiB libres, 18 % (avant lancement, apres pytest)
 AUTORISE : libre 6167 Mo >= 6000 (classe resultat)
 REFUSE : classe chronometrage (2025 MiB utilises > 1000, 18 % > 10 %) -> banc non lance
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « inventaire statique »
+  nvidia-smi 2026-11-09 17:39:58 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 741 MiB, libres 7278 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « ventilation par phase »
+  nvidia-smi 2026-11-09 17:42:17 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 720 MiB, libres 7299 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  graphes synthétiques (graine 7, degré moyen 7.5), pas réels de nb_train
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « ventilation par phase »
+  nvidia-smi 2026-11-09 17:46:06 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 730 MiB, libres 7289 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  graphes synthétiques (graine 7, degré moyen 7.5), pas réels de nb_train, élagage au pas 100 (inactif sur 3 pas)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « ventilation par phase »
+  nvidia-smi 2026-11-09 17:47:52 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 705 MiB, libres 7314 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  graphes synthétiques (graine 7, degré moyen 7.5), pas réels de nb_train, élagage au pas 100 (inactif sur 3 pas)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « courbes de mise à l'échelle »
+  nvidia-smi 2026-11-09 17:48:51 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 707 MiB, libres 7312 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « ventilation par phase »
+  nvidia-smi 2026-11-09 17:51:20 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 797 MiB, libres 7222 MiB (10 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  graphes synthétiques (graine 7, degré moyen 7.5), pas réels de nb_train, élagage au pas 100 (inactif sur 3 pas)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « ventilation par phase »
+  nvidia-smi 2026-11-09 17:52:46 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 702 MiB, libres 7317 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  graphes synthétiques (graine 7, degré moyen 7.5), pas réels de nb_train, élagage au pas 100 (inactif sur 3 pas)
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « point de mur (dichotomie) »
+  nvidia-smi 2026-11-09 18:16:34 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 757 MiB, libres 7262 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  seq 128 / batch 16 / 532 nœuds
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « prix de bf16 »
+  nvidia-smi 2026-11-09 18:22:35 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 730 MiB, libres 7289 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  mêmes données, même graine, 2 × N pas
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « colonie réduite (200 nœuds) »
+  nvidia-smi 2026-11-09 18:27:01 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 712 MiB, libres 7307 MiB (9 %)
+  règle v2 : chronométrage autorisé (carte quasi vide)
+  même corpus synthétique, même graine
+
+9 novembre 2026 (e) — compléments : points « nœuds » re-mesurés, sparse/dense, reproduction de la config du 8 novembre
+  nvidia-smi 2026-11-09 20:03:48 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 1909 MiB, libres 6110 MiB (23 %)
+  règle v2 : relevé pris APRÈS les mesures — 1 909 MiB (23 %) : un autre processus a pris la carte entre-temps.
+             Les mesures de temps ci-dessus ont été prises à 8,7-9,0 % d'occupation, donc dans la classe
+             « chronométrage » ; ce relevé tardif ne les invalide pas. Aucun processus étranger n'a été tué.
+  note honnête : ces trois séries ont tourné juste après les campagnes ci-dessus, dans le même état de carte
+                 (712-741 MiB utilisés, 8,7-9,0 % constatés avant chacune) ; le relevé ci-dessus est pris au moment
+                 de consigner le bloc, pas avant la mesure.
+  seq 32 / batch 8 / tbptt 16 ; 2000 arêtes à population variable (200/532/1000/2000) ; 3000 arêtes en tbptt 16
