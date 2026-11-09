@@ -583,6 +583,7 @@ def make_trainer(cfg: dict, device: torch.device, prune_every: int | None = None
         seq_len=int(cfg["seq"]),
         enable_growth=bool(cfg.get("growth", True)),
         enable_lifecycle=bool(cfg.get("lifecycle", True)),
+        checkpoint_turns=bool(cfg.get("checkpoint_turns", False)),
     )
     trainer.tbptt = int(cfg.get("tbptt", 16))
     if not cfg.get("growth", True):
@@ -685,6 +686,10 @@ def run_config(cfg: dict, device: torch.device, steps: int = 2, warmup: int = 1,
     global METER
     torch.manual_seed(int(cfg.get("seed", 42)))
     trainer = make_trainer(cfg, device, prune_every=prune_every, grow_check=grow_check)
+    if not cfg.get("release_telemetry", True):
+        # Baseline of the 9 November behaviour, kept for the before/after: the
+        # telemetry kept the last block's graph alive between two steps.
+        trainer._release_telemetry = lambda: None  # type: ignore[method-assign]
     meter = PhaseMeter(device, label=str(cfg))
     start = time.time()
 
@@ -915,6 +920,10 @@ def _as_args(cfg: dict, steps: int) -> list[str]:
         args.append("--losses")
     if cfg.get("clear_telemetry"):
         args.append("--clear-telemetry")
+    if cfg.get("checkpoint_turns"):
+        args.append("--checkpoint-turns")
+    if not cfg.get("release_telemetry", True):
+        args.append("--keep-telemetry")
     return args
 
 
@@ -989,14 +998,25 @@ def campaign_sweep(sweeps: list[str], steps: int = 2, timeout: float = 1800.0,
 # ----------------------------------------------------------------------
 # Campaign 5 — the wall, by bisection, and the law that predicts it
 # ----------------------------------------------------------------------
-def campaign_bisect(low: int = 500, high: int = 9000, steps: int = 1, timeout: float = 1800.0) -> dict:
+def campaign_bisect(
+    low: int = 500,
+    high: int = 9000,
+    steps: int = 1,
+    timeout: float = 1800.0,
+    extra: dict | None = None,
+    out: str = "bisect.json",
+) -> dict:
     """Greatest edge count that fits at seq 128 / batch 16, by bisection."""
-    condition = log_condition("point de mur (dichotomie)", "seq 128 / batch 16 / 532 nœuds")
+    extra = dict(extra or {})
+    flags = "seq 128 / batch 16 / 532 nœuds" + (
+        " / " + ", ".join(f"{k}={v}" for k, v in extra.items()) if extra else ""
+    )
+    condition = log_condition("point de mur (dichotomie)", flags)
     attempts: list[dict] = []
     best = None
 
     def fits(edges: int) -> bool:
-        cfg = {"nodes": 532, "edges": int(edges), "seq": 128, "batch": 16}
+        cfg = {"nodes": 532, "edges": int(edges), "seq": 128, "batch": 16, **extra}
         result = _child(_as_args(cfg, steps), timeout)
         result["edges"] = int(edges)
         attempts.append(
@@ -1031,13 +1051,13 @@ def campaign_bisect(low: int = 500, high: int = 9000, steps: int = 1, timeout: f
                     hi = mid
     payload = {
         "condition": condition,
-        "config": {"nodes": 532, "seq": 128, "batch": 16},
+        "config": {"nodes": 532, "seq": 128, "batch": 16, **extra},
         "max_edges_that_fit": best,
         "attempts": attempts,
         "gpu": gpu_info(),
     }
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    (REPORT_DIR / "bisect.json").write_text(
+    (REPORT_DIR / out).write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     return payload
@@ -1092,6 +1112,80 @@ def campaign_reduced(steps: int = 30) -> dict:
     return out
 
 
+def campaign_sessionf(
+    steps: int = 2,
+    edges: int = 3000,
+    seq: int = 32,
+    batch: int = 8,
+    tbptt: int = 16,
+    wall: bool = False,
+    wall_low: int = 4000,
+    wall_high: int = 9000,
+) -> dict:
+    """Session F: the two levers, measured at the text run's shape.
+
+    Three points on the same brain, same seed, same data: the 9 November
+    behaviour (telemetry kept), then L1 (telemetry released), then L1+L2
+    (gradient checkpointing per tour). The wall, when asked, is re-bisected with
+    both levers ON, in its own file so the 9 November one stays intact.
+    """
+    condition = log_condition(
+        "session F — leviers L1 (télémétrie) et L2 (checkpointing par tour)",
+        f"seq {seq} / batch {batch} / tbptt {tbptt} / 532 nœuds, croissance coupée",
+    )
+    base = {
+        "nodes": 532,
+        "edges": int(edges),
+        "seq": int(seq),
+        "batch": int(batch),
+        "tbptt": int(tbptt),
+        "growth": False,
+    }
+    variants = {
+        "L0_telemetrie_retenue": {"release_telemetry": False},
+        "L1_telemetrie_lachee": {},
+        "L1_L2_checkpoint": {"checkpoint_turns": True},
+    }
+    out: dict = {"condition": condition, "config": base, "steps": int(steps), "points": {}}
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    path = REPORT_DIR / "session-f.json"
+    for label, extra in variants.items():
+        cfg = {**base, **extra}
+        result = _child(_as_args(cfg, steps), 3600.0)
+        step = (result.get("steps") or [{}])[-1]
+        out["points"][label] = {
+            "config": cfg,
+            "peak_mib": result.get("peak_mib"),
+            "ms_per_step": result.get("ms_per_step"),
+            "baseline_allocated_mib": result.get("baseline_allocated_mib"),
+            "allocated_after_mib": step.get("allocated_mib"),
+            "reserved_mib": step.get("reserved_mib"),
+            "oom": result.get("oom"),
+            "error": result.get("error"),
+        }
+        print(
+            f"  {label:24s} : pic {result.get('peak_mib')} Mo, {result.get('ms_per_step')} ms/pas",
+            flush=True,
+        )
+        path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if wall:
+        bisect = campaign_bisect(
+            wall_low,
+            wall_high,
+            steps=1,
+            timeout=3600.0,
+            extra={"checkpoint_turns": True},
+            out="bisect-sessionf.json",
+        )
+        out["wall"] = {
+            "config": bisect.get("config"),
+            "max_edges_that_fit": bisect.get("max_edges_that_fit"),
+            "attempts": bisect.get("attempts"),
+        }
+        path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return out
+
+
 # ----------------------------------------------------------------------
 # CLI
 # ----------------------------------------------------------------------
@@ -1119,6 +1213,18 @@ def main(argv: list[str] | None = None) -> None:
     bisect_parser.add_argument("--high", type=int, default=9000)
     bisect_parser.add_argument("--steps", type=int, default=1)
     bisect_parser.add_argument("--timeout", type=float, default=1800.0)
+    bisect_parser.add_argument("--checkpoint-turns", action="store_true")
+    bisect_parser.add_argument("--out", default="bisect.json")
+
+    sessionf_parser = sub.add_parser("sessionf", help="session F: L1, L2 and the new wall")
+    sessionf_parser.add_argument("--steps", type=int, default=2)
+    sessionf_parser.add_argument("--edges", type=int, default=3000)
+    sessionf_parser.add_argument("--seq", type=int, default=32)
+    sessionf_parser.add_argument("--batch", type=int, default=8)
+    sessionf_parser.add_argument("--tbptt", type=int, default=16)
+    sessionf_parser.add_argument("--wall", action="store_true")
+    sessionf_parser.add_argument("--wall-low", type=int, default=4000)
+    sessionf_parser.add_argument("--wall-high", type=int, default=9000)
 
     amp_parser = sub.add_parser("amp", help="campaign 4: bf16 price")
     amp_parser.add_argument("--steps", type=int, default=20)
@@ -1139,6 +1245,8 @@ def main(argv: list[str] | None = None) -> None:
     one_parser.add_argument("--prune", action="store_true")
     one_parser.add_argument("--losses", action="store_true")
     one_parser.add_argument("--clear-telemetry", action="store_true")
+    one_parser.add_argument("--checkpoint-turns", action="store_true")
+    one_parser.add_argument("--keep-telemetry", action="store_true")
 
     args = parser.parse_args(argv)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -1162,7 +1270,27 @@ def main(argv: list[str] | None = None) -> None:
         return
 
     if args.command == "bisect":
-        campaign_bisect(args.low, args.high, steps=args.steps, timeout=args.timeout)
+        campaign_bisect(
+            args.low,
+            args.high,
+            steps=args.steps,
+            timeout=args.timeout,
+            extra={"checkpoint_turns": True} if args.checkpoint_turns else None,
+            out=args.out,
+        )
+        return
+
+    if args.command == "sessionf":
+        campaign_sessionf(
+            steps=args.steps,
+            edges=args.edges,
+            seq=args.seq,
+            batch=args.batch,
+            tbptt=args.tbptt,
+            wall=bool(args.wall),
+            wall_low=args.wall_low,
+            wall_high=args.wall_high,
+        )
         return
 
     if args.command == "amp":
@@ -1183,6 +1311,8 @@ def main(argv: list[str] | None = None) -> None:
             "tbptt": args.tbptt,
             "growth": not args.no_growth,
             "clear_telemetry": bool(args.clear_telemetry),
+            "checkpoint_turns": bool(args.checkpoint_turns),
+            "release_telemetry": not args.keep_telemetry,
         }
         try:
             result = run_config(

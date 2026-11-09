@@ -1,0 +1,82 @@
+{
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 2122.0,
+      "free_mib": 5897.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": false,
+      "used_mib": 2122.0,
+      "total_mib": 8192.0,
+      "free_mib": 5897.0,
+      "used_pct": 25.9,
+      "verdict": "chronométrage REFUSÉ (2122 MiB utilisés, 26 %) — mesures mémoire seules, temps indicatifs"
+    }
+  },
+  "config": {
+    "nodes": 532,
+    "edges": 2000,
+    "seq": 32,
+    "batch": 8,
+    "tbptt": 16,
+    "growth": false
+  },
+  "steps": 2,
+  "points": {
+    "L0_telemetrie_retenue": {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false,
+        "release_telemetry": false
+      },
+      "peak_mib": null,
+      "ms_per_step": null,
+      "baseline_allocated_mib": null,
+      "allocated_after_mib": null,
+      "reserved_mib": null,
+      "oom": false,
+      "error": "fatal   : Memory allocation failure | FAILED: CUDA error: unknown error | Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information. | CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect. | For debugging consider passing CUDA_LAUNCH_BLOCKING=1 | Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions."
+    },
+    "L1_telemetrie_lachee": {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false
+      },
+      "peak_mib": null,
+      "ms_per_step": null,
+      "baseline_allocated_mib": null,
+      "allocated_after_mib": null,
+      "reserved_mib": null,
+      "oom": true,
+      "error": "FAILED: CUDA error: out of memory | Search for `cudaErrorMemoryAllocation' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information. | CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect. | For debugging consider passing CUDA_LAUNCH_BLOCKING=1 | Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions."
+    },
+    "L1_L2_checkpoint": {
+      "config": {
+        "nodes": 532,
+        "edges": 2000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false,
+        "checkpoint_turns": true
+      },
+      "peak_mib": 264.47,
+      "ms_per_step": 8231.2,
+      "baseline_allocated_mib": 84.08,
+      "allocated_after_mib": 84.71,
+      "reserved_mib": 288.0,
+      "oom": false,
+      "error": null
+    }
+  }
+}

@@ -1,5 +1,13 @@
 # Core
-torch>=2.4
+# DERNIÈRE VERSION COMPATIBLE MAXWELL (sm_50, GTX 860M).
+# PyTorch 2.14.0 est la dernière release publiée avec un wheel CUDA 12.6, et
+# c'est le seul build qui compile encore pour sm_50 : les wheels cu128 ont
+# supprimé Maxwell/Pascal dès 2.8, et CUDA 13.x (build PyPI par défaut de 2.14)
+# ne descend plus sous Turing (sm_75). Sur la machine cible, installer :
+#   pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/cu126
+# Le build PyPI par défaut de 2.14 est en CUDA 13.0 : il ne voit PAS la 860M.
+# Cette machine-ci (RTX 3070) tourne encore sur 2.11.0+cu128 : ne pas réinstaller.
+torch==2.14.0
 numpy>=1.26
 
 # Corpus and tokenizer

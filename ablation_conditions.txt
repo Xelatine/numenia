@@ -68,3 +68,38 @@ REFUSE : classe chronometrage (2025 MiB utilises > 1000, 18 % > 10 %) -> banc no
                  (712-741 MiB utilisés, 8,7-9,0 % constatés avant chacune) ; le relevé ci-dessus est pris au moment
                  de consigner le bloc, pas avant la mesure.
   seq 32 / batch 8 / tbptt 16 ; 2000 arêtes à population variable (200/532/1000/2000) ; 3000 arêtes en tbptt 16
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « session F — leviers L1 (télémétrie) et L2 (checkpointing par tour) »
+  nvidia-smi 2026-11-09 21:53:27 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2212 MiB, libres 5807 MiB (27 %)
+  règle v2 : chronométrage REFUSÉ (2212 MiB utilisés, 27 %) — mesures mémoire seules, temps indicatifs
+  seq 32 / batch 8 / tbptt 16 / 532 nœuds, croissance coupée
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « point de mur (dichotomie) »
+  nvidia-smi 2026-11-09 21:54:27 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2182 MiB, libres 5837 MiB (27 %)
+  règle v2 : chronométrage REFUSÉ (2182 MiB utilisés, 27 %) — mesures mémoire seules, temps indicatifs
+  seq 128 / batch 16 / 532 nœuds / checkpoint_turns=True
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « session F — leviers L1 (télémétrie) et L2 (checkpointing par tour) »
+  nvidia-smi 2026-11-09 22:00:44 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2056 MiB, libres 5963 MiB (25 %)
+  règle v2 : chronométrage REFUSÉ (2056 MiB utilisés, 25 %) — mesures mémoire seules, temps indicatifs
+  seq 32 / batch 8 / tbptt 16 / 532 nœuds, croissance coupée
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « point de mur (dichotomie) »
+  nvidia-smi 2026-11-09 22:01:48 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2034 MiB, libres 5985 MiB (25 %)
+  règle v2 : chronométrage REFUSÉ (2034 MiB utilisés, 25 %) — mesures mémoire seules, temps indicatifs
+  seq 128 / batch 16 / 532 nœuds / checkpoint_turns=True
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « session F — leviers L1 (télémétrie) et L2 (checkpointing par tour) »
+  nvidia-smi 2026-11-09 22:04:54 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2122 MiB, libres 5897 MiB (26 %)
+  règle v2 : chronométrage REFUSÉ (2122 MiB utilisés, 26 %) — mesures mémoire seules, temps indicatifs
+  seq 32 / batch 8 / tbptt 16 / 532 nœuds, croissance coupée
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « point de mur (dichotomie) »
+  nvidia-smi 2026-11-09 22:07:02 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2080 MiB, libres 5939 MiB (25 %)
+  règle v2 : chronométrage REFUSÉ (2080 MiB utilisés, 25 %) — mesures mémoire seules, temps indicatifs
+  seq 128 / batch 16 / 532 nœuds / checkpoint_turns=True
+
+9 novembre 2026 (e) — diagnostic mémoire, campagne « session F — leviers L1 (télémétrie) et L2 (checkpointing par tour) »
+  nvidia-smi 2026-11-09 22:19:16 : NVIDIA GeForce RTX 3070 Laptop GPU — total 8192 MiB, utilisés 2320 MiB, libres 5699 MiB (28 %)
+  règle v2 : chronométrage REFUSÉ (2320 MiB utilisés, 28 %) — mesures mémoire seules, temps indicatifs
+  seq 32 / batch 8 / tbptt 16 / 532 nœuds, croissance coupée
