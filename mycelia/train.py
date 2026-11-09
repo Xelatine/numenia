@@ -298,6 +298,7 @@ class Trainer:
         seq_len: int | None = None,
         enable_growth: bool = True,
         enable_lifecycle: bool = True,
+        telemetry_every: int = 10,
         **brain_overrides,
     ) -> None:
         self.config = config or load_config()
@@ -366,6 +367,11 @@ class Trainer:
         else:
             self.brain = brain.to(self.device)
             self.tokenizer = tokenizer or (load_tokenizer() if data == "text" else None)
+            # A resumed brain is built from its genome, which does not carry the
+            # flag: the run decides, not the file. Without this, resuming with
+            # ``checkpoint_turns=True`` would silently run without it.
+            if "checkpoint_turns" in brain_overrides:
+                self.brain.checkpoint_turns = bool(brain_overrides["checkpoint_turns"])
         self.brain.clock = self.step
         # Ablation arm (rapports/ABLATION-croissance.md): a fixed random graph of the
         # same size as the grown one. Nothing is born, nothing dies. Only a
@@ -419,6 +425,9 @@ class Trainer:
         self.save_seconds = float(training.get("save_seconds", 600))
         self.first_save_step = int(training.get("first_save_step", 10))
         self._optimizer_pool = self.brain.n_nodes
+        # The cockpit gets detached CPU copies every N steps, never a view of
+        # the graph: a live view survived the step and held 315 Mo (measured).
+        self.telemetry_every = max(0, int(telemetry_every))
 
     # ------------------------------------------------------------------
     # Hyperparameters, learning rate
@@ -448,9 +457,27 @@ class Trainer:
         self.optimizer.zero_grad(set_to_none=True)
         self.brain.last_node_io = []
         self.brain.last_out_acc = None
+        self.brain._last_out = None
+        self.brain._last_hot = torch.zeros(0, dtype=torch.long)
         gc.collect()
         if self.device.type == "cuda":
             torch.cuda.empty_cache()
+
+    def _release_telemetry(self) -> None:
+        """Let go of the graph the telemetry was holding (measured leak, L1).
+
+        ``last_node_io`` and ``_last_out`` point at tensors that are outputs of
+        the autograd graph. Once the optimizer has consumed the step, keeping
+        them keeps the last block's activations alive: 315 Mo at seq 32, ~1.3 Go
+        at seq 128. The dashboard is served a sampled, detached CPU copy before
+        the references are dropped, so nothing the cockpit shows is lost.
+        """
+        brain = self.brain
+        if self.telemetry_every and self.step % self.telemetry_every == 0:
+            brain.telemetry = brain.snapshot_telemetry()
+        brain.last_node_io = []
+        brain._last_out = None
+        brain._last_hot = torch.zeros(0, dtype=torch.long)
 
     def step_once(self) -> dict:
         lr = self._apply_learning_rate()
@@ -557,7 +584,7 @@ class Trainer:
             self._maybe_grow(val_ppl, metrics)
 
         # Do not keep the autograd graph of this step alive through telemetry.
-        self.brain.last_node_io = []
+        self._release_telemetry()
         # Measured at the very end of the step, after the life cycle and the
         # growth: this is the memory the next step starts from, not the peak of
         # the graph that has just been freed.
@@ -799,6 +826,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--save-every", type=int, default=None)
     parser.add_argument("--device", type=str, default=None)
     parser.add_argument("--config", type=str, default=None)
+    # OFF by default: the flag trades time for memory, and a trade is applied
+    # only once it has been measured (session F).
+    parser.add_argument(
+        "--checkpoint-turns",
+        action="store_true",
+        help="recalculer chaque tour au backward (moins de mémoire, plus de temps)",
+    )
     return parser.parse_args(argv)
 
 
@@ -834,6 +868,9 @@ def main(argv: list[str] | None = None) -> None:
         )
     if args.report_every:
         trainer.report_every = args.report_every
+    if args.checkpoint_turns:
+        trainer.brain.checkpoint_turns = True
+        trainer.log(f"checkpointing par tour : ON (drapeau) | device {trainer.device}")
     # --save-every stays available as an extra trigger; the clock is the rule.
 
     brain = trainer.brain

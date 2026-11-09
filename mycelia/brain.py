@@ -36,6 +36,7 @@ from typing import Sequence
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.checkpoint import checkpoint as _checkpoint
 
 from mycelia.lifecycle import EdgeUsage, anti_identity_penalty  # noqa: F401  (re-exported)
 from mycelia.node import COMPUTE_PARAMS, DEFAULT_DIM, NodeBank
@@ -104,6 +105,7 @@ class Brain(nn.Module):
         birth_mode: str = "traffic",
         birth_seed: int = 0,
         mmap: bool = False,
+        checkpoint_turns: bool = False,
     ) -> None:
         super().__init__()
         if n_nodes < 8:
@@ -184,6 +186,12 @@ class Brain(nn.Module):
         self.edge_chunk_size = max(1, int(edge_chunk_size))
         self.birth_passes = 0
         self.mmap = bool(mmap)
+        # Gradient checkpointing per tour. OFF by default: it trades time for
+        # memory, and a trade is only applied once it has been measured. Every
+        # input of a tour is journaled (wiring, strengths, living mask) so the
+        # replay at backward reads the tour, never the live graph -- a birth or
+        # a burial may have happened since (rule 4 of the session brief).
+        self.checkpoint_turns = bool(checkpoint_turns)
         self.dissipation = float(dissipation)
         # A membrane also cools at every tour, for two reasons: a merge of old
         # and new signal must fade, and a state that only accumulates would grow
@@ -267,6 +275,9 @@ class Brain(nn.Module):
         self.last_trace: dict[int, list[tuple[int, int]]] = {}
         self._last_out: torch.Tensor | None = None
         self._last_hot: torch.Tensor = torch.zeros(0, dtype=torch.long)
+        # Sampled, detached CPU copies of the last readings. The dashboard reads
+        # this, never a live view of the graph: that was the measured leak.
+        self.telemetry: dict = {}
 
         self._seed_wiring()
 
@@ -571,6 +582,129 @@ class Brain(nn.Module):
         self.births += created
         return created
 
+    def _hop(
+        self,
+        wave: torch.Tensor,
+        state: torch.Tensor,
+        ids: torch.Tensor,
+        src_all: torch.Tensor,
+        tgt_all: torch.Tensor,
+        mask_all: torch.Tensor,
+        alive_all: torch.Tensor,
+    ) -> tuple[torch.Tensor, ...]:
+        """One tour of the diffusion, as a single replayable step.
+
+        Everything this function reads is an *argument*: the wiring, the
+        trainable strengths and the living mask come from the journal of the
+        tour, never from the live buffers. A backward that replays the hop
+        (gradient checkpointing) therefore cannot see a graph that changed since
+        the forward -- no double birth, no double burial, no second usage write.
+
+        It returns tensors only. A list, a dict or a counter rebuilt during the
+        replay would be a second, invisible mutation; the caller does every
+        write (``emitted``, ``usage``, the trace) exactly once, in the forward.
+        """
+        empty_long = ids.new_zeros(0)
+        out, _gate = self.bank.forward_rows(wave, ids)
+        if src_all.numel() == 0:
+            return (
+                state, wave.new_zeros(0, wave.shape[1], self.dim), empty_long,
+                ids, empty_long, wave.new_zeros(0), empty_long, empty_long,
+                wave.new_zeros(()), out, ids,
+            )
+        row_of = torch.full((self.n_nodes,), -1, dtype=torch.long, device=wave.device)
+        row_of[ids] = torch.arange(ids.numel(), device=wave.device)
+        rows = row_of[src_all]
+        # A node whose gate is shut sends exactly nothing: it must not appear in
+        # the trace as if it had spoken.
+        fired = out.detach().abs().amax(dim=(1, 2)) > 0
+        # A buried node receives nothing (its firing organs are zero and it must
+        # not wake as a zombie); it is only reachable through a *birth*, which is
+        # the one door the cemetery honours.
+        keep = (rows >= 0) & fired[rows.clamp_min(0)] & alive_all[tgt_all]
+        eids = keep.nonzero(as_tuple=True)[0]
+        if eids.numel() == 0:
+            return (
+                state, wave.new_zeros(0, wave.shape[1], self.dim), empty_long,
+                ids[fired], empty_long, wave.new_zeros(0), empty_long, empty_long,
+                wave.new_zeros(()), out, ids,
+            )
+
+        rows_e = rows[eids]
+        src_e = src_all[eids]
+        tgt_e = tgt_all[eids]
+        mask_e = mask_all[eids]
+        receivers, inverse = torch.unique(tgt_e, return_inverse=True)
+        inbox = out.new_zeros(receivers.numel(), wave.shape[1], self.dim)
+        # D2: the scatter runs on bounded edge chunks, so a hop never
+        # materialises [E, B, dim] for the whole wiring at once. The maths is
+        # unchanged; only the order of the additions moves, which is why the
+        # equivalence test uses a tolerance and not torch.equal.
+        chunk = self.edge_chunk_size
+        magnitudes: list[torch.Tensor] = []
+        for start in range(0, int(eids.numel()), chunk):
+            stop = min(start + chunk, int(eids.numel()))
+            rows_c = rows_e[start:stop]
+            inv_c = inverse[start:stop]
+            mask_c = mask_e[start:stop]
+            recv_c = receivers[inv_c]
+            key_c = self.bank.keys(state[recv_c], recv_c)
+            query_c = self.bank.queries(out[rows_c], src_e[start:stop])
+            score_c = torch.sigmoid(
+                (query_c * key_c).sum(dim=-1, keepdim=True) * self.inv_sqrt_dim
+            )
+            message_c = out[rows_c] * score_c * mask_c.view(-1, 1, 1) * self.dissipation
+            inbox.index_add_(0, inv_c, message_c)
+            # Detached: the caller applies them to the usage buffer, once.
+            magnitudes.append(message_c.detach().abs().mean(dim=(1, 2)) * mask_c.detach())
+
+        # A signal that received nothing dies here. No sync on values: the
+        # decision stays a tensor comparison.
+        alive_inbox = inbox.detach().abs().amax(dim=(1, 2)) > 0
+        hot = receivers[alive_inbox]
+        # The membrane cools, then integrates what just arrived. This line is
+        # the memory of the colony; the wave itself is replaced by what was
+        # delivered, which is the fatigue of the medium.
+        state = state * self.state_decay
+        if hot.numel():
+            state = state.index_add(0, hot, inbox[alive_inbox])
+        return (
+            state,
+            inbox[alive_inbox],
+            hot,
+            ids[fired],
+            eids,
+            torch.cat(magnitudes),
+            src_e,
+            tgt_e,
+            inbox.detach().abs().sum(),
+            out,
+            ids,
+        )
+
+    def snapshot_telemetry(self) -> dict:
+        """Detached CPU copies of the last readings, for the cockpit.
+
+        The dashboard must never hold a view of the live graph: keeping one is
+        what held 315 Mo of activations after a step had already been consumed
+        (measured, 9 November). Sampling every N steps costs a few kilobytes.
+        """
+        return {
+            "step": int(self.clock),
+            "out_acc": None if self.last_out_acc is None else self.last_out_acc.detach().cpu().clone(),
+            "node_io": [
+                (inp.detach().cpu().clone(), out.detach().cpu().clone())
+                for inp, out in self.last_node_io
+            ],
+            "energy_by_hop": list(self.last_energy_by_hop),
+            "firing_nodes": list(self.last_firing_nodes),
+            "trace": {
+                int(hop): [(int(s), int(t)) for s, t in pairs]
+                for hop, pairs in self.last_trace.items()
+            },
+            "births": int(self.last_births),
+        }
+
     def forward(
         self,
         tokens: torch.Tensor,
@@ -661,81 +795,80 @@ class Brain(nn.Module):
             for hop in range(hops):
                 if hot.numel() == 0:
                     break
-                x = wave
-                out, _gate = self.bank.forward_rows(x, hot)
-                position_io.append((x, out))
-                # Keep the pair (ids, outputs) together: the last hop may have
-                # no successor, and the telemetry must not mix two hops.
-                self._last_out = out
-                self._last_hot = hot
-
-                # Cloned views: the buffer is written by births, and autograd
-                # must not see those writes (the in-place trap of the spec).
+                # The journal of the tour: the wiring, the trainable strengths
+                # and the living mask, snapshotted *before* the hop. A replay
+                # that read the live buffers instead would see the births and
+                # burials that happened since the forward, and would attach a
+                # gradient to a synapse that did not carry the message.
                 src_all = self.edge_index[0, : self.ne].clone()
                 tgt_all = self.edge_index[1, : self.ne].clone()
-                if src_all.numel() == 0:
-                    break
-
-                row_of = torch.full((self.n_nodes,), -1, dtype=torch.long, device=device)
-                row_of[hot] = torch.arange(hot.numel(), device=device)
-                rows = row_of[src_all]
-                # A node whose gate is shut sends exactly nothing: it must not
-                # appear in the trace as if it had spoken.
-                fired = out.detach().abs().amax(dim=(1, 2)) > 0
-                emitted[hot[fired]] = True
-                # A buried node receives nothing (its firing organs are zero and
-                # it must not wake as a zombie); it is only reachable through a
-                # *birth*, which is the one door the cemetery honours.
-                keep = (rows >= 0) & fired[rows.clamp_min(0)] & self.node_alive[tgt_all]
-                if not bool(keep.any()):
-                    break
-
-                eids = keep.nonzero(as_tuple=True)[0]
-                rows_e = rows[eids]
-                src_e = src_all[eids]
-                tgt_e = tgt_all[eids]
-                mask_e = self._edge_mask[eids]
-
-                receivers, inverse = torch.unique(tgt_e, return_inverse=True)
-                inbox = out.new_zeros(receivers.numel(), batch, self.dim)
-                # D2: the scatter runs on bounded edge chunks, so a hop never
-                # materialises [E, B, dim] for the whole wiring at once. The
-                # maths is unchanged; only the order of the additions moves,
-                # which is why the equivalence test uses 1e-6 and not torch.equal.
-                chunk = self.edge_chunk_size
-                for start in range(0, int(eids.numel()), chunk):
-                    stop = min(start + chunk, int(eids.numel()))
-                    rows_c = rows_e[start:stop]
-                    inv_c = inverse[start:stop]
-                    mask_c = mask_e[start:stop]
-                    recv_c = receivers[inv_c]
-                    key_c = self.bank.keys(state[recv_c], recv_c)
-                    query_c = self.bank.queries(out[rows_c], src_e[start:stop])
-                    score_c = torch.sigmoid(
-                        (query_c * key_c).sum(dim=-1, keepdim=True) * self.inv_sqrt_dim
+                mask_all = self._edge_mask[: self.ne]
+                alive_all = self.node_alive.clone()
+                x = wave
+                replay = (
+                    bool(self.checkpoint_turns)
+                    and torch.is_grad_enabled()
+                    and x.requires_grad
+                )
+                if replay:
+                    # One checkpoint per tour, non-reentrant: the activations of
+                    # the hop are recomputed at backward instead of being kept.
+                    outputs = _checkpoint(
+                        self._hop,
+                        x,
+                        state,
+                        hot,
+                        src_all,
+                        tgt_all,
+                        mask_all,
+                        alive_all,
+                        use_reentrant=False,
+                        preserve_rng_state=True,
                     )
-                    message_c = (
-                        out[rows_c] * score_c * mask_c.view(-1, 1, 1) * self.dissipation
-                    )
-                    inbox.index_add_(0, inv_c, message_c)
-                    if grow:
-                        magnitudes = message_c.detach().abs().mean(dim=(1, 2)) * mask_c.detach()
-                        self.usage_rule.update(self.edge_usage, eids[start:stop], magnitudes)
+                else:
+                    outputs = self._hop(x, state, hot, src_all, tgt_all, mask_all, alive_all)
+                (
+                    state,
+                    wave,
+                    hot,
+                    emit_ids,
+                    eids,
+                    magnitudes,
+                    src_e,
+                    tgt_e,
+                    energy,
+                    out,
+                    hot_in,
+                ) = outputs
 
-                # A signal that received nothing dies here. No sync on values:
-                # the decision stays a tensor comparison.
-                alive_inbox = inbox.detach().abs().amax(dim=(1, 2)) > 0
-                hot = receivers[alive_inbox]
+                # Keep the pair (ids, outputs) together: the last hop may have
+                # no successor, and the telemetry must not mix two hops.
+                position_io.append((x, out))
+                self._last_out = out.detach()
+                self._last_hot = hot_in
+                if emit_ids.numel():
+                    emitted[emit_ids] = True
+                if eids.numel() and grow:
+                    # Outside the checkpoint on purpose: a buffer written inside
+                    # the body would be written a second time by the replay, and
+                    # the usage average would drift for no reason.
+                    #
+                    # One call per chunk, exactly as before the refactor: the
+                    # rule decays the WHOLE table at every call, so folding the
+                    # chunks into one call would silently change the average
+                    # (measured: up to 0.013 of absolute difference on the toy
+                    # brain, and the pruning that reads it would follow).
+                    for start in range(0, int(eids.numel()), self.edge_chunk_size):
+                        stop = min(start + self.edge_chunk_size, int(eids.numel()))
+                        self.usage_rule.update(
+                            self.edge_usage, eids[start:stop], magnitudes[start:stop]
+                        )
+                if hot.numel() == 0:
+                    # Nothing survived this tour: the membrane does not even
+                    # cool, exactly as before the refactor.
+                    break
                 fired_nodes[hot] = True
-                # The membrane cools, then integrates what just arrived. This
-                # line is the memory of the colony; the wave itself is replaced
-                # by what was delivered, which is the fatigue of the medium.
-                state = state * self.state_decay
-                if hot.numel():
-                    state = state.index_add(0, hot, inbox[alive_inbox])
-                wave = inbox[alive_inbox]
-
-                position_energy.append(inbox.detach().abs().sum())
+                position_energy.append(energy)
                 if trace:
                     pairs = torch.stack([src_e, tgt_e], dim=1)[: self.trace_limit].tolist()
                     position_trace[hop] = [(int(s), int(t)) for s, t in pairs]
@@ -776,7 +909,9 @@ class Brain(nn.Module):
         self.last_births = created_total
         if grow and self._last_out is not None and self._last_hot.numel():
             with torch.no_grad():
-                average = self._last_out.detach().mean(dim=1)
+                # ``_last_out`` is already detached: a live view here was the
+                # leak the 9 November diagnostic measured (315 Mo at seq 32).
+                average = self._last_out.mean(dim=1)
                 slots = self._last_hot
                 self.mean_out.index_copy_(
                     0, slots, 0.99 * self.mean_out[slots] + 0.01 * average
