@@ -1,0 +1,82 @@
+{
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 2320.0,
+      "free_mib": 5699.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": false,
+      "used_mib": 2320.0,
+      "total_mib": 8192.0,
+      "free_mib": 5699.0,
+      "used_pct": 28.3,
+      "verdict": "chronométrage REFUSÉ (2320 MiB utilisés, 28 %) — mesures mémoire seules, temps indicatifs"
+    }
+  },
+  "config": {
+    "nodes": 532,
+    "edges": 1000,
+    "seq": 32,
+    "batch": 8,
+    "tbptt": 16,
+    "growth": false
+  },
+  "steps": 2,
+  "points": {
+    "L0_telemetrie_retenue": {
+      "config": {
+        "nodes": 532,
+        "edges": 1000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false,
+        "release_telemetry": false
+      },
+      "peak_mib": 352.45,
+      "ms_per_step": 4094.1,
+      "baseline_allocated_mib": 94.11,
+      "allocated_after_mib": 93.87,
+      "reserved_mib": 394.0,
+      "oom": false,
+      "error": null
+    },
+    "L1_telemetrie_lachee": {
+      "config": {
+        "nodes": 532,
+        "edges": 1000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false
+      },
+      "peak_mib": 352.45,
+      "ms_per_step": 4291.9,
+      "baseline_allocated_mib": 82.24,
+      "allocated_after_mib": 82.0,
+      "reserved_mib": 382.0,
+      "oom": false,
+      "error": null
+    },
+    "L1_L2_checkpoint": {
+      "config": {
+        "nodes": 532,
+        "edges": 1000,
+        "seq": 32,
+        "batch": 8,
+        "tbptt": 16,
+        "growth": false,
+        "checkpoint_turns": true
+      },
+      "peak_mib": 187.02,
+      "ms_per_step": 6675.0,
+      "baseline_allocated_mib": 82.24,
+      "allocated_after_mib": 82.0,
+      "reserved_mib": 220.0,
+      "oom": false,
+      "error": null
+    }
+  }
+}
