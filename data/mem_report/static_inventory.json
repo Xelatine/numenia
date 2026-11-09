@@ -1,0 +1,1238 @@
+{
+  "device_label": "cuda",
+  "rows": [
+    {
+      "name": "bank.b1_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        64,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1142784,
+      "bytes": 4571136,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.b2_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1142784,
+      "bytes": 4571136,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        64,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1089536,
+      "bytes": 4358144,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        64,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1089536,
+      "bytes": 4358144,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1089536,
+      "bytes": 4358144,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 1089536,
+      "bytes": 4358144,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "bank.q_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 571392,
+      "bytes": 2285568,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.k_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 571392,
+      "bytes": 2285568,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 544768,
+      "bytes": 2179072,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 544768,
+      "bytes": 2179072,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 544768,
+      "bytes": 2179072,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 544768,
+      "bytes": 2179072,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "embedding.weight",
+      "kind": "parameter",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.vocab"
+    },
+    {
+      "name": "output_head.weight",
+      "kind": "parameter",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.vocab"
+    },
+    {
+      "name": "optim.embedding.weight.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.embedding.weight.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.output_head.weight.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.output_head.weight.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        10000,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 320000,
+      "bytes": 1280000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "attr._last_out",
+      "kind": "attribute tensor",
+      "shape": [
+        530,
+        8,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 135680,
+      "bytes": 542720,
+      "requires_grad": true,
+      "persistent": false,
+      "section": "other"
+    },
+    {
+      "name": "edge_index",
+      "kind": "buffer",
+      "shape": [
+        2,
+        20000
+      ],
+      "dtype": "torch.int64",
+      "device": "cuda:0",
+      "numel": 40000,
+      "bytes": 320000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.wiring"
+    },
+    {
+      "name": "bank.b1_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 35712,
+      "bytes": 142848,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 34048,
+      "bytes": 136192,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        64
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 34048,
+      "bytes": 136192,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "_edge_keys[4010 pairs]",
+      "kind": "host set",
+      "shape": [],
+      "dtype": "int",
+      "device": "cpu",
+      "numel": 4010,
+      "bytes": 128320,
+      "requires_grad": false,
+      "persistent": false,
+      "section": "not saved (derived)"
+    },
+    {
+      "name": "_edge_mask",
+      "kind": "parameter",
+      "shape": [
+        20000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 20000,
+      "bytes": 80000,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.wiring"
+    },
+    {
+      "name": "edge_usage",
+      "kind": "buffer",
+      "shape": [
+        20000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 20000,
+      "bytes": 80000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.wiring"
+    },
+    {
+      "name": "optim._edge_mask.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        20000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 20000,
+      "bytes": 80000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim._edge_mask.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        20000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 20000,
+      "bytes": 80000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "bank.gate_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        1,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.b2_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.ln_w",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.ln_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.q_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "bank.k_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "mean_out",
+      "kind": "buffer",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.life"
+    },
+    {
+      "name": "attr.mean_out",
+      "kind": "attribute tensor",
+      "shape": [
+        558,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17856,
+      "bytes": 71424,
+      "requires_grad": false,
+      "persistent": false,
+      "section": "other"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        1,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        1,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 17024,
+      "bytes": 68096,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "output_head.bias",
+      "kind": "parameter",
+      "shape": [
+        10000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 10000,
+      "bytes": 40000,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.vocab"
+    },
+    {
+      "name": "optim.output_head.bias.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        10000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 10000,
+      "bytes": 40000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.output_head.bias.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        10000
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 10000,
+      "bytes": 40000,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "node_born_step",
+      "kind": "buffer",
+      "shape": [
+        558
+      ],
+      "dtype": "torch.int64",
+      "device": "cuda:0",
+      "numel": 558,
+      "bytes": 4464,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.life"
+    },
+    {
+      "name": "node_frozen_until",
+      "kind": "buffer",
+      "shape": [
+        558
+      ],
+      "dtype": "torch.int64",
+      "device": "cuda:0",
+      "numel": 558,
+      "bytes": 4464,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.life"
+    },
+    {
+      "name": "bank.gate_b",
+      "kind": "parameter",
+      "shape": [
+        558,
+        1
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 558,
+      "bytes": 2232,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.node_bank"
+    },
+    {
+      "name": "optim.?.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        1
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 532,
+      "bytes": 2128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        532,
+        1
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 532,
+      "bytes": 2128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "attr.last_out_acc",
+      "kind": "attribute tensor",
+      "shape": [
+        8,
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 256,
+      "bytes": 1024,
+      "requires_grad": false,
+      "persistent": false,
+      "section": "other"
+    },
+    {
+      "name": "node_alive",
+      "kind": "buffer",
+      "shape": [
+        558
+      ],
+      "dtype": "torch.bool",
+      "device": "cuda:0",
+      "numel": 558,
+      "bytes": 558,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.life"
+    },
+    {
+      "name": "is_io",
+      "kind": "buffer",
+      "shape": [
+        558
+      ],
+      "dtype": "torch.bool",
+      "device": "cuda:0",
+      "numel": 558,
+      "bytes": 558,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "state_dict.life"
+    },
+    {
+      "name": "readout_norm.weight",
+      "kind": "parameter",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.vocab"
+    },
+    {
+      "name": "readout_norm.bias",
+      "kind": "parameter",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": true,
+      "persistent": true,
+      "section": "state_dict.vocab"
+    },
+    {
+      "name": "optim.readout_norm.weight.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.readout_norm.weight.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.readout_norm.bias.exp_avg",
+      "kind": "optimizer",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.readout_norm.bias.exp_avg_sq",
+      "kind": "optimizer",
+      "shape": [
+        32
+      ],
+      "dtype": "torch.float32",
+      "device": "cuda:0",
+      "numel": 32,
+      "bytes": 128,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim._edge_mask.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.?.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.embedding.weight.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.output_head.weight.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.output_head.bias.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.readout_norm.weight.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "optim.readout_norm.bias.step",
+      "kind": "optimizer",
+      "shape": [],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 1,
+      "bytes": 4,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "optimizer"
+    },
+    {
+      "name": "cemetery[0 nodes]",
+      "kind": "host tensors",
+      "shape": [],
+      "dtype": "float32",
+      "device": "cpu",
+      "numel": 0,
+      "bytes": 0,
+      "requires_grad": false,
+      "persistent": true,
+      "section": "cemetery"
+    }
+  ],
+  "total_bytes": 50795484,
+  "persistent_bytes": 50051996,
+  "transient_bytes": 743488,
+  "crosscheck": {
+    "tensor_sum_mib": 48.44,
+    "persistent_mib": 47.73,
+    "cuda_allocated_mib": 391.75,
+    "cuda_reserved_mib": 556.0,
+    "checkpoint_mib": 21.78,
+    "checkpoint_equals_saved_state": true,
+    "note": "torch.save zips the tensors: the file is smaller than the raw state because of deflate, not because state is missing. The comparison that matters is tensor_sum vs cuda_allocated."
+  },
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 741.0,
+      "free_mib": 7278.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": true,
+      "used_mib": 741.0,
+      "total_mib": 8192.0,
+      "free_mib": 7278.0,
+      "used_pct": 9.0,
+      "verdict": "chronométrage autorisé (carte quasi vide)"
+    }
+  },
+  "config": {
+    "nodes": 532,
+    "edges": 4000,
+    "vocab": 10000,
+    "dim": 32
+  }
+}

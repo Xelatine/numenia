@@ -1,0 +1,82 @@
+{
+  "condition": {
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "total_mib": 8192.0,
+      "used_mib": 730.0,
+      "free_mib": 7289.0
+    },
+    "rule": {
+      "classe_chronometrage_autorisee": true,
+      "used_mib": 730.0,
+      "total_mib": 8192.0,
+      "free_mib": 7289.0,
+      "used_pct": 8.9,
+      "verdict": "chronométrage autorisé (carte quasi vide)"
+    }
+  },
+  "config": {
+    "nodes": 532,
+    "edges": 2000,
+    "seq": 32,
+    "batch": 8,
+    "growth": true
+  },
+  "steps": 20,
+  "f32": {
+    "peak_mib": 2702.92,
+    "ms_per_step": 5409.7,
+    "losses": [
+      9.20848,
+      9.20655,
+      9.20447,
+      9.20224,
+      9.20015,
+      9.19778,
+      9.19531,
+      9.19286,
+      9.19016,
+      9.18734,
+      9.18435,
+      9.18155,
+      9.17812,
+      9.17495,
+      9.17116,
+      9.16761,
+      9.16402,
+      9.15968,
+      9.15558,
+      9.15119
+    ],
+    "error": null,
+    "oom": false
+  },
+  "bf16": {
+    "peak_mib": 1777.48,
+    "ms_per_step": 6343.9,
+    "losses": [
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.1875,
+      9.18371,
+      9.14699,
+      9.12726
+    ],
+    "error": null,
+    "oom": false
+  }
+}
