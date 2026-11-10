@@ -51,18 +51,29 @@ TOY = dict(
 )
 
 
-def toy_trainer(checkpoint: bool, **overrides) -> Trainer:
+def toy_trainer(checkpoint: bool, selective: bool = False, **overrides) -> Trainer:
     kwargs = dict(TOY)
     kwargs.update(overrides)
-    trainer = Trainer(checkpoint_turns=checkpoint, **kwargs)
+    kwargs["checkpoint_turns"] = checkpoint
+    if selective:
+        kwargs["checkpoint_selective"] = True
+    trainer = Trainer(**kwargs)
     trainer.brain.allow_node_growth = False
     return trainer
 
 
-def fresh_brain(checkpoint: bool) -> Brain:
+def fresh_brain(checkpoint: bool, selective: bool = False) -> Brain:
     torch.manual_seed(0)
-    brain = Brain(n_nodes=24, dim=8, vocab=64, max_hops=4, max_edges=256, max_births=0)
-    brain.checkpoint_turns = checkpoint
+    brain = Brain(
+        n_nodes=24,
+        dim=8,
+        vocab=64,
+        max_hops=4,
+        max_edges=256,
+        max_births=0,
+        checkpoint_turns=checkpoint,
+        checkpoint_selective=selective,
+    )
     return brain
 
 
@@ -85,8 +96,10 @@ def test_checkpoint_forward_equivalence() -> None:
 # ----------------------------------------------------------------------
 # t2 — the gradient is the same gradient
 # ----------------------------------------------------------------------
-def gradients(checkpoint: bool, x: torch.Tensor, targets: torch.Tensor) -> dict[str, torch.Tensor]:
-    brain = fresh_brain(checkpoint)
+def gradients(
+    checkpoint: bool, x: torch.Tensor, targets: torch.Tensor, selective: bool = False
+) -> dict[str, torch.Tensor]:
+    brain = fresh_brain(checkpoint, selective)
     brain.zero_grad(set_to_none=True)
     logits, _ = brain(x, grow=False)
     loss = F.cross_entropy(logits.reshape(-1, brain.vocab), targets.reshape(-1))
@@ -346,3 +359,135 @@ def test_longrun_resume(tmp_path) -> None:
     torch.set_rng_state(global_state)
     got_next = runner.train_step()["loss"]
     assert abs(expected_next - got_next) < 1e-6, "le flux aléatoire a divergé après reprise"
+
+
+# ======================================================================
+# Session G — the selective checkpoint (s1..s5)
+#
+# The lever wraps ``_route`` (message passing) instead of the whole tour, so
+# the node non-linearity stays in the autograd graph. It has the same three
+# ways to be wrong as the full checkpoint -- forward, gradient, replayed
+# mutation -- plus one of its own: the recompute reorders floating-point
+# additions, and the router is a threshold (``abs().amax() > 0``), so a 1e-7
+# difference can flip a routing decision. Each claim gets its test.
+# ======================================================================
+def test_selective_gradient_equivalence() -> None:
+    """Dérivées identiques entre checkpoint complet et sélectif.
+
+    Tolerance fixed by measurement: same operations on the same inputs, only
+    the order of the additions inside the chunked scatter can move.
+    """
+    x = torch.randint(2, 64, (4, 6))
+    targets = torch.randint(0, 64, (4, 6))
+    full = gradients(True, x, targets)
+    selective = gradients(True, x, targets, selective=True)
+
+    assert full.keys() == selective.keys()
+    for name, reference in full.items():
+        delta = float((selective[name] - reference).abs().max())
+        torch.testing.assert_close(
+            selective[name], reference, atol=1e-6, rtol=1e-5, msg=f"{name} (écart {delta:.2e})"
+        )
+
+
+def test_selective_no_writes_in_checkpoint() -> None:
+    """Aucune écriture rejouée : mêmes naissances, mêmes morts, même usage."""
+    full = toy_trainer(True)
+    losses_full = [full.train_step()["loss"] for _ in range(10)]
+    selective = toy_trainer(True, selective=True)
+    losses_sel = [selective.train_step()["loss"] for _ in range(10)]
+
+    for name in ("births", "edge_deaths", "node_deaths", "node_revivals", "node_births"):
+        assert getattr(full.brain, name) == getattr(selective.brain, name), name
+    assert selective.brain.ne == full.brain.ne
+    assert selective.brain.ne > 12, "aucune naissance : le test ne prouve rien"
+    torch.testing.assert_close(
+        selective.brain.edge_usage[: selective.brain.ne],
+        full.brain.edge_usage[: full.brain.ne],
+        atol=1e-7,
+        rtol=1e-6,
+    )
+    for index, (a, b) in enumerate(zip(losses_full, losses_sel)):
+        assert abs(a - b) < 1e-5, f"pas {index + 1}: {a!r} vs {b!r}"
+
+
+def test_selective_replay_topology_frozen() -> None:
+    """Le replay sélectif relit le journal du tour, pas la topologie courante."""
+    full = toy_trainer(True)
+    for _ in range(6):
+        full.train_step()
+    selective = toy_trainer(True, selective=True)
+    for _ in range(6):
+        selective.train_step()
+
+    x = torch.randint(2, 64, (2, 4))
+    full.brain.eval()
+    selective.brain.eval()
+    with torch.no_grad():
+        _, trace_full = full.brain(x, grow=False)
+        _, trace_sel = selective.brain(x, grow=False)
+
+    assert trace_full == trace_sel
+    assert any(len(pairs) for pairs in trace_full.values()), "aucun message : rien à comparer"
+
+
+def test_selective_resume_continuity(tmp_path) -> None:
+    """20 pas, sauvegarde, 20 pas : identique au run continu à 1e-6."""
+    overrides = dict(batch_size=8, seq_len=10, max_hops=4)
+    trainer = toy_trainer(True, selective=True, **overrides)
+    losses = [trainer.train_step()["loss"] for _ in range(20)]
+    path = trainer.save(tmp_path / "genome.pt", latest=False)
+    losses += [trainer.train_step()["loss"] for _ in range(20)]
+
+    resumed = Trainer.resume(
+        path,
+        config=trainer.config,
+        **dict(TOY, checkpoint_turns=True, checkpoint_selective=True, **overrides),
+    )
+    resumed.brain.allow_node_growth = False
+    assert resumed.brain.checkpoint_selective is True, "la reprise a perdu le drapeau sélectif"
+    after = [resumed.train_step()["loss"] for _ in range(20)]
+
+    for index, (a, b) in enumerate(zip(losses[20:], after)):
+        assert abs(a - b) < 1e-6, f"pas {21 + index}: {a!r} vs {b!r}"
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="la mémoire ne se mesure que sur le GPU")
+def test_selective_memory_between_bounds() -> None:
+    """Le pic sélectif est STRICTEMENT entre le pic OFF et le pic ON complet."""
+
+    def peak(checkpoint: bool, selective: bool, edges: int = 1500) -> float:
+        torch.manual_seed(0)
+        brain = Brain(
+            n_nodes=532,
+            dim=32,
+            vocab=64,
+            max_hops=8,
+            max_births=0,
+            max_edges=edges + 64,
+            checkpoint_turns=checkpoint,
+            checkpoint_selective=selective,
+        ).cuda()
+        generator = torch.Generator().manual_seed(7)
+        count = max(1, edges - 12)
+        sources = torch.randint(2, 532, (count,), generator=generator)
+        targets = torch.randint(2, 532, (count,), generator=generator)
+        keep = sources != targets
+        brain.add_edges(sources[keep].tolist(), targets[keep].tolist())
+        x = torch.randint(2, 64, (8, 8), device="cuda")
+        logits, _ = brain(x, grow=False)
+        logits.float().sum().backward()
+        brain.zero_grad(set_to_none=True)
+        torch.cuda.empty_cache()
+        torch.cuda.reset_peak_memory_stats()
+        logits, _ = brain(x, grow=False)
+        logits.float().sum().backward()
+        measured = torch.cuda.max_memory_allocated() / 2**20
+        del logits, x, brain
+        torch.cuda.empty_cache()
+        return measured
+
+    off = peak(False, False)
+    on = peak(True, False)
+    selective = peak(True, True)
+    assert on < selective < off, f"OFF {off:.0f} / sélectif {selective:.0f} / ON {on:.0f} Mo"

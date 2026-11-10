@@ -106,6 +106,7 @@ class Brain(nn.Module):
         birth_seed: int = 0,
         mmap: bool = False,
         checkpoint_turns: bool = False,
+        checkpoint_selective: bool = False,
     ) -> None:
         super().__init__()
         if n_nodes < 8:
@@ -192,6 +193,14 @@ class Brain(nn.Module):
         # replay at backward reads the tour, never the live graph -- a birth or
         # a burial may have happened since (rule 4 of the session brief).
         self.checkpoint_turns = bool(checkpoint_turns)
+        # Selective is a refinement, never a replacement: on its own it would
+        # disable the checkpoint entirely (nothing to restrict).
+        if checkpoint_selective and not checkpoint_turns:
+            raise ValueError(
+                "checkpoint_selective requires checkpoint_turns=True: it only "
+                "restricts what the full checkpoint wraps"
+            )
+        self.checkpoint_selective = bool(checkpoint_selective)
         self.dissipation = float(dissipation)
         # A membrane also cools at every tour, for two reasons: a merge of old
         # and new signal must fade, and a state that only accumulates would grow
@@ -604,16 +613,38 @@ class Brain(nn.Module):
         replay would be a second, invisible mutation; the caller does every
         write (``emitted``, ``usage``, the trace) exactly once, in the forward.
         """
-        empty_long = ids.new_zeros(0)
         out, _gate = self.bank.forward_rows(wave, ids)
+        routed = self._route(out, state, ids, src_all, tgt_all, mask_all, alive_all)
+        return (*routed, out, ids)
+
+    def _route(
+        self,
+        out: torch.Tensor,
+        state: torch.Tensor,
+        ids: torch.Tensor,
+        src_all: torch.Tensor,
+        tgt_all: torch.Tensor,
+        mask_all: torch.Tensor,
+        alive_all: torch.Tensor,
+    ) -> tuple[torch.Tensor, ...]:
+        """Message passing only: the part a *selective* checkpoint replays.
+
+        Split from ``_hop`` on purpose. ``_hop`` also runs the node
+        non-linearity (``forward_rows``); in selective mode the caller wraps
+        this function alone, so the backward recomputes the routing -- measured
+        as the dominant term of the peak -- and reuses the node activations that
+        are still in the autograd graph. Returns the nine routing outputs; the
+        caller keeps ``out`` and the tour's input ids.
+        """
+        empty_long = ids.new_zeros(0)
         if src_all.numel() == 0:
             return (
-                state, wave.new_zeros(0, wave.shape[1], self.dim), empty_long,
-                ids, empty_long, wave.new_zeros(0), empty_long, empty_long,
-                wave.new_zeros(()), out, ids,
+                state, out.new_zeros(0, out.shape[1], self.dim), ids,
+                empty_long, empty_long, out.new_zeros(0), empty_long, empty_long,
+                out.new_zeros(()),
             )
-        row_of = torch.full((self.n_nodes,), -1, dtype=torch.long, device=wave.device)
-        row_of[ids] = torch.arange(ids.numel(), device=wave.device)
+        row_of = torch.full((self.n_nodes,), -1, dtype=torch.long, device=out.device)
+        row_of[ids] = torch.arange(ids.numel(), device=out.device)
         rows = row_of[src_all]
         # A node whose gate is shut sends exactly nothing: it must not appear in
         # the trace as if it had spoken.
@@ -625,9 +656,9 @@ class Brain(nn.Module):
         eids = keep.nonzero(as_tuple=True)[0]
         if eids.numel() == 0:
             return (
-                state, wave.new_zeros(0, wave.shape[1], self.dim), empty_long,
-                ids[fired], empty_long, wave.new_zeros(0), empty_long, empty_long,
-                wave.new_zeros(()), out, ids,
+                state, out.new_zeros(0, out.shape[1], self.dim), empty_long,
+                ids[fired], empty_long, out.new_zeros(0), empty_long, empty_long,
+                out.new_zeros(()),
             )
 
         rows_e = rows[eids]
@@ -635,7 +666,7 @@ class Brain(nn.Module):
         tgt_e = tgt_all[eids]
         mask_e = mask_all[eids]
         receivers, inverse = torch.unique(tgt_e, return_inverse=True)
-        inbox = out.new_zeros(receivers.numel(), wave.shape[1], self.dim)
+        inbox = out.new_zeros(receivers.numel(), out.shape[1], self.dim)
         # D2: the scatter runs on bounded edge chunks, so a hop never
         # materialises [E, B, dim] for the whole wiring at once. The maths is
         # unchanged; only the order of the additions moves, which is why the
@@ -678,8 +709,6 @@ class Brain(nn.Module):
             src_e,
             tgt_e,
             inbox.detach().abs().sum(),
-            out,
-            ids,
         )
 
     def snapshot_telemetry(self) -> dict:
@@ -805,19 +834,39 @@ class Brain(nn.Module):
                 mask_all = self._edge_mask[: self.ne]
                 alive_all = self.node_alive.clone()
                 x = wave
+                hot_in = hot
                 replay = (
                     bool(self.checkpoint_turns)
                     and torch.is_grad_enabled()
                     and x.requires_grad
                 )
-                if replay:
+                if replay and self.checkpoint_selective:
+                    # Selective: the node non-linearity stays in the autograd
+                    # graph, only the routing is recomputed at backward. Less
+                    # recompute than the full checkpoint, so a higher peak and
+                    # a lower time cost -- both to be measured, never assumed.
+                    out, _gate = self.bank.forward_rows(x, hot_in)
+                    routed = _checkpoint(
+                        self._route,
+                        out,
+                        state,
+                        hot_in,
+                        src_all,
+                        tgt_all,
+                        mask_all,
+                        alive_all,
+                        use_reentrant=False,
+                        preserve_rng_state=True,
+                    )
+                    outputs = (*routed, out, hot_in)
+                elif replay:
                     # One checkpoint per tour, non-reentrant: the activations of
                     # the hop are recomputed at backward instead of being kept.
                     outputs = _checkpoint(
                         self._hop,
                         x,
                         state,
-                        hot,
+                        hot_in,
                         src_all,
                         tgt_all,
                         mask_all,
@@ -826,7 +875,7 @@ class Brain(nn.Module):
                         preserve_rng_state=True,
                     )
                 else:
-                    outputs = self._hop(x, state, hot, src_all, tgt_all, mask_all, alive_all)
+                    outputs = self._hop(x, state, hot_in, src_all, tgt_all, mask_all, alive_all)
                 (
                     state,
                     wave,
