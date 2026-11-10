@@ -1,0 +1,105 @@
+{
+  "session": "H",
+  "titre": "la plomberie",
+  "date": "2026-11-10",
+  "etat_final": "bloqué sur le transfert de torch — rapport d'échec documenté, run non lancé",
+  "machine": {
+    "hostname": "IA",
+    "acces": "dieux@192.168.50.53",
+    "os": "Linux 7.0.0-29-generic",
+    "cpu": "Intel Core i7-4710HQ, 8 threads",
+    "ram_mib_total": 7350,
+    "ram_mib_disponible": 1435,
+    "disque": "/dev/sda2 938 Go, 8 % utilisé",
+    "python_systeme": "3.14.4",
+    "pep668": "oui (externally-managed), pas de root sur la machine",
+    "outillage_installe": {
+      "uv": "0.13.7 dans ~/.local/bin, installé sans privilèges",
+      "venv": "~/mycelia/.venv, Python 3.14.4, créé par uv sans ensurepip",
+      "note": "python3.14 -m venv échoue (paquet python3.14-venv absent, installation système impossible sans root)"
+    },
+    "depot": {
+      "tete": "a516706",
+      "branche": "main",
+      "arbre": "propre",
+      "methode": "bundle incrémental 5081127..HEAD, git bundle verify OK"
+    }
+  },
+  "carte": {
+    "nom": "NVIDIA GeForce GTX 860M",
+    "pilote": "580.173.02",
+    "vram_mib": 2048,
+    "utilise_mib": 3,
+    "occupation_pct": 0,
+    "regle7": "satisfaite — carte quasi vide, salle blanche constatée",
+    "etiquette": "[mesuré]"
+  },
+  "reseau": {
+    "ping_serveur": {"envoyes": 30, "recus": 25, "perte_pct": 16.7, "min_ms": 3, "max_ms": 130, "moy_ms": 66},
+    "ping_passerelle": {"envoyes": 20, "recus": 20, "perte_pct": 0.0, "min_ms": 1, "max_ms": 1, "moy_ms": 1},
+    "diagnostic": "la perte est sur le lien radio du serveur, pas sur le LAN : la passerelle répond à 1 ms sans perte",
+    "etiquette": "[mesuré]"
+  },
+  "transferts": [
+    {"methode": "uv pip install --index-url cu126 (serveur -> Internet)", "debit": "1,07 Mo/s en rafale puis 0", "octets_atteints": "~14 Mo", "verdict": "échec : connection reset, uv repart de zéro à chaque essai", "etiquette": "[mesuré]"},
+    {"methode": "curl -C - wheel CPU 169,1 Mo (serveur -> Internet)", "debit": "~600 Ko/s au mieux puis 0", "octets_atteints": "45,5 Mo / 169,1 Mo", "verdict": "échec : resets en boucle, « Recv failure : Connexion réinitialisée »", "etiquette": "[mesuré]"},
+    {"methode": "scp LAN, 1 Mo puis 50 Mo", "debit": "0", "octets_atteints": "0", "verdict": "échec : connection reset à 24 s et 25 s", "etiquette": "[mesuré]"},
+    {"methode": "scp 4 Mo x 6 flux parallèles", "debit": "186 Ko/s utiles", "octets_atteints": "12 / 208 tranches", "verdict": "fonctionne mais lent (39 envois pour 12 succès)", "etiquette": "[mesuré]"},
+    {"methode": "scp 4 Mo x 8 flux parallèles", "debit": "~75 Ko/s utiles", "octets_atteints": "104 071 168 octets (40 tranches)", "verdict": "meilleur résultat de la session, puis dégradation du lien", "etiquette": "[mesuré]"},
+    {"methode": "scp 4 Mo x 24 flux parallèles", "debit": "0", "octets_atteints": "0 tranche vérifiée (1040 envois en 113 s)", "verdict": "échec : étranglement sshd (MaxStartups), les connexions sont refusées instantanément", "etiquette": "[mesuré]"},
+    {"methode": "flux tar unique de 40 Mo", "debit": "0", "octets_atteints": "0", "verdict": "échec : coupure à 24 s (« Timeout, server not responding »)", "etiquette": "[mesuré]"},
+    {"methode": "serveur -> Internet, 8 requêtes Range de 2 Mo en parallèle", "debit": "92 Ko/s", "octets_atteints": "14 292 585 octets en 150 s", "verdict": "fonctionne mais plus lent que le push, et par le même lien radio", "etiquette": "[mesuré]"},
+    {"methode": "serveur -> Internet, une requête Range de 8 Mo", "debit": "48 Ko/s", "octets_atteints": "4 321 174 octets en 90 s", "verdict": "206 confirmé : les Range sont supportées, mais le débit ne suit pas", "etiquette": "[mesuré]"},
+    {"methode": "reprise par offset (tail -c +N | ssh 'cat >>')", "debit": "10 Ko/s", "octets_atteints": "5 235 035 octets", "verdict": "la plus économe en connexions, mais le lien est au plus bas ; laissée en tâche de fond", "etiquette": "[mesuré]"},
+    {"methode": "HTTP : le serveur tire depuis mon poste (python -m http.server)", "debit": "13 Ko/s", "octets_atteints": "0,7 Mo en 55 s", "verdict": "pire que le push, abandonnée", "etiquette": "[mesuré]"}
+  ],
+  "wheel": {
+    "fichier": "torch-2.14.0+cu126-cp314-cp314-manylinux_2_28_x86_64.whl",
+    "octets": 869180118,
+    "md5": "b7da24fc1e10e598215e358666d31174",
+    "dependances": ["sympy", "networkx", "setuptools", "mpmath", "fsspec", "filelock", "jinja2", "MarkupSafe", "typing_extensions"],
+    "total_wheels_locales_octets": 879677434,
+    "emplacement_local": ".server/wheels/ (poste, lien stable, téléchargement réussi)",
+    "presente_sur_le_serveur": false,
+    "meilleur_transfert": 104071168,
+    "etiquette": "[mesuré]"
+  },
+  "missions": {
+    "1_torch": {
+      "etat": "partiel",
+      "fait": ["uv installé sans privilèges", "venv Python 3.14.4 créé", "wheel cu126 cp314 téléchargée et vérifiée sur le poste (869 180 118 octets)", "outil d'envoi reprenable écrit"],
+      "bloque": "transfert de 869 180 118 octets sur un lien à 10-186 Ko/s avec 16 % de perte",
+      "etiquette": "[mesuré]"
+    },
+    "2_benchmark_100_pas": {
+      "etat": "non fait",
+      "raison": "torch absent : aucun pas ne peut être exécuté sur la 860M",
+      "critere_declare_avant_mesure": "100 pas sans OOM, pic cohérent avec 483,73 Mo (session G), temps par pas mesuré sur carte à 0 %",
+      "etiquette": "non mesuré"
+    },
+    "3_campagne_gbis": {
+      "etat": "non fait",
+      "raison": "même blocage",
+      "points_prevus": ["--chunk 2048 vs 512 à seq 128/b16, 3 000 arêtes, checkpoint complet", "mode off à 1 000 arêtes"],
+      "etiquette": "non mesuré"
+    },
+    "run_3000_pas": {"etat": "non lancé", "raison": "aucun « lance » humain, et la machine n'est pas capable de l'exécuter"}
+  },
+  "erreurs_de_conduite": [
+    "J'ai supprimé les 104 071 168 octets déjà reçus par tranches en repassant à la méthode par offset (rm -f ~/<wheel>), perdant 12 % de la wheel. Consigné, pas caché.",
+    "J'ai lancé 24 flux parallèles alors que la mesure à 6 flux montrait déjà des échecs : le résultat a été zéro tranche et un sshd étranglé."
+  ],
+  "trous": [
+    "Aucune validation CUDA sur Maxwell : la compatibilité sm_50 de torch 2.14.0+cu126 vient du commentaire de requirements.txt, elle n'a pas été constatée sur la machine [supposé].",
+    "Aucun test CPU n'a tourné sur le serveur (torch absent) : la suite 59 passed / 3 skipped reste [mesuré] sur le poste seulement.",
+    "Aucun chiffre de temps propre : la salle blanche est constatée mais n'a servi à rien.",
+    "Le pic de 483,73 Mo reste [mesuré en session G sur RTX 3070] ; il n'a pas été reproduit sur la 860M.",
+    "Les débits ci-dessus sont mesurés sur une fenêtre de deux heures ; ils varient d'un facteur 10 et ne sont pas extrapolables."
+  ],
+  "pour_finir": {
+    "octets_restants": 863944783,
+    "duree_estimee": "3 h à 24 h selon la qualité du lien [estimé depuis 10-75 Ko/s mesurés]",
+    "methode_la_plus_avancee": "tranches de 4 Mo, 6 flux, vérification md5 par lot (186 Ko/s utiles, 104 Mo atteints une fois)",
+    "remède_structurel": "brancher le serveur en Ethernet : la passerelle répond à 1 ms sans perte, seul le lien radio du serveur perd des paquets"
+  }
+}
