@@ -925,6 +925,8 @@ def _as_args(cfg: dict, steps: int) -> list[str]:
         args.append("--checkpoint-turns")
     if cfg.get("checkpoint_selective"):
         args.append("--checkpoint-selective")
+    if int(cfg.get("chunk", 512)) != 512:
+        args += ["--chunk", str(cfg["chunk"])]
     if not cfg.get("release_telemetry", True):
         args.append("--keep-telemetry")
     return args
@@ -1250,6 +1252,9 @@ def main(argv: list[str] | None = None) -> None:
     one_parser.add_argument("--clear-telemetry", action="store_true")
     one_parser.add_argument("--checkpoint-turns", action="store_true")
     one_parser.add_argument("--checkpoint-selective", action="store_true")
+    # Session G, levier (a) : la taille de chunk commande le nombre de kernels
+    # du scatter. Plus gros = moins de lancements, plus de mémoire.
+    one_parser.add_argument("--chunk", type=int, default=512)
     one_parser.add_argument("--keep-telemetry", action="store_true")
 
     args = parser.parse_args(argv)
@@ -1317,6 +1322,7 @@ def main(argv: list[str] | None = None) -> None:
             "clear_telemetry": bool(args.clear_telemetry),
             "checkpoint_turns": bool(args.checkpoint_turns),
             "checkpoint_selective": bool(args.checkpoint_selective),
+            "chunk": int(args.chunk),
             "release_telemetry": not args.keep_telemetry,
         }
         try:
