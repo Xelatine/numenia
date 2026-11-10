@@ -584,6 +584,7 @@ def make_trainer(cfg: dict, device: torch.device, prune_every: int | None = None
         enable_growth=bool(cfg.get("growth", True)),
         enable_lifecycle=bool(cfg.get("lifecycle", True)),
         checkpoint_turns=bool(cfg.get("checkpoint_turns", False)),
+        checkpoint_selective=bool(cfg.get("checkpoint_selective", False)),
     )
     trainer.tbptt = int(cfg.get("tbptt", 16))
     if not cfg.get("growth", True):
@@ -922,6 +923,8 @@ def _as_args(cfg: dict, steps: int) -> list[str]:
         args.append("--clear-telemetry")
     if cfg.get("checkpoint_turns"):
         args.append("--checkpoint-turns")
+    if cfg.get("checkpoint_selective"):
+        args.append("--checkpoint-selective")
     if not cfg.get("release_telemetry", True):
         args.append("--keep-telemetry")
     return args
@@ -1246,6 +1249,7 @@ def main(argv: list[str] | None = None) -> None:
     one_parser.add_argument("--losses", action="store_true")
     one_parser.add_argument("--clear-telemetry", action="store_true")
     one_parser.add_argument("--checkpoint-turns", action="store_true")
+    one_parser.add_argument("--checkpoint-selective", action="store_true")
     one_parser.add_argument("--keep-telemetry", action="store_true")
 
     args = parser.parse_args(argv)
@@ -1312,6 +1316,7 @@ def main(argv: list[str] | None = None) -> None:
             "growth": not args.no_growth,
             "clear_telemetry": bool(args.clear_telemetry),
             "checkpoint_turns": bool(args.checkpoint_turns),
+            "checkpoint_selective": bool(args.checkpoint_selective),
             "release_telemetry": not args.keep_telemetry,
         }
         try:

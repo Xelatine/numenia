@@ -372,6 +372,13 @@ class Trainer:
             # ``checkpoint_turns=True`` would silently run without it.
             if "checkpoint_turns" in brain_overrides:
                 self.brain.checkpoint_turns = bool(brain_overrides["checkpoint_turns"])
+            if "checkpoint_selective" in brain_overrides:
+                selective = bool(brain_overrides["checkpoint_selective"])
+                if selective and not self.brain.checkpoint_turns:
+                    raise ValueError(
+                        "checkpoint_selective requires checkpoint_turns: pass both on resume"
+                    )
+                self.brain.checkpoint_selective = selective
         self.brain.clock = self.step
         # Ablation arm (rapports/ABLATION-croissance.md): a fixed random graph of the
         # same size as the grown one. Nothing is born, nothing dies. Only a
@@ -833,6 +840,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="recalculer chaque tour au backward (moins de mémoire, plus de temps)",
     )
+    # Session G: the selective refinement of the same lever. It only restricts
+    # what the full checkpoint wraps (the routing), so it needs the first flag.
+    parser.add_argument(
+        "--checkpoint-selective",
+        action="store_true",
+        help="ne checkpoint-er que le message passing, laisser les MLP dans l'autograd",
+    )
     return parser.parse_args(argv)
 
 
@@ -871,6 +885,14 @@ def main(argv: list[str] | None = None) -> None:
     if args.checkpoint_turns:
         trainer.brain.checkpoint_turns = True
         trainer.log(f"checkpointing par tour : ON (drapeau) | device {trainer.device}")
+    if args.checkpoint_selective:
+        if not args.checkpoint_turns:
+            raise SystemExit(
+                "--checkpoint-selective exige --checkpoint-turns : le sélectif restreint "
+                "ce que le checkpoint complet enveloppe, il ne le remplace pas"
+            )
+        trainer.brain.checkpoint_selective = True
+        trainer.log("checkpointing sélectif : ON (routage seul, MLP dans l'autograd)")
     # --save-every stays available as an extra trigger; the clock is the rule.
 
     brain = trainer.brain
