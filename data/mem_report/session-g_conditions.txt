@@ -1,0 +1,16 @@
+# Session G — conditions de carte (règle 7)
+date: 2026-11-10T21:34:10+01:00
+commit: 5081127
+gpu: NVIDIA GeForce RTX 3070 Laptop GPU
+driver: 610.88
+vram totale: 8192 MiB
+vram occupee: 1854 MiB
+vram libre: 6098 MiB
+temperature: 55 C
+torch: 2.11.0+cu128 cuda 12.8
+python: 3.12.10
+occupation etrangere mesuree: 1854 MiB sur 8192 MiB
+verdict regle 7: CLASSE CHRONOMETRAGE NON PROPRE (1854 Mio > 1000 Mio)
+  processus concernes: navigateurs, Steam, Discord, Epic, overlay NVIDIA (non tuables)
+  consequence: les ms/pas de cette session se comparent ENTRE EUX (a carte egale),
+  pas aux chiffres absolus de la session F, mesures a occupation plus faible.

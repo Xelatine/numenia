@@ -1,0 +1,317 @@
+{
+  "session": "G",
+  "mesures": [
+    {
+      "edges": 1000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "off",
+      "steps": 2,
+      "wall_s": 31.6,
+      "ms_per_step": 7962.9,
+      "peak_mib": 352.45,
+      "baseline_allocated_mib": 82.24,
+      "gpu_used_mib_at_start": 5504.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 1000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "on",
+      "steps": 2,
+      "wall_s": 37.5,
+      "ms_per_step": 8967.3,
+      "peak_mib": 187.02,
+      "baseline_allocated_mib": 82.24,
+      "gpu_used_mib_at_start": 5587.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 1000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "selective",
+      "steps": 2,
+      "wall_s": 32.4,
+      "ms_per_step": 8330.9,
+      "peak_mib": 292.17,
+      "baseline_allocated_mib": 82.24,
+      "gpu_used_mib_at_start": 5681.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 2000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "off",
+      "steps": 2,
+      "wall_s": 30.2,
+      "ms_per_step": 7602.1,
+      "peak_mib": 2376.13,
+      "baseline_allocated_mib": 84.83,
+      "gpu_used_mib_at_start": 7728.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 2000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "on",
+      "steps": 2,
+      "wall_s": 41.6,
+      "ms_per_step": 11292.5,
+      "peak_mib": 264.47,
+      "baseline_allocated_mib": 84.08,
+      "gpu_used_mib_at_start": 5632.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 2000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "selective",
+      "steps": 2,
+      "wall_s": 39.3,
+      "ms_per_step": 11049.0,
+      "peak_mib": 919.84,
+      "baseline_allocated_mib": 85.49,
+      "gpu_used_mib_at_start": 6244.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "off",
+      "steps": 2,
+      "wall_s": 40.0,
+      "ms_per_step": 10409.1,
+      "peak_mib": 4212.7,
+      "baseline_allocated_mib": 83.0,
+      "gpu_used_mib_at_start": 7739.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "on",
+      "steps": 2,
+      "wall_s": 54.2,
+      "ms_per_step": 16155.0,
+      "peak_mib": 311.63,
+      "baseline_allocated_mib": 84.21,
+      "gpu_used_mib_at_start": 4776.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "tbptt": 16,
+      "mode": "selective",
+      "steps": 2,
+      "wall_s": 54.1,
+      "ms_per_step": 14589.8,
+      "peak_mib": 1183.84,
+      "baseline_allocated_mib": 84.83,
+      "gpu_used_mib_at_start": 5854.0,
+      "losses": [
+        9.20848,
+        9.20655
+      ]
+    },
+    {
+      "edges": 3000,
+      "seq": 128,
+      "batch": 16,
+      "tbptt": 16,
+      "mode": "on",
+      "steps": 2,
+      "wall_s": 197.0,
+      "ms_per_step": 64542.1,
+      "peak_mib": 483.73,
+      "baseline_allocated_mib": 84.47,
+      "gpu_used_mib_at_start": 5392.0,
+      "losses": [
+        9.20831,
+        9.20622
+      ]
+    },
+    {
+      "edges": 3000,
+      "seq": 128,
+      "batch": 16,
+      "tbptt": 16,
+      "mode": "selective",
+      "steps": 2,
+      "wall_s": 210.1,
+      "ms_per_step": 67208.8,
+      "peak_mib": 1695.71,
+      "baseline_allocated_mib": 84.16,
+      "gpu_used_mib_at_start": 6990.0,
+      "losses": [
+        9.20831,
+        9.20622
+      ]
+    }
+  ],
+  "leviers_temps": [
+    {
+      "levier": "a_taille_de_chunk",
+      "chunk": 2048,
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "mode": "off",
+      "ms_per_step": 6955.5,
+      "peak_mib": 4261.32,
+      "wall_s": 32.8,
+      "erreur": null
+    },
+    {
+      "levier": "a_taille_de_chunk",
+      "chunk": 8192,
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "mode": "off",
+      "ms_per_step": 9574.1,
+      "peak_mib": 4277.25,
+      "wall_s": 34.6,
+      "erreur": null
+    },
+    {
+      "levier": "c_torch_compile",
+      "edges": 1000,
+      "seq": 32,
+      "batch": 8,
+      "temps_s": 27.5,
+      "resultat": "aucune sortie",
+      "erreur": " | Set TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\""
+    },
+    {
+      "levier": "a_taille_de_chunk",
+      "chunk": 512,
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "mode": "off",
+      "ms_per_step": 12778.5,
+      "peak_mib": 4212.7,
+      "wall_s": 46.0,
+      "erreur": null
+    },
+    {
+      "levier": "a_taille_de_chunk",
+      "chunk": 1024,
+      "edges": 3000,
+      "seq": 32,
+      "batch": 8,
+      "mode": "off",
+      "ms_per_step": 12343.9,
+      "peak_mib": 4209.97,
+      "wall_s": 44.0,
+      "erreur": null
+    }
+  ],
+  "conditions": {
+    "fichier": "data/mem_report/session-g_conditions.txt",
+    "regle_7_respectee": false,
+    "occupation_etrangere_mib": "1854 à 7728 pendant la session",
+    "utilization_gpu_pct": "48-78",
+    "consequence": "temps absolus non comparables aux sessions précédentes ; seuls les rapports internes valent",
+    "memoire_fiable": true,
+    "preuve_memoire": "352,45 Mo à 1 000 arêtes et 311,63 Mo à 3 000 (ON), identiques à la session F"
+  },
+  "ratios": {
+    "1000_seq32": {
+      "on_sur_off": 1.1261,
+      "selectif_sur_off": 1.0462
+    },
+    "2000_seq32": {
+      "on_sur_off": 1.4854,
+      "selectif_sur_off": 1.4534
+    },
+    "3000_seq32": {
+      "on_sur_off": 1.552,
+      "selectif_sur_off": 1.4016
+    },
+    "3000_seq128": {
+      "selectif_sur_on_temps": 1.0413,
+      "selectif_sur_on_pic": 3.505
+    },
+    "selectif_gain_sur_on": {
+      "1000": 0.071,
+      "2000": 0.0216,
+      "3000": 0.0969
+    }
+  },
+  "criteres": {
+    "declares_avant_mesure": {
+      "surcout_temps_max": 1.4,
+      "pic_max_mib": 1500,
+      "config": "3000 arêtes, seq 32/b8/tbptt 16"
+    },
+    "mesures": {
+      "surcout_temps": 1.4016,
+      "pic_mib": 1183.84
+    },
+    "verdict_temps": "RATE",
+    "verdict_pic": "TENU",
+    "marge_temps_pct": 0.16
+  },
+  "verdict": {
+    "selectif": "n'atteint pas le critère temps (×1,4016 pour ×1,4) et perd à seq 128 (+4,1 % de temps, pic ×3,5)",
+    "recommandation_run": "checkpoint complet (--checkpoint-turns seul), sélectif écarté à seq 128",
+    "seul_levier_gagnant": "--chunk 2048 : −45,6 % à 3 000 arêtes seq 32, pic +1,2 %"
+  },
+  "duree_run_texte": {
+    "config": "3000 arêtes, seq 128/b16, checkpoint complet",
+    "ms_par_pas_mesure": 64542.1,
+    "pas": 3000,
+    "heures_estimees_aujourdhui": 53.8,
+    "heures_estimees_session_f": 9.3,
+    "note": "l'écart ×5,8 est l'occupation étrangère de la carte, pas le code : même pic mémoire à 0,01 Mo près"
+  },
+  "trous": [
+    "chronométrage contaminé (règle 7 non respectée), temps non comparables aux sessions précédentes",
+    "seq 128 sous-mesuré : un seul point, pas de mode off (pic 4212,70 Mo, carte pleine)",
+    "8 000 arêtes seq 128 non refait (101,8 s/pas en session F)",
+    "groupe l0 (télémétrie conservée) non exécuté",
+    "levier (a) non mesuré à seq 128, donc non recommandé pour le run"
+  ]
+}
