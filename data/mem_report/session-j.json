@@ -1,0 +1,96 @@
+{
+  "session": "J",
+  "date": "2026-11-11",
+  "machine": {
+    "hostname": "IA",
+    "ram_mo_total": 7350,
+    "ram_mo_disponible_apres_nettoyage": 6216,
+    "gpu": "GTX 860M",
+    "gpu_mo_utilises": 3,
+    "gpu_pct": 0,
+    "note": "la machine a 7 350 Mo et non 16 Go comme annonce dans le brief",
+    "etiquette": "[mesuré]"
+  },
+  "salle_blanche": {
+    "conteneurs_avant": 23,
+    "conteneurs_apres": 0,
+    "restart_no": 24,
+    "ram_disponible_avant_mo": 1366,
+    "ram_disponible_apres_mo": 6216,
+    "swap_avant_mo": 3797,
+    "swap_apres_mo": 305,
+    "charge_avant": "56 a 102",
+    "charge_apres": 1.08,
+    "services_systemd": "deja inactive avant intervention",
+    "etiquette": "[mesuré]"
+  },
+  "gpu": {
+    "venv": ".venv-cu126",
+    "python": "3.12.16 (python-build-standalone)",
+    "torch": "2.14.0+cu126",
+    "arch_list": ["sm_50", "sm_60", "sm_70", "sm_75", "sm_80", "sm_86", "sm_90"],
+    "disponible": true,
+    "cartes": 1,
+    "nom": "NVIDIA GeForce GTX 860M",
+    "capacite": [5, 0],
+    "sm_50_constate": true,
+    "etiquette": "[mesuré]"
+  },
+  "correction_du_diagnostic_precedent": {
+    "affirmation_corrigee": "nccl 2.29.3 et cudnn 9.10.2.21 existent, mais sous manylinux_2_18_x86_64 et manylinux_2_27_x86_64, etiquettes absentes de mes filtres pip",
+    "reste_vrai": "triton 3.8 n'a pas de wheel cp314, d ou la necessite de Python 3.12",
+    "etiquette": "[mesuré]"
+  },
+  "lot_transfere": {
+    "roues": 27,
+    "octets": 3636963137,
+    "python_portable_octets": 68163679,
+    "python_portable_md5": "fe3c763ce578c2f25f52e0bf1e686a16",
+    "incident": "disque local a 100 pour cent : neuf roues creees vides et trois tronquees (cublas, cufft, curand), reconstruites depuis le wheelhouse d origine",
+    "etiquette": "[mesuré]"
+  },
+  "benchmark": {
+    "publie_comme_reference": false,
+    "echelles_disponibles": {"0": 512, "1": 302, "2": 3000, "3": 140000},
+    "echelle_1000_noeuds": "inexistante dans le code",
+    "mesure_obtenue": {
+      "noeuds": 302,
+      "aretes": 1500,
+      "batch": 2,
+      "seq": 16,
+      "dim": 32,
+      "hops": 8,
+      "tbptt": 16,
+      "iterations": 20,
+      "mediane_ms_par_pas": 3214,
+      "min_ms": 2985,
+      "max_ms": 5433,
+      "ram_mo": 2382,
+      "derive_commit_par_pas": 10,
+      "reserve": "quatre processus bench_step residuels actifs au lancement",
+      "etiquette": "[mesuré, conditions non propres]"
+    },
+    "oom": {
+      "pid": 146380,
+      "anon_rss_ko": 6451000,
+      "total_vm_ko": 14846704,
+      "contexte": "512 noeuds, 4000 aretes, batch 16, seq 128",
+      "etiquette": "[mesuré]"
+    },
+    "tentative_propre": "lancee, aucune sortie : processus mort avec la session ssh",
+    "run_3000_pas": {"lance": false}
+  },
+  "reseau": {
+    "chemin": "IPv6 lien-local SERVEUR-IPV6%15",
+    "enp8s0": "toujours 169.254.184.83/16, aucun bail DHCP",
+    "netplan_dropin_installe": false,
+    "wifi": "associe au SSID wifi mais ne route plus : passerelle 100 pour cent de perte, pypi 000",
+    "etiquette": "[mesuré]"
+  },
+  "git": {
+    "push_effectue": "4a6f673..7a8e04c vers origin/main",
+    "commit_local_scale": "1e3fcbe (feat(bench): --scale)"
+  },
+  "en_attente_droits_root": ["netplan apply", "swapoff -a puis swapon -a"],
+  "genome_myc": "absent du depot serveur"
+}

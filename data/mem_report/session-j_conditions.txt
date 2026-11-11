@@ -1,0 +1,45 @@
+Session J — conditions de mesure
+================================
+Machine : IA (accès IPv6 lien-local SERVEUR-IPV6%15)
+Date : 2026-11-11
+CPU : i7-4710HQ, 8 threads
+RAM : 7 350 Mo au total (et non 16 Go comme annonce dans le brief)
+GPU : GTX 860M, 3 MiB utilises sur 2 048, 0 % d utilisation
+Swap : 4 095 Mo au total
+
+Nettoyage effectue cette session
+-------------------------------
+Conteneurs docker : 23 actifs -> 0, et 24 passes en restart=no
+Services systemd : deja inactive avant intervention
+RAM disponible : 1 366 Mo -> 6 216 Mo
+Swap utilise : 3 797 Mo -> 305 Mo
+Charge moyenne : 56 a 102 -> 1,08 puis 2,66
+
+Reseau
+------
+Chemin utilise : Ethernet IPv6 lien-local (index 15 cote poste), 0 ms, 0 %.
+enp8s0 : toujours 169.254.184.83/16, aucun bail DHCP, drop-in netplan NON installe.
+WiFi : associe (SSID wifi, 5 GHz) mais ne route plus : passerelle PASSERELLE-LAN a
+  100 % de perte, PyPI et PyTorch en 000.
+
+GPU — constate
+--------------
+venv .venv-cu126 / CPython 3.12.16 / torch 2.14.0+cu126
+arch_list : ['sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86', 'sm_90']
+torch.cuda.is_available() : True
+torch.cuda.get_device_capability(0) : (5, 0)
+=> sm_50 constate, plus suppose.
+
+Benchmark — resultat publie avec reserve
+----------------------------------------
+302 noeuds / 1 500 aretes / batch 2 / seq 16 / dim 32 / hops 8 / tbptt 16
+mediane 3 214 ms/pas sur 20 iterations [2 985 - 5 433], RAM 2 382 Mo.
+RESERVE : quatre processus bench_step.py residuels etaient actifs au lancement.
+Cette valeur n est pas une mesure de reference.
+
+Limite memoire mesuree
+----------------------
+512 noeuds / 4 000 aretes / batch 16 / seq 128 :
+Out of memory: Killed process 146380 (python)
+  total-vm:14846704kB, anon-rss:6451000kB
+Le graphe seul reclame environ 6,45 Go sur une machine de 7,35 Go.
