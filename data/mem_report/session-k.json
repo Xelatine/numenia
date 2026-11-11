@@ -1,0 +1,52 @@
+{
+  "session": "K",
+  "date": "2026-11-11",
+  "echelle": {
+    "decision": "ajouter une echelle 4 a 1000 noeuds sans renumeroter 0..3",
+    "avant": {"0": 512, "1": 302, "2": 3000, "3": 140000},
+    "apres": {"0": 512, "1": 302, "2": 3000, "3": 140000, "4": 1000},
+    "commit": "9299b24",
+    "pousse": true,
+    "etiquette": "[mesuré]"
+  },
+  "conditions": {
+    "conteneurs_actifs": 0,
+    "conteneurs_restart_no": 24,
+    "charge_avant": "0.06 0.02 0.02",
+    "ram_disponible_mo": 6142,
+    "swap_mo": 723,
+    "gpu_mo_utilises": 3,
+    "gpu_pct": 0,
+    "processus_residuels": 0,
+    "acces": "IPv6 lien-local du cable, 0 ms, 0 pour cent de perte",
+    "etiquette": "[mesuré]"
+  },
+  "benchmark": {
+    "parametres_communs": {"aretes": 1500, "batch": 2, "seq": 16, "dim": 32, "hops": 8, "tbptt": 16, "data": "toy", "device": "cpu"},
+    "points": [
+      {"noeuds": 302, "iterations": 20, "mediane_ms": 2932, "min_ms": 2810, "max_ms": 3074, "ram_mo": 2385, "derive_mo_par_pas": 10},
+      {"noeuds": 512, "iterations": 10, "mediane_ms": 2826, "min_ms": 2751, "max_ms": 3026, "ram_mo": 2034, "derive_mo_par_pas": 18},
+      {"noeuds": 1000, "iterations": 10, "mediane_ms": 2099, "min_ms": 2010, "max_ms": 2238, "ram_mo": 1045, "derive_mo_par_pas": 13}
+    ],
+    "reference": {"noeuds": 1000, "mediane_ms": 2099, "etiquette": "[mesuré]"},
+    "anomalie": "1000 noeuds est plus rapide que 302 a aretes egales ; coherent avec un graphe plus dilue, non demontre",
+    "etiquette": "[mesuré]"
+  },
+  "diagnostic_memoire_corrige": {
+    "conclusion_session_j": "empreinte du graphe, 6,45 Go a 512 noeuds",
+    "conclusion_session_k": "l empreinte vient du produit batch x seq, pas du nombre de noeuds",
+    "preuve": {"batch16_seq128_512_noeuds_mo": 6450, "batch2_seq16_1000_noeuds_mo": 1045},
+    "optimisation_code_necessaire": false,
+    "etiquette": "[mesuré]"
+  },
+  "ouvert": {
+    "derive_mo_par_pas": 13,
+    "extrapolation_3000_pas_go": 38,
+    "duree_estimee_3000_pas_s": 6297000,
+    "run_3000_pas_lance": false,
+    "netplan_applique": false,
+    "enp8s0": "169.254.184.83/16",
+    "wifi": "associe mais ne route rien",
+    "genome_myc": "absent du depot local et serveur"
+  }
+}
