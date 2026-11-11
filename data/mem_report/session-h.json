@@ -85,6 +85,16 @@
     },
     "run_3000_pas": {"etat": "non lancé", "raison": "aucun « lance » humain, et la machine n'est pas capable de l'exécuter"}
   },
+  "retest": {
+    "quand": "même nuit, second essai, environ deux heures après le premier",
+    "ping_serveur": {"envoyes": 12, "recus": 9, "perte_pct": 25.0, "min_ms": 3, "max_ms": 991, "moy_ms": 158},
+    "connexions_ssh": "5 refus sur 6 : « Connection closed by SERVEUR-LAN port 22 »",
+    "scp_8_ko": "échec (connection closed, 19 s)",
+    "scp_4_mo": "échec (connection closed)",
+    "reprise_par_offset": {"octets_avant": 16597738, "octets_apres": 22245730, "gain_octets": 5647992, "fenetre_s": 290, "debit_kos": 19},
+    "verdict": "le transfert fonctionne encore, mais uniquement par le flux ssh 'cat >>' ; scp est désormais refusé et la perte atteint 25 %",
+    "etiquette": "[mesuré]"
+  },
   "erreurs_de_conduite": [
     "J'ai supprimé les 104 071 168 octets déjà reçus par tranches en repassant à la méthode par offset (rm -f ~/<wheel>), perdant 12 % de la wheel. Consigné, pas caché.",
     "J'ai lancé 24 flux parallèles alors que la mesure à 6 flux montrait déjà des échecs : le résultat a été zéro tranche et un sshd étranglé."
