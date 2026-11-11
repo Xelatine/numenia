@@ -99,7 +99,7 @@ def main(argv: list[str] | None = None) -> None:
     # Le point de mesure de la session I est « 1 000 nœuds » : sans ce levier,
     # le script prend l'échelle de la config (512 nœuds pour le jouet) et l'on
     # mesure une autre taille que celle annoncée.
-    parser.add_argument("--scale", type=int, default=None, choices=[0, 1, 2, 3])
+    parser.add_argument("--scale", type=int, default=None, choices=[0, 1, 2, 3, 4])
     args = parser.parse_args(argv)
 
     try:

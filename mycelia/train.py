@@ -821,7 +821,7 @@ class Trainer:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="train the mycelia brain")
     parser.add_argument("--data", choices=["toy", "text"], default="toy")
-    parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3])
+    parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3, 4])
     parser.add_argument("--steps", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--seq-len", type=int, default=None)

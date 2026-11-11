@@ -16,12 +16,16 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "configs" / "config.yaml"
 
 # Node budget per scale. 302 is a wink at C. elegans; 140 000 is the fly.
-SCALE_NODES = {0: 512, 1: 302, 2: 3000, 3: 140_000}
+# 4: 1 000 is the nominal size the protocol has always announced, and that no
+# scale provided — it is added here rather than renumbering 0..3, which would
+# invalidate every figure already published against them.
+SCALE_NODES = {0: 512, 1: 302, 2: 3000, 3: 140_000, 4: 1_000}
 SCALE_NAMES = {
     0: "prototype (RTX 3070, 8 Go)",
     1: "C. elegans",
     2: "fly larva",
     3: "fly (long term, mmap)",
+    4: "nominal (1 000 nodes)",
 }
 
 DEFAULTS: dict[str, Any] = {
