@@ -42,13 +42,18 @@ from mycelia.train import Trainer, process_memory  # noqa: E402
 
 
 def build_trainer(
-    config: dict, batch: int, seq: int, device: str | None, data: str = "toy"
+    config: dict,
+    batch: int,
+    seq: int,
+    device: str | None,
+    data: str = "toy",
+    scale: int | None = None,
 ) -> Trainer:
     return Trainer(
         config=config,
         data=data,
         device=device,
-        scale=int(config["brain"]["scale"]),
+        scale=int(config["brain"]["scale"] if scale is None else scale),
         batch_size=batch,
         seq_len=seq,
     )
@@ -91,6 +96,10 @@ def main(argv: list[str] | None = None) -> None:
     # Overrides the config the way a run would, so the effect of a knob is a
     # measurement and not an opinion.
     parser.add_argument("--tbptt", type=int, default=None)
+    # Le point de mesure de la session I est « 1 000 nœuds » : sans ce levier,
+    # le script prend l'échelle de la config (512 nœuds pour le jouet) et l'on
+    # mesure une autre taille que celle annoncée.
+    parser.add_argument("--scale", type=int, default=None, choices=[0, 1, 2, 3])
     args = parser.parse_args(argv)
 
     try:
@@ -101,7 +110,9 @@ def main(argv: list[str] | None = None) -> None:
     config = load_config()
     default_seq = config["training"]["text_seq" if args.data == "text" else "toy_seq"]
     seq = int(args.seq if args.seq is not None else default_seq)
-    trainer = build_trainer(config, args.batch, seq, args.device, args.data)
+    trainer = build_trainer(
+        config, args.batch, seq, args.device, args.data, scale=args.scale
+    )
     if args.tbptt is not None:
         trainer.tbptt = int(args.tbptt)
     brain = trainer.brain
