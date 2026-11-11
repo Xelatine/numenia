@@ -1,0 +1,31 @@
+Session I — conditions de mesure
+================================
+Machine : IA (serveur SERVEUR-LAN / SERVEUR-IPV6)
+Date : 2026-11-11
+CPU : i7-4710HQ, 8 threads
+RAM : 7 350 Mo au total, 1 575 Mo disponibles au moment des mesures
+GPU : NVIDIA GeForce GTX 860M, 3 MiB utilises sur 2 048 Mo, 0 % d'utilisation
+Disque : SSD 1 To, 8 % utilise
+
+Reseau
+------
+Chemin utilise : Ethernet IPv6 lien-local, interface enp8s0 du serveur
+  (index 15 cote poste). enp8s0 : UP, LOWER_UP, carrier 1, vitesse 1 000 Mb/s.
+  Aucun bail DHCP : adresse lien-local 169.254.184.83/16 seulement.
+  Profil netplan responsable : netplan-enp8s0.
+WiFi (wlp7s0) : non utilise pour les transferts de cette session.
+
+Debits mesures
+--------------
+Wheel torch 869 180 118 o          : 10 s -> 82,9 MiB/s (663 Mbit/s)
+Wheelhouse 879 677 434 o           : 10 s -> 83,9 MiB/s
+Dependances projet 101 410 221 o   :  3 s -> 32,2 MiB/s
+Fermeture CUDA 2 483 565 691 o     : 24 s -> 98,7 MiB/s
+
+Etat de la machine pendant les mesures (viole la regle de la salle blanche)
+--------------------------------------------------------------------------
+Charge moyenne : entre 56 et 102 selon les releves
+Services etrangers actifs : clickhouse-server, litellm, open-webui, speaches,
+  hermes gateway, ods-mdns, dockerd + containerd + une douzaine de conteneurs,
+  opencode serve, unattended-upgrades.
+Consequence : aucun temps par pas n'est publie comme mesure dans cette session.

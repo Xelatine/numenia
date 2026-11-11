@@ -1,0 +1,89 @@
+{
+  "session": "I",
+  "date": "2026-11-11",
+  "machine": {
+    "hostname": "IA",
+    "cpu": "i7-4710HQ 8 threads",
+    "ram_mo_total": 7350,
+    "ram_mo_disponible": 1575,
+    "gpu": "GTX 860M",
+    "gpu_mo_utilises": 3,
+    "gpu_pct": 0,
+    "charge_moyenne": "56 a 102",
+    "etiquette": "[mesuré]"
+  },
+  "reseau": {
+    "decouverte": "enp8s0 UP/LOWER_UP carrier 1 vitesse 1000, adresse lien-local 169.254.184.83/16 seule, profil netplan-enp8s0 sans bail DHCP",
+    "chemin_utilise": "IPv6 lien-local SERVEUR-IPV6%15 (index 15 cote poste)",
+    "ping_filaire": {"envoyes": 4, "recus": 4, "perte_pct": 0, "moy_ms": 0},
+    "etiquette": "[mesuré]"
+  },
+  "debits": {
+    "wheel_torch": {
+      "octets": 869180118,
+      "secondes": 10,
+      "mib_par_s": 82.9,
+      "md5": "b7da24fc1e10e598215e358666d31174",
+      "md5_conforme": true
+    },
+    "wheelhouse": {"octets": 879677434, "secondes": 10, "mib_par_s": 83.9},
+    "dependances_projet": {"octets": 101410221, "secondes": 3, "mib_par_s": 32.2},
+    "fermeture_cuda": {"octets": 2483565691, "secondes": 24, "mib_par_s": 98.7},
+    "comparaison_session_h": "19 Ko/s au mieux -> 82,9 MiB/s, facteur environ 4500",
+    "etiquette": "[mesuré]"
+  },
+  "installation": {
+    "depot_serveur": {"tete": "e998821", "propre": true, "bundle_octets": 3958},
+    "torch_cu126": {
+      "resultat": "echec",
+      "erreur": "undefined symbol: ncclCommGrow",
+      "ldd_manquants": [
+        "libcufft.so.11",
+        "libcufile.so.0",
+        "libcupti.so.12",
+        "libcurand.so.10",
+        "libcusparseLt.so.0",
+        "libcusparse.so.12",
+        "libnccl.so.2",
+        "libnvshmem_host.so.3"
+      ],
+      "cause": "pins nccl 2.29.3, cudnn 9.10.2.21 et triton ~3.8.0 non publies pour cp314 ; nccl disponible plafonne a 2.27.7"
+    },
+    "torch_cpu": {"version": "2.14.0+cpu", "octets": 196260719, "import": "OK"},
+    "modules": [
+      "numpy 2.5.4",
+      "pytest",
+      "fastapi",
+      "pydantic",
+      "httpx",
+      "uvicorn",
+      "datasets",
+      "tokenizers",
+      "pyarrow",
+      "PyYAML"
+    ]
+  },
+  "tests_cpu": {"passed": 58, "skipped": 4, "duree_s": 102.67, "etiquette": "[mesuré]"},
+  "gpu": {
+    "sm_50_constate": false,
+    "capacite_attendue": [5, 0],
+    "raison": "build cpu installe ; build cu126 impossible a lier",
+    "etiquette": "[supposé]"
+  },
+  "benchmark_100_pas": {
+    "publie": false,
+    "tentatives": [
+      {"iters": 100, "resultat": "processus mort sans ecrire de ligne"},
+      {"iters": 8, "resultat": "processus lance pid 66475, sshd injoignable ensuite sur 6 tentatives"}
+    ],
+    "raison": "machine saturee : charge 56 a 102, 1575 Mo disponibles, services etrangers actifs",
+    "etiquette": "[non mesuré]"
+  },
+  "run_3000_pas": {"lance": false},
+  "erreurs_de_conduite": [
+    "scp -r a cree ~/cuda-min/cuda-min : 5 paquets installes au lieu de 16",
+    "glob ~/cpu/*.whl non expanse passe a uv avant creation du repertoire distant",
+    "deux benchmarks lances sans python -u, sortie restee dans le tampon",
+    "trois iterations CUDA une par une avant d utiliser ldd"
+  ]
+}
