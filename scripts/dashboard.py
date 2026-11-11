@@ -30,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train", action="store_true", help="train live (default)")
     parser.add_argument("--checkpoint", type=Path, default=None, help="observe a saved genome instead")
     parser.add_argument("--data", choices=["toy", "text"], default="text")
-    parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3])
+    parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3, 4])
     parser.add_argument("--steps", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=None)
     parser.add_argument("--seq-len", type=int, default=None)
