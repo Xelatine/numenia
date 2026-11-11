@@ -1,0 +1,34 @@
+Session K — conditions de mesure
+================================
+Machine : IA (accès IPv6 lien-local du câble, 0 ms, 0 % de perte)
+Date : 2026-11-11
+CPU : i7-4710HQ, 8 threads
+RAM : 7 350 Mo au total, 6 142 Mo disponibles au départ
+Swap : 723 Mo utilisés
+GPU : GTX 860M, 3 MiB sur 2 048, 0 % d'utilisation
+Conteneurs docker : 0 actif (23 stoppés, 24 en restart=no)
+Services systemd etrangers : inactive
+Charge moyenne avant mesure : 0.06 0.02 0.02
+Processus bench_step.py residuels : aucun
+
+Parametres communs aux trois points
+-----------------------------------
+aretes 1500 | batch 2 | seq 16 | dim 32 | hops 8 | tbptt 16 | data toy
+device cpu | --only step | CUDA_VISIBLE_DEVICES=-1
+
+Points mesures
+--------------
+302 noeuds, 20 iterations  : mediane 2 932 ms/pas [2 810 - 3 074] | RAM 2 385 Mo | +10 Mo/pas
+512 noeuds, 10 iterations  : mediane 2 826 ms/pas [2 751 - 3 026] | RAM 2 034 Mo | +18 Mo/pas
+1000 noeuds, 10 iterations : mediane 2 099 ms/pas [2 010 - 2 238] | RAM 1 045 Mo | +13 Mo/pas
+
+Conditions apres le dernier point
+---------------------------------
+Charge : 2.91 1.27 0.50 | disponibles : 6 150 Mo | GPU 3 MiB / 0 %
+Aucune trace de killed process dans le journal noyau sur les 10 dernieres minutes.
+
+Rappel du diagnostic corrige
+----------------------------
+L OOM de la session J (6 450 Mo, tue par le noyau) venait de batch 16 x seq 128,
+pas du nombre de noeuds : la meme machine tient 1 000 noeuds en 1 045 Mo a
+batch 2 / seq 16.
