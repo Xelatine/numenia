@@ -35,29 +35,119 @@
     "etiquette": "[mesuré]"
   },
   "reseau": {
-    "ping_serveur": {"envoyes": 30, "recus": 25, "perte_pct": 16.7, "min_ms": 3, "max_ms": 130, "moy_ms": 66},
-    "ping_passerelle": {"envoyes": 20, "recus": 20, "perte_pct": 0.0, "min_ms": 1, "max_ms": 1, "moy_ms": 1},
+    "ping_serveur": {
+      "envoyes": 30,
+      "recus": 25,
+      "perte_pct": 16.7,
+      "min_ms": 3,
+      "max_ms": 130,
+      "moy_ms": 66
+    },
+    "ping_passerelle": {
+      "envoyes": 20,
+      "recus": 20,
+      "perte_pct": 0.0,
+      "min_ms": 1,
+      "max_ms": 1,
+      "moy_ms": 1
+    },
     "diagnostic": "la perte est sur le lien radio du serveur, pas sur le LAN : la passerelle répond à 1 ms sans perte",
     "etiquette": "[mesuré]"
   },
   "transferts": [
-    {"methode": "uv pip install --index-url cu126 (serveur -> Internet)", "debit": "1,07 Mo/s en rafale puis 0", "octets_atteints": "~14 Mo", "verdict": "échec : connection reset, uv repart de zéro à chaque essai", "etiquette": "[mesuré]"},
-    {"methode": "curl -C - wheel CPU 169,1 Mo (serveur -> Internet)", "debit": "~600 Ko/s au mieux puis 0", "octets_atteints": "45,5 Mo / 169,1 Mo", "verdict": "échec : resets en boucle, « Recv failure : Connexion réinitialisée »", "etiquette": "[mesuré]"},
-    {"methode": "scp LAN, 1 Mo puis 50 Mo", "debit": "0", "octets_atteints": "0", "verdict": "échec : connection reset à 24 s et 25 s", "etiquette": "[mesuré]"},
-    {"methode": "scp 4 Mo x 6 flux parallèles", "debit": "186 Ko/s utiles", "octets_atteints": "12 / 208 tranches", "verdict": "fonctionne mais lent (39 envois pour 12 succès)", "etiquette": "[mesuré]"},
-    {"methode": "scp 4 Mo x 8 flux parallèles", "debit": "~75 Ko/s utiles", "octets_atteints": "104 071 168 octets (40 tranches)", "verdict": "meilleur résultat de la session, puis dégradation du lien", "etiquette": "[mesuré]"},
-    {"methode": "scp 4 Mo x 24 flux parallèles", "debit": "0", "octets_atteints": "0 tranche vérifiée (1040 envois en 113 s)", "verdict": "échec : étranglement sshd (MaxStartups), les connexions sont refusées instantanément", "etiquette": "[mesuré]"},
-    {"methode": "flux tar unique de 40 Mo", "debit": "0", "octets_atteints": "0", "verdict": "échec : coupure à 24 s (« Timeout, server not responding »)", "etiquette": "[mesuré]"},
-    {"methode": "serveur -> Internet, 8 requêtes Range de 2 Mo en parallèle", "debit": "92 Ko/s", "octets_atteints": "14 292 585 octets en 150 s", "verdict": "fonctionne mais plus lent que le push, et par le même lien radio", "etiquette": "[mesuré]"},
-    {"methode": "serveur -> Internet, une requête Range de 8 Mo", "debit": "48 Ko/s", "octets_atteints": "4 321 174 octets en 90 s", "verdict": "206 confirmé : les Range sont supportées, mais le débit ne suit pas", "etiquette": "[mesuré]"},
-    {"methode": "reprise par offset (tail -c +N | ssh 'cat >>')", "debit": "10 Ko/s", "octets_atteints": "5 235 035 octets", "verdict": "la plus économe en connexions, mais le lien est au plus bas ; laissée en tâche de fond", "etiquette": "[mesuré]"},
-    {"methode": "HTTP : le serveur tire depuis mon poste (python -m http.server)", "debit": "13 Ko/s", "octets_atteints": "0,7 Mo en 55 s", "verdict": "pire que le push, abandonnée", "etiquette": "[mesuré]"}
+    {
+      "methode": "uv pip install --index-url cu126 (serveur -> Internet)",
+      "debit": "1,07 Mo/s en rafale puis 0",
+      "octets_atteints": "~14 Mo",
+      "verdict": "échec : connection reset, uv repart de zéro à chaque essai",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "curl -C - wheel CPU 169,1 Mo (serveur -> Internet)",
+      "debit": "~600 Ko/s au mieux puis 0",
+      "octets_atteints": "45,5 Mo / 169,1 Mo",
+      "verdict": "échec : resets en boucle, « Recv failure : Connexion réinitialisée »",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "scp LAN, 1 Mo puis 50 Mo",
+      "debit": "0",
+      "octets_atteints": "0",
+      "verdict": "échec : connection reset à 24 s et 25 s",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "scp 4 Mo x 6 flux parallèles",
+      "debit": "186 Ko/s utiles",
+      "octets_atteints": "12 / 208 tranches",
+      "verdict": "fonctionne mais lent (39 envois pour 12 succès)",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "scp 4 Mo x 8 flux parallèles",
+      "debit": "~75 Ko/s utiles",
+      "octets_atteints": "104 071 168 octets (40 tranches)",
+      "verdict": "meilleur résultat de la session, puis dégradation du lien",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "scp 4 Mo x 24 flux parallèles",
+      "debit": "0",
+      "octets_atteints": "0 tranche vérifiée (1040 envois en 113 s)",
+      "verdict": "échec : étranglement sshd (MaxStartups), les connexions sont refusées instantanément",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "flux tar unique de 40 Mo",
+      "debit": "0",
+      "octets_atteints": "0",
+      "verdict": "échec : coupure à 24 s (« Timeout, server not responding »)",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "serveur -> Internet, 8 requêtes Range de 2 Mo en parallèle",
+      "debit": "92 Ko/s",
+      "octets_atteints": "14 292 585 octets en 150 s",
+      "verdict": "fonctionne mais plus lent que le push, et par le même lien radio",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "serveur -> Internet, une requête Range de 8 Mo",
+      "debit": "48 Ko/s",
+      "octets_atteints": "4 321 174 octets en 90 s",
+      "verdict": "206 confirmé : les Range sont supportées, mais le débit ne suit pas",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "reprise par offset (tail -c +N | ssh 'cat >>')",
+      "debit": "10 Ko/s",
+      "octets_atteints": "5 235 035 octets",
+      "verdict": "la plus économe en connexions, mais le lien est au plus bas ; laissée en tâche de fond",
+      "etiquette": "[mesuré]"
+    },
+    {
+      "methode": "HTTP : le serveur tire depuis mon poste (python -m http.server)",
+      "debit": "13 Ko/s",
+      "octets_atteints": "0,7 Mo en 55 s",
+      "verdict": "pire que le push, abandonnée",
+      "etiquette": "[mesuré]"
+    }
   ],
   "wheel": {
     "fichier": "torch-2.14.0+cu126-cp314-cp314-manylinux_2_28_x86_64.whl",
     "octets": 869180118,
     "md5": "b7da24fc1e10e598215e358666d31174",
-    "dependances": ["sympy", "networkx", "setuptools", "mpmath", "fsspec", "filelock", "jinja2", "MarkupSafe", "typing_extensions"],
+    "dependances": [
+      "sympy",
+      "networkx",
+      "setuptools",
+      "mpmath",
+      "fsspec",
+      "filelock",
+      "jinja2",
+      "MarkupSafe",
+      "typing_extensions"
+    ],
     "total_wheels_locales_octets": 879677434,
     "emplacement_local": ".server/wheels/ (poste, lien stable, téléchargement réussi)",
     "presente_sur_le_serveur": false,
@@ -67,7 +157,12 @@
   "missions": {
     "1_torch": {
       "etat": "partiel",
-      "fait": ["uv installé sans privilèges", "venv Python 3.14.4 créé", "wheel cu126 cp314 téléchargée et vérifiée sur le poste (869 180 118 octets)", "outil d'envoi reprenable écrit"],
+      "fait": [
+        "uv installé sans privilèges",
+        "venv Python 3.14.4 créé",
+        "wheel cu126 cp314 téléchargée et vérifiée sur le poste (869 180 118 octets)",
+        "outil d'envoi reprenable écrit"
+      ],
       "bloque": "transfert de 869 180 118 octets sur un lien à 10-186 Ko/s avec 16 % de perte",
       "etiquette": "[mesuré]"
     },
@@ -80,18 +175,37 @@
     "3_campagne_gbis": {
       "etat": "non fait",
       "raison": "même blocage",
-      "points_prevus": ["--chunk 2048 vs 512 à seq 128/b16, 3 000 arêtes, checkpoint complet", "mode off à 1 000 arêtes"],
+      "points_prevus": [
+        "--chunk 2048 vs 512 à seq 128/b16, 3 000 arêtes, checkpoint complet",
+        "mode off à 1 000 arêtes"
+      ],
       "etiquette": "non mesuré"
     },
-    "run_3000_pas": {"etat": "non lancé", "raison": "aucun « lance » humain, et la machine n'est pas capable de l'exécuter"}
+    "run_3000_pas": {
+      "etat": "non lancé",
+      "raison": "aucun « lance » humain, et la machine n'est pas capable de l'exécuter"
+    }
   },
   "retest": {
     "quand": "même nuit, second essai, environ deux heures après le premier",
-    "ping_serveur": {"envoyes": 12, "recus": 9, "perte_pct": 25.0, "min_ms": 3, "max_ms": 991, "moy_ms": 158},
+    "ping_serveur": {
+      "envoyes": 12,
+      "recus": 9,
+      "perte_pct": 25.0,
+      "min_ms": 3,
+      "max_ms": 991,
+      "moy_ms": 158
+    },
     "connexions_ssh": "5 refus sur 6 : « Connection closed by 192.168.50.53 port 22 »",
     "scp_8_ko": "échec (connection closed, 19 s)",
     "scp_4_mo": "échec (connection closed)",
-    "reprise_par_offset": {"octets_avant": 16597738, "octets_apres": 22245730, "gain_octets": 5647992, "fenetre_s": 290, "debit_kos": 19},
+    "reprise_par_offset": {
+      "octets_avant": 16597738,
+      "octets_apres": 22245730,
+      "gain_octets": 5647992,
+      "fenetre_s": 290,
+      "debit_kos": 19
+    },
     "verdict": "le transfert fonctionne encore, mais uniquement par le flux ssh 'cat >>' ; scp est désormais refusé et la perte atteint 25 %",
     "etiquette": "[mesuré]"
   },
@@ -111,5 +225,21 @@
     "duree_estimee": "3 h à 24 h selon la qualité du lien [estimé depuis 10-75 Ko/s mesurés]",
     "methode_la_plus_avancee": "tranches de 4 Mo, 6 flux, vérification md5 par lot (186 Ko/s utiles, 104 Mo atteints une fois)",
     "remède_structurel": "brancher le serveur en Ethernet : la passerelle répond à 1 ms sans perte, seul le lien radio du serveur perd des paquets"
+  },
+  "releve_3": {
+    "quand": "même nuit, vingt minutes après le second",
+    "ping_serveur": {
+      "envoyes": 10,
+      "recus": 4,
+      "perte_pct": 60.0,
+      "min_ms": 45,
+      "max_ms": 112,
+      "moy_ms": 81
+    },
+    "connexions_ssh": "0 acceptee sur 6",
+    "bundle_1896_octets": "echec 5/5, fichier distant vide",
+    "octets_sur_serveur": 22245730,
+    "verdict": "aucun transfert n aboutit, pas meme 1,9 ko ; la perte est passee de 16,7 % a 25 % puis 60 % sur la meme liaison",
+    "etiquette": "[mesuré]"
   }
 }

@@ -82,6 +82,21 @@ sortie redirigée passe encore. Le fichier est à **22 245 730 octets** sur
 869 180 118 (2,6 %). Au débit du retest il reste 846 934 388 octets, soit
 **≈ 12 h** [estimé] ; au meilleur débit jamais observé (38 Ko/s), ≈ 6 h.
 
+## Troisième relevé — le lien s'effondre
+
+Troisième essai, vingt minutes après le second.
+
+| Mesure | Valeur | Étiquette |
+|---|---|---|
+| Perte ping vers le serveur | **60 %** (4 reçus sur 10), 45 à 112 ms | [mesuré] |
+| Connexions `ssh` acceptées | **0 sur 6** | [mesuré] |
+| `ssh 'cat >>'` (1 896 octets, le bundle) | échec aux 5 essais, fichier distant vide | [mesuré] |
+
+Trajectoire de la nuit, sur la même liaison : 16,7 % de perte, puis 25 %, puis
+60 %. Aucun transfert n'aboutit plus, pas même 1 896 octets. Le fichier est resté
+à **22 245 730 octets** sur 869 180 118 (2,6 %).
+
+```
 ## Deux erreurs de conduite, consignées
 
 1. J'ai supprimé les 104 071 168 octets déjà reçus (`rm -f ~/<wheel>`) en
