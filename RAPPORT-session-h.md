@@ -64,6 +64,24 @@ quelques centaines de mégaoctets.
 Le meilleur transfert atteint **12 %** de la wheel. Le fichier complet fait
 869 180 118 octets ; il en manque 863 944 783.
 
+## Retest de la même nuit
+
+Second essai, deux heures après le premier, pour savoir si l'échec était
+conjoncturel ou structurel.
+
+| Mesure | Valeur | Étiquette |
+|---|---|---|
+| Perte ping vers le serveur | **25 %** (9 reçus sur 12), 3 à 991 ms, 158 ms de moyenne | [mesuré] |
+| Connexions `ssh` acceptées | **1 sur 6** | [mesuré] |
+| `scp` de 8 Ko | refusé (« Connection closed », 19 s) | [mesuré] |
+| `scp` d'une tranche de 4 Mo | refusé | [mesuré] |
+| Flux `ssh 'cat >>'` par offset | 5 647 992 octets en 290 s = **19 Ko/s** | [mesuré] |
+
+Le diagnostic se précise : `scp` est désormais refusé, mais le flux `ssh` à
+sortie redirigée passe encore. Le fichier est à **22 245 730 octets** sur
+869 180 118 (2,6 %). Au débit du retest il reste 846 934 388 octets, soit
+**≈ 12 h** [estimé] ; au meilleur débit jamais observé (38 Ko/s), ≈ 6 h.
+
 ## Deux erreurs de conduite, consignées
 
 1. J'ai supprimé les 104 071 168 octets déjà reçus (`rm -f ~/<wheel>`) en
