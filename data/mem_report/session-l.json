@@ -1,0 +1,49 @@
+{
+  "session": "L",
+  "date": "2026-11-11",
+  "sprint": "francais — phase 1 seulement",
+  "prerequis": {
+    "1_1_filaire": {
+      "etat": "rouge",
+      "enp8s0": "169.254.184.83/16 SERVEUR-IPV6/64",
+      "netplan_dropin_installe": false,
+      "route_defaut": "via PASSERELLE-LAN dev wlp7s0 metric 20600",
+      "blocage": "droits root, action humaine",
+      "etiquette": "[mesuré]"
+    },
+    "1_2_derive": {
+      "etat": "rouge (caracterisee)",
+      "sonde": "scripts/drift_probe.py",
+      "courbe_rss_mo": {"depart": 631, "pas_1": 792, "pas_20": 886, "pas_40": 1003, "pas_60": 1131, "pas_80": 1314, "pas_100": 1433},
+      "pente_mo_par_pas_seq16": 4.7,
+      "pente_mo_par_pas_seq8": 2.4,
+      "plat_observe": false,
+      "structures_accumulees": {"cimetiere": 0, "requetes_naissance": 0, "historique": 0},
+      "cause_localisee": "retenue par forward, proportionnelle a batch x seq",
+      "cause_prouvee": false,
+      "hypothese_testee": {
+        "champs": ["last_node_io", "last_energy_by_hop", "last_out_acc", "_last_out"],
+        "methode": "vider ces champs apres chaque pas, comparer la pente",
+        "rss_sans_vidage": {"10": 840, "20": 886},
+        "rss_avec_vidage": {"10": 841, "20": 887},
+        "verdict": "refutee, ecart nul"
+      },
+      "extrapolation_3000_pas_go": 19,
+      "etiquette": "[mesuré]"
+    },
+    "1_3_run_3000": {"etat": "non lance", "raison": "depend de 1.2", "etiquette": "[non mesuré]"}
+  },
+  "conditions": {
+    "charge": "0.01",
+    "ram_disponible_mo": 6054,
+    "swap_mo": 721,
+    "gpu_mo_utilises": 3,
+    "gpu_pct": 0,
+    "conteneurs_actifs": 0
+  },
+  "phases_2_4": "non entamees, conformement a la regle du sprint",
+  "corrections_du_brief": [
+    "data/genome.pt est present sur le serveur (67 049 701 octets)",
+    "le depot serveur est a f6ccd1c, pas a 9299b24"
+  ]
+}

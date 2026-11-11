@@ -1,0 +1,30 @@
+Session L — conditions de mesure de la dérive
+=============================================
+Machine : IA (accès IPv6 lien-local du câble)
+Date : 2026-11-11
+Charge : 0.01 | RAM disponible 6 054 Mo | swap 721 Mo
+GPU : 3 MiB / 0 % | conteneurs : 0 actif
+
+Parametres
+----------
+scale 4 (1 000 nœuds) | batch 2 | seq 16 (sauf mention) | toy | CPU
+Trainer.step parque a 10 007 pour eviter croissance et validation.
+Sonde : scripts/drift_probe.py (mesure seule, n ecrit aucun fichier).
+
+Courbes RSS (Mo)
+----------------
+seq 16 : 631 (depart) 792 (1) 886 (20) 1003 (40) 1131 (60) 1314 (80) 1433 (100)
+seq 8  : 631 (depart) 791 (1) 840 (20)            -> pente 2,4 Mo/pas
+
+Pente seq 16 : environ 4,7 Mo/pas. Pente seq 8 : environ 2,4 Mo/pas.
+Aucun plateau sur 100 pas : ce n est pas un echauffement d allocateur.
+
+Structures suivies (20 pas, seq 16)
+-----------------------------------
+cimetiere 0 | requetes de naissance 0 | historique 0 | noeuds 1000 | aretes 52 -> 172
+Aucune accumulation de liste : la retention vient du forward.
+
+Evenement de cycle de vie
+-------------------------
+Vers le pas 85 : "8 aretes coupees, 667 noeuds enterres" (dans la courbe a 120 pas).
+La derive existe avant cet evenement, sur les 80 premiers pas.
