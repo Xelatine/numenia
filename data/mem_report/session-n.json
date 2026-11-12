@@ -57,6 +57,6 @@
     "dashboard inactif pendant les mesures",
     "GPU non verifie (NVML driver/library mismatch)",
     "swap non releve",
-    "RAM totale relevee 7350 Mo (vs 16 Go des sessions precedentes) : a reconcilier"
+    "identite reconciliee : hote IA, 7350 Mo constant dans toutes les archives H->L ; le 16 Go du brief etait errone, corrige des la session J"
   ]
 }
