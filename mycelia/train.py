@@ -22,6 +22,7 @@ right, because each one already failed a real run:
 from __future__ import annotations
 
 import argparse
+import ctypes
 import gc
 import json
 import math
@@ -65,6 +66,29 @@ from mycelia.lifecycle import (  # noqa: E402
     anti_redundancy_penalty,
     apply_lifecycle,
 )
+
+_MALLOC_TRIM = None
+
+
+def trim_heap() -> None:
+    """Give freed heap pages back to the OS (glibc only, no-op elsewhere).
+
+    Session N measurement, scale 4 / batch 2 / seq 16: RSS grew +4.3 Mo/step
+    while ``uordblks`` stayed flat (195.2 -> 195.3 Mo) and ``fordblks`` grew
+    39.7 -> 103.7 Mo. Nothing was retained: the growth was fragmentation of
+    the glibc arena. ``malloc_trim(0)`` after each step cut the slope to
+    +0.07 Mo/step, for roughly +40 ms/step on the 1000-node scale. On a
+    non-glibc build the symbol is absent and this does nothing.
+    """
+    global _MALLOC_TRIM
+    if _MALLOC_TRIM is None:
+        try:
+            _MALLOC_TRIM = ctypes.CDLL("libc.so.6").malloc_trim
+        except (OSError, AttributeError):
+            _MALLOC_TRIM = False
+    if _MALLOC_TRIM:
+        _MALLOC_TRIM(0)
+
 
 IGNORE = -100
 TEXT_PROMPT = "Il était une fois"
@@ -592,6 +616,10 @@ class Trainer:
 
         # Do not keep the autograd graph of this step alive through telemetry.
         self._release_telemetry()
+        # Session N: the freed pages were never returned to the OS, and the
+        # arena grew +4.3 Mo/step with a flat uordblks. Trim before reading the
+        # memory, so the reported RAM is the one the next step starts from.
+        trim_heap()
         # Measured at the very end of the step, after the life cycle and the
         # growth: this is the memory the next step starts from, not the peak of
         # the graph that has just been freed.

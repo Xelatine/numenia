@@ -1,0 +1,62 @@
+{
+  "session": "N",
+  "date": "2026-11-12",
+  "objet": "derive memoire BIO-1 : cause, correctif, verification",
+  "verdict": "fragmentation du tas glibc, pas fuite Python ; corrige par malloc_trim(0) par pas",
+  "constate": {
+    "h3_tracemalloc": {
+      "conditions": "scale 4, toy, batch 2, seq 16, 20 pas, step initial 10007",
+      "memoire_python_tracee": "72.44 -> 72.48 Mo (plate)",
+      "brain_py_345": "+0.01 Mo / +120 objets (set _edge_keys, 172 entrées, borné par max_edges=20000)",
+      "brain_py_956": "+0.01 Mo / +129 objets (last_firing_nodes, borné par n_nodes=1000)",
+      "conclusion": "les deux lignes sont des allocations bornées, innocentes"
+    },
+    "h4_census": {
+      "conditions": "scale 4, toy, batch 2, seq 16, 20 pas",
+      "tenseurs_vivants": "111 -> 117 objets, 98.9 Mo constants",
+      "uordblks": "188.6 -> 188.8 Mo (plat)",
+      "fordblks": "22.9 -> 103.6 Mo",
+      "arena": "211.5 -> 292.5 Mo",
+      "pente_rss_defaut": "4.38 Mo/pas",
+      "pente_rss_mono_thread": "4.39 Mo/pas",
+      "conclusion": "aucune retention ; croissance = arene glibc qui s'etend"
+    },
+    "h4b_leviers": {
+      "baseline": "+4.30 Mo/pas",
+      "malloc_trim_chaque_pas": "+0.07 Mo/pas",
+      "malloc_mmap_threshold_128k": "+4.21 Mo/pas (sans effet)"
+    },
+    "h5_verification_100_pas": {
+      "conditions": "patch actif, scale 4, toy, batch 2, seq 16, step initial 10007",
+      "rss_pas_10": 445,
+      "rss_pas_40": 444,
+      "rss_pas_90": 445,
+      "rss_pas_100": 462,
+      "prune_au_pas": 10100,
+      "prune_effet": "8 arêtes coupées, 667 nœuds enterrés (+18 Mo ponctuels)",
+      "pente_totale": "+0.19 Mo/pas",
+      "pente_hors_prune": "+0.02 Mo/pas",
+      "uordblks": "189-195 Mo, plat"
+    }
+  },
+  "patch": {
+    "fichier": "mycelia/train.py",
+    "md5_avant": "ab23c6f6bf7f2675a7666c7f0b443ad4",
+    "md5_apres": "05c67c0f59140013ebc2c26fbfe7f916",
+    "mecanisme": "trim_heap() en fin de step_once(), avant process_memory() ; glibc uniquement, no-op ailleurs",
+    "cout_mesure": "~+40 ms/pas a l'echelle 4",
+    "verification_transfert": "md5 local = md5 serveur ; sauvegarde serveur /tmp/train.py.pre-h4n"
+  },
+  "prerequis": {
+    "1.1_filaire": "rouge (sudo bash ~/prepare-filaire.sh en attente)",
+    "1.2_derive": "vert (cause nommee, patch mesure 100 pas)",
+    "1.3_run_3000": "debloque, non lance ; confirmation finale a l'echelle nominale"
+  },
+  "limites": [
+    "mesure sur 100 pas, echelle 4 toy batch 2 seq 16, pas la config texte batch 16 seq 128",
+    "dashboard inactif pendant les mesures",
+    "GPU non verifie (NVML driver/library mismatch)",
+    "swap non releve",
+    "RAM totale relevee 7350 Mo (vs 16 Go des sessions precedentes) : a reconcilier"
+  ]
+}

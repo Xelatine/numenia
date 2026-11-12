@@ -1,0 +1,33 @@
+Session N — 2026-11-12 — BIO-1
+
+SALLE (relevé avant exécution, CONSTATÉ)
+  charge           1.71 2.31 1.27
+  RAM totale       7350 Mo, disponible 5875 Mo
+  conteneurs       0 actif
+  GPU              non vérifié : NVML driver/library version mismatch
+  swap             non relevé (commande de relevé en échec)
+
+CODE
+  mycelia/train.py avant patch  md5 ab23c6f6bf7f2675a7666c7f0b443ad4
+  mycelia/train.py après patch  md5 05c67c0f59140013ebc2c26fbfe7f916 (poste = serveur)
+  sauvegarde serveur            /tmp/train.py.pre-h4n
+
+INTERPRÉTEUR
+  .venv/bin/python (3.14), torch 2.14.0+cpu, 4 threads (défaut) et 1 thread (run B)
+
+SONDES (toutes injectées par stdin SSH, base64 — aucun scp, aucun fichier transféré)
+  h3_probe.py   tracemalloc(25), snapshots pas 5 et 20, 20 pas
+  h4_probe.py   census gc des tenseurs + mallinfo2, 20 pas, 4 threads puis mono-thread
+  h4b_probe.py  3 variantes : baseline / malloc_trim(0) par pas / MALLOC_MMAP_THRESHOLD_=131072, 20 pas chacune
+  h5_probe.py   100 pas avec patch, RSS + mallinfo2 tous les 10 pas
+
+CONFIGURATION DES MESURES
+  scale 4 (1000 nœuds), dim 32, max_edges 20000, max_births 8
+  données toy, batch 2, seq 16, device cpu
+  step initial 10007 (hors périodes de croissance ; le prune tombe au pas 10100)
+  allocateur : réglages par défaut (ni MALLOC_ARENA_MAX, ni MALLOC_TRIM_THRESHOLD_,
+  ni MALLOC_MMAP_THRESHOLD_) sauf dans la variante C de h4b
+
+CRITÈRE DE SUCCÈS (protocole)
+  dérive RSS ~0 ou plafonnée sur 100 pas, uordblks plat
+  résultat : +0.19 Mo/pas tout compris, +0.02 Mo/pas hors prune, uordblks plat
