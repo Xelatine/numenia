@@ -58,3 +58,31 @@ RELEVÉS (log data/mem_report/run3000.log)
   cadence et avec la croissance des arêtes, l'ETA réel se compte en heures.
 
   Premier checkpoint attendu au pas 500 (data/genome_run3000.pt).
+
+DÉCISION AU CHECKPOINT 500 (règle de continuation)
+  Relevé : VmHWM 4 202 Mo (Δ +970 Mo depuis le pas 400), disponible 1 861 Mo < 2 Go.
+  -> règle d'ARRÊT déclenchée. Checkpoint vérifié présent :
+     data/genome_run3000.pt, 82 439 639 o, step 500.
+  Arrêt propre : screen -S run3000 -X quit ; processus disparu, checkpoint intact.
+
+MESURE DU MOTEUR DU PIC (reprise du checkpoint, 20 pas, sans validate/checkpoint)
+  plain            : HWM 3 596 -> 3 701 Mo (arêtes 2 942 -> 3 101) = +0,66 Mo/arête
+  checkpoint_turns : HWM 633 Mo, PLAT sur 20 pas, mêmes arêtes
+  Conclusion : le pic scale avec les arêtes en mode plain ; le recalcul des
+  activations au backward le divise par 5,8 sans changer la config nominale.
+  Note : un cap max_edges=4000 aurait encore donné ~4,3 Go par extrapolation
+  (0,66 Mo x 1 058 arêtes) — ce n'était donc pas le levier le plus doux.
+
+RELANCE (session O, 23:19)
+  reprise     data/genome_run3000.pt (step 500), checkpoint_turns ON
+  config      scale 4 (1029 nœuds), batch 2, seq 16, max_edges 20 000, toy, cpu
+  écrans      run3000 (run) + watch3000 (guet, follow.log toutes les 10 min)
+  harnais     scripts/run_3000.py md5 9b187cc85e0ff55f54fd9491fdf2e38e
+
+  PACE 520 : 9 604 ms/pas | RSS 462 Mo | HWM 641 Mo | arêtes 3 101
+  disponible 5 462 Mo
+  ETA : 2 500 pas x ~9,6 s ≈ 6 h 40 (nuit), si la cadence tient.
+
+  Les 500 premiers pas ont été faits sans checkpoint_turns ; la reprise active
+  le drapeau. Les gradients sont recalculés à l'identique (preserve_rng_state),
+  mais ce changement de mode en cours de run doit rester consigné.
