@@ -1,0 +1,60 @@
+Session O — 2026-11-12 — RUN 3 000 PAS (en cours)
+
+IDENTITÉ BIO-1 (réconciliée avant lancement, CONSTATÉ)
+  hostname     IA
+  matériel     Acer Aspire VN7-591G, i7-4710HQ, 8 threads
+  machine-id   76af723afeca4feebaf8ba2a6b3fecbd
+  noyau        7.0.0-29-generic
+  RAM          7 350 MiB au total — identique aux archives H→L ; le « 16 Go »
+               du brief était une erreur, corrigée dès la session J
+
+SALLE BLANCHE (relevé juste avant lancement)
+  charge       0.03 0.22 0.58
+  RAM          7 350 Mo total, 5 870 Mo disponibles
+  swap         667 Mo utilisés (seuil 500 non tenu) mais activité nulle :
+               vmstat si/so = 0,0,0 sur les échantillons
+  conteneurs   0 actif
+  GPU          non vérifié : NVML driver/library version mismatch (580.178)
+  disque       803 Go libres
+  verrou       aucun
+  python       aucun run résiduel
+
+SAUVEGARDES AVANT RUN
+  data/genome.pt (67 049 701 o) non touché — la sauvegarde du run va dans
+  data/genome_run3000.pt ; data/genome_latest.pt sera écrit par Trainer.save
+  (les journaux préexistants per_step.csv / history.json étaient absents)
+
+LANCEMENT
+  écran        screen -dmS run3000 (tmux absent sur l'hôte)
+  PID python   204337
+  commande     cd ~/mycelia && .venv/bin/python scripts/run_3000.py
+  log          data/mem_report/run3000.log
+  harnais      scripts/run_3000.py, md5 558765c58068763ea8ef812baf082f0d
+               (poste = serveur)
+  config       scale 4 (1000 nœuds) | toy | batch 2 | seq 16 | cpu | seed 42
+               patch trim_heap actif (commit 7eda51a)
+
+PROTOCOLE DE RELEVÉ
+  TRACE tous les 100 pas : RSS, uordblks, fordblks, arena, arêtes, cimetière
+  CHECKPOINT tous les 500 pas dans data/genome_run3000.pt
+  Critère : dérive ~0 ou plafonnée, uordblks plat, sur 3 000 pas
+
+RELEVÉS (log data/mem_report/run3000.log)
+  pas 100 | fin de pas RSS 452 Mo | uordblks 200.0 | fordblks 1015.0 | arena 1215.0 | arêtes 774  | perte 4.3204 | pic 1461
+  pas 200 | fin de pas RSS 458 Mo | uordblks 200.7 | fordblks 1878.5 | arena 2079.1 | arêtes 1417 | perte 3.7948 | pic 2317
+  pas 300 | fin de pas RSS 470 Mo | uordblks 210.0 | fordblks 2508.1 | arena 2718.1 | arêtes 1979 | perte 3.0936 | pic 2956
+  pas 400 | fin de pas RSS 471 Mo | uordblks 205.6 | fordblks 2792.1 | arena 2997.6 | arêtes 2484 | perte 2.4940 | pic 3233
+
+  Dérive de fin de pas : +0,06 Mo/pas sur 300 pas (452 -> 471 Mo), uordblks plat.
+
+  ATTENTION — le « pic » est VmHWM (record monotone depuis le démarrage), pas le pic
+  de chaque pas. Il monte 1461 -> 2317 -> 2956 -> 3233 Mo. La mémoire disponible
+  pendant le run est ~3,5 Go : la marge au-dessus du record est mince (~300 Mo).
+  Le chiffre « RAM 1 045 Mo » du banc de la session K était une mesure de fin de
+  pas, pas un pic intra-pas : les deux métriques ne sont pas comparables.
+
+  Cadence observée : ~3,4 s/pas sur les 200 premiers, ~5,7 s/pas de 200 à 300,
+  ~6,2 s/pas de 300 à 400. La durée de 1 h 47 est donc déjà dépassée ; à cette
+  cadence et avec la croissance des arêtes, l'ETA réel se compte en heures.
+
+  Premier checkpoint attendu au pas 500 (data/genome_run3000.pt).
