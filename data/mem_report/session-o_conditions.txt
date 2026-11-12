@@ -86,3 +86,26 @@ RELANCE (session O, 23:19)
   Les 500 premiers pas ont été faits sans checkpoint_turns ; la reprise active
   le drapeau. Les gradients sont recalculés à l'identique (preserve_rng_state),
   mais ce changement de mode en cours de run doit rester consigné.
+
+TRANSPORT — OPTION LIEN-LOCAL (root indisponible)
+  `sudo bash ~/prepare-filaire.sh` n'a pas pu être tenté : l'outil refuse les
+  wrappers de privilèges, et aucune fenêtre root n'est ouverte sur l'hôte.
+  Les trois artefacts sont passés par le canal SSH lien-local, md5 vérifiés
+  poste/serveur :
+    data/corpus_fr.txt                              24 719 274 o  md5 1a27b7abb971ce2eec1aa7d7aaae21e0
+    data/tokenizer.json                                709 412 o  md5 d8b2e90c6ab5771cc47dff2bf026303d
+    data/models/qwen2.5-0.5b-instruct-q8_0.gguf    675 710 816 o  md5 a49598f88d6157e900ae2aac730873c9
+  Transfert du GGUF : 86 s en flux SSH (cat | ssh 'cat > ...'), md5 serveur
+  identique. Aucune segmentation nécessaire.
+
+  CONSTATÉ : data/corpus_fr.txt est un recueil d'histoires synthétiques
+  (« Il était une fois un petit facteur… »), 29 402 lignes, PAS le corpus
+  Gutenberg 50-100 Mo évoqué dans le brief. Il alimente bien TextDataset,
+  mais le contenu doit être dit tel quel dans le rapport.
+
+  Vérification du chemin texte (sans inférence, run en cours) :
+    TextDataset(seq_len=16) OK | 5 195 606 tokens | 309 725 fenêtres train
+    | 16 302 fenêtres val
+
+  Aucune inférence ni entraînement texte lancé : le run 3 000 pas reste seul
+  utilisateur du CPU jusqu'à sa fin.
