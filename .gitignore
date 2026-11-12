@@ -29,3 +29,6 @@ archive/
 
 # Rapports et comptes rendus : archive locale, jamais publiee (demande du 8 novembre).
 rapports/
+.server/
+# Modèles GGUF et artefacts de transport : volumineux, jamais versionnés.
+data/models/
