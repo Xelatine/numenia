@@ -1,5 +1,13 @@
 Session N — 2026-11-12 — BIO-1
 
+IDENTITÉ (vérifiée le 12/11, CONSTATÉ)
+  hostname         IA
+  matériel         Acer Aspire VN7-591G, i7-4710HQ, 8 threads
+  machine-id       76af723afeca4feebaf8ba2a6b3fecbd
+  noyau            7.0.0-29-generic
+  cohérence        archives H→L : 7 350 Mo au total (le « 16 Go » du brief a été
+                   corrigé dès la session J ; ce n'était pas une mesure)
+
 SALLE (relevé avant exécution, CONSTATÉ)
   charge           1.71 2.31 1.27
   RAM totale       7350 Mo, disponible 5875 Mo

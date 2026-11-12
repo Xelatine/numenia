@@ -89,7 +89,7 @@ Ce n'était pas une fuite : rien ne s'accumule (uordblks plat, tenseurs vivants 
 - Le dashboard n'était pas actif pendant les mesures.
 - GPU non vérifié cette session : `nvidia-smi` échoue (`NVML: driver/library version mismatch`).
 - Swap non relevé (commande `awk` échouée dans le relevé de salle).
-- Salle au moment du run : charge 1,71 ; RAM totale 7 350 Mo, disponible 5 875 Mo ; **0 conteneur actif**. La RAM totale diffère des 16 Go des sessions précédentes — à réconcilier (machine ou noyau différent), non bloquant pour la mesure allocateur.
+- Salle au moment du run : charge 1,71 ; RAM totale 7 350 Mo, disponible 5 875 Mo ; **0 conteneur actif**. **Identité réconciliée le 12 novembre** : `hostnamectl` donne l'hôte `IA` (Acer Aspire VN7-591G, i7-4710HQ, machine-id `76af723a…`), et **toutes les archives H→L mesurent 7 350 Mo au total**. Le « 16 Go » venait du brief initial, corrigé dès la session J (« 7 350 Mo au total et non 16 Go comme annoncé dans le brief »). Aucun changement de machine ; la mention de mon premier jet était l'erreur.
 
 ## État des trois prérequis
 
