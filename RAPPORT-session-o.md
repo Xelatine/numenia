@@ -55,11 +55,21 @@
 - **1.1-a « Transport fiable poste→serveur » : VERT** (lien-local SSH, mesures ci-dessus, md5 vérifiés).
 - **1.1-b « Ethernet filaire dédié » : reporté, objectif de confort hors chemin critique** (latence/robustesse pour les organes temps réel). **Le filaire n'a pas marché ; c'est son objectif qui est satisfait autrement.**
 
-## Smoke-test de la première parole — prêt, pas encore exécuté
+## Smoke-test de la première parole — exécuté
 
-- `scripts/smoke_qwen.py` écrit : chargement du GGUF, 20 tokens, prompt fixe, seed 42, latence s/token mesurée, md5 du modèle vérifié avant chargement.
-- Runtime : `llama-cpp-python` **absent**, aucun wheel pour Python 3.14 → compilation source lancée (`cmake` via pip, `g++`/`make` présents) dans `screen buildllama`, journal `data/models/llama_build.log`.
-- **Aucune inférence n'a été lancée** tant que le run tournait. L'exécution du smoke-test reste la dernière étape, après la compilation.
+- `scripts/smoke_qwen.py` (md5 `a27780d9…`, poste = serveur) : md5 du modèle vérifié avant chargement, prompt fixe, seed 42, 20 tokens.
+- Runtime : `llama-cpp-python` **absent**, aucun wheel cp314 → compilation source (`cmake` 4.4.4 via pip, g++/make) dans `screen buildllama`, **`BUILD_EXIT=0`**.
+- **Résultat CONSTATÉ** :
+
+```
+modele qwen2.5-0.5b-instruct-q8_0.gguf | 675710816 o | md5 a49598f88d6157e900ae2aac730873c9
+chargement : 0.34 s
+prompt     : "Bonjour, je m'appelle Mycelia. "
+sortie     : ' Je suis une personne qui a des problèmes de santé mentale et de santé physique. Je suis'
+20 tokens en 1.01 s | 0.051 s/token
+```
+
+La sortie est celle du modèle de base, sans distillation ni conditionnement : elle n'est pas un résultat du graphe MYCELIA et ne doit pas être lue comme tel. C'est la mesure de latence et la preuve que le canal d'inférence fonctionne (~20 tok/s sur CPU).
 
 ## Journal haute résolution
 
@@ -74,4 +84,4 @@
 | 1.2 Dérive | **VERT** (fragmentation glibc, `trim_heap`, mesuré) |
 | 1.3 Run 3 000 pas | **VERT** (terminé, pic 709 Mo, perte 0,0010) |
 
-Les phases 2-4 du sprint français ne sont plus bloquées par le transport : corpus réel et modèle sont sur le serveur. Reste la première inférence (compilation en cours) avant d'ouvrir la phase 2.
+Les phases 2-4 du sprint français ne sont plus bloquées par le transport : corpus réel et modèle sont sur le serveur, et la première inférence est faite (0,051 s/token). La phase 2 peut s'ouvrir : distillation / ingestion du corpus réel dans le graphe, avec la réserve que le corpus Gutenberg est un top-100 par téléchargements (œuvres variées, pages de titre incluses), pas une sélection littéraire curatée.

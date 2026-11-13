@@ -127,3 +127,11 @@ DÉCISIONS
         corpus 61,4 Mo en 8,16 s, md5 vérifiés)
   1.1-b Ethernet filaire dédié : REPORTÉ (confort, hors chemin critique).
         Le filaire n'a PAS fonctionné : root indisponible, 5e session.
+
+PREMIÈRE INFÉRENCE (après FIN, runtime compilé)
+  llama-cpp-python 0.3.36, BUILD_EXIT=0 (cmake 4.4.4 via pip, g++/make)
+  smoke_qwen.py md5 a27780d92e8dfcbb3c055a930c95ade6 (poste = serveur)
+  chargement 0,34 s | 20 tokens en 1,01 s | 0,051 s/token (~20 tok/s, CPU)
+  sortie : " Je suis une personne qui a des problèmes de santé mentale et de
+  santé physique. Je suis" — sortie du modèle de base, sans distillation ;
+  mesure de latence, pas un résultat du graphe.
