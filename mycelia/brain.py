@@ -201,6 +201,14 @@ class Brain(nn.Module):
                 "restricts what the full checkpoint wraps"
             )
         self.checkpoint_selective = bool(checkpoint_selective)
+        # Session R: optional strict top-k on the propagation. The router still
+        # scores every node; only the heavy propagation is restricted. Default
+        # None keeps every existing genome and test bit-for-bit unchanged.
+        self.topk_fraction: float | None = None
+        self.topk_min: int = 8
+        # Per-hop/per-position activity profile, off by default (zero cost).
+        self.profile_active: bool = False
+        self.active_profile: list[tuple[int, int, int]] = []
         self.dissipation = float(dissipation)
         # A membrane also cools at every tour, for two reasons: a merge of old
         # and new signal must fade, and a state that only accumulates would grow
@@ -916,7 +924,24 @@ class Brain(nn.Module):
                     # Nothing survived this tour: the membrane does not even
                     # cool, exactly as before the refactor.
                     break
+                if self.profile_active:
+                    self.active_profile.append((position, hop, int(hot.numel())))
                 fired_nodes[hot] = True
+                # Session R: strict top-k on the propagation. The score is read
+                # on the membrane (detached): selection is a policy, never a
+                # differentiable path. The router itself already ran on every
+                # node -- only the next tour is restricted.
+                if self.topk_fraction is not None and hot.numel() > self.topk_min:
+                    k = min(int(hot.numel()), max(self.topk_min, int(self.n_nodes * self.topk_fraction)))
+                    if int(hot.numel()) > k:
+                        with torch.no_grad():
+                            score = state[hot].abs().sum(dim=tuple(range(1, state.dim())))
+                            keep = torch.topk(score, k).indices
+                            # wave et hot sont deux vues de la même liste de
+                            # nœuds : réduire l'une sans l'autre désynchronise
+                            # le forward (mesuré : 667 lignes vs 564 adresses).
+                            hot = hot[keep]
+                            wave = wave[keep]
                 position_energy.append(energy)
                 if trace:
                     pairs = torch.stack([src_e, tgt_e], dim=1)[: self.trace_limit].tolist()

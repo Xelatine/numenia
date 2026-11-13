@@ -1,0 +1,80 @@
+{
+  "session": "R",
+  "disque": {
+    "modele": "Verbatim Vi560 SATA SSD",
+    "rotational": 0,
+    "ecriture_directe_500mo_s": 0.165,
+    "ecriture_debit_go_s": 3.2,
+    "lecture_directe": "refusee par le systeme de fichiers (Invalid input)",
+    "hdparm": "permission denied (root indisponible)",
+    "lecture_page_cache_go_s": 7.7,
+    "lecture_disque_froide": "non mesuree"
+  },
+  "activite_par_hop": {
+    "genome": "data/genome_run3000.pt",
+    "n_nodes": 1129,
+    "ne": 6246,
+    "fractions": {"0": 0.025, "1": 0.167, "2": 0.591, "3": 0.875, "4": 0.889, "5": 0.889, "6": 0.889, "7": 0.889}
+  },
+  "genome_myc": {
+    "format": "myc-1",
+    "octets": 29501537,
+    "hash_global": "34caba7813561650030199010018e7ae",
+    "equite_fp16_max_abs": 0.005905,
+    "equite_fp16_verdict": "rejete",
+    "equite_fp32_max_abs": 4.768e-06,
+    "equite_fp32_verdict": "accepte",
+    "alignement": 4096
+  },
+  "topk": {
+    "verdict": "rejete",
+    "reference_perte": 0.002342,
+    "mesures": [
+      {"fraction": null, "perte": 0.002342, "facteur": 1.0},
+      {"fraction": 0.5, "perte": 1.594342, "facteur": 680.7},
+      {"fraction": 0.25, "perte": 3.091727, "facteur": 1320.1},
+      {"fraction": 0.1, "perte": 4.325328, "facteur": 1847.4},
+      {"fraction": 0.05, "perte": 4.208384, "facteur": 1797.3},
+      {"fraction": 0.01, "perte": 6.16217, "facteur": 2631.9}
+    ],
+    "reserve": "selection sur energie de membrane, pas sur les magnitudes du routeur",
+    "defaut": "desactive"
+  },
+  "int8": {
+    "max_abs_logits": 0.1088,
+    "ecart_relatif_moyen": 0.00546,
+    "seuil": 0.05,
+    "verdict": "accepte",
+    "golden_fp32": "2/5",
+    "golden_int8": "2/5"
+  },
+  "mmap": {
+    "simulation": true,
+    "n": 200000,
+    "fichier_go": 1.28,
+    "ecriture_s": 2.8,
+    "chargement_complet_s": 0.59,
+    "rss_mo": 1220.9,
+    "mmap_us_par_ligne": 2.24,
+    "seuil_projete_fp32": 206998,
+    "seuil_projete_int8": 827995
+  },
+  "reorganisation": {
+    "simulation": true,
+    "n": 50000,
+    "gain_min": 0.12,
+    "gain_max": 0.3506,
+    "seuil": 0.2,
+    "verdict": "non prouve, non adopte",
+    "note": "dominé par le page cache ; compactage non implemente"
+  },
+  "dimensionnement": {
+    "organes_valeurs_par_noeud": 6401,
+    "arete_octets": 12,
+    "10k": {"fp32_go": 0.26, "int8_go": 0.06, "topologie_mo": 2.4, "topk5_int8_mo": 3.2},
+    "100k": {"fp32_go": 2.56, "int8_go": 0.64, "topologie_mo": 24, "topk5_int8_mo": 32},
+    "1M": {"fp32_go": 25.6, "int8_go": 6.4, "topologie_mo": 240, "topk5_int8_mo": 320}
+  },
+  "promesse_fenetre": "non etablie : dependait du top-k, rejete ; la fenetre active est le graphe",
+  "non_fait": ["encodeur rouge", "compactage sommeil", "debit lecture disque", "reorganisation 200k", "top-k texte"]
+}

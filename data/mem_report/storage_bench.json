@@ -1,0 +1,119 @@
+{
+  "sizes": {
+    "10000": {
+      "organes_fp32_go": 0.26,
+      "organes_int8_go": 0.06,
+      "topologie_go": 0.002,
+      "ram_topk5_fp32_mo": 12.8,
+      "ram_topk5_int8_mo": 3.2
+    },
+    "100000": {
+      "organes_fp32_go": 2.56,
+      "organes_int8_go": 0.64,
+      "topologie_go": 0.024,
+      "ram_topk5_fp32_mo": 128.0,
+      "ram_topk5_int8_mo": 32.0
+    },
+    "1000000": {
+      "organes_fp32_go": 25.6,
+      "organes_int8_go": 6.4,
+      "topologie_go": 0.24,
+      "ram_topk5_fp32_mo": 1280.2,
+      "ram_topk5_int8_mo": 320.1
+    }
+  },
+  "int8": {
+    "max_abs_logits": 0.10879659652709961,
+    "mean_abs_logits": 0.022998681291937828,
+    "relative_mean": 0.005460804328322411,
+    "seuil": 0.05,
+    "ok": true,
+    "detail": {
+      "gate_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      },
+      "gate_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 4516,
+        "bytes_int8": 1129
+      },
+      "b1_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 9248768,
+        "bytes_int8": 2312192
+      },
+      "b1_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 289024,
+        "bytes_int8": 72256
+      },
+      "b2_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 9248768,
+        "bytes_int8": 2312192
+      },
+      "b2_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      },
+      "ln_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      },
+      "ln_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      },
+      "q_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 4624384,
+        "bytes_int8": 1156096
+      },
+      "q_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      },
+      "k_w": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 4624384,
+        "bytes_int8": 1156096
+      },
+      "k_b": {
+        "max_abs_row": 0.0,
+        "bytes_fp32": 144512,
+        "bytes_int8": 36128
+      }
+    }
+  },
+  "golden_int8": {
+    "fp32": "2/5",
+    "int8": "2/5"
+  },
+  "reorder": {
+    "n": 50000,
+    "rows_hot": 2500,
+    "row_bytes": 6401,
+    "cold_random_order_seconds": 0.0058,
+    "cold_community_order_seconds": 0.0051,
+    "gain": 0.1207,
+    "note": "SIMULATION \u00e0 communaut\u00e9s plant\u00e9es ; gain = borne sup\u00e9rieure"
+  },
+  "mmap": {
+    "n": 200000,
+    "row_bytes": 6401,
+    "file_go": 1.28,
+    "write_s": 2.8,
+    "full_load_s": 0.59,
+    "full_load_rss_mb": 1220.9,
+    "mmap_cold_us_per_row": 2.24,
+    "mmap_rows": 10000,
+    "seuil_projete_noeuds_fp32": 206998,
+    "seuil_projete_noeuds_int8": 827995
+  }
+}
