@@ -1,0 +1,137 @@
+{
+  "genome": "/home/dieux/mycelia/data/genome_run3000.pt",
+  "myc": {
+    "path": "/home/dieux/mycelia/data/genome_myc",
+    "hash_global": "34caba7813561650030199010018e7ae",
+    "md5": {
+      "topology.csr": "d2805e7f0f7155feb3a6ad4bd38913f0",
+      "embeddings.bin": "96a7c959b0b7862e3fce6c14e016e400",
+      "token_embedding.bin": "a0da3dd1337bf861a5fe8a586c4521e0",
+      "output_head.bin": "50b9dff68b23b257a916fc4ddee4c299",
+      "misc.bin": "d0b12ceaaccc307b95637e60e03d2016",
+      "energy.bin": "e044fe487546536fe00c6c95ddad7453",
+      "salience.bin": "e044fe487546536fe00c6c95ddad7453",
+      "cemetery.bin": "25340286bcd89768b2e9249bd60649dc"
+    },
+    "bytes": 29501537
+  },
+  "equity": {
+    "atol": 0.001,
+    "max_abs": 4.76837158203125e-06,
+    "mean_abs": 9.143922738985566e-07,
+    "ok": true,
+    "shape": [
+      4,
+      16,
+      100
+    ]
+  },
+  "formats": {
+    "fp16": {
+      "info": {
+        "path": "/home/dieux/mycelia/data/genome_myc_fp16",
+        "hash_global": "43da0240e621a7ee1129a9ce301b4b37",
+        "md5": {
+          "topology.csr": "538a7477e033c01b9dced3ed4c916114",
+          "embeddings.bin": "96a7c959b0b7862e3fce6c14e016e400",
+          "token_embedding.bin": "a0da3dd1337bf861a5fe8a586c4521e0",
+          "output_head.bin": "50b9dff68b23b257a916fc4ddee4c299",
+          "misc.bin": "d0b12ceaaccc307b95637e60e03d2016",
+          "energy.bin": "e044fe487546536fe00c6c95ddad7453",
+          "salience.bin": "e044fe487546536fe00c6c95ddad7453",
+          "cemetery.bin": "25340286bcd89768b2e9249bd60649dc"
+        },
+        "bytes": 29489045
+      },
+      "equity": {
+        "atol": 0.001,
+        "max_abs": 0.005905091762542725,
+        "mean_abs": 0.0011144140735268593,
+        "ok": false,
+        "shape": [
+          4,
+          16,
+          100
+        ]
+      }
+    },
+    "fp32": {
+      "info": {
+        "path": "/home/dieux/mycelia/data/genome_myc",
+        "hash_global": "34caba7813561650030199010018e7ae",
+        "md5": {
+          "topology.csr": "d2805e7f0f7155feb3a6ad4bd38913f0",
+          "embeddings.bin": "96a7c959b0b7862e3fce6c14e016e400",
+          "token_embedding.bin": "a0da3dd1337bf861a5fe8a586c4521e0",
+          "output_head.bin": "50b9dff68b23b257a916fc4ddee4c299",
+          "misc.bin": "d0b12ceaaccc307b95637e60e03d2016",
+          "energy.bin": "e044fe487546536fe00c6c95ddad7453",
+          "salience.bin": "e044fe487546536fe00c6c95ddad7453",
+          "cemetery.bin": "25340286bcd89768b2e9249bd60649dc"
+        },
+        "bytes": 29501537
+      },
+      "equity": {
+        "atol": 0.001,
+        "max_abs": 4.76837158203125e-06,
+        "mean_abs": 9.143922738985566e-07,
+        "ok": true,
+        "shape": [
+          4,
+          16,
+          100
+        ]
+      }
+    }
+  },
+  "profile": {
+    "0": {
+      "positions": 16,
+      "mean_fraction": 0.0248,
+      "max_fraction": 0.0248,
+      "min_fraction": 0.0248
+    },
+    "1": {
+      "positions": 16,
+      "mean_fraction": 0.1674,
+      "max_fraction": 0.1674,
+      "min_fraction": 0.1674
+    },
+    "2": {
+      "positions": 16,
+      "mean_fraction": 0.5908,
+      "max_fraction": 0.5908,
+      "min_fraction": 0.5908
+    },
+    "3": {
+      "positions": 16,
+      "mean_fraction": 0.8751,
+      "max_fraction": 0.8751,
+      "min_fraction": 0.8751
+    },
+    "4": {
+      "positions": 16,
+      "mean_fraction": 0.8893,
+      "max_fraction": 0.8893,
+      "min_fraction": 0.8893
+    },
+    "5": {
+      "positions": 16,
+      "mean_fraction": 0.8893,
+      "max_fraction": 0.8893,
+      "min_fraction": 0.8893
+    },
+    "6": {
+      "positions": 16,
+      "mean_fraction": 0.8893,
+      "max_fraction": 0.8893,
+      "min_fraction": 0.8893
+    },
+    "7": {
+      "positions": 16,
+      "mean_fraction": 0.8893,
+      "max_fraction": 0.8893,
+      "min_fraction": 0.8893
+    }
+  }
+}
