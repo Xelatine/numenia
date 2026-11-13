@@ -67,8 +67,15 @@
   },
   "smoke_qwen": {
     "script": "scripts/smoke_qwen.py",
-    "runtime": "llama-cpp-python absent (aucun wheel cp314), compilation source lancee",
-    "execution": "en attente de la compilation",
-    "inference_lancee": false
+    "script_md5": "a27780d92e8dfcbb3c055a930c95ade6",
+    "runtime": "llama-cpp-python 0.3.36 compile depuis les sources (BUILD_EXIT=0, cmake 4.4.4)",
+    "execution": "ok",
+    "chargement_s": 0.34,
+    "tokens": 20,
+    "duree_s": 1.01,
+    "s_par_token": 0.051,
+    "prompt": "Bonjour, je m'appelle Mycelia. ",
+    "sortie": " Je suis une personne qui a des problemes de sante mentale et de sante physique. Je suis",
+    "note": "sortie du modele de base, sans distillation ni conditionnement ; mesure de latence uniquement"
   }
 }
