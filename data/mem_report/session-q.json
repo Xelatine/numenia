@@ -1,0 +1,36 @@
+{
+  "session": "Q",
+  "golden_qwen": {
+    "modele": "qwen2.5-0.5b-instruct-q8_0.gguf",
+    "md5_modele": "a49598f88d6157e900ae2aac730873c9",
+    "dim": 896,
+    "resultats": {
+      "mean": {"hit1": "3/5", "bon_min": 0.8644, "bon_max": 0.9293, "faux_max": 0.9228},
+      "cls": {"hit1": "2/5", "bon_min": 0.6546, "bon_max": 0.7423, "faux_max": 0.7808},
+      "last": {"hit1": "3/5", "bon_min": 0.8506, "bon_max": 0.9293, "faux_max": 0.9051}
+    },
+    "verdict": "rouge",
+    "cause": "espace tasse (cosinus 0,85-0,93 tous textes) ; HIT@1 independant du seuil",
+    "seuil_055": "non calibrable : aucun seuil ne separe les bons des faux"
+  },
+  "memoire": {
+    "etat": "mono-vecteur 32-d, inchangee",
+    "raison": "condition 5/5 non remplie, emb_index non branche",
+    "tests": "7/7 (session P)"
+  },
+  "fraction_active": {
+    "genome": "data/genome_run3000.pt",
+    "noeuds_vivants": 1005,
+    "noeuds_ayant_emis": 1004,
+    "fraction": 0.999,
+    "portee": "cumulee sur 64 positions",
+    "topk_5pct": 56,
+    "note": "levier reel mais facteur 20 non prouve par position"
+  },
+  "config_2000_aretes": {
+    "etat": "differee",
+    "raison": "ingestion bloquee par l'encodeur ; mesure sans emploi avant un golden vert",
+    "duree_estimee": "environ 2 h 10 (250 pas x 30,6 s)"
+  },
+  "prochaine_action": "mesurer un encodeur d'embedding dedie (bge-m3 / e5 multilingue) sur le meme golden"
+}

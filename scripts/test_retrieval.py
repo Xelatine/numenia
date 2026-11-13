@@ -45,6 +45,7 @@ GOLDEN = [
 ]
 
 DIM = 32
+QWEN_DIM = 896
 
 
 def hash_embed(text: str, dim: int = DIM) -> np.ndarray:
@@ -94,27 +95,55 @@ class GraphEncoder:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--encoder", choices=("lexical", "hash", "graph"), default="lexical")
+    parser.add_argument(
+        "--encoder", choices=("lexical", "hash", "graph", "qwen"), default="lexical"
+    )
     args = parser.parse_args()
-    encode = {"hash": hash_embed, "lexical": lexical_embed, "graph": GraphEncoder()}[args.encoder]
+    if args.encoder == "qwen":
+        from qwen_embed import QwenEncoder
 
-    memory = EpisodicMemory(dim=DIM)
+        encoder = QwenEncoder()
+        dim = encoder.dim
+    else:
+        encoder = {"hash": hash_embed, "lexical": lexical_embed, "graph": GraphEncoder()}[args.encoder]
+        dim = DIM
+    encode = encoder
+
+    memory = EpisodicMemory(dim=dim)
     for content, _query, _expect in GOLDEN:
         memory.add(encode(content), salience=0.9, text=content)
 
     hits = 0
+    margins = []
     for content, query, expect in GOLDEN:
-        result = memory.retrieve(encode(query), top_k=1)
-        ok = bool(result) and expect.lower() in memory.text[result[0][0]].lower()
+        query_vec = encode(query)
+        result = memory.retrieve(query_vec, top_k=len(GOLDEN))
+        best = result[0] if result else None
+        ok = bool(best) and expect.lower() in memory.text[best[0]].lower()
         hits += int(ok)
-        shown = memory.text[result[0][0]][:44] if result else "AUCUN"
+        shown = memory.text[best[0]][:44] if best else "AUCUN"
+        if best is not None:
+            # Cosinus du bon souvenir vs meilleur mauvais souvenir : la marge
+            # dit si le seuil 0,55 est un constat ou une convention.
+            good = [s for i, s in result if expect.lower() in memory.text[i].lower()]
+            bad = [s for i, s in result if expect.lower() not in memory.text[i].lower()]
+            margins.append((max(good) if good else float("nan"), max(bad) if bad else float("nan")))
         print(f"{'OK ' if ok else 'KO '} [{expect}] → {shown}")
     ratio = hits / len(GOLDEN)
-    print(f"HIT@1 = {hits}/{len(GOLDEN)} (encodeur {args.encoder})")
+    print(f"HIT@1 = {hits}/{len(GOLDEN)} (encodeur {args.encoder}, dim {dim})")
+    if margins:
+        goods = [g for g, _ in margins if g == g]
+        bads = [b for _, b in margins if b == b]
+        if goods:
+            print(f"cosinus bon souvenir  : min {min(goods):.4f} | moyenne {sum(goods)/len(goods):.4f}")
+        if bads:
+            print(f"cosinus meilleur faux : max {max(bads):.4f} | moyenne {sum(bads)/len(bads):.4f}")
     if args.encoder == "graph":
         print("  rappel : embeddings non entraînés → ce chiffre est la BASE de la phase 2")
     if args.encoder == "lexical":
         print("  rappel : preuve LEXICALE du pipeline, pas sémantique")
+    if args.encoder == "qwen":
+        print("  rappel : sens EMPRUNTÉ à Qwen (organe externe), souvenirs = nœuds MYCELIA")
     md5 = memory.save(ROOT / "data" / "mem_golden_test.npz")
     print(f"md5 {md5}")
     assert hits == len(GOLDEN), "RETRIEVAL EN ÉCHEC — ne pas construire dessus"
