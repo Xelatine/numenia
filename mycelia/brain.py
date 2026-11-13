@@ -107,6 +107,8 @@ class Brain(nn.Module):
         mmap: bool = False,
         checkpoint_turns: bool = False,
         checkpoint_selective: bool = False,
+        activation: str = "gelu",
+        output_sparse: bool = False,
     ) -> None:
         super().__init__()
         if n_nodes < 8:
@@ -146,6 +148,8 @@ class Brain(nn.Module):
             "birth_mode": str(birth_mode),
             "birth_seed": int(birth_seed),
             "mmap": bool(mmap),
+            "activation": str(activation),
+            "output_sparse": bool(output_sparse),
         }
 
         self.n_nodes = int(n_nodes)
@@ -220,7 +224,10 @@ class Brain(nn.Module):
         self.allow_node_growth = True
 
         # All node organs as stacked matrices: one tensor per organ, growable.
-        self.bank = NodeBank(self.n_nodes, self.dim, weak_noise=weak_noise)
+        self.bank = NodeBank(
+            self.n_nodes, self.dim, weak_noise=weak_noise,
+            activation=activation, output_sparse=output_sparse,
+        )
 
         # Tokens become signals here, and signals become token predictions here.
         self.embedding = nn.Embedding(self.vocab, self.dim)

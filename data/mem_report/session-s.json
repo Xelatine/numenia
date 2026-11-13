@@ -1,0 +1,46 @@
+{
+  "session": "S",
+  "diagnostic": {
+    "activation": {
+      "gate": "sigmoid + seuil dur 0.1",
+      "body": "GELU",
+      "router": "sigmoid(q.k/sqrt(dim))",
+      "readout": "LayerNorm + Linear"
+    },
+    "zeros_exacts_par_hop": 0.0,
+    "gates_fermes_par_hop": 0.0,
+    "conclusion": "aucun zero natif : le cerveau ne peut pas etre sparse par activation"
+  },
+  "complexite_forward": [
+    {"aretes": 3123, "secondes": 0.1857},
+    {"aretes": 6246, "secondes": 0.9745},
+    {"aretes": 12492, "secondes": 2.1195},
+    {"aretes": 24984, "secondes": 4.0827}
+  ],
+  "forward_dense": false,
+  "delta_temporel": {
+    "epsilon_1e-3": {"fraction_changeante": 0.8893, "median": 0.09796},
+    "epsilon_1e-2": {"fraction_changeante": 0.889, "median": 0.09796},
+    "verdict": "regime dense total, couche Delta ecartee"
+  },
+  "activation_sparse": {
+    "implementee": true,
+    "options": ["activation=relu", "output_sparse=true (ReLU de sortie)"],
+    "pilote_50_pas": {
+      "dense": {"zeros": 0.0, "perte": 4.5502, "topk_facteurs": [1.0, 1.0, 1.0, 1.0, 0.996]},
+      "sparse": {"zeros": 0.4803, "perte": 4.5934, "topk_facteurs": [1.0, 1.0, 1.0, 1.0, 0.996]}
+    },
+    "limite": "les deux bras sont a la perte du hasard (ln100=4.605) : contraste ininterpretable"
+  },
+  "jumeau_3000": {
+    "execute": false,
+    "duree_estimee": "environ 11 h CPU",
+    "consequence": "doctrine sparse non prouvee"
+  },
+  "actions_non_faites": {
+    "gate_entraine": "sans jumeau entraine, second inconnu",
+    "couche_delta": "ecartee par la mesure (88,9 % de changement)",
+    "memory_layer": "non prototypee ; golden 2/5 lexical, 3/5 graphe"
+  },
+  "encodeur": "rouge, ingestion fermee"
+}

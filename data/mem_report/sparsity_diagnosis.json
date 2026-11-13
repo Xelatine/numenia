@@ -1,0 +1,81 @@
+{
+  "activation": {
+    "gate": "sigmoid(gate_w\u00b7x + b), seuil dur GATE_THRESHOLD=0.1 -> z\u00e9ros exacts",
+    "body": "GELU (lisse, jamais exactement z\u00e9ro)",
+    "router_score": "sigmoid(q\u00b7k/sqrt(dim))",
+    "readout": "LayerNorm + Linear",
+    "conclusion": "des z\u00e9ros exacts existent d\u00e9j\u00e0 (gate), mais la couche body reste lisse"
+  },
+  "zeros_par_hop": {
+    "0": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "1": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "2": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "3": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "4": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "5": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "6": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    },
+    "7": {
+      "sorties_nulles": 0.0,
+      "gates_fermes": 0.0
+    }
+  },
+  "complexite": [
+    {
+      "noeuds": 1129,
+      "aretes": 3123,
+      "forward_s": 0.1857,
+      "ratio_vs_6246": 0.191
+    },
+    {
+      "noeuds": 1129,
+      "aretes": 6246,
+      "forward_s": 0.9745,
+      "ratio_vs_6246": 1.0
+    },
+    {
+      "noeuds": 1129,
+      "aretes": 12492,
+      "forward_s": 2.1195,
+      "ratio_vs_6246": 2.175
+    },
+    {
+      "noeuds": 1129,
+      "aretes": 24984,
+      "forward_s": 4.0827,
+      "ratio_vs_6246": 4.19
+    }
+  ],
+  "delta_temporel": {
+    "0.001": {
+      "fraction_moyenne_changeante": 0.8893,
+      "delta_median": 0.09796
+    },
+    "0.01": {
+      "fraction_moyenne_changeante": 0.889,
+      "delta_median": 0.09796
+    }
+  },
+  "genome": "data/genome_run3000.pt",
+  "note": "delta calcule sur l'etat complet [N, batch, dim], par position"
+}
