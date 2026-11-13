@@ -1,0 +1,43 @@
+{
+  "session": "T",
+  "smoke_sparse_100": {
+    "verdict": "compatible",
+    "steps": 100,
+    "final_loss": 4.4288,
+    "edges": 790,
+    "alive": 1002,
+    "cemetery": 0,
+    "node_deaths": 0,
+    "edge_deaths": 25,
+    "zeros_moyens": 0.5,
+    "hwm_mb": 541
+  },
+  "jumeau_3000": {
+    "etat": "en cours",
+    "pid": 238894,
+    "journal": "data/mem_report/sparse_3000.log",
+    "json": "data/mem_report/sparse_3000.json",
+    "checkpoint": "data/genome_sparse_3000.pt",
+    "seuil_etage1": 0.004684,
+    "reference_dense": 0.002342,
+    "etage2": "campagne top-k automatique si etage 1 vert",
+    "verdict": "non rendu"
+  },
+  "self_json": {
+    "fichier": "data/genome_myc/self.json",
+    "nom": "sans-nom (à nommer au premier Sommeil)",
+    "sexe": "indéterminé",
+    "age": "now() - birth_ts",
+    "stable": true,
+    "tests": "4 passed"
+  },
+  "organes_externes": {
+    "fichier": "mycelia/organs/external.py",
+    "niveaux": 4,
+    "niveaux_3_4": "stubbes : pas de detecteur d'ignorance (golden 5/5 non atteint)",
+    "appels_reels": 0,
+    "tests": "4 passed"
+  },
+  "encodeur": "rouge, ingestion fermee",
+  "prochaine_action": "lire sparse_3000.json a la fin du run"
+}

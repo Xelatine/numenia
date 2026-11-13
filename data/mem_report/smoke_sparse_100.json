@@ -1,0 +1,64 @@
+{
+  "steps": 100,
+  "rows": [
+    {
+      "step": 20,
+      "loss": 4.642,
+      "edges": 169,
+      "alive": 1002,
+      "cemetery": 0,
+      "edge_deaths": 0,
+      "node_deaths": 0,
+      "zeros": 0.4857,
+      "rss_mb": 446.6
+    },
+    {
+      "step": 40,
+      "loss": 4.6079,
+      "edges": 327,
+      "alive": 1002,
+      "cemetery": 0,
+      "edge_deaths": 0,
+      "node_deaths": 0,
+      "zeros": 0.4875,
+      "rss_mb": 452.6
+    },
+    {
+      "step": 60,
+      "loss": 4.555,
+      "edges": 479,
+      "alive": 1002,
+      "cemetery": 0,
+      "edge_deaths": 0,
+      "node_deaths": 0,
+      "zeros": 0.489,
+      "rss_mb": 469.9
+    },
+    {
+      "step": 80,
+      "loss": 4.5385,
+      "edges": 636,
+      "alive": 1002,
+      "cemetery": 0,
+      "edge_deaths": 0,
+      "node_deaths": 0,
+      "zeros": 0.4896,
+      "rss_mb": 470.2
+    },
+    {
+      "step": 100,
+      "loss": 4.4288,
+      "edges": 765,
+      "alive": 1002,
+      "cemetery": 0,
+      "edge_deaths": 25,
+      "node_deaths": 0,
+      "zeros": 0.5004,
+      "rss_mb": 471.1
+    }
+  ],
+  "verdict": "compatible",
+  "reasons": [],
+  "activation": "relu",
+  "output_sparse": true
+}
