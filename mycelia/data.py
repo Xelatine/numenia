@@ -114,8 +114,19 @@ class TextDataset:
         if max_lines is not None:
             text = "\n".join(text.splitlines()[: int(max_lines)])
 
-        ids = self.tokenizer.encode(text).ids
-        stream = torch.tensor(ids, dtype=torch.long)
+        # Chunked on purpose: a 60+ MB corpus encoded in one call builds a
+        # multi-million-entry Python list and was OOM-killed on BIO-1 (exit 137,
+        # 13 November, corpus Gutenberg). Encoding by 4 MB slices bounds the peak
+        # to one chunk; the stream is still one contiguous LongTensor.
+        chunk_chars = 4_000_000
+        chunks = [
+            torch.tensor(
+                self.tokenizer.encode(text[start : start + chunk_chars]).ids,
+                dtype=torch.long,
+            )
+            for start in range(0, len(text), chunk_chars)
+        ]
+        stream = torch.cat(chunks) if chunks else torch.zeros(0, dtype=torch.long)
         cut = int(stream.numel() * (1.0 - float(val_fraction)))
         # One token of context overlap at the boundary: a window needs to start
         # before the split to read the first held-out token in context.

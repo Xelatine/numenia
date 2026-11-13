@@ -1,0 +1,74 @@
+{
+  "session": "O",
+  "date": "2026-11-12/13",
+  "run_3000": {
+    "statut": "termine",
+    "debut": "2026-11-12T23:19:28",
+    "fin": "2026-11-13T10:33",
+    "duree_heures": 11.2,
+    "pas": 3000,
+    "perte_debut": 4.3204,
+    "perte_fin": 0.0010,
+    "aretes": {"debut": 774, "fin": 6246},
+    "noeuds": {"debut": 1000, "fin": 1129, "nes": 10, "morts": 500, "cimetiere": 5},
+    "aretes_mortes": 16009,
+    "rss_mo": {"min": 426, "max": 483, "fin": 444},
+    "hwm_final_mo": 709,
+    "regimes": [
+      {"pas": "0-500", "checkpoint_turns": false, "hwm_mo": 4202, "arret_regle": true},
+      {"pas": "500-3000", "checkpoint_turns": true, "hwm_mo": 709}
+    ],
+    "checkpoint": {
+      "fichier": "data/genome_run3000.pt",
+      "octets": 87795754,
+      "md5": "53b00b6944f19ab889fe27510955bf06",
+      "step": 3000
+    },
+    "journal": "data/mem_report/follow.run3000.log (436 lignes, 31 185 o, recupere avant arret du guet)"
+  },
+  "corpus": {
+    "apprentissage": {
+      "fichier": "data/corpus_gutenberg.txt",
+      "octets": 61360803,
+      "md5": "5a3e256afccc4d4c2a1604a2b1a9d08c",
+      "livres": 100,
+      "source": "Gutendex, languages=fr, sort=popular (top 100 download_count)",
+      "boilerplate_restant": 0,
+      "tokens": 21323837,
+      "fenetres_train": 1266101,
+      "fenetres_val": 66638,
+      "rss_chargement_mo": 1234
+    },
+    "smoke_test": {
+      "fichier": "data/corpus_fr.txt",
+      "octets": 24719274,
+      "md5": "1a27b7abb971ce2eec1aa7d7aaae21e0",
+      "nature": "histoires synthetiques, jamais corpus d'apprentissage par defaut"
+    },
+    "correctif_chargeur": {
+      "fichier": "mycelia/data.py",
+      "md5": "5db19d4eaa016402575493ac6d7dfbbc",
+      "raison": "encodage par tranches de 4 MB : l'encodage en un appel etait tue par l'OOM (exit 137) sur 61 Mo"
+    }
+  },
+  "transport": {
+    "canal": "lien-local SSH (base64/stdin)",
+    "root": "indisponible (outil refuse sudo, aucune fenetre root)",
+    "mesures": [
+      {"objet": "GGUF Q8_0", "octets": 675710816, "secondes": 86, "debit_mo_s": 7.8, "md5": "a49598f88d6157e900ae2aac730873c9"},
+      {"objet": "corpus_gutenberg", "octets": 61360803, "secondes": 8.16, "debit_mo_s": 7.5, "md5": "5a3e256afccc4d4c2a1604a2b1a9d08c"}
+    ]
+  },
+  "prerequis": {
+    "1.1a_transport": "vert (lien-local mesure, md5)",
+    "1.1b_filaire": "reporte (confort, hors chemin critique) — le filaire n'a pas fonctionne",
+    "1.2_derive": "vert",
+    "1.3_run_3000": "vert"
+  },
+  "smoke_qwen": {
+    "script": "scripts/smoke_qwen.py",
+    "runtime": "llama-cpp-python absent (aucun wheel cp314), compilation source lancee",
+    "execution": "en attente de la compilation",
+    "inference_lancee": false
+  }
+}
