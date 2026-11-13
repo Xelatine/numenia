@@ -140,10 +140,17 @@ class NodeBank(nn.Module):
     ``n`` rows are preserved bit for bit (proved by ``test_reallocate_no_loss``).
     """
 
-    def __init__(self, n_nodes: int, dim: int = DEFAULT_DIM, weak_noise: float = 0.02) -> None:
+    def __init__(self, n_nodes: int, dim: int = DEFAULT_DIM, weak_noise: float = 0.02,
+                 activation: str = "gelu", output_sparse: bool = False) -> None:
         super().__init__()
         self.dim = int(dim)
         self.weak_noise = float(weak_noise)
+        # Session S: the activation is a property of the born brain, not a
+        # post-hoc cut. "gelu" is the historical default and stays bit-for-bit.
+        if activation not in ("gelu", "relu"):
+            raise ValueError(f"activation inconnue {activation!r}")
+        self.activation = str(activation)
+        self.output_sparse = bool(output_sparse)
         self.n_nodes = int(n_nodes)
         for name, shape in bank_shapes(self.dim).items():
             self.register_parameter(name, nn.Parameter(torch.empty(self.n_nodes, *shape)))
@@ -220,13 +227,18 @@ class NodeBank(nn.Module):
     def forward_rows(self, x: torch.Tensor, ids: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """Fire the gathered nodes ``ids`` on their states ``x`` [A, B, dim]."""
         gate = torch.sigmoid(_blinear(x, self.gate_w[ids], self.gate_b[ids]))
-        hidden = F.gelu(_blinear(x, self.b1_w[ids], self.b1_b[ids]))
+        pre = _blinear(x, self.b1_w[ids], self.b1_b[ids])
+        hidden = F.relu(pre) if self.activation == "relu" else F.gelu(pre)
         transformed = _blinear(hidden, self.b2_w[ids], self.b2_b[ids])
         # Residual outside the norm: what a node receives keeps its amplitude,
         # so a loop genuinely loses 10 % of it at every traversal (F5).
         out = (x + _layernorm(transformed, self.ln_w[ids], self.ln_b[ids])) * gate
         # Silence is exact: no faint echo keeps travelling for free.
         out = torch.where(gate >= GATE_THRESHOLD, out, torch.zeros_like(out))
+        # ReLU on the node's own output produces exact zeros; the residual in
+        # ``transformed`` alone never would (measured: 0.0 every hop).
+        if self.output_sparse:
+            out = torch.relu(out)
         return out, gate
 
     def queries(self, x: torch.Tensor, ids: torch.Tensor) -> torch.Tensor:

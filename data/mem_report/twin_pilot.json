@@ -1,0 +1,100 @@
+{
+  "steps": 50,
+  "arms": [
+    {
+      "label": "dense",
+      "activation": "gelu",
+      "output_sparse": false,
+      "steps": 50,
+      "final_loss": 0.0,
+      "edges": 405,
+      "mean_zero_fraction": 0.0,
+      "delta": {
+        "0.001": {
+          "fraction_moyenne_changeante": 0.312,
+          "delta_median": 0.0
+        },
+        "0.01": {
+          "fraction_moyenne_changeante": 0.312,
+          "delta_median": 0.0
+        }
+      },
+      "topk": [
+        {
+          "fraction": null,
+          "loss": 4.5502,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.5,
+          "loss": 4.5502,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.25,
+          "loss": 4.5502,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.1,
+          "loss": 4.5483,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.05,
+          "loss": 4.5311,
+          "factor": 0.996
+        }
+      ],
+      "checkpoint": "/home/dieux/mycelia/data/genome_pilot_dense.pt"
+    },
+    {
+      "label": "sparse",
+      "activation": "relu",
+      "output_sparse": true,
+      "steps": 50,
+      "final_loss": 0.0,
+      "edges": 405,
+      "mean_zero_fraction": 0.4803,
+      "delta": {
+        "0.001": {
+          "fraction_moyenne_changeante": 0.312,
+          "delta_median": 0.0
+        },
+        "0.01": {
+          "fraction_moyenne_changeante": 0.312,
+          "delta_median": 0.0
+        }
+      },
+      "topk": [
+        {
+          "fraction": null,
+          "loss": 4.5934,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.5,
+          "loss": 4.5934,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.25,
+          "loss": 4.5934,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.1,
+          "loss": 4.5924,
+          "factor": 1.0
+        },
+        {
+          "fraction": 0.05,
+          "loss": 4.5771,
+          "factor": 0.996
+        }
+      ],
+      "checkpoint": "/home/dieux/mycelia/data/genome_pilot_sparse.pt"
+    }
+  ],
+  "note": "PILOTE 50 pas ; le jumeau 3000 pas n'a pas \u00e9t\u00e9 ex\u00e9cut\u00e9"
+}
