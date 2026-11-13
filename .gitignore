@@ -1,6 +1,7 @@
 # Generated corpus artefacts: the scripts rebuild them from Hugging Face.
 data/train.parquet
 data/corpus_fr.txt
+data/corpus_gutenberg.txt
 data/tokenizer.json
 data/*.pt
 data/train.lock

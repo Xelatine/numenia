@@ -109,3 +109,21 @@ TRANSPORT — OPTION LIEN-LOCAL (root indisponible)
 
   Aucune inférence ni entraînement texte lancé : le run 3 000 pas reste seul
   utilisateur du CPU jusqu'à sa fin.
+
+CLÔTURE DU RUN (13/11 10:33)
+  FIN step 3000 | checkpoint 87 795 754 o | md5 53b00b6944f19ab889fe27510955bf06
+  perte 4,3204 -> 0,0010 | arêtes 774 -> 6 246 | nœuds 1 000 -> 1 129
+  RSS 426-483 Mo (fin 444) | VmHWM final 709 Mo
+  follow.log récupéré AVANT l'arrêt du guet : data/mem_report/follow.run3000.log
+
+DÉCISIONS
+  corpus de validation (smoke-test) = data/corpus_fr.txt, synthétique, assumé
+  corpus d'apprentissage          = data/corpus_gutenberg.txt, réel, domaine public
+                                    61 360 803 o, md5 5a3e256afccc4d4c2a1604a2b1a9d08c
+  chargeur corrigé : encodage par tranches de 4 MB (l'encodage en un appel a
+  été tué par l'OOM à 61 Mo) ; 21 323 837 tokens, 1 266 101 fenêtres train
+
+  1.1-a Transport fiable poste->serveur : VERT (lien-local, 675,7 Mo en 86 s,
+        corpus 61,4 Mo en 8,16 s, md5 vérifiés)
+  1.1-b Ethernet filaire dédié : REPORTÉ (confort, hors chemin critique).
+        Le filaire n'a PAS fonctionné : root indisponible, 5e session.
