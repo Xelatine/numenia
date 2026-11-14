@@ -1,43 +1,62 @@
 {
   "session": "U",
   "jumeau_sparse": {
-    "etat": "en cours",
-    "pid": 238894,
-    "dernier_pas": 2640,
-    "pas_total": 3000,
-    "perte_courante": 0.1824,
+    "etat": "echec",
+    "steps": 3000,
+    "final_loss": 0.0747,
     "reference_dense": 0.002342,
-    "seuil_etage1": 0.004684,
-    "hwm_mb": 750,
-    "edges": 6929,
-    "nodes_alive": 1008,
-    "cemetery": 4,
-    "verdict": "non rendu",
-    "json_attendu": "data/mem_report/sparse_3000.json"
+    "ceiling": 0.004684,
+    "stage1_admissible": false,
+    "topk": "non execute : etage 1 echoue (plan B)",
+    "hwm_mb": 749.5,
+    "seconds": 42518.6,
+    "edges": 6317,
+    "nodes_alive": 999,
+    "cemetery": 13,
+    "plan_b": "non commence (Top-KAST ou gate Switch)"
   },
-  "reseau": {
-    "etat": "hs",
-    "interface": "enp8s0",
-    "adresse": "169.254.184.83/16",
-    "route_defaut": false,
-    "dns": "echec de resolution (huggingface.co, pypi.org)",
-    "nmcli": "Not authorized to control networking",
-    "wifi": "DOWN"
+  "encodeur": {
+    "etat": "vert",
+    "modele": "embeddinggemma-300m-q8_0.gguf",
+    "source": "ggml-org/embeddinggemma-300M-GGUF",
+    "taille_octets": 333590944,
+    "md5": "29ebd01c9362065f36405ef185c7755d",
+    "dim": 768,
+    "hwm_mb": 664.4,
+    "golden": "5/5",
+    "config": "document prefixe 'title: none | text: ', requete brute",
+    "golden_prefixed_query": "4/5",
+    "heldout": "5/5 (meme config) ; 5/5 avec prefixes",
+    "qwen_baseline": "3/5"
   },
-  "golden": {
-    "etat": "rouge",
-    "qwen_brut": "3/5",
-    "qwen_instruct": "1/5",
-    "qwen_task": "1/5",
-    "embeddinggemma": "non telechargeable (reseau)",
-    "bge_m3": "non telechargeable (reseau)"
+  "detecteur_ignorance": {
+    "seuil": 0.30,
+    "seuil_ancien": 0.55,
+    "connus_min": 0.322,
+    "inconnus_max": 0.260,
+    "separation": 0.062,
+    "connus_acceptes": "5/5",
+    "inconnus_rejetes": "5/5",
+    "niveaux_3_4": "armes, clients absents, aucun appel reseau"
   },
   "nom": {
-    "mecanisme": "signature structurelle triee -> table de syllabes, une seule fois",
-    "tests": "4 passed",
-    "execute_sur_organisme": false,
-    "self_json": "sans-nom (a nommer au premier Sommeil)"
+    "mecanisme": "signature structurelle -> syllabes, 4 tests",
+    "candidat_genome_dense": "Bou",
+    "decision": "refuse, self.json reste sans-nom, choix utilisateur",
+    "sommeil_implemente": false
   },
-  "non_fait": ["verdict jumeau", "ingestion", "encodage corpus", "whisper", "smolvlm", "niveaux 3-4", "test final"],
-  "prealable_prochaine_session": "retablir le reseau de BIO-1"
+  "longues_taches": {
+    "run_ingestion_py": "absent",
+    "run_corpus_py": "absent",
+    "lancees": false
+  },
+  "sens": "non integres (aucun long run a couvrir)",
+  "reseau": {
+    "interface_serveur": "wlp7s0 (enp8s0 lien-local)",
+    "debit_serveur": "27 Ko/s, 8 Ko/s en parallele",
+    "lien_local": "4,5 Mo/s",
+    "telechargement_windows": "20 Mo/s",
+    "methode": "telechargement Windows puis SSH, md5 verifie"
+  },
+  "prochaine_action": "plan B sparse, puis scripts d'ingestion, puis longues taches"
 }

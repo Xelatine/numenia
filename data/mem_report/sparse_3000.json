@@ -1,0 +1,15 @@
+{
+  "steps": 3000,
+  "activation": "relu",
+  "output_sparse": true,
+  "final_loss": 0.0747,
+  "reference_dense": 0.002342,
+  "ceiling": 0.004684,
+  "stage1_admissible": false,
+  "edges": 6317,
+  "nodes_alive": 999,
+  "cemetery": 13,
+  "hwm_mb": 749.5,
+  "seconds": 42518.6,
+  "topk": "non ex\u00e9cut\u00e9 : \u00e9tage 1 \u00e9chou\u00e9 (plan B)"
+}
