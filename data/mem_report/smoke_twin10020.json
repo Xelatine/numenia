@@ -7,8 +7,8 @@
   "seq_len": 32,
   "reference_dense": 0.002342,
   "ceiling": 0.002342,
-  "final_loss": 4.4597,
-  "awake_last": 1007,
+  "final_loss": 2.7801,
+  "awake_last": 1008,
   "param_mb_fp32": 246.0,
   "routing": {
     "nodes_ever_awake": 10020,
@@ -17,17 +17,17 @@
   },
   "edges": 731,
   "cemetery": 0,
-  "hwm_mb": 2070.3,
-  "seconds": 811.6,
+  "hwm_mb": 2107.5,
+  "seconds": 572.9,
   "rows": [
     {
       "step": 100,
-      "loss": 4.459692,
+      "loss": 2.780108,
       "edges": 731,
-      "awake": 1007,
+      "awake": 1008,
       "covered": 10020,
-      "rss_mb": 1331.1,
-      "hwm_mb": 1755.6
+      "rss_mb": 1368.1,
+      "hwm_mb": 1671.9
     }
   ],
   "routing_ok": true

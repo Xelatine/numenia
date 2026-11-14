@@ -1,0 +1,39 @@
+{
+  "session": "W4",
+  "pilote_a": {
+    "mapping": "MLP 896->256->32, distillation cosinus",
+    "train_sentences": 1200,
+    "steps": 500,
+    "spearman": 0.6669,
+    "cos_error": 0.1672,
+    "hit_at_1": 2,
+    "qwen_hit_at_1": 2,
+    "seuils": {"spearman": 0.70, "cos_error": 0.15, "hit_at_1": 4},
+    "verdict": "ROUGE"
+  },
+  "piste_c": {
+    "routeur": "cles aleatoires gelees 10020x768, top 10%",
+    "paraphrase_jaccard": 0.4805,
+    "unrelated_jaccard": 0.1092,
+    "gap": 0.3713,
+    "coverage": 0.4936,
+    "seuils": {"paraphrase": 0.50, "gap": 0.30, "coverage": 0.30},
+    "verdict": "ROUGE (P1 manque de 0.019)"
+  },
+  "b2_correction": {
+    "effondrement": "pas 300 : 9558 enterres, 462 vivants, 62 eveilles",
+    "causes": ["mort par isolement", "injection au seul noeud 0"],
+    "corrections": ["injection broadcast aux eveilles", "readout moyenne", "pas de mort par isolement si route_fraction"],
+    "smoke_apres": {"coverage": 10020, "deaths": 0, "loss_100": 2.7801, "hwm_mb": 2107.5, "pace_s": 5.88},
+    "smoke_avant": {"loss_100": 4.4597, "hwm_mb": 2070, "pace_s": 8.77}
+  },
+  "run": {
+    "pid": 247374,
+    "seuil": 0.002342,
+    "checkpoint": "data/genome_twin10020_run.pt",
+    "verdict": "non ecrit"
+  },
+  "poids_mycelia_modifies_par_greffe": false,
+  "decisions_utilisateur": ["palier ou course libre pour le run"],
+  "non_fait": ["greffe 2", "ingestion", "corpus", "sens", "nom"]
+}

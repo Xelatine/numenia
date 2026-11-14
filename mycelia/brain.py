@@ -222,6 +222,9 @@ class Brain(nn.Module):
             None if route_fraction is None else float(route_fraction)
         )
         self.last_awake_nodes: int = int(self.n_nodes)
+        # Readout of the routed experts: mean of the outputs of the nodes woken
+        # by the previous token. None for a brain without routing.
+        self._readout_vec: torch.Tensor | None = None
         # Diagnostic: which nodes have been awake at least once. A node that
         # never wakes is not routed, it is amputated -- the smoke must see zero.
         self.awake_seen = torch.zeros(self.n_nodes, dtype=torch.bool)
@@ -522,7 +525,14 @@ class Brain(nn.Module):
         return state
 
     def predict(self, state: torch.Tensor) -> torch.Tensor:
-        """Read the colony's understanding: the reader's membrane, normalised."""
+        """Read the colony's understanding: the reader's membrane, normalised.
+
+        Routed brains read the mean of the experts' outputs instead of a single
+        membrane: a node without synapses never fills its state, so reading
+        node 1 alone would waste the capacity the router just woke.
+        """
+        if self.route_fraction is not None and self._readout_vec is not None:
+            return self.output_head(self.readout_norm(self._readout_vec))
         return self.output_head(self.readout_norm(state[OUTPUT_NODE]))
 
     @torch.no_grad()
@@ -819,6 +829,10 @@ class Brain(nn.Module):
         hops = self.max_hops if hops is None else int(hops)
         grow = self.training if grow is None else bool(grow)
         state = self._fresh_state(batch) if state is None else self._fit_state(state, batch)
+        if self.route_fraction is not None:
+            # The readout is rebuilt inside this forward; a tensor kept from the
+            # previous block would hold a freed graph.
+            self._readout_vec = None
 
         predictions: list[torch.Tensor] = []
         trace_out: dict[int, list[tuple[int, int]]] = {}
@@ -912,8 +926,17 @@ class Brain(nn.Module):
             # The door injects into the wavefront, not into the membrane: what
             # circulates is what was just received. A node emits its input, so
             # a loop loses energy instead of accumulating it forever.
-            hot = idx0
-            wave = injection.unsqueeze(0)
+            # A routed brain broadcasts the token to every awake node: with a
+            # 10 000-node graph and a 20 000-edge budget, most nodes have no
+            # synapse yet, and injecting at node 0 alone would leave the woke
+            # capacity without any signal.
+            if awake_flat is not None:
+                hot = awake_flat.nonzero(as_tuple=True)[0]
+                weights = gate_all[0, hot]
+                wave = injection.unsqueeze(0) * weights.view(-1, 1, 1)
+            else:
+                hot = idx0
+                wave = injection.unsqueeze(0)
             position_trace: dict[int, list[tuple[int, int]]] = {}
             position_energy: list[torch.Tensor] = []
             position_io: list[tuple[torch.Tensor, torch.Tensor]] = []
@@ -1007,6 +1030,11 @@ class Brain(nn.Module):
                 # Keep the pair (ids, outputs) together: the last hop may have
                 # no successor, and the telemetry must not mix two hops.
                 position_io.append((x, out))
+                if awake_flat is not None and hop == 0:
+                    # Every woken expert's transform of this token is the
+                    # readout for the next prediction. Detached? No: the next
+                    # token's loss must reach the router and the expert rows.
+                    self._readout_vec = out.mean(dim=0)
                 self._last_out = out.detach()
                 self._last_hot = hot_in
                 if emit_ids.numel():
