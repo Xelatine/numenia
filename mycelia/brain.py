@@ -109,6 +109,7 @@ class Brain(nn.Module):
         checkpoint_selective: bool = False,
         activation: str = "gelu",
         output_sparse: bool = False,
+        route_fraction: float | None = None,
     ) -> None:
         super().__init__()
         if n_nodes < 8:
@@ -150,6 +151,7 @@ class Brain(nn.Module):
             "mmap": bool(mmap),
             "activation": str(activation),
             "output_sparse": bool(output_sparse),
+            "route_fraction": None if route_fraction is None else float(route_fraction),
         }
 
         self.n_nodes = int(n_nodes)
@@ -210,6 +212,19 @@ class Brain(nn.Module):
         # None keeps every existing genome and test bit-for-bit unchanged.
         self.topk_fraction: float | None = None
         self.topk_min: int = 8
+        # Session W: conditional routing. Instead of silencing nodes forever
+        # (a fixed amputation), a learned projection of the *current input*
+        # chooses the fraction of the colony that is awake for this token.
+        # The others are dormant, not dead: the next token wakes another half.
+        if route_fraction is not None and not 0.0 < float(route_fraction) <= 1.0:
+            raise ValueError("route_fraction must be in (0, 1]")
+        self.route_fraction: float | None = (
+            None if route_fraction is None else float(route_fraction)
+        )
+        self.last_awake_nodes: int = int(self.n_nodes)
+        # Diagnostic: which nodes have been awake at least once. A node that
+        # never wakes is not routed, it is amputated -- the smoke must see zero.
+        self.awake_seen = torch.zeros(self.n_nodes, dtype=torch.bool)
         # Per-hop/per-position activity profile, off by default (zero cost).
         self.profile_active: bool = False
         self.active_profile: list[tuple[int, int, int]] = []
@@ -232,6 +247,14 @@ class Brain(nn.Module):
         # Tokens become signals here, and signals become token predictions here.
         self.embedding = nn.Embedding(self.vocab, self.dim)
         self.output_head = nn.Linear(self.dim, self.vocab)
+        # The router: one score per node, read from the injected signal. A
+        # dedicated generator keeps this init out of the global RNG stream, so
+        # every existing run keeps its exact trajectory.
+        router_generator = torch.Generator().manual_seed(1234)
+        self.router_w = nn.Parameter(
+            torch.randn(self.dim, self.n_nodes, generator=router_generator) * 0.02
+        )
+        self.router_b = nn.Parameter(torch.zeros(self.n_nodes))
         with torch.no_grad():
             # A *dedicated* generator: drawing from the global RNG here would
             # shift every later draw (candidate sampling included) and silently
@@ -615,6 +638,7 @@ class Brain(nn.Module):
         tgt_all: torch.Tensor,
         mask_all: torch.Tensor,
         alive_all: torch.Tensor,
+        node_weight: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, ...]:
         """One tour of the diffusion, as a single replayable step.
 
@@ -629,6 +653,10 @@ class Brain(nn.Module):
         write (``emitted``, ``usage``, the trace) exactly once, in the forward.
         """
         out, _gate = self.bank.forward_rows(wave, ids)
+        if node_weight is not None:
+            # Soft routing weight: the hard top-k chooses who is awake, this
+            # scalar lets the router learn *how much* each awake node speaks.
+            out = out * node_weight.unsqueeze(-1)
         routed = self._route(out, state, ids, src_all, tgt_all, mask_all, alive_all)
         return (*routed, out, ids)
 
@@ -827,6 +855,36 @@ class Brain(nn.Module):
 
             injection = self.embedding(tokens[:, position])
 
+            # Session W: the input wakes a fraction of the colony. This is a
+            # routing decision, not an amputation: next token, another subset.
+            # The signal enters at node 0 exactly as before; dormant nodes are
+            # simply not reachable during this token. Computed from the current
+            # token only -- no future token can influence the routing.
+            gate_all = None
+            awake_flat = None
+            if self.route_fraction is not None:
+                if batch != 1:
+                    raise ValueError(
+                        "route_fraction requires batch_size=1: one token chooses "
+                        "one awake subset; a shared mask would be a fake routing"
+                    )
+                alive_mask = self.node_alive
+                scores = injection @ self.router_w + self.router_b  # [1, N]
+                masked = scores.masked_fill(~alive_mask.unsqueeze(0), float("-inf"))
+                k = max(2, int(round(self.route_fraction * int(alive_mask.sum()))))
+                chosen = torch.topk(masked, k, dim=1).indices
+                awake = torch.zeros_like(masked, dtype=torch.bool)
+                awake.scatter_(1, chosen, True)
+                awake[:, INPUT_NODE] = True
+                awake[:, OUTPUT_NODE] = True
+                alive_mask = alive_mask | (torch.arange(self.n_nodes, device=device) == INPUT_NODE)
+                alive_mask = alive_mask | (torch.arange(self.n_nodes, device=device) == OUTPUT_NODE)
+                awake &= alive_mask.unsqueeze(0)
+                gate_all = torch.sigmoid(scores)
+                awake_flat = awake[0]
+                self.last_awake_nodes = int(awake_flat.sum())
+                self.awake_seen |= awake_flat.detach().to("cpu")
+
             # The door injects into the wavefront, not into the membrane: what
             # circulates is what was just received. A node emits its input, so
             # a loop loses energy instead of accumulating it forever.
@@ -848,8 +906,20 @@ class Brain(nn.Module):
                 tgt_all = self.edge_index[1, : self.ne].clone()
                 mask_all = self._edge_mask[: self.ne]
                 alive_all = self.node_alive.clone()
+                if awake_flat is not None:
+                    # Only edges with both ends awake are traversed. This is
+                    # where the compute is actually saved: a dormant node costs
+                    # neither a forward nor a message.
+                    traversable = awake_flat[src_all] & awake_flat[tgt_all]
+                    if not bool(traversable.all()):
+                        src_all = src_all[traversable]
+                        tgt_all = tgt_all[traversable]
+                        mask_all = mask_all[traversable]
                 x = wave
                 hot_in = hot
+                node_weight = (
+                    None if gate_all is None else gate_all[:, hot_in].t()
+                )
                 replay = (
                     bool(self.checkpoint_turns)
                     and torch.is_grad_enabled()
@@ -861,6 +931,8 @@ class Brain(nn.Module):
                     # recompute than the full checkpoint, so a higher peak and
                     # a lower time cost -- both to be measured, never assumed.
                     out, _gate = self.bank.forward_rows(x, hot_in)
+                    if node_weight is not None:
+                        out = out * node_weight.unsqueeze(-1)
                     routed = _checkpoint(
                         self._route,
                         out,
@@ -886,11 +958,14 @@ class Brain(nn.Module):
                         tgt_all,
                         mask_all,
                         alive_all,
+                        node_weight,
                         use_reentrant=False,
                         preserve_rng_state=True,
                     )
                 else:
-                    outputs = self._hop(x, state, hot_in, src_all, tgt_all, mask_all, alive_all)
+                    outputs = self._hop(
+                        x, state, hot_in, src_all, tgt_all, mask_all, alive_all, node_weight
+                    )
                 (
                     state,
                     wave,
