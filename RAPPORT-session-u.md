@@ -1,104 +1,131 @@
-# Session U — verdict en attente, porte dorée bloquée par le réseau
+# Session U — verdict rouge, encodeur vert, nom non imposé
 
-**Trois faits, dans l'ordre où ils ont été constatés :**
+**Trois chiffres suffisent :**
 
-1. le jumeau sparse **tourne encore** (2 640/3 000 au dernier relevé) : son JSON
-   n'existe pas, donc **aucun verdict n'est lisible** ;
-2. le réseau de BIO-1 est **tombé** (DNS et route absents) : l'encodeur
-   EmbeddingGemma et les organes sensoriels ne peuvent pas être téléchargés ;
-3. le mécanisme de nom est **implémenté et testé** (4/4), sans nommer
-   l'organisme à sa place.
+- jumeau sparse : **0,0747** de perte finale pour un plafond de **0,004684** →
+  `stage1_admissible: false`, top-k non exécuté ;
+- golden : **5/5** avec EmbeddingGemma-300M (md5 `29ebd01c…`, 333 590 944 o),
+  **4/5** avec les préfixes officiels — la configuration mesurée est consignée ;
+- nom : le mécanisme produirait **« Bou »** → je ne l'impose pas, l'organisme
+  reste sans-nom jusqu'à ta décision.
 
-Aucune de ces trois lignes n'est un contournement : ce sont les mesures du jour.
+## 1. Verdict du jumeau : ÉCHEC DE LA PISTE A
 
-## 1. Jumeau sparse : EN COURS, verdict non rendu
+`data/mem_report/sparse_3000.json`, lu tel quel :
 
 | | |
 |---|---|
-| État | PID 238894 vivant, 10 h 08 d'exécution |
-| Dernier pas | **2 640 / 3 000** |
-| Rythme | ~17 s/pas → reste ~1 h 40 |
-| HWM | **750 Mo** (plafond 800) |
-| Perte au pas 2 600 | **0,1824** (référence dense finale : 0,002342) |
-| Arêtes / nœuds | 6 929 / 1 008, cimetière 4 |
-| Seuil étage 1 | perte finale ≤ 0,004684 |
+| Pas | 3 000 |
+| Perte finale | **0,0747** |
+| Référence dense | 0,002342 |
+| Plafond étage 1 | 0,004684 |
+| Verdict | **`stage1_admissible: false`** |
+| Top-k 50/25/10/5 % | **non exécuté** (« étage 1 échoué (plan B) ») |
+| HWM | 749,5 Mo |
+| Durée | 42 518,6 s (11 h 48) |
 
-La perte courante (0,18) est encore **77×** au-dessus du seuil d'admissibilité,
-mais elle baisse (4,64 au pas 100 → 0,18 au pas 2 600) et le dense avait la même
-trajectoire avant de chuter. **Prédire le verdict serait exactement ce que le
-protocole interdit.** Il sera dans `data/mem_report/sparse_3000.json` :
+L'écart au plafond est de **×15,9**. Le sparse n'est pas « presque » admissible :
+il est seize fois au-dessus. Conséquence doctrinale : **pas d'ingestion dense
+« en attendant »**, pas de top-k inventé, **Plan B** (Top-KAST / gate Switch)
+comme prochaine piste. Le contraste avec le dense (×679 à 50 %) ne peut pas être
+lu puisque la campagne top-k n'a pas eu lieu — et c'est un résultat en soi.
 
-```
-ssh -i .server/id_ed25519_mycelia -6 dieux@fe80::226a:8aff:fea3:5e67%15 \
-  'cat ~/mycelia/data/mem_report/sparse_3000.json'
-```
+## 2. Encodeur : EmbeddingGemma-300M, golden 5/5
 
-Si `stage1_admissible` est vrai, la campagne top-k s'exécute automatiquement ;
-si faux, le Plan B (Top-KAST / gate Switch) s'applique — et sera consigné comme
-échec de la piste A.
+`google/embeddinggemma-300m` est **gated** (accord manuel). Le GGUF Q8_0 de
+`ggml-org/embeddinggemma-300M-GGUF` est libre :
 
-## 2. Golden 5/5 : BLOQUÉ PAR L'INFRASTRUCTURE, pas par la mesure
-
-`enp8s0` ne porte qu'une adresse lien-local `169.254.184.83/16`, aucune route
-par défaut, Wi-Fi `DOWN`. `nmcli connection up` répond **« Not authorized to
-control networking »** (root/polkit indisponible). `huggingface.co` et `pypi.org`
-ne résolvent plus.
-
-Conséquence : **EmbeddingGemma-300M et bge-m3 ne peuvent pas être obtenus**, donc
-le golden reste rouge et l'ingestion reste fermée. Ce n'est pas un échec de la
-piste encodeur — c'est une panne réseau constatée.
-
-Dernière tentative **offline** sur Qwen (déjà présent) : les préfixes
-d'instruction n'aident pas, ils détruisent :
-
-| Variante | HIT@1 |
+| | |
 |---|---|
-| brut | 3/5 |
-| « Instruct: Retrieve the passage… » | **1/5** |
-| « task: search result \| query: » | **1/5** |
+| Taille | 333 590 944 o |
+| md5 (calculé, identique Windows/BIO-1) | `29ebd01c9362065f36405ef185c7755d` |
+| dim | 768 |
+| HWM mesuré | **664,4 Mo** |
+| Golden | **5/5** (hit@1) |
 
-Aucun encodeur local ne passe la porte. Rien n'est maquillé en « presque 5/5 ».
+Le détail qui compte : les préfixes officiels **dégradent** le golden.
 
-## 3. Le nom : mécanisme B défini, testé, non exécuté sur l'organisme
-
-`mycelia/naming.py` — l'organisme se nomme **au premier Sommeil**, à partir de sa
-structure, jamais au hasard :
-
-- signature = (nœuds vivants, arêtes, suite des degrés **triée**) ;
-- projection SHA-256 sur une table de syllabes fixe (24 × 10 × 12) ;
-- **indépendant de l'ordre des arêtes** (testé par permutation) ;
-- **figé dès l'écriture** : l'ingestion peut changer le graphe, le nom ne bouge
-  plus (testé : second graphe → même nom) ;
-- survit à la copie/compaction (testé).
-
-4/4 tests. `self.json` conserve pour l'instant
-« sans-nom (à nommer au premier Sommeil) » : **la machine n'a pas nommé
-l'organisme à la place de l'utilisateur**.
-
-## 4. Ce qui n'a pas été fait, et pourquoi
-
-| Action | État | Raison |
+| Configuration | Golden | Held-out (5 paires inédites) |
 |---|---|---|
-| Verdict jumeau | **en attente** | run à 88 %, non interrompu |
-| Golden EmbeddingGemma | **bloqué** | réseau/DNS morts, root absent |
-| Ingestion 21,3 M tokens | **non lancée** | golden rouge + verdict absent |
-| Encodage corpus | **non lancé** | même condition |
-| Whisper / SmolVLM | **non intégrés** | téléchargements impossibles |
-| Niveaux 3-4 | **stubs** | pas de détecteur d'ignorance |
-| Test final | **impossible** | dépend de tout le reste |
+| Qwen 0,5B brut (baseline) | 3/5 | — |
+| Gemma, préfixes query + document | 4/5 | 5/5 |
+| Gemma, préfixe document seul | **5/5** | **5/5** |
+| Gemma, aucun préfixe | 4/5 | — |
+
+La paire difficile est « Je déteste qu'on me coupe la parole » / « qu'est-ce qui
+l'énerve ? » : cos 0,322 contre 0,279 pour le meilleur faux. Le 5/5 tient à
+**0,043 de marge** sur cette paire. Le held-out 5/5 dans les deux configs dit que
+le choix n'est pas un sur-ajustement grotesque, mais la marge reste mince et je
+ne la présente pas comme confortable.
+
+### Détecteur d'ignorance : seuil 0,55 → 0,30
+
+Le seuil hérité 0,55 aurait déclaré **inconnus deux souvenirs corrects** (0,521
+et 0,322). Mesure sur 5 connus + 5 inconnus :
+
+- connus : 0,741 / 0,563 / 0,521 / 0,616 / 0,322 → **min 0,322** ;
+- inconnus : 0,132 / 0,260 / 0,187 / 0,199 / 0,159 → **max 0,260** ;
+- séparation **0,062**, seuil **0,30** : 5/5 connus acceptés, 5/5 inconnus rejetés.
+
+`ExternalOrgans.confidence_threshold` passe donc à **0,30**. Les niveaux 3-4 sont
+**armés** (condition golden remplie), mais aucun client Gemini/web n'est appelé
+sans clé : le code refuse toujours explicitement.
+
+## 3. Nom : « Bou » — refusé, décision laissée à l'utilisateur
+
+Le mécanisme (signature structurelle, 4/4 tests) appliqué au génome dense vivant
+(`genome_run3000.pt`, 3 000 pas, 1 005 nœuds vivants, 6 246 arêtes) donne
+**« Bou »**. Ce n'est pas un nom, c'est un artefact de table de syllabes.
+
+Je ne l'écris pas. `self.json` garde « sans-nom (à nommer au premier Sommeil) ».
+Aucun Sommeil n'est implémenté à ce jour : le déclencheur n'existe pas encore.
+**Le nom t'appartient** — dis-le et je l'écris ; sinon le mécanisme devra être
+corrigé (longueur minimale, table revue) avant de servir.
+
+## 4. Les deux longues tâches : NON LANCÉES, et pas seulement à cause du verdict
+
+| Script attendu | Réalité |
+|---|---|
+| `scripts/run_ingestion.py` | **n'existe pas** |
+| `scripts/run_corpus.py` | **n'existe pas** |
+
+Même avec un verdict vert, les commandes de la séquence auraient échoué. Il
+faudra les écrire (reprise, checkpoints/500, suivi RSS 24 h) avant de parler de
+7-8 jours. Rien n'a été lancé : ni ingestion, ni encodage, ni dense « en
+attendant ». La doctrine est respectée.
+
+## 5. Sens : non intégrés, et c'était le bon ordre
+
+Whisper et SmolVLM n'ont de sens que **pendant** un long run. Il n'y a pas de
+long run. Les télécharger maintenant aurait ajouté deux modèles non mesurés à un
+organisme qui n'ingère pas. Rien n'a été maquillé en « prêt ».
+
+## 6. Réseau : réparé par la mesure, pas par le câble
+
+`enp8s0` est toujours en lien-local (DHCP non abouti) ; le trafic passe par
+`wlp7s0`. Débit serveur : 27 Ko/s, effondré à 8 Ko/s en parallèle. Le lien local
+Windows → BIO-1 mesure **4,5 Mo/s** et le téléchargement Windows **20 Mo/s**.
+Le GGUF a donc été téléchargé sur Windows (6 s) puis poussé par SSH (38 s), md5
+vérifié des deux côtés.
 
 ## État consolidé
 
 | Élément | État |
 |---|---|
-| Jumeau sparse | **en cours**, HWM 750 Mo, perte 0,18 au pas 2 600 |
-| Golden encodeur | **rouge** — Qwen 3/5, variantes 1/5, aucun encodeur dédié téléchargeable |
-| Nom | **mécanisme prêt**, non exécuté (choix utilisateur ou premier Sommeil) |
-| Identité offline | **verte** (8 tests + 4 tests de nom) |
-| Organes externes | **câblés, stubs** |
-| Réseau BIO-1 | **HS** (lien-local seul, pas de route, nmcli non autorisé) |
+| Jumeau sparse | **ROUGE** — 0,0747 vs 0,004684, top-k non exécuté |
+| Encodeur | **VERT** — Gemma 5/5, held-out 5/5, HWM 664,4 Mo |
+| Détecteur d'ignorance | **calibré 0,30**, marge 0,062 |
+| Niveaux 3-4 | **armés**, clients absents (aucun appel) |
+| Nom | **non imposé** — « Bou » rejeté, décision utilisateur |
+| Ingestion / corpus | **scripts absents**, non lancés |
+| Sens | **non intégrés** (pas de run à couvrir) |
+| Plan B | **prochaine étape** — non commencé |
 
-La prochaine session n'a qu'un seul préalable non négociable : **rétablir le
-réseau** (connexion filaire ou Wi-Fi avec privilèges) pour obtenir un encodeur.
-Sans lui, ni le golden, ni l'ingestion, ni les sens ne peuvent avancer — et le
-dire est plus utile que de lancer une tâche dense « en attendant ».
+## Prochaine action, dans l'ordre
+
+1. écrire le **Plan B** sparse (Top-KAST ou gate Switch) et le mesurer comme le
+   jumeau : perte ≤ 0,004684 à 50 % de zéros, HWM, équité ;
+2. écrire `run_ingestion.py` et `run_corpus.py` avec reprise et checkpoints ;
+3. alors seulement : ingestion sparse, encodage, puis whisper/SmolVLM pendant
+   le run ;
+4. le nom : ta décision, ou un générateur corrigé au premier Sommeil.

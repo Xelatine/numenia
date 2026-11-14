@@ -9,6 +9,11 @@ La condition d'activation est le golden retrieval 5/5 : sans lui, l'organisme ne
 sait pas dire « je ne sais pas », et toute escalade serait aveugle. Les niveaux
 3-4 renvoient donc un refus explicite, jamais une erreur bloquante.
 
+Mesure du 14/11 (EmbeddingGemma-300M, golden 5/5) : le seuil 0,55 hérité était
+mal calibré — deux souvenirs corrects (0,521 et 0,322) étaient déclarés inconnus.
+Connus min 0,322 / inconnus max 0,260 → seuil 0,30, marge 0,062. Les niveaux 3-4
+s'ARMENT avec ce seuil ; aucun client externe n'est appelé sans clé explicite.
+
 Vie privée : le contexte local (souvenirs, génome) n'est JAMAIS transmis. Seule
 une question décontextualisée peut sortir, après passage par ``sanitize``.
 """
@@ -34,7 +39,7 @@ class ExternalOrgans:
     gemini_client: callable | None = None
     web_search: callable | None = None
     ignorance_detector: callable | None = None
-    confidence_threshold: float = 0.55
+    confidence_threshold: float = 0.30  # calibré sur Gemma, voir le docstring
     history: list = field(default_factory=list)
 
     def _has_detector(self) -> bool:
@@ -60,7 +65,7 @@ class ExternalOrgans:
         if not self._has_detector():
             return self._record(Escalation(
                 3, None, blocked=True,
-                reason="escalade bloquée : pas de détecteur d'ignorance (golden 5/5 non atteint)",
+                reason="escalade bloquée : détecteur d'ignorance non câblé (golden 5/5 atteint, seuil 0,30)",
             ))
         if self.gemini_client is not None:
             answer = self.gemini_client(self.sanitize(question))
