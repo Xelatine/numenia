@@ -1,0 +1,43 @@
+{
+  "session": "W",
+  "jumeau_b1": {
+    "etat": "run en cours",
+    "pid": 243610,
+    "n_nodes": 2004,
+    "route_fraction": 0.5,
+    "batch": 1,
+    "seq_len": 32,
+    "batch_justification": "50% par question exige un masque par sequence ; meme budget de tokens que le dense (32)",
+    "seuil_etage1": 0.002342,
+    "checkpoint": "data/genome_twin2004_run.pt",
+    "log": "data/mem_report/twin2004.log",
+    "json_attendu": "data/mem_report/twin2004.json",
+    "verdict": "non ecrit"
+  },
+  "smoke": {
+    "steps": 100,
+    "covered_nodes": 2004,
+    "never_awake": 0,
+    "awake_last": 1003,
+    "awake_fraction": 0.5005,
+    "hwm_mb": 702.8,
+    "hwm_attendu_mb": 1500,
+    "hwm_note": "mesure a 731 aretes, moitie dormante ; le pic suivra la croissance",
+    "cemetery": 0,
+    "pace_s_per_step_100": 7.12,
+    "loss_100": 4.3808,
+    "routing_ok": true
+  },
+  "chat": {
+    "script": "scripts/chat.py",
+    "niveaux": ["identite", "memoire", "qwen", "refus"],
+    "seuil_memoire": 0.30,
+    "memoire": "data/memory_chat.npz",
+    "tests": "6 passed",
+    "essai_reel": "identite -> qwen -> memoire sur la meme question",
+    "reseau": "aucun client reseau instancie"
+  },
+  "tests": {"chat": "6/6", "brain_external": "11 passed, 1 skipped"},
+  "non_fait": ["verdict etage 1", "etage 2", "ingestion", "corpus", "sens", "nom"],
+  "prochaine_action": "lire twin2004.json a la fin du run"
+}

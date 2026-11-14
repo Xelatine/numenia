@@ -1,0 +1,30 @@
+{
+  "mode": "smoke",
+  "steps": 100,
+  "n_nodes": 2004,
+  "route_fraction": 0.5,
+  "batch": 1,
+  "seq_len": 32,
+  "reference_dense": 0.002342,
+  "ceiling": 0.002342,
+  "final_loss": 4.3808,
+  "awake_last": 1003,
+  "covered_nodes": 2004,
+  "never_awake": 0,
+  "never_awake_ids": [],
+  "edges": 731,
+  "cemetery": 0,
+  "hwm_mb": 702.8,
+  "seconds": 585.2,
+  "rows": [
+    {
+      "step": 100,
+      "loss": 4.380787,
+      "edges": 731,
+      "awake": 1003,
+      "covered": 2004,
+      "hwm_mb": 673.4
+    }
+  ],
+  "routing_ok": true
+}
