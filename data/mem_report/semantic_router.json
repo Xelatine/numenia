@@ -1,0 +1,17 @@
+{
+  "thresholds": {
+    "paraphrase_jaccard_min": 0.5,
+    "gap_over_unrelated_min": 0.3,
+    "coverage_min": 0.3
+  },
+  "n_nodes": 10020,
+  "k": 1002,
+  "paraphrase_jaccard": 0.4805,
+  "unrelated_jaccard": 0.1092,
+  "gap": 0.3713,
+  "coverage": 0.4936,
+  "pass_p1": false,
+  "pass_p2": true,
+  "pass_p3": true,
+  "verdict": "ROUGE"
+}

@@ -140,6 +140,12 @@ def kill_isolated_nodes(brain: "Brain", step: int | None = None, grace: int | No
     """
     step = brain.clock if step is None else int(step)
     grace = brain.isolate_grace if grace is None else int(grace)
+    # A routed colony keeps its full capacity by design: most nodes are dormant
+    # for a given token and have no synapse yet, so "isolated" is not "dead".
+    # Burying them turned the 10 020-node twin into 462 nodes at step 300
+    # (measured: 9 558 burials), which is the opposite of the experiment.
+    if getattr(brain, "route_fraction", None) is not None:
+        return []
     touched = torch.zeros(brain.n_nodes, dtype=torch.bool, device=brain.node_alive.device)
     if brain.ne:
         touched[brain.edge_index[0, : brain.ne]] = True

@@ -1,0 +1,20 @@
+{
+  "thresholds": {
+    "spearman_min": 0.7,
+    "cos_error_max": 0.15,
+    "hit_at_1_min": 4
+  },
+  "train_sentences": 1200,
+  "steps": 500,
+  "mapping": "MLP 896->256->32, cosine distillation",
+  "spearman": 0.6669,
+  "cos_error_mean": 0.1672,
+  "pass_s1": false,
+  "pass_s2": false,
+  "retrieval": {
+    "qwen": 2,
+    "learned": 2,
+    "pass_s3": false
+  },
+  "verdict": "ROUGE"
+}

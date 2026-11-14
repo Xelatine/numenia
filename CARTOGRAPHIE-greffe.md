@@ -113,6 +113,43 @@ C (routage par similarité de question), qui est la seule piste déjà verte
 (EmbeddingGemma 5/5). Si A échoue aussi, la greffe paramétrique est consignée
 comme non viable à cette dimension — pas contournée.
 
+## Suite — pilote A (encodeur distillé) et piste C (routage sémantique)
+
+Mêmes seuils, consignés avant chaque calcul.
+
+### A. MLP 896→256→32, distillation de cosinus
+
+1 200 phrases du corpus, 500 pas, paires aléatoires, cible = cosinus des
+embeddings Qwen. Aucune phrase d'évaluation dans l'entraînement.
+
+| | Valeur | Seuil |
+|---|---|---|
+| Spearman | **0,667** | ≥ 0,70 |
+| Erreur cosinus | **0,167** | ≤ 0,15 |
+| hit@1 | 2/5 | ≥ 4/5 |
+
+**ROUGE**, mais meilleur que la projection linéaire (0,597) : le traducteur
+appris se rapproche du mur sans le franchir. Les 32 dimensions restent le
+facteur limitant, pas la forme de la projection.
+
+### C. Routage sémantique (Gemma 768 → clés gelées)
+
+10 020 nœuds, 10 % sélectionnés, clés aléatoires gelées (aucun poids MYCELIA
+modifié).
+
+| | Valeur | Seuil |
+|---|---|---|
+| Jaccard paraphrases | **0,4805** | ≥ 0,50 |
+| Jaccard sans rapport | 0,109 | — |
+| Écart | **0,371** | ≥ 0,30 |
+| Couverture des 10 questions | **49,4 %** | ≥ 30 % |
+
+**ROUGE sur P1 de 0,019.** Une paire (« qu'est-ce qui m'énerve ? ») tombe à
+0,207 et tire la moyenne ; les autres sont à 0,50-0,59. Le seuil n'est pas
+déplacé : le pilote est consigné comme presque-passant, et une nouvelle
+itération devra être évaluée sur des paraphrases **inédites**, avec un nouveau
+seuil écrit avant.
+
 ## Ce qui n'a pas été fait
 
 - aucun poids de MYCELIA modifié ;
