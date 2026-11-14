@@ -247,14 +247,16 @@ class Brain(nn.Module):
         # Tokens become signals here, and signals become token predictions here.
         self.embedding = nn.Embedding(self.vocab, self.dim)
         self.output_head = nn.Linear(self.dim, self.vocab)
-        # The router: one score per node, read from the injected signal. A
-        # dedicated generator keeps this init out of the global RNG stream, so
-        # every existing run keeps its exact trajectory.
-        router_generator = torch.Generator().manual_seed(1234)
-        self.router_w = nn.Parameter(
-            torch.randn(self.dim, self.n_nodes, generator=router_generator) * 0.02
-        )
-        self.router_b = nn.Parameter(torch.zeros(self.n_nodes))
+        # The router: one score per node, read from the injected signal. It is
+        # created ONLY when routing is active: a brain without a router must
+        # keep the exact state_dict it had before this feature, otherwise every
+        # genome already written becomes unloadable (strict load_state_dict).
+        if self.route_fraction is not None:
+            router_generator = torch.Generator().manual_seed(1234)
+            self.router_w = nn.Parameter(
+                torch.randn(self.dim, self.n_nodes, generator=router_generator) * 0.02
+            )
+            self.router_b = nn.Parameter(torch.zeros(self.n_nodes))
         with torch.no_grad():
             # A *dedicated* generator: drawing from the global RNG here would
             # shift every later draw (candidate sampling included) and silently
