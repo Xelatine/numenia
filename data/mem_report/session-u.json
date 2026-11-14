@@ -1,0 +1,43 @@
+{
+  "session": "U",
+  "jumeau_sparse": {
+    "etat": "en cours",
+    "pid": 238894,
+    "dernier_pas": 2640,
+    "pas_total": 3000,
+    "perte_courante": 0.1824,
+    "reference_dense": 0.002342,
+    "seuil_etage1": 0.004684,
+    "hwm_mb": 750,
+    "edges": 6929,
+    "nodes_alive": 1008,
+    "cemetery": 4,
+    "verdict": "non rendu",
+    "json_attendu": "data/mem_report/sparse_3000.json"
+  },
+  "reseau": {
+    "etat": "hs",
+    "interface": "enp8s0",
+    "adresse": "169.254.184.83/16",
+    "route_defaut": false,
+    "dns": "echec de resolution (huggingface.co, pypi.org)",
+    "nmcli": "Not authorized to control networking",
+    "wifi": "DOWN"
+  },
+  "golden": {
+    "etat": "rouge",
+    "qwen_brut": "3/5",
+    "qwen_instruct": "1/5",
+    "qwen_task": "1/5",
+    "embeddinggemma": "non telechargeable (reseau)",
+    "bge_m3": "non telechargeable (reseau)"
+  },
+  "nom": {
+    "mecanisme": "signature structurelle triee -> table de syllabes, une seule fois",
+    "tests": "4 passed",
+    "execute_sur_organisme": false,
+    "self_json": "sans-nom (a nommer au premier Sommeil)"
+  },
+  "non_fait": ["verdict jumeau", "ingestion", "encodage corpus", "whisper", "smolvlm", "niveaux 3-4", "test final"],
+  "prealable_prochaine_session": "retablir le reseau de BIO-1"
+}
