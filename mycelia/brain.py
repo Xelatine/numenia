@@ -225,6 +225,10 @@ class Brain(nn.Module):
         # Diagnostic: which nodes have been awake at least once. A node that
         # never wakes is not routed, it is amputated -- the smoke must see zero.
         self.awake_seen = torch.zeros(self.n_nodes, dtype=torch.bool)
+        # Exploration cursor: advances on EVERY forward, never on the clock.
+        # The clock repeats when tbptt splits a step into several blocks, which
+        # left 6/10 020 nodes never woken in the smoke.
+        self._explore_cursor = 0
         # Per-hop/per-position activity profile, off by default (zero cost).
         self.profile_active: bool = False
         self.active_profile: list[tuple[int, int, int]] = []
@@ -654,6 +658,10 @@ class Brain(nn.Module):
         replay would be a second, invisible mutation; the caller does every
         write (``emitted``, ``usage``, the trace) exactly once, in the forward.
         """
+        if wave.shape[0] != ids.numel():
+            raise RuntimeError(
+                f"routing desync: wave {tuple(wave.shape)} vs ids {tuple(ids.shape)}"
+            )
         out, _gate = self.bank.forward_rows(wave, ids)
         if node_weight is not None:
             # Soft routing weight: the hard top-k chooses who is awake, this
@@ -683,8 +691,11 @@ class Brain(nn.Module):
         """
         empty_long = ids.new_zeros(0)
         if src_all.numel() == 0:
+            # No traversable edge: nothing was delivered, so no node is hot.
+            # Returning ids[fired] here used to desynchronise wave (empty) and
+            # hot (size 1) as soon as routing removed every neighbour of node 0.
             return (
-                state, out.new_zeros(0, out.shape[1], self.dim), ids,
+                state, out.new_zeros(0, out.shape[1], self.dim), ids.new_zeros(0),
                 empty_long, empty_long, out.new_zeros(0), empty_long, empty_long,
                 out.new_zeros(()),
             )
@@ -702,7 +713,7 @@ class Brain(nn.Module):
         if eids.numel() == 0:
             return (
                 state, out.new_zeros(0, out.shape[1], self.dim), empty_long,
-                ids[fired], empty_long, out.new_zeros(0), empty_long, empty_long,
+                ids.new_zeros(0), empty_long, out.new_zeros(0), empty_long, empty_long,
                 out.new_zeros(()),
             )
 
@@ -879,6 +890,17 @@ class Brain(nn.Module):
                 awake.scatter_(1, chosen, True)
                 awake[:, INPUT_NODE] = True
                 awake[:, OUTPUT_NODE] = True
+                # Deterministic exploration: a tiny rotating block guarantees
+                # that every node is woken at least once, even though the toy
+                # corpus has only 100 distinct tokens (so only 100 distinct
+                # router inputs). Without it, measured 17/10 020 nodes were
+                # never woken -- dead-born capacity, the MoE trap.
+                explore = 4
+                explore_ids = (
+                    self._explore_cursor + torch.arange(explore, device=device)
+                ) % self.n_nodes
+                self._explore_cursor = (self._explore_cursor + explore) % self.n_nodes
+                awake[0, explore_ids] = True
                 alive_mask = alive_mask | (torch.arange(self.n_nodes, device=device) == INPUT_NODE)
                 alive_mask = alive_mask | (torch.arange(self.n_nodes, device=device) == OUTPUT_NODE)
                 awake &= alive_mask.unsqueeze(0)

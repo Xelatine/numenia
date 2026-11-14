@@ -1,0 +1,34 @@
+{
+  "mode": "smoke",
+  "steps": 100,
+  "n_nodes": 10020,
+  "route_fraction": 0.1,
+  "batch": 1,
+  "seq_len": 32,
+  "reference_dense": 0.002342,
+  "ceiling": 0.002342,
+  "final_loss": 4.4597,
+  "awake_last": 1007,
+  "param_mb_fp32": 246.0,
+  "routing": {
+    "nodes_ever_awake": 10020,
+    "top200_share_of_awake_events": 0.02,
+    "never_awake": 0
+  },
+  "edges": 731,
+  "cemetery": 0,
+  "hwm_mb": 2070.3,
+  "seconds": 811.6,
+  "rows": [
+    {
+      "step": 100,
+      "loss": 4.459692,
+      "edges": 731,
+      "awake": 1007,
+      "covered": 10020,
+      "rss_mb": 1331.1,
+      "hwm_mb": 1755.6
+    }
+  ],
+  "routing_ok": true
+}
