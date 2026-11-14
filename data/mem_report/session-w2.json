@@ -1,0 +1,46 @@
+{
+  "session": "W-clarified",
+  "jumeau_b2": {
+    "etat": "run en cours",
+    "pid": 245331,
+    "n_nodes": 10020,
+    "route_fraction": 0.10,
+    "awake_measured": 1007,
+    "batch": 1,
+    "seq_len": 32,
+    "seuil_etage1": 0.002342,
+    "stage2_fractions": [0.10, 0.05, 0.02],
+    "checkpoint": "data/genome_twin10020_run.pt",
+    "log": "data/mem_report/twin10020.log",
+    "json_attendu": "data/mem_report/twin10020.json",
+    "verdict": "non ecrit"
+  },
+  "smoke": {
+    "steps": 100,
+    "covered_nodes": 10020,
+    "never_awake": 0,
+    "awake_last": 1007,
+    "top200_share": 0.02,
+    "param_mb_fp32": 246.0,
+    "rss_steady_mb": 1331,
+    "hwm_train_mb": 1756,
+    "hwm_report_mb": 2070.3,
+    "hwm_expected_mb": 1024,
+    "hwm_note": "poids 246 + gradients 246 + Adam 492 + activations/save ; dormants jamais calcules, RSS plat",
+    "pace_s_per_step_100": 8.77,
+    "routing_ok": true
+  },
+  "bugs_corriges": [
+    "route sans arete renvoyait hot=1 avec wave vide (baddbmm batch 0)",
+    "exploration basee sur le clock laissait 6 noeuds jamais eveilles (tbptt) ; curseur global"
+  ],
+  "chat": {
+    "script": "scripts/chat.py",
+    "tests": "13 passed, 1 skipped (chat+brain)",
+    "essai_reel": "identite -> qwen -> memoire",
+    "reseau": "aucun client"
+  },
+  "run_2004": "arrete, remplace par la vision 10020",
+  "non_fait": ["verdict etage 1", "etage 2", "ingestion", "corpus", "sens", "nom"],
+  "prochaine_action": "lire twin10020.json a la fin du run"
+}
