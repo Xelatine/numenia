@@ -1,0 +1,39 @@
+{
+  "thresholds": {
+    "spearman_min": 0.7,
+    "cos_error_max": 0.15,
+    "hit_at_1_min": 4
+  },
+  "dim_source": 896,
+  "dim_target": 32,
+  "sentences": 20,
+  "pca_fit_tokens": 4096,
+  "mappings": {
+    "pca": {
+      "spearman": 0.3762,
+      "cos_error_mean": 0.6705,
+      "pass_s1": false,
+      "pass_s2": false
+    },
+    "random": {
+      "spearman": 0.3479,
+      "cos_error_mean": 0.1142,
+      "pass_s1": false,
+      "pass_s2": true
+    },
+    "pca_sentences": {
+      "spearman": 0.5969,
+      "cos_error_mean": 0.1574,
+      "pass_s1": false,
+      "pass_s2": false
+    }
+  },
+  "retrieval": {
+    "qwen": 2,
+    "pca": 2,
+    "random": 2,
+    "pca_sentences": 1,
+    "pass_pca": false
+  },
+  "verdict": "ROUGE"
+}

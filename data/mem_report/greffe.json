@@ -1,0 +1,42 @@
+{
+  "partie": 3,
+  "etape_1_extraction": {
+    "fichier": "data/models/qwen2.5-0.5b-instruct-q8_0.gguf",
+    "octets": 675710816,
+    "architecture": "qwen2",
+    "couches": 24,
+    "dim": 896,
+    "tetes": 14,
+    "tetes_kv": 2,
+    "ffn": 4864,
+    "vocab": 151936,
+    "tenseurs": 291,
+    "types": {"Q8_0": 170, "F32": 121},
+    "embedding_shape": [896, 151936],
+    "inventaire": "data/mem_report/qwen_tensors.json"
+  },
+  "etape_2_cartographie": {
+    "greffe_1": "E[qwen] moyen -> P (32x896) -> embedding.weight[t]",
+    "greffe_2": "tete h -> 4 matrices 32x32 (q,k,v,o) -> 336 noeuds, 14/layer",
+    "evolution_noeud": "mix_w 32x32 en residu",
+    "etiquettes": ["[voix]", "[greffon]", "[mycelia]"]
+  },
+  "etape_3_validation": {
+    "seuils_avant": {"spearman_min": 0.70, "cos_error_max": 0.15, "hit_at_1_min": 4},
+    "resultats_32d": {
+      "random": {"spearman": 0.3479, "cos_error": 0.1142, "hit_at_1": 2},
+      "pca_tokens": {"spearman": 0.3762, "cos_error": 0.6705, "hit_at_1": 2},
+      "pca_phrases": {"spearman": 0.5969, "cos_error": 0.1574, "hit_at_1": 1},
+      "qwen_baseline_hit_at_1": 2
+    },
+    "courbe_dimension": {
+      "64": {"random_spearman": 0.4556, "random_hit_at_1": 4, "pca_phrases_spearman": 0.6377},
+      "128": {"random_spearman": 0.6634, "pca_phrases_spearman": 0.6768}
+    },
+    "verdict": "ROUGE",
+    "raison": "aucune projection ne passe Spearman 0.70 ; 32d detruit l'ordre ; 128d infaisable (4 Go de poids)"
+  },
+  "poids_mycelia_modifies": false,
+  "cartographie_revisee": ["encodeur distille MLP 896->32", "dim 64 avec moins de noeuds", "Qwen comme routeur (piste C)"],
+  "prochaine_action": "pilote A (distillation) ou C (routage par similarite), seuils inchanges"
+}
