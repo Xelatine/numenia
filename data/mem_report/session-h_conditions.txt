@@ -1,7 +1,7 @@
 Session H « la plomberie » — conditions de mesure
 ==================================================
 
-Machine de mesure : utilisateur@SERVEUR-LAN (hostname IA), Linux 7.0.0-29-generic,
+Machine de mesure : utilisateur@SERVEUR-LAN (hostname serveur), Linux 7.0.0-29-generic,
 i7-4710HQ (8 threads), 7 350 MiB de RAM dont 1 435 disponibles, /dev/sda2 938 Go
 utilisés à 8 % (825 Go libres). Dépôt ~/mycelia à a516706, arbre propre.
 

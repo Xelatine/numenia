@@ -1,6 +1,6 @@
 Session I — conditions de mesure
 ================================
-Machine : IA (serveur SERVEUR-LAN / SERVEUR-IPV6)
+Machine : serveur (serveur SERVEUR-LAN / SERVEUR-IPV6)
 Date : 2026-11-11
 CPU : i7-4710HQ, 8 threads
 RAM : 7 350 Mo au total, 1 575 Mo disponibles au moment des mesures

@@ -1,6 +1,6 @@
 Session J — conditions de mesure
 ================================
-Machine : IA (accès IPv6 lien-local SERVEUR-IPV6%15)
+Machine : serveur (accès IPv6 lien-local SERVEUR-IPV6%15)
 Date : 2026-11-11
 CPU : i7-4710HQ, 8 threads
 RAM : 7 350 Mo au total (et non 16 Go comme annonce dans le brief)

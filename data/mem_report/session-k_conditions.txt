@@ -1,6 +1,6 @@
 Session K — conditions de mesure
 ================================
-Machine : IA (accès IPv6 lien-local du câble, 0 ms, 0 % de perte)
+Machine : serveur (accès IPv6 lien-local du câble, 0 ms, 0 % de perte)
 Date : 2026-11-11
 CPU : i7-4710HQ, 8 threads
 RAM : 7 350 Mo au total, 6 142 Mo disponibles au départ
