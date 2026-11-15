@@ -33,3 +33,7 @@ rapports/
 .server/
 # Modèles GGUF et artefacts de transport : volumineux, jamais versionnés.
 data/models/
+
+# État d'exécution : jamais versionné (le flag d'éveil est recréé à chaque session).
+data/awake.flag
+data/webchat/

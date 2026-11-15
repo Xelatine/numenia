@@ -882,7 +882,7 @@ class Brain(nn.Module):
 
             injection = self.embedding(tokens[:, position])
 
-            # Session W: the input wakes a fraction of the colony. This is a
+                        # Session W: the input wakes a fraction of the colony. This is a
             # routing decision, not an amputation: next token, another subset.
             # The signal enters at node 0 exactly as before; dormant nodes are
             # simply not reachable during this token. Computed from the current
@@ -922,7 +922,12 @@ class Brain(nn.Module):
                 awake_flat = awake[0]
                 self.last_awake_nodes = int(awake_flat.sum())
                 self.awake_seen |= awake_flat.detach().to("cpu")
-
+            else:
+                # Validated routers already kept the full 10 020 alive during the
+                # run; a live validation guess running elsewhere must not bury
+                # them by touching this isolation audit here.
+                self.last_awake_nodes = int(alive_mask.sum())
+            
             # The door injects into the wavefront, not into the membrane: what
             # circulates is what was just received. A node emits its input, so
             # a loop loses energy instead of accumulating it forever.

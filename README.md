@@ -17,6 +17,23 @@ Status: the six construction stages are implemented, tested, and observable live
 in a browser cockpit. See [Results](#results) for exactly what was measured and
 what was not.
 
+## Nyra — state on 15 November 2026
+
+The runtime is called **Nyra**. What exists, as verified by the audit in
+[`AUDIT-ETAT.md`](AUDIT-ETAT.md):
+
+| Piece | State |
+|---|---|
+| Routed brain, 10 020 nodes, 10 % awake per token | ✅ `mycelia/brain.py` (`n_nodes`, `route_fraction`). Smoke measured `nodes_ever_awake: 10020`, `never_awake: 0`, `cemetery: 0` |
+| Run B2 — 3 000 steps, loss ceiling 0.002342 | ❌ no verdict: `data/mem_report/twin10020.json` does not exist; the 100-step smoke stands at **2.7801**, and 0.002342 is a *dense* reference (decision recorded in `PROTOCOLE-reprise-run.md`) |
+| `--resume` — never restart from zero | ✅ `scripts/run_twin_10020.py` calls `Trainer.resume`, which logs `reprise à step X` |
+| Local chat — `scripts/webchat.py`, `start.py` | ⚠️ runs on `0.0.0.0:8080`, answers and logs; but the readout is a token id turned into `chr()`, not a decoded sentence |
+| `self.json` identity | ❌ never written on this machine; "Nyra" is a string, not an identity read at wake-up |
+| Métabolisme · DPO (`preferences.jsonl`) · Garde-manger · prompt maître | ❌ not a line of code |
+
+The cockpit below is `scripts/dashboard.py`; the chat is `scripts/webchat.py`.
+Both use port 8080, so they cannot run at the same time.
+
 Docs: [français](docs/README.fr.md) · [español](docs/README.es.md) ·
 [deutsch](docs/README.de.md) · [中文](docs/README.zh.md) · [日本語](docs/README.ja.md) ·
 [português](docs/README.pt.md) · [русский](docs/README.ru.md) · [العربية](docs/README.ar.md)
@@ -105,7 +122,7 @@ mycelia/
   train.py       Trainer (CLI, dashboard and tests share it), OOM handling, SIGINT
 scripts/         train_tokenizer, generate, train_baseline, dashboard
 dashboard/       runner.py (threaded), server.py (FastAPI + WS), static/index.html
-tests/           7 files, 43 tests
+tests/           17 files, 90 tests
 pytest.ini      collection limited to tests/, so a bare `pytest` is safe
 configs/         config.yaml — every threshold, loosenable without code
 docs/            README.fr.md + short translations (ES, DE, ZH, JA, PT, RU, AR)
@@ -186,12 +203,16 @@ real machine (RTX 3070, torch 2.11+cu128). Anything not measured is marked.
 
 ```
 pytest -q
-43 passed in ~70 s
+90 tests collected in 1.17 s   # --collect-only, 15 Nov 2026
 ```
 
-Seven files: `test_brain`, `test_lifecycle`, `test_text`, `test_growth`,
-`test_checkpoint`, `test_dashboard`, plus `test_instrumentation` (the initial
-loss must start at ln(vocab), and the node counters must close).
+Seventeen files: `test_brain`, `test_lifecycle`, `test_text`, `test_growth`,
+`test_checkpoint`, `test_checkpoint_turns`, `test_dashboard`,
+`test_instrumentation`, `test_ablation`, `test_birth_schedule`, `test_chat`,
+`test_external`, `test_gguf_reader`, `test_identity`, `test_memory`,
+`test_naming` (plus `conftest.py`). The number quoted above is a **collection**,
+verified on 15 November 2026; the old "43 passed" figure predates this suite
+and is no longer quoted.
 
 ### Toy run (delayed copy, `--scale 0`, batch 32, CUDA)
 

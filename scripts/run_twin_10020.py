@@ -72,6 +72,27 @@ def build_trainer(seed: int = 42) -> Trainer:
     return trainer
 
 
+def resume_trainer(path: str | Path) -> Trainer:
+    """Reprend un run interrompu depuis son checkpoint.
+
+    Jamais de zéro : ``Trainer.resume`` recharge le cerveau, l'optimiseur, la
+    croissance, l'historique et les RNG, et loggue « reprise à step X » (cf.
+    mycelia/train.py). Le checkpoint de run est écrit tous les 500 pas.
+    """
+    trainer = Trainer.resume(
+        path,
+        config=load_config(),
+        device="cpu",
+        batch_size=1,
+        seq_len=32,
+        route_fraction=FRACTION,
+        checkpoint_turns=True,
+    )
+    trainer.brain.checkpoint_turns = True
+    trainer.report_every = 100
+    return trainer
+
+
 def routing_concentration(brain) -> dict:
     """Le piège MoE : tout envoyer aux mêmes favoris. On le mesure."""
     seen = brain.awake_seen
@@ -118,13 +139,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--mode", choices=("smoke", "run"), default="run")
     parser.add_argument("--steps", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--resume", default=None,
+        help="checkpoint de run à reprendre (jamais de zéro si présent)",
+    )
     args = parser.parse_args(argv)
 
     steps = args.steps or (100 if args.mode == "smoke" else 3000)
     checkpoint = ROOT / "data" / f"genome_twin10020_{args.mode}.pt"
     report_path = REPORT / ("smoke_twin10020.json" if args.mode == "smoke" else "twin10020.json")
     started = time.perf_counter()
-    trainer = build_trainer(seed=args.seed)
+    trainer = resume_trainer(args.resume) if args.resume else build_trainer(seed=args.seed)
+    if args.resume:
+        print(f"REPRISE | {args.resume} | step {trainer.step} -> {steps}", flush=True)
     print(
         f"JUMEAU 10020 | mode {args.mode} | {NODES} nœuds | route {FRACTION:.0%}"
         f" | batch 1 | seq 32 | seuil {CEILING:.6f} | checkpoint {checkpoint}",
@@ -172,7 +199,8 @@ def main(argv: list[str] | None = None) -> int:
             t.save(checkpoint)
             print(f"CHECKPOINT step {t.step} -> {checkpoint}", flush=True)
 
-    trainer.run(steps, callback=callback)
+    remaining = max(0, steps - trainer.step)
+    trainer.run(remaining, callback=callback)
     trainer.save(checkpoint)
 
     final_loss = float(trainer.history[-1]["loss"]) if trainer.history else float("nan")
