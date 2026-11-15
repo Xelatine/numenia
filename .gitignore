@@ -23,8 +23,10 @@ venv/
 .DS_Store
 mycelia_v2.zip
 
-# Deliveries ship as dated ZIPs, on disk and in Releases, never in the tree.
+# Deliveries ship as dated ZIPs: tout est regroupe dans livraisons/, jamais
+# versionne (ils partent en Releases, pas dans l'arbre Git).
 *.zip
+livraisons/
 # Frozen prototypes: history, not source. Read them, never import them.
 archive/
 
