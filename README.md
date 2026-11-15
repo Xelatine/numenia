@@ -126,6 +126,10 @@ tests/           17 files, 90 tests
 pytest.ini      collection limited to tests/, so a bare `pytest` is safe
 configs/         config.yaml — every threshold, loosenable without code
 docs/            README.fr.md + short translations (ES, DE, ZH, JA, PT, RU, AR)
+rapports/        session reports, verdicts, ablation notes (+ INDEX.md)
+livraisons/      dated delivery ZIPs, never versioned (*.zip)
+data/            checkpoints, corpora, runs/ — rebuilt locally, never versioned
+archive/         frozen v1/v2 prototypes, read-only history, never versioned
 ```
 
 ## Run
