@@ -38,6 +38,9 @@ AWAKE_TTL_SECONDS = 300
 # Seuil : on n'envoie pas au LLM, on utilise le cerveau routé
 REFERENCE_LOSS = 0.002342
 
+# Dossier de données du projet
+DATA_DIR = ROOT / "data"
+
 # ── Brain initialisé une seule fois (CPU, routing actif) ──────
 def _init_brain() -> Brain:
     trainer = Trainer(
@@ -197,9 +200,16 @@ def feedback():
     ip = request.remote_addr or "unknown"
     choix = request.form.get("choix", "")  # "👍" ou "👎"
     _append_access(ip, f"feedback:{choix}")
-    # Écriture dans preferences.jsonl seulement si IP consignée du user
-    # (cf. Phase 3 : seules les IP du user comptent)
-    # Pour l'instant on journalise simplement
+    # Écriture dans preferences.jsonl (Phase 3 : DPO pairs)
+    prefs = DATA_DIR / "preferences.jsonl"
+    prefs.parent.mkdir(parents=True, exist_ok=True)
+    entry = json.dumps({
+        "ip": ip,
+        "choix": choix,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }, ensure_ascii=False)
+    with prefs.open("a", encoding="utf-8") as f:
+        f.write(entry + "\n")
     return jsonify(ok=True)
 
 
