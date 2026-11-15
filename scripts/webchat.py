@@ -108,6 +108,23 @@ def _is_awake() -> bool:
         return False
     return True
 
+# Identité lue à l'éveil (self.json)
+_IDENTITY = None
+def _load_identity() -> 'Identity':
+    global _IDENTITY
+    if _IDENTITY is not None:
+        return _IDENTITY
+    self_json = Path(__file__).resolve().parent.parent / 'data' / 'genome_myc' / 'self.json'
+    if self_json.exists():
+        from mycelia.identity import Identity
+        _IDENTITY = Identity.load(self_json)
+    else:
+        _IDENTITY = Identity(name='Nyra')
+    return _IDENTITY
+
+def _identity_name() -> str:
+    return _load_identity().who_am_i()
+
 # ── Routes Flask ─────────────────────────────────────────────
 app = Flask(__name__)
 
@@ -154,11 +171,11 @@ def chat():
 
         # Étiquette [nyra] sur la première réponse autonome
         # (le self-play l'écrira plus tard ; ici on juste note)
-        label = "[nyra]"
+        label = _identity_name()
 
     else:
         response = ""
-        label = "[nyra]"
+        label = _identity_name()
 
     # Lecture du badge métabolisme en temps réel
     badge = "actif" if _is_awake() else "en attente du verdict"
