@@ -66,7 +66,7 @@ l'arbre de travail.**
 |---|---|---|---|
 | C1 | `webchat.py` : lignes + endpoints | ✅ | **284 lignes**. 5 routes : `/chat` (`:105`), `/feedback` (`:165`), `/history` (`:176`), `/debug` (`:183`), `/awake` (`:189`) — confirmé à l'exécution : `GET /debug` → `{"routes":["/static/<path:filename>","/chat","/feedback","/history","/debug","/awake"]}` |
 | C2 | `render_template_string` importé (bug récent corrigé) | ✅ | `scripts/webchat.py:19` `from flask import Flask, render_template, render_template_string, request, jsonify` ; utilisé `:153`. (`render_template` reste importé mais inutilisé) |
-| C3 | Bind `0.0.0.0:8080` | ✅ | `scripts/webchat.py:29` `FLASK_HOST = "0.0.0.0"`, `:30` `FLASK_PORT = 8080`, `:196` `app.run(host=FLASK_HOST, port=FLASK_PORT, threaded=True)`. À l'exécution le serveur annonce `http://192.168.50.222:8080` → **joignable depuis le LAN**. Aucune authentification : `:102` `REQUIRE_TOKEN = False`, jamais utilisé |
+| C3 | Bind `0.0.0.0:8080` | ✅ | `scripts/webchat.py:29` `FLASK_HOST = "0.0.0.0"`, `:30` `FLASK_PORT = 8080`, `:196` `app.run(host=FLASK_HOST, port=FLASK_PORT, threaded=True)`. À l'exécution le serveur annonce `http://PC-LAN:8080` → **joignable depuis le LAN**. Aucune authentification : `:102` `REQUIRE_TOKEN = False`, jamais utilisé |
 | C4 | Le chat démarre localement | ✅ | Smoke : serveur UP en **4 s**, `GET /awake` → `{"actif":true}`, `GET /debug` → 200. Arrêt par `taskkill //PID 37040 //F` (PID vérifié `python.exe`), port 8080 libéré derrière |
 | C5 | Le chat peut **répondre** à un message | ❌ | `POST /chat` (message=bonjour) → **HTTP 500**. Traceback réel : `scripts/webchat.py:122 in chat` → `scripts/webchat.py:81 in _append_access` → `ACCESS_LOG.append_text(line)` → `AttributeError: 'WindowsPath' object has no attribute 'append_text'`. **Le chat démarre mais aucun message ne peut aboutir** |
 
@@ -136,12 +136,12 @@ Affirmations que le code ne soutient pas encore. Constat, sans jugement :
 | `xela` | **Aucune** occurrence dans les sources. Les seuls fichiers qui contiennent cette chaîne sont des wheels CUDA binaires (`.server/cuda-min/*.whl`) — faux positif, pas un secret | — |
 | `sshpass` | **1 occurrence** : une commande SSH qui pointe vers un fichier de mot de passe **situé hors du projet**. Le secret lui-même n'est pas dans le dépôt, mais une commande non interactive l'expose en clair dans l'historique de commandes | `.server/server.bat:1` |
 | `password` | Aucun dans le code. Occurrences uniquement dans le vocabulaire d'un tokenizer Hugging Face (`.cache/…/tokenizer.json`) — pas des secrets | — |
-| Clé privée | **Clé privée OpenSSH en clair** dans le dossier projet | `.server/id_ed25519_mycelia` (couverte par `.gitignore:33` → jamais commitée) |
+| Clé privée | **Clé privée OpenSSH en clair** dans le dossier projet | `.server/cle-ssh` (couverte par `.gitignore:33` → jamais commitée) |
 | Réseau sortant | **1 seul programme sortant** : collecte Gutendex (`urllib.request`, `https://gutendex.com/books/?languages=fr`) — assumé, documenté, script de corpus | `scripts/fetch_gutenberg_fr.py:20,25,41-42` |
 | Réseau sortant (trompeur) | Le chat sonde `8.8.8.8:80` pour trouver l'IP locale, alors que son docstring et 3 lignes d'affichage promettent « aucune sortie internet ». UDP : aucun paquet émis, mais l'intention contredit la promesse | `scripts/webchat.py:258-262` |
 | Kills globaux | **Aucun `taskkill`/`pkill`/`killall` dans le code exécutable.** `start.py:101` `process.terminate()` cible son propre enfant ; `mycelia/train.py:154` `os.kill(pid, 0)` est une **sonde** (documentée `CONTRIBUTING.md:23`), pas un meurtre. L'interdiction du kill global est écrite `PROTOCOLE-reprise-run.md:123` | — |
 | PID codés en dur | **Aucun** | — |
-| Exposition réseau | Bind `0.0.0.0:8080`, sans auth, avec un `/debug` qui énumère les routes, et un `/chat` qui plante. Accessible depuis le LAN (annoncé `192.168.50.222:8080`) | `scripts/webchat.py:29,102,183-187` |
+| Exposition réseau | Bind `0.0.0.0:8080`, sans auth, avec un `/debug` qui énumère les routes, et un `/chat` qui plante. Accessible depuis le LAN (annoncé `PC-LAN:8080`) | `scripts/webchat.py:29,102,183-187` |
 
 ---
 
@@ -164,7 +164,7 @@ Affirmations que le code ne soutient pas encore. Constat, sans jugement :
 
 ## 6. CE QUI EST INVÉRIFIABLE DEPUIS LE PC
 
-Ces 7 points exigent **une seule session SSH** sur `192.168.50.53`. Aucun n'a été testé ici.
+Ces 7 points exigent **une seule session SSH** sur `SERVEUR-LAN`. Aucun n'a été testé ici.
 
 1. **Le run B2 est-il vivant ?** `ps aux | grep run_twin_10020` → PID + dernier step du log. (Le protocole interdit de relancer si un run vit.)
 2. **Checkpoint de reprise présent ?** `ls -la data/genome_twin10020_run.pt` (écrit tous les 500 pas). Son absence ⇒ le run n'a jamais passé 500 pas.
@@ -172,7 +172,7 @@ Ces 7 points exigent **une seule session SSH** sur `192.168.50.53`. Aucun n'a é
 4. **Le génome 10 020 est-il intact ?** `genome_twin10020_smoke.pt` (775 852 137 o attendus) et `genome_latest.pt` (775 851 218 o).
 5. **`.venv-cu126` contient-il réellement torch ?** `.venv-cu126/bin/python -c "import torch;print(torch.__version__)"` — et **le `.venv` (3.14) est-il pollué** par le `pip install torch --index-url …/nightly/cpu` lancé avant l'audit (effet de bord non confirmé du protocole) ?
 6. **Le résultat du run 3 000 pas existe-t-il côté serveur ?** `ls -la data/mem_report/twin10020.json` — absent en local, jamais produit.
-7. **État SSH** : bannissement fail2ban/MaxStartups levé ? clé `id_ed25519_mycelia` installée côté serveur ? (`.ssh/` local est **vide**.)
+7. **État SSH** : bannissement fail2ban/MaxStartups levé ? clé `cle-ssh` installée côté serveur ? (`.ssh/` local est **vide**.)
 
 ---
 

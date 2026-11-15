@@ -1,6 +1,6 @@
 Session J — conditions de mesure
 ================================
-Machine : IA (accès IPv6 lien-local fe80::226a:8aff:fea3:5e67%15)
+Machine : serveur (accès IPv6 lien-local SERVEUR-IPV6%15)
 Date : 2026-11-11
 CPU : i7-4710HQ, 8 threads
 RAM : 7 350 Mo au total (et non 16 Go comme annonce dans le brief)
@@ -19,7 +19,7 @@ Reseau
 ------
 Chemin utilise : Ethernet IPv6 lien-local (index 15 cote poste), 0 ms, 0 %.
 enp8s0 : toujours 169.254.184.83/16, aucun bail DHCP, drop-in netplan NON installe.
-WiFi : associe (SSID wifi, 5 GHz) mais ne route plus : passerelle 192.168.50.1 a
+WiFi : associe (SSID wifi, 5 GHz) mais ne route plus : passerelle PASSERELLE-LAN a
   100 % de perte, PyPI et PyTorch en 000.
 
 GPU — constate

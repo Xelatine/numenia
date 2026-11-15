@@ -20,7 +20,7 @@ qui occupaient la mémoire, avec le swap plein à 94 %.
 | GPU | 3 MiB / 0 % | 3 MiB / 0 % | [mesuré] |
 
 `docker stop` et `docker update --restart=no` ne demandent pas les droits root
-(`dieux` est dans le groupe docker) : c'est réversible par `--restart=always`
+(`utilisateur` est dans le groupe docker) : c'est réversible par `--restart=always`
 puis `start`.
 
 ## 2. GPU : `(5, 0)` constaté, plus jamais supposé
@@ -100,7 +100,7 @@ fichiers d'origine. `enp8s0` reste en `169.254.184.83/16`.
 Aggravation mesurée pendant la session : le WiFi est associé au point d'accès
 (SSID `wifi`, 5 GHz) mais **ne route plus rien** — passerelle à 100 % de perte,
 PyPI et PyTorch en `000`. Tout l'accès passe donc par le lien-local IPv6 du
-câble, `fe80::226a:8aff:fea3:5e67%15`, à 0 ms et 0 % de perte.
+câble, `SERVEUR-IPV6%15`, à 0 ms et 0 % de perte.
 
 ## 5. État et livrables
 

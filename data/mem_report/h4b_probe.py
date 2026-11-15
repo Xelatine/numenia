@@ -14,7 +14,7 @@ import os
 import sys
 import time
 
-sys.path.insert(0, "/home/dieux/mycelia")
+sys.path.insert(0, "/home/utilisateur/mycelia")
 
 from mycelia.config import load_config  # noqa: E402
 from mycelia.train import Trainer, process_memory  # noqa: E402

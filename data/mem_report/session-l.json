@@ -5,9 +5,9 @@
   "prerequis": {
     "1_1_filaire": {
       "etat": "rouge",
-      "enp8s0": "169.254.184.83/16 fe80::226a:8aff:fea3:5e67/64",
+      "enp8s0": "169.254.184.83/16 SERVEUR-IPV6/64",
       "netplan_dropin_installe": false,
-      "route_defaut": "via 192.168.50.1 dev wlp7s0 metric 20600",
+      "route_defaut": "via PASSERELLE-LAN dev wlp7s0 metric 20600",
       "blocage": "droits root, action humaine",
       "etiquette": "[mesuré]"
     },

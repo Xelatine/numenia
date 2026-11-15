@@ -1,7 +1,7 @@
 {
-  "genome": "/home/dieux/mycelia/data/genome_run3000.pt",
+  "genome": "/home/utilisateur/mycelia/data/genome_run3000.pt",
   "myc": {
-    "path": "/home/dieux/mycelia/data/genome_myc",
+    "path": "/home/utilisateur/mycelia/data/genome_myc",
     "hash_global": "34caba7813561650030199010018e7ae",
     "md5": {
       "topology.csr": "d2805e7f0f7155feb3a6ad4bd38913f0",
@@ -29,7 +29,7 @@
   "formats": {
     "fp16": {
       "info": {
-        "path": "/home/dieux/mycelia/data/genome_myc_fp16",
+        "path": "/home/utilisateur/mycelia/data/genome_myc_fp16",
         "hash_global": "43da0240e621a7ee1129a9ce301b4b37",
         "md5": {
           "topology.csr": "538a7477e033c01b9dced3ed4c916114",
@@ -57,7 +57,7 @@
     },
     "fp32": {
       "info": {
-        "path": "/home/dieux/mycelia/data/genome_myc",
+        "path": "/home/utilisateur/mycelia/data/genome_myc",
         "hash_global": "34caba7813561650030199010018e7ae",
         "md5": {
           "topology.csr": "d2805e7f0f7155feb3a6ad4bd38913f0",

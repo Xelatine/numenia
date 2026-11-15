@@ -5,7 +5,7 @@
   "etat_final": "bloqué sur le transfert de torch — rapport d'échec documenté, run non lancé",
   "machine": {
     "hostname": "IA",
-    "acces": "dieux@192.168.50.53",
+    "acces": "utilisateur@SERVEUR-LAN",
     "os": "Linux 7.0.0-29-generic",
     "cpu": "Intel Core i7-4710HQ, 8 threads",
     "ram_mib_total": 7350,
@@ -196,7 +196,7 @@
       "max_ms": 991,
       "moy_ms": 158
     },
-    "connexions_ssh": "5 refus sur 6 : « Connection closed by 192.168.50.53 port 22 »",
+    "connexions_ssh": "5 refus sur 6 : « Connection closed by SERVEUR-LAN port 22 »",
     "scp_8_ko": "échec (connection closed, 19 s)",
     "scp_4_mo": "échec (connection closed)",
     "reprise_par_offset": {

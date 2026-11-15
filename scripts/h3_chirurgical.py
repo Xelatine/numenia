@@ -1,5 +1,5 @@
 import sys, gc, torch
-sys.path.insert(0, "/home/dieux/mycelia")
+sys.path.insert(0, "/home/utilisateur/mycelia")
 from mycelia.config import load_config
 from mycelia.train import Trainer
 from mycelia.brain import Brain

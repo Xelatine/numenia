@@ -12,7 +12,7 @@ adresse lien-local `169.254.184.83/16` et **aucun bail DHCP**. Tout le trafic
 continuait donc de passer par `wlp7s0`, le radio qui perdait les paquets.
 
 Le chemin filaire est pourtant utilisable sans aucun droit root, en IPv6
-lien-local : `fe80::226a:8aff:fea3:5e67%15` (index 15 = carte Ethernet du
+lien-local : `SERVEUR-IPV6%15` (index 15 = carte Ethernet du
 poste). C'est ce chemin qui a servi à tout le reste de la session.
 
 | Mesure | Valeur | Étiquette |

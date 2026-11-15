@@ -8,7 +8,7 @@ Jamais de seuil déplacé après coup, jamais de reprise maquillée.
 
 Le lanceur `scripts/run_twin_10020.py` lit `/proc/self/status` (`hwm_mb()`) : il est
 **Linux uniquement**. Les checkpoints 10 020 nœuds (775 Mo) n'existent que sur le serveur
-`192.168.50.53`. Le PC hôte Windows n'a aucun checkpoint twin/10020 et son disque C: est
+`SERVEUR-LAN`. Le PC hôte Windows n'a aucun checkpoint twin/10020 et son disque C: est
 plein (493 Mo libres). **Conclusion : B2 vit et revit sur le serveur, nulle part ailleurs.**
 
 Interpréteur : prendre le venv qui contient réellement torch (`.venv-cu126`, Python 3.12),

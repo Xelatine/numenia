@@ -39,3 +39,5 @@ data/models/
 # État d'exécution : jamais versionné (le flag d'éveil est recréé à chaque session).
 data/awake.flag
 data/webchat/
+# Sorties de run regroupees : jamais versionnees.
+data/runs/

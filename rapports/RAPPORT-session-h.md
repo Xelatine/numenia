@@ -38,8 +38,8 @@ Diagnostic mesuré, et il est net :
 
 | Cible | Paquets | Perte | Latence |
 |---|---:|---:|---|
-| Passerelle 192.168.50.1 | 20 | **0 %** | 1 ms |
-| Serveur 192.168.50.53 | 30 | **16,7 %** | 3 à 130 ms, 66 ms de moyenne |
+| Passerelle PASSERELLE-LAN | 20 | **0 %** | 1 ms |
+| Serveur SERVEUR-LAN | 30 | **16,7 %** | 3 à 130 ms, 66 ms de moyenne |
 
 La passerelle est parfaite. C'est donc le lien radio du serveur qui perd des
 paquets, pas le LAN. Conséquence : toute pile TCP s'effondre dès qu'on lui demande
@@ -137,7 +137,7 @@ bash .server/upstream.sh ".server/wheels/torch-2.14.0+cu126-cp314-cp314-manylinu
      "~/torch-2.14.0+cu126-cp314-cp314-manylinux_2_28_x86_64.whl" 36000
 
 # état vu de l'extérieur, en une commande
-ssh -i .server/id_ed25519_mycelia dieux@192.168.50.53 'cat ~/dl-status.txt'
+ssh -i .server/cle-ssh utilisateur@SERVEUR-LAN 'cat ~/dl-status.txt'
 
 # une fois le md5 concordant
 ssh ... 'cd ~/mycelia && ~/.local/bin/uv pip install --python .venv/bin/python \

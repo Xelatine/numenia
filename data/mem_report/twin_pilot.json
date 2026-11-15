@@ -46,7 +46,7 @@
           "factor": 0.996
         }
       ],
-      "checkpoint": "/home/dieux/mycelia/data/genome_pilot_dense.pt"
+      "checkpoint": "/home/utilisateur/mycelia/data/genome_pilot_dense.pt"
     },
     {
       "label": "sparse",
@@ -93,7 +93,7 @@
           "factor": 0.996
         }
       ],
-      "checkpoint": "/home/dieux/mycelia/data/genome_pilot_sparse.pt"
+      "checkpoint": "/home/utilisateur/mycelia/data/genome_pilot_sparse.pt"
     }
   ],
   "note": "PILOTE 50 pas ; le jumeau 3000 pas n'a pas \u00e9t\u00e9 ex\u00e9cut\u00e9"

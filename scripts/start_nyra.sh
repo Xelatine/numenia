@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Lanceur Nyra — version serveur Linux (192.168.50.53).
+# Lanceur Nyra — version serveur Linux (SERVEUR-LAN).
 # Le même rôle que start.py sur le PC : refuser un double lancement,
 # choisir l'interpréteur qui a torch, lancer et journaliser.
 #

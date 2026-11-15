@@ -14,7 +14,7 @@
   },
   "reseau": {
     "decouverte": "enp8s0 UP/LOWER_UP carrier 1 vitesse 1000, adresse lien-local 169.254.184.83/16 seule, profil netplan-enp8s0 sans bail DHCP",
-    "chemin_utilise": "IPv6 lien-local fe80::226a:8aff:fea3:5e67%15 (index 15 cote poste)",
+    "chemin_utilise": "IPv6 lien-local SERVEUR-IPV6%15 (index 15 cote poste)",
     "ping_filaire": {"envoyes": 4, "recus": 4, "perte_pct": 0, "moy_ms": 0},
     "etiquette": "[mesuré]"
   },

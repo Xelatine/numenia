@@ -33,7 +33,7 @@ différé. Artefact : `data/mem_report/smoke_sparse_100.json`.
 prend plusieurs heures. **Aucune notification automatique** : pour suivre,
 
 ```
-ssh -i .server/id_ed25519_mycelia -6 dieux@fe80::226a:8aff:fea3:5e67%15 \
+ssh -i .server/cle-ssh -6 utilisateur@SERVEUR-IPV6%15 \
   'tail -f ~/mycelia/data/mem_report/sparse_3000.log'
 ```
 

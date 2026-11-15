@@ -1,7 +1,7 @@
 Session H « la plomberie » — conditions de mesure
 ==================================================
 
-Machine de mesure : dieux@192.168.50.53 (hostname IA), Linux 7.0.0-29-generic,
+Machine de mesure : utilisateur@SERVEUR-LAN (hostname serveur), Linux 7.0.0-29-generic,
 i7-4710HQ (8 threads), 7 350 MiB de RAM dont 1 435 disponibles, /dev/sda2 938 Go
 utilisés à 8 % (825 Go libres). Dépôt ~/mycelia à a516706, arbre propre.
 
@@ -13,9 +13,9 @@ Carte, relevée avant toute campagne (deux fois, à 4 h d'intervalle) :
   rien à chronométrer. La salle blanche est constatée, pas utilisée.
 
 Réseau, mesuré le 10 novembre 2026 entre 23 h 15 et 01 h 10 (heure locale) :
-  ping 192.168.50.53 (le serveur), 30 paquets : 25 reçus, 5 perdus = 16 % de
+  ping SERVEUR-LAN (le serveur), 30 paquets : 25 reçus, 5 perdus = 16 % de
       perte, 3 ms minimum, 130 ms maximum, 66 ms de moyenne.
-  ping 192.168.50.1 (la passerelle), 20 paquets : 20 reçus, 0 % de perte, 1 ms.
+  ping PASSERELLE-LAN (la passerelle), 20 paquets : 20 reçus, 0 % de perte, 1 ms.
   Conclusion : le LAN filaire et la passerelle sont sains ; la perte est sur le
       lien radio du serveur lui-même. C'est la cause unique des échecs ci-dessous,
       et aucun réglage applicatif ne la corrige.

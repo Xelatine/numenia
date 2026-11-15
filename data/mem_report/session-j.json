@@ -81,7 +81,7 @@
     "run_3000_pas": {"lance": false}
   },
   "reseau": {
-    "chemin": "IPv6 lien-local fe80::226a:8aff:fea3:5e67%15",
+    "chemin": "IPv6 lien-local SERVEUR-IPV6%15",
     "enp8s0": "toujours 169.254.184.83/16, aucun bail DHCP",
     "netplan_dropin_installe": false,
     "wifi": "associe au SSID wifi mais ne route plus : passerelle 100 pour cent de perte, pypi 000",

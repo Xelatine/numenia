@@ -1,6 +1,6 @@
 Session L — conditions de mesure de la dérive
 =============================================
-Machine : IA (accès IPv6 lien-local du câble)
+Machine : serveur (accès IPv6 lien-local du câble)
 Date : 2026-11-11
 Charge : 0.01 | RAM disponible 6 054 Mo | swap 721 Mo
 GPU : 3 MiB / 0 % | conteneurs : 0 actif

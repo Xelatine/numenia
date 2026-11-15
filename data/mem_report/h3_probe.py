@@ -13,7 +13,7 @@ import gc
 import sys
 import tracemalloc
 
-sys.path.insert(0, "/home/dieux/mycelia")
+sys.path.insert(0, "/home/utilisateur/mycelia")
 
 import torch  # noqa: E402
 
