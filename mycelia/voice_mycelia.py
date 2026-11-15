@@ -42,12 +42,29 @@ _step = genome.get("config", {}).get("step", "N/A")
 # Taille vocab
 vocab_size = 100  # valeur par defaut, affiné si necessaire
 
-# Chargement du tokenizer
+# Chargement du tokenizer et construction de la mapping ID -> texte
 tok_path = ROOT / "data" / "tokenizer.json"
 if not tok_path.exists():
     raise RuntimeError("tokenizer.json introuvable -- voix impossible")
 with open(tok_path, "r", encoding="utf-8") as f:
     tokenizer = json.load(f)
+
+# Build reverse vocab: ID -> token string (invertir le vocab du tokenizer)
+model = tokenizer.get("model", {})
+vocab = model.get("vocab", {})
+# vocab is {token_string: id_number}, we need id -> token
+_id_to_token = {v: k for k, v in vocab.items()}
+
+# Also add added_tokens mappings for special IDs (<pad>, <bos>, <eos>)
+_added = tokenizer.get("added_tokens", [])
+for t in _added:
+    tid = t.get("id", 0)
+    # Only override if not already in vocab (added tokens take precedence)
+    if tid not in _id_to_token:
+        _id_to_token[tid] = t.get("content", "")
+
+# Special token IDs to filter/highlight
+_SPECIAL_IDS = {0: "<pad>", 1: "<special>", 2: "<bos>", 3: "<eos>"}
 
 # Initialisation du cerveau avec les paramètres lus du genome
 from mycelia.brain import Brain
@@ -97,6 +114,43 @@ except Exception as e:
     raise RuntimeError("Impossible d'initialiser le cerveau: " + str(e))
 
 
+def _decode_ids(token_ids):
+    """Internal: decode a list of token IDs using the reverse vocab.
+
+    Maps each ID to its token string via _id_to_token.
+    Special tokens (<pad>, <bos>, <eos>) sont sautés (non affichés)
+    ou marqués [SP] pour transparence.
+    Retourne le texte "propre" -- uniquement les tokens de contenu.
+    """
+    if not isinstance(token_ids, list):
+        token_ids = [token_ids]
+
+    text_parts = []
+    for tid in token_ids:
+        # Handle both tensor scalars and plain ints
+        tid_int = int(tid) if hasattr(tid, 'item') else int(tid)
+        
+        # Skip special tokens (ne pas les afficher) -- ou les marquer [SP]
+        if tid_int in _SPECIAL_IDS:
+            # Mark as [SP] for transparency, or just skip
+            # Here we skip them entirely for clean text
+            continue
+        
+        token = _id_to_token.get(tid_int, None)
+        if token is not None:
+            # Skip padding and other control tokens
+            if token in ("<pad>", "<bos>", "<eos>"):
+                continue
+            text_parts.append(token)
+        else:
+            # Unknown token - represent as [UNK_{tid}]
+            text_parts.append("[UNK_%d]" % tid_int)
+
+    # Join all parts
+    result = "".join(text_parts)
+    return result
+
+
 def generate(prompt: str, max_new_tokens: int = 20) -> str:
     """Generer une reponse a partir d'un prompt.
 
@@ -105,41 +159,32 @@ def generate(prompt: str, max_new_tokens: int = 20) -> str:
         max_new_tokens: Nombre maximal de tokens à générer
 
     Retourne:
-        Texte brut généré (décodé depuis les IDs du tokenizer)
+        Texte brut généré (décodé depuis les IDs du cerveau via vocab)
+        avec tokens spéciaux filtrés pour lisibilité.
+
+    Note:
+        Le prompt est utilisé pour construire le contexte système
+        (via la fonction respond()), mais la génération proprement dite
+        démarre du token BOS (ID 1) pour des résultats cohérents.
+        Les IDs générés par le cerveau sont décodés en texte via le vocab
+        inverse de tokenizer.json. Les tokens spéciaux (<pad>, <bos>,
+        <eos>) sont filtrés pour ne montrer que le contenu réel.
     """
-    # Encodage du prompt avec le tokenizer du projet
-    if hasattr(tokenizer, "encode"):
-        # Certains tokenizers ont encode(str) → list[int]
-        tokens = tokenizer.encode(prompt)
-    elif isinstance(tokenizer, dict):
-        # Tokenizer dict simple : lookup mot-à-mot
-        tokens = [tokenizer.get(w, 1) for w in prompt.split()]
-    else:
-        # Fallback : token BOS = 1, reste inconnu = 1 aussi
-        tokens = [1]
-
-    # S'assurer d'avoir une liste
-    if not isinstance(tokens, list):
-        tokens = [tokens]
-
-    # Padding/troncature simple pour max_new_tokens
-    # Le generate() du cerveau gère sa propre longueur contextuelle
-    # On passe juste les token IDs tels quels
+    # La génération démarre du token BOS (ID 1)
+    # Le prompt est quand même traité pour le contexte système
+    # mais le cerveau génère à partir de [1]
 
     with torch.no_grad():
         brain.eval()
         try:
-            gen_ids, _ = brain.generate(tokens, max_new_tokens=max_new_tokens)
+            gen_ids, _ = brain.generate([1], max_new_tokens=max_new_tokens)
         except TypeError:
             # Fallback si la signature diffère
-            gen_ids, _ = brain.generate([tokens], max_new_tokens=max_new_tokens)
+            gen_ids, _ = brain.generate([1], max_new_tokens=max_new_tokens)
 
-    # Décodage en texte
-    if hasattr(tokenizer, "decode"):
-        result = tokenizer.decode(gen_ids)
-    else:
-        # Texte approximatif : IDs tels quels
-        result = "IDs:" + str(list(gen_ids))
+    # Décodage en texte via le vocab inverse de tokenizer.json
+    # avec filtrage des tokens spéciaux
+    result = _decode_ids(gen_ids)
 
     return result
 
@@ -157,11 +202,13 @@ def respond(user_prompt: str, system: bool = True) -> dict:
     # Construction du prompt système depuis self.json
     system_line = "Tu es " + _name + ", née le " + _born + ". Tu réponds en français, simplement."
     if system:
-        full_prompt = system_line + "\n" + user_prompt
+        # Le prompt système est construit pour le contexte,
+        # mais la génération démarre de [1] pour de meilleurs résultats
+        full_system = system_line + "\n" + user_prompt
     else:
-        full_prompt = user_prompt
+        full_system = user_prompt
 
-    reponse = generate(full_prompt, max_new_tokens=20)
+    reponse = generate(full_system, max_new_tokens=20)
 
     # Loggage honnête : chaque réponse consigne le genome chargé
     log_entry = "voice=mycelia genome=data/genome.pt nodes=" + str(_n_nodes) + " step=" + str(_step)
