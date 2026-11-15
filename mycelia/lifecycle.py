@@ -276,6 +276,12 @@ def apply_lifecycle(brain: "Brain", step: int | None = None, cfg: dict | None = 
     life = (cfg or {}).get("lifecycle", cfg or {})
     prune_first = bool(life.get("prune", True))
     dead_edges = prune_edges(brain) if prune_first else 0
+    # Validate-lifecycle jobs (a live kernel polling JSON) that create a routed
+    # brain never bury nodes: only the real training run does that, and only
+    # between its own steps. Any live job offset (*validate_lifecycle_by_json,
+    # *validate_lifecycle_through_events) must see 0 burials and 0 edge deaths
+    # here on a freshly grown routed brain, otherwise the lifecycle job is not
+    # what it claims to isolate.
     dead_nodes = kill_isolated_nodes(brain, step=step)
     revived = 0
     for node_id in list(brain.pending_revivals):
