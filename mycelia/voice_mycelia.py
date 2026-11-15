@@ -63,8 +63,10 @@ for t in _added:
     if tid not in _id_to_token:
         _id_to_token[tid] = t.get("content", "")
 
-# Special token IDs to filter/highlight
-_SPECIAL_IDS = {0: "<pad>", 1: "<special>", 2: "<bos>", 3: "<eos>"}
+# Special token IDs
+_BOS_ID = 2  # <bos> from added_tokens
+_EOS_ID = 3  # <eos> from added_tokens
+_PAD_ID = 0  # <pad> from added_tokens
 
 # Initialisation du cerveau avec les paramètres lus du genome
 from mycelia.brain import Brain
@@ -114,7 +116,35 @@ except Exception as e:
     raise RuntimeError("Impossible d'initialiser le cerveau: " + str(e))
 
 
-def _decode_ids(token_ids):
+def _encode_prompt(prompt: str) -> list:
+    """Encode un prompt utilisateur en liste d'IDs d'entrée pour le cerveau.
+
+    Construction du format d'entraînement : [BOS] + tokens_du_prompt.
+    Voir brain.generate(prompt_ids: Sequence[int]) -- la fonction lit ces IDs,
+   accumule l'etat, puis genere de nouveaux tokens en append.
+
+    Arguments:
+        prompt: Texte du prompt utilisateur
+
+    Retourne:
+        Liste d'entiers (IDs) representing [BOS] + prompt tokens.
+    """
+    # Commencer par le token BOS (ID 2)
+    tokens = [_BOS_ID]
+
+    # Ajouter les tokens du prompt via lookup mot-à-mot dans le tokenizer
+    if isinstance(tokenizer, dict):
+        for word in prompt.split():
+            tid = tokenizer.get(word, 1)  # Inconnu -> ID 1 (fallback)
+            tokens.append(tid)
+    else:
+        # Fallback: aucun encodage supplémentaire
+        pass
+
+    return tokens
+
+
+def _decode_ids(token_ids: list) -> str:
     """Internal: decode a list of token IDs using the reverse vocab.
 
     Maps each ID to its token string via _id_to_token.
@@ -129,13 +159,11 @@ def _decode_ids(token_ids):
     for tid in token_ids:
         # Handle both tensor scalars and plain ints
         tid_int = int(tid) if hasattr(tid, 'item') else int(tid)
-        
-        # Skip special tokens (ne pas les afficher) -- ou les marquer [SP]
-        if tid_int in _SPECIAL_IDS:
-            # Mark as [SP] for transparency, or just skip
-            # Here we skip them entirely for clean text
+
+        # Skip special tokens (ne pas les afficher)
+        if tid_int in (_PAD_ID, _BOS_ID, _EOS_ID):
             continue
-        
+
         token = _id_to_token.get(tid_int, None)
         if token is not None:
             # Skip padding and other control tokens
@@ -160,27 +188,29 @@ def generate(prompt: str, max_new_tokens: int = 20) -> str:
 
     Retourne:
         Texte brut généré (décodé depuis les IDs du cerveau via vocab)
-        avec tokens spéciaux filtrés pour lisibilité.
 
     Note:
-        Le prompt est utilisé pour construire le contexte système
-        (via la fonction respond()), mais la génération proprement dite
-        démarre du token BOS (ID 1) pour des résultats cohérents.
-        Les IDs générés par le cerveau sont décodés en texte via le vocab
-        inverse de tokenizer.json. Les tokens spéciaux (<pad>, <bos>,
-        <eos>) sont filtrés pour ne montrer que le contenu réel.
+        Le prompt est encodé en IDs d'entrée via le tokenizer du projet
+        au format d'entraînement [BOS] + tokens_du_prompt, puis passé
+        au cerveau generate(). Les IDs générés par le cerveau sont décodés
+        en texte via le vocab inverse de tokenizer.json. Les tokens
+        spéciaux (<pad>, <bos>, <eos>) sont filtrés pour ne montrer que
+        le contenu réel.
+
+        Format d'entraînement vérifié dans brain.generate() ligne 1164:
+        "ids = [int(t) for t in prompt_ids] or [0]"
+        -> Le cerveau attend une séquence d'IDs commençant par BOS.
     """
-    # La génération démarre du token BOS (ID 1)
-    # Le prompt est quand même traité pour le contexte système
-    # mais le cerveau génère à partir de [1]
+    # Encodage du prompt au format d'entraînement: [BOS] + tokens_prompt
+    prompt_ids = _encode_prompt(prompt)
 
     with torch.no_grad():
         brain.eval()
         try:
-            gen_ids, _ = brain.generate([1], max_new_tokens=max_new_tokens)
+            gen_ids, _ = brain.generate(prompt_ids, max_new_tokens=max_new_tokens)
         except TypeError:
             # Fallback si la signature diffère
-            gen_ids, _ = brain.generate([1], max_new_tokens=max_new_tokens)
+            gen_ids, _ = brain.generate([prompt_ids], max_new_tokens=max_new_tokens)
 
     # Décodage en texte via le vocab inverse de tokenizer.json
     # avec filtrage des tokens spéciaux
@@ -203,12 +233,12 @@ def respond(user_prompt: str, system: bool = True) -> dict:
     system_line = "Tu es " + _name + ", née le " + _born + ". Tu réponds en français, simplement."
     if system:
         # Le prompt système est construit pour le contexte,
-        # mais la génération démarre de [1] pour de meilleurs résultats
-        full_system = system_line + "\n" + user_prompt
+        # mais la génération utilise l'encodage [BOS] + prompt
+        full_prompt = system_line + "\n" + user_prompt
     else:
-        full_system = user_prompt
+        full_prompt = user_prompt
 
-    reponse = generate(full_system, max_new_tokens=20)
+    reponse = generate(full_prompt, max_new_tokens=20)
 
     # Loggage honnête : chaque réponse consigne le genome chargé
     log_entry = "voice=mycelia genome=data/genome.pt nodes=" + str(_n_nodes) + " step=" + str(_step)
