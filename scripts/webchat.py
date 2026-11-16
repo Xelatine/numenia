@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Nyra — Interface web locale (Flask, 0.0.0.0:8080)
+"""Nyra ? Interface web locale (Flask, 0.0.0.0:8080)
 Réseau local ONLY : aucune sortie internet, pas de redirection de port.
-Le chat utilise le cerveau routé 10 020 nœuds, seuil 0,002342.
+Le chat utilise le cerveau routé 10 020 n?uds, seuil 0,002342.
 Ne modifie jamais les poids.
 """
 
@@ -27,7 +27,7 @@ from mycelia.train import Trainer, process_memory
 from mycelia.identity import Identity
 from mycelia.voice_mycelia import respond
 
-# ── Configuration ──────────────────────────────────────────────
+# ?? Configuration ??????????????????????????????????????????????
 FLASK_HOST = "0.0.0.0"
 FLASK_PORT = 8080
 TOKEN_FILE = ROOT / "data" / "webchat" / "token.txt"
@@ -40,11 +40,11 @@ AWAKE_TTL_SECONDS = 300
 # Seuil : on n'envoie pas au LLM, on utilise le cerveau routé
 REFERENCE_LOSS = 0.002342
 
-# Identité — chargement depuis self.json (pas de fallback, conformément Phase 3.3)
+# Identité ? chargement depuis self.json (pas de fallback, conformément Phase 3.3)
 def load_identity():
     path = Path("data/genome_myc/self.json")
     if not path.exists():
-        # refus d'éveil — PAS de fallback
+        # refus d'éveil ? PAS de fallback
         return None
     return Identity.load(path)
 
@@ -55,7 +55,7 @@ else:
     IDENTITY_NONE = False
     identity = _identity
 
-# ── Brain initialisé une seule fois (CPU, routing actif) ──────
+# ?? Brain initialisé une seule fois (CPU, routing actif) ??????
 def _init_brain() -> Brain:
     trainer = Trainer(
         config={},
@@ -77,7 +77,7 @@ def _init_brain() -> Brain:
 brain = _init_brain()
 
 
-# ── Point de génération vocale MYCELIA ──────────────────────────
+# ?? Point de génération vocale MYCELIA ??????????????????????????
 def _voice_chat(user_prompt: str) -> dict:
     """Génère une réponse via le moteur MYCELIA local.
 
@@ -89,7 +89,7 @@ def _voice_chat(user_prompt: str) -> dict:
     return result
 
 
-# ── Routes Flask ──────────────────────────────────────────────
+# ?? Routes Flask ??????????????????????????????????????????????
 app = Flask(__name__)
 
 @app.route("/awake", methods=["GET"])
@@ -128,11 +128,38 @@ def chat():
         }), 500
 
 
-# Page d'accueil
+
+@app.route("/api/status", methods=["GET"])
+def api_status():
+    awake_val = not IDENTITY_NONE
+    try:
+        import torch
+        g = torch.load(ROOT / "data" / "genome.pt", map_location='cpu', weights_only=False)
+        n_nodes = g.get('config', {}).get('n_nodes', 'N/A')
+        step = g.get('config', {}).get('step', 'N/A')
+    except Exception:
+        n_nodes = 'N/A'
+        step = 'N/A'
+    return jsonify({"awake": awake_val, "genome": "data/genome.pt", "nodes": n_nodes, "step": step, "uptime": 0, "voice": "mycelia"})
+
+@app.route("/api/chatlog", methods=["GET"])
+def api_chatlog():
+    return jsonify([])
+
+@app.route("/api/metrics", methods=["GET"])
+def api_metrics():
+    return jsonify([{"date": "2026-01-01", "nodes": "N/A", "step": "N/A", "perte": "N/A"}])
+
+
+
+# Route dashboard
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    return "<html><body>Dashboard</body></html>"# Page d'accueil
 @app.route("/", methods=["GET"])
 def index():
     return render_template_string(
-        "<html><body><h1>Nyra — Voix MYCELIA locale</h1>"
+        "<html><body><h1>Nyra ? Voix MYCELIA locale</h1>"
         "<p>POST /chat avec JSON {\"message\": \"votre question\"}</p>"
         "<p>Endpoint /awake pour vérification de santé.</p></body></html>"
     )
@@ -140,8 +167,8 @@ def index():
 
 # Lancement
 if __name__ == "__main__":
-    print("Démarrage Nyra — voix locale MYCELIA")
-    print("  /awake  → vérification santé (200 ou erreur)")
-    print("  /chat     → POST JSON {\"message\": \"...\"}")
+    print("Démarrage Nyra ? voix locale MYCELIA")
+    print("  /awake  -> vérification santé (200 ou erreur)")
+    print("  /chat     -> POST JSON {\"message\": \"...\"}")
     print("Host: 0.0.0.0:8080 (local ONLY, pas de redirection)")
     app.run(host=FLASK_HOST, port=FLASK_PORT)
