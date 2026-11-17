@@ -926,6 +926,8 @@ class Brain(nn.Module):
                 # Validated routers already kept the full 10 020 alive during the
                 # run; a live validation guess running elsewhere must not bury
                 # them by touching this isolation audit here.
+                alive_mask = self.node_alive  # fix: masque par défaut
+                # (pas de routage → tous les nœuds vivants)
                 self.last_awake_nodes = int(alive_mask.sum())
             
             # The door injects into the wavefront, not into the membrane: what

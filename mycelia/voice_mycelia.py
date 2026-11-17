@@ -37,7 +37,7 @@ if not gm_path.exists():
 genome = torch.load(gm_path, map_location="cpu", weights_only=False)
 # Lecture de n_nodespuisqueidepuis le checkpoint -- jamais en dur 10_020
 _n_nodes = genome.get("config", {}).get("n_nodes", "N/A")
-_step = genome.get("config", {}).get("step", "N/A")
+_step = genome.get("config", {}).get("step", genome.get("step", "N/A"))
 
 # Taille vocab
 vocab_size = 100  # valeur par defaut, affiné si necessaire

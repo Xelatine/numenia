@@ -8,6 +8,7 @@ jamais un modele externe. Ne modifie jamais les poids.
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 import time
@@ -30,6 +31,7 @@ FLASK_HOST = "0.0.0.0"
 FLASK_PORT = 8080
 ACCESS_LOG = ROOT / "data" / "webchat" / "access.log"
 GENOME_PATH = ROOT / "data" / "genome.pt"
+METRICS_PATH = ROOT / "data" / "metrics.json"
 NEXT_MILESTONE = "10 020 nœuds — serveur B2"
 MAX_CHATLOG = 50
 
@@ -91,7 +93,7 @@ def _status_data() -> dict:
             g = torch.load(GENOME_PATH, map_location="cpu", weights_only=False)
             cfg = g.get("config", {}) if isinstance(g, dict) else {}
             nodes = cfg.get("n_nodes", "N/A")
-            step = cfg.get("step", "N/A")
+            step = g.get("step", cfg.get("step", "N/A"))
     except Exception:
         pass
     return {
@@ -135,7 +137,18 @@ def _chatlog_data(limit: int = MAX_CHATLOG) -> list:
 
 
 def _metrics_data() -> list:
-    """Historique par session. La perte n'est pas stockee : N/A, on n'invente pas."""
+    """Historique par session, lu dans data/metrics.json (aucun chiffre invente).
+
+    Sans fichier, on affiche l'etat courant et une perte inconnue (N/A) : une
+    courbe vide vaut mieux qu'une perte plausible sortie de nulle part.
+    """
+    if METRICS_PATH.exists():
+        try:
+            rows = json.loads(METRICS_PATH.read_text(encoding="utf-8"))
+            if isinstance(rows, list) and rows:
+                return rows
+        except (OSError, ValueError):
+            pass
     status = _status_data()
     return [
         {

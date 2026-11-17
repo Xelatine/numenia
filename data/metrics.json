@@ -1,0 +1,11 @@
+[
+  {
+    "date": "2026-11-17",
+    "nodes": 893,
+    "step": 2760,
+    "perte": 0.0006,
+    "session": 1,
+    "duree_min": 54,
+    "corpus": "corpus_fr.txt"
+  }
+]
