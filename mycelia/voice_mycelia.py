@@ -36,7 +36,7 @@ if not gm_path.exists():
     raise RuntimeError("genome.pt introuvable -- voix impossible")
 genome = torch.load(gm_path, map_location="cpu", weights_only=False)
 # Lecture de n_nodespuisqueidepuis le checkpoint -- jamais en dur 10_020
-_n_nodes = genome.get("config", {}).get("n_nodes", "N/A")
+_n_nodes = genome.get("n_nodes", genome.get("config", {}).get("n_nodes", "N/A"))
 _step = genome.get("config", {}).get("step", genome.get("step", "N/A"))
 
 # Taille vocab

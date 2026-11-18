@@ -93,7 +93,10 @@ def _status_data() -> dict:
         if GENOME_PATH.exists():
             g = torch.load(GENOME_PATH, map_location="cpu", weights_only=False)
             cfg = g.get("config", {}) if isinstance(g, dict) else {}
-            nodes = cfg.get("n_nodes", "N/A")
+            # Le pool reel est le n_nodes de premier niveau (brain.n_nodes),
+            # pas celui du config de construction : apres des naissances les
+            # deux divergent (532 vs 512 au step 25 de la session texte).
+            nodes = g.get("n_nodes", cfg.get("n_nodes", "N/A"))
             step = g.get("step", cfg.get("step", "N/A"))
             # La croissance se lit dans le genome : le pool (slots alloues) et
             # les vivants (ceux que le genome n'a pas enterres) sont deux

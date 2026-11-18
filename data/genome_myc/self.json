@@ -1,0 +1,9 @@
+{
+  "name": "Nyra",
+  "birth_ts": "2026-11-18T18:58:04.034273+00:00",
+  "declared_sex": "indéterminé",
+  "declared_age_fn": "now() - birth_ts",
+  "version_genome": "myc-2-texte:b5e86dd0",
+  "cpu_seconds": 0.0,
+  "stable": true
+}

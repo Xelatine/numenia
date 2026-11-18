@@ -8,5 +8,17 @@
     "duree_min": 54,
     "corpus": "corpus_fr.txt",
     "nodes_alive": 522
+  },
+  {
+    "date": "2026-11-18",
+    "nodes": 532,
+    "nodes_pool": 532,
+    "nodes_alive": 514,
+    "step": 25,
+    "perte": 9.1799,
+    "session": "1-texte",
+    "duree_min": 8.6,
+    "corpus": "corpus_fr.txt",
+    "genome": "v2-texte"
   }
 ]
