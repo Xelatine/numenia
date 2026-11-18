@@ -67,6 +67,7 @@ for t in _added:
 _BOS_ID = 2  # <bos> from added_tokens
 _EOS_ID = 3  # <eos> from added_tokens
 _PAD_ID = 0  # <pad> from added_tokens
+_UNK_ID = 1  # <unk> from added_tokens -- filtre aussi, sinon la voix le recite
 
 # Initialisation du cerveau avec les paramètres lus du genome
 from mycelia.brain import Brain
@@ -161,13 +162,13 @@ def _decode_ids(token_ids: list) -> str:
         tid_int = int(tid) if hasattr(tid, 'item') else int(tid)
 
         # Skip special tokens (ne pas les afficher)
-        if tid_int in (_PAD_ID, _BOS_ID, _EOS_ID):
+        if tid_int in (_PAD_ID, _UNK_ID, _BOS_ID, _EOS_ID):
             continue
 
         token = _id_to_token.get(tid_int, None)
         if token is not None:
             # Skip padding and other control tokens
-            if token in ("<pad>", "<bos>", "<eos>"):
+            if token in ("<pad>", "<unk>", "<bos>", "<eos>"):
                 continue
             text_parts.append(token)
         else:

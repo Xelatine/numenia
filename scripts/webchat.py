@@ -85,6 +85,7 @@ def _voice_chat(user_prompt: str) -> dict:
 def _status_data() -> dict:
     """Etat reel lu sur le checkpoint genome.pt (taille lue, pas codee en dur)."""
     nodes = "N/A"
+    alive = "N/A"
     step = "N/A"
     try:
         import torch
@@ -94,12 +95,20 @@ def _status_data() -> dict:
             cfg = g.get("config", {}) if isinstance(g, dict) else {}
             nodes = cfg.get("n_nodes", "N/A")
             step = g.get("step", cfg.get("step", "N/A"))
+            # La croissance se lit dans le genome : le pool (slots alloues) et
+            # les vivants (ceux que le genome n'a pas enterres) sont deux
+            # nombres differents, et c'est leur ecart qui raconte la vie.
+            buffer = (g.get("state_dict") or {}).get("node_alive")
+            if buffer is not None:
+                alive = int(buffer.sum())
     except Exception:
         pass
     return {
         "awake": not IDENTITY_NONE,
         "genome": "data/genome.pt",
         "nodes": nodes,
+        "nodes_pool": nodes,
+        "nodes_alive": alive,
         "step": step,
         "uptime": round(time.time() - START_TIME, 1),
         "voice": "mycelia",
@@ -316,7 +325,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   <section class="card">
     <h2>🧠 Cerveau</h2>
     <dl>
-      <dt>Nodes</dt><dd id="s-nodes">__NODES__</dd>
+      <dt>Nodes</dt><dd id="s-nodes">pool __NODES_POOL__ · vivants __NODES_ALIVE__</dd>
       <dt>Step</dt><dd id="s-step">__STEP__</dd>
       <dt>Perte</dt><dd id="s-perte">non mesurée</dd>
     </dl>
@@ -363,7 +372,10 @@ async function refresh() {
     document.getElementById('s-uptime').textContent = fmt(st.uptime) + ' s';
     document.getElementById('s-voice').textContent = st.voice;
     document.getElementById('s-genome').textContent = st.genome;
-    document.getElementById('s-nodes').textContent = st.nodes;
+    document.getElementById('s-nodes').textContent = 'pool '
+      + (st.nodes_pool !== undefined ? st.nodes_pool : st.nodes)
+      + ' · vivants '
+      + (st.nodes_alive !== undefined ? st.nodes_alive : 'N/A');
     document.getElementById('s-step').textContent = st.step;
 
     const log = await (await fetch('/api/chatlog')).json();
@@ -481,7 +493,8 @@ def dashboard():
     html = html.replace("__UPTIME__", str(status["uptime"]))
     html = html.replace("__VOICE__", escape(str(status["voice"])))
     html = html.replace("__GENOME__", escape(str(status["genome"])))
-    html = html.replace("__NODES__", escape(str(status["nodes"])))
+    html = html.replace("__NODES_POOL__", escape(str(status["nodes_pool"])))
+    html = html.replace("__NODES_ALIVE__", escape(str(status["nodes_alive"])))
     html = html.replace("__STEP__", escape(str(status["step"])))
     html = html.replace("__LAST_WORDS__", escape(last_words))
     html = html.replace("__CONVERSATIONS__", conversations)

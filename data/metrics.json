@@ -6,6 +6,7 @@
     "perte": 0.0006,
     "session": 1,
     "duree_min": 54,
-    "corpus": "corpus_fr.txt"
+    "corpus": "corpus_fr.txt",
+    "nodes_alive": 522
   }
 ]
