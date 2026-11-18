@@ -20,5 +20,43 @@
     "duree_min": 8.6,
     "corpus": "corpus_fr.txt",
     "genome": "v2-texte"
+  },
+  {
+    "date": "2026-11-18",
+    "nodes": 532,
+    "nodes_pool": 532,
+    "nodes_alive": 514,
+    "nodes_born": 2,
+    "aretes": 318,
+    "step": 38,
+    "perte": 9.1694,
+    "session": "1-nyra",
+    "duree_min": 3.2,
+    "corpus": "corpus_fr.txt",
+    "genome": "v2-texte",
+    "mots_fr": 0,
+    "tok_s": 70.3,
+    "pas": 13,
+    "garde_vram": 0,
+    "device": "cuda"
+  },
+  {
+    "date": "2026-11-18",
+    "nodes": 532,
+    "nodes_pool": 532,
+    "nodes_alive": 514,
+    "nodes_born": 2,
+    "aretes": 462,
+    "step": 56,
+    "perte": 9.1475,
+    "session": "3-nyra",
+    "duree_min": 3.2,
+    "corpus": "corpus_fr.txt",
+    "genome": "v2-texte",
+    "mots_fr": 1,
+    "tok_s": 75.7,
+    "pas": 14,
+    "garde_vram": 0,
+    "device": "cuda"
   }
 ]

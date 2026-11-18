@@ -848,7 +848,7 @@ class Trainer:
 # ----------------------------------------------------------------------
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="train the mycelia brain")
-    parser.add_argument("--data", choices=["toy", "text"], default="toy")
+    parser.add_argument("--data", choices=["toy", "text"], default=None)
     parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3, 4])
     parser.add_argument("--steps", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=None)
@@ -887,20 +887,27 @@ def main(argv: list[str] | None = None) -> None:
 
     config = load_config(args.config)
     training = config["training"]
-    steps = args.steps if args.steps is not None else int(
-        training["text_steps"] if args.data == "text" else training["toy_steps"]
-    )
 
     # C1: one writer per checkpoint. A second trainer does not just steal the
     # GPU, it writes the same genome.pt and genome_latest.pt.
     lock = acquire_lock()
 
     if args.resume:
-        trainer = Trainer.resume(args.resume, config=config, device=args.device)
+        # A resume takes the checkpoint as it is. The data mode, the batch and
+        # the sequence are forwarded explicitly, otherwise a text genome came
+        # back as a toy one and batch/seq silently fell back to the config file.
+        explicit: dict = {}
+        if args.data:
+            explicit["data"] = args.data
+        if args.batch_size:
+            explicit["batch_size"] = args.batch_size
+        if args.seq_len:
+            explicit["seq_len"] = args.seq_len
+        trainer = Trainer.resume(args.resume, config=config, device=args.device, **explicit)
     else:
         trainer = Trainer(
             config=config,
-            data=args.data,
+            data=args.data or "toy",
             device=args.device,
             seed=args.seed,
             scale=args.scale,
@@ -908,6 +915,9 @@ def main(argv: list[str] | None = None) -> None:
             seq_len=args.seq_len,
             **({"max_hops": args.hops} if args.hops else {}),
         )
+    steps = args.steps if args.steps is not None else int(
+        training["text_steps"] if trainer.data_mode == "text" else training["toy_steps"]
+    )
     if args.report_every:
         trainer.report_every = args.report_every
     if args.checkpoint_turns:

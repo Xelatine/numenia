@@ -1,0 +1,18 @@
+{
+  "session_min": 60,
+  "batch_size": 8,
+  "warmup": 1000,
+  "lr_max": 0.0003,
+  "seuil_vram": 1900,
+  "temp_pause": 85,
+  "temp_stop": 90,
+  "mode_247": true,
+  "pauses_thermiques": true,
+  "stop_after_session": false,
+  "seq_len": 128,
+  "save_min": 5,
+  "game_vram_mb": 2048,
+  "pause_thermique_min": 5,
+  "intervalle_thermique_min": 60,
+  "updated": "2026-11-18T22:47:10+00:00"
+}

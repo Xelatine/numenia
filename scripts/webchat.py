@@ -20,11 +20,15 @@ from flask import Flask, jsonify, request
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 
+from mycelia import nyra_control as nc
 from mycelia.brain import Brain
 from mycelia.identity import Identity
+from mycelia.nyra_control import count_mots_fr
 from mycelia.train import Trainer
 from mycelia.voice_mycelia import respond
+from nyra_panel import PANEL_SCRIPT, PANEL_SECTIONS, PANEL_STYLE, PANEL_TABS
 
 # -- Configuration ---------------------------------------------------------
 FLASK_HOST = "0.0.0.0"
@@ -33,6 +37,10 @@ ACCESS_LOG = ROOT / "data" / "webchat" / "access.log"
 GENOME_PATH = ROOT / "data" / "genome.pt"
 METRICS_PATH = ROOT / "data" / "metrics.json"
 NEXT_MILESTONE = "10 020 nœuds — serveur B2"
+# Jalons de perte du panel 📈 : le prochain est le plus grand encore au-dessus
+# de la perte courante.
+MILESTONES = (7.0, 5.0, 3.5)
+NO_WINDOW = 0x08000000 if sys.platform == "win32" else 0
 MAX_CHATLOG = 50
 
 START_TIME = time.time()
@@ -211,6 +219,23 @@ def chat():
         result = _voice_chat(user_msg)
         reponse = result.get("réponse", "")
         log_entry = result.get("voix_config", {}).get("log", "")
+        # Z8 : le compteur de mots francais s'applique ici, sur la reponse
+        # telle qu'elle part ; le lanceur en fait la somme par session dans
+        # metrics.json (champ "mots_fr").
+        mots_fr, mots_total = count_mots_fr(reponse)
+        try:
+            nc.append_eloquence(
+                {
+                    "ts": nc.now_iso(),
+                    "session": (nc.read_state() or {}).get("session"),
+                    "prompt": user_msg,
+                    "reponse": reponse,
+                    "mots_fr": mots_fr,
+                    "mots_total": mots_total,
+                }
+            )
+        except OSError:
+            pass
         ACCESS_LOG.parent.mkdir(parents=True, exist_ok=True)
         with open(ACCESS_LOG, "a", encoding="utf-8") as f:
             timestamp = datetime.now(timezone.utc).isoformat()
@@ -225,7 +250,13 @@ def chat():
                 + "\n"
             )
         return jsonify(
-            {"réponse": reponse, "voix_log": log_entry, "succès": True}
+            {
+                "réponse": reponse,
+                "voix_log": log_entry,
+                "succès": True,
+                "mots_fr": mots_fr,
+                "mots_total": mots_total,
+            }
         )
     except Exception as e:
         return (
@@ -254,8 +285,213 @@ def api_metrics():
     return jsonify(_metrics_data())
 
 
+# -- Temps reel, historique, eloquence, configuration ----------------------
+GPU_CACHE: dict = {"at": 0.0, "value": {}}
+
+
+def _gpu_stats() -> dict:
+    """Temperature, VRAM et occupation du GPU, cachees 5 s.
+
+    Une seule requete ``nvidia-smi`` : les compteurs par processus repondent
+    ``[N/A]`` sous WDDM sur ce portable, donc la VRAM des autres se deduit du
+    total utilise moins celle du lanceur (voir scripts/nyra_launcher.py).
+    """
+    now = time.time()
+    if now - float(GPU_CACHE["at"]) < 5.0:
+        return GPU_CACHE["value"]
+    value: dict = {}
+    try:
+        out = subprocess.run(
+            [
+                "nvidia-smi",
+                "--query-gpu=temperature.gpu,memory.used,memory.total,"
+                "utilization.gpu",
+                "--format=csv,noheader,nounits",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=4,
+            creationflags=NO_WINDOW,
+        )
+        parts = [
+            p.strip() for p in (out.stdout or "").strip().splitlines()[0].split(",")
+        ]
+        value = {
+            "temp_c": float(parts[0]),
+            "gpu_used_mb": float(parts[1]),
+            "gpu_total_mb": float(parts[2]),
+            "gpu_pct": float(parts[3]),
+        }
+    except (OSError, IndexError, ValueError, subprocess.SubprocessError):
+        value = {}
+    GPU_CACHE.update({"at": now, "value": value})
+    return value
+
+
+def _live_data() -> dict:
+    """Etat du lanceur (training / paused / cooling) et mesures du moment."""
+    state = nc.read_state() or {}
+    try:
+        fresh = (time.time() - float(state.get("updated_ts"))) < 120.0
+    except (TypeError, ValueError):
+        fresh = False
+    if state and fresh:
+        data = dict(state)
+        data["source"] = "lanceur"
+    else:
+        status = _status_data()
+        data = {
+            "status": "idle",
+            "reason": "lanceur arrete" if not state else "etat du lanceur perime",
+            "step": status["step"],
+            "session": state.get("session"),
+            "session_minutes_left": state.get("session_minutes_left"),
+            "loss": state.get("loss"),
+            "tok_s": state.get("tok_s"),
+            "vram_mb": state.get("vram_mb"),
+            "vram_reserved_mb": state.get("vram_reserved_mb"),
+            "ram_mb": state.get("ram_mb"),
+            "cumulative_training_min": state.get("cumulative_training_min"),
+            "vram_guard_hits": state.get("vram_guard_hits"),
+            "device": state.get("device"),
+            "source": "serveur",
+        }
+    gpu = _gpu_stats()
+    if gpu:
+        data.update(
+            {
+                "temp_c": gpu["temp_c"],
+                "gpu_pct": gpu["gpu_pct"],
+                "gpu_used_mb": gpu["gpu_used_mb"],
+                "gpu_total_mb": gpu["gpu_total_mb"],
+            }
+        )
+        reserved = data.get("vram_reserved_mb") if fresh else None
+        data["other_vram_mb"] = round(
+            max(0.0, gpu["gpu_used_mb"] - float(reserved or 0.0)), 1
+        )
+    return data
+
+
+def _next_milestone(rows: list) -> dict:
+    """Prochain jalon de perte et son ETA, d'apres les pas reellement faits."""
+    points: list = []
+    for row in rows:
+        try:
+            points.append((float(row["step"]), float(row["perte"])))
+        except (KeyError, TypeError, ValueError):
+            continue
+    if not points:
+        return {"cible": None, "note": "aucune perte mesurée pour l'instant"}
+    step_now, loss_now = points[-1]
+    targets = [m for m in MILESTONES if m < loss_now]
+    if not targets:
+        return {
+            "cible": None,
+            "perte_actuelle": round(loss_now, 4),
+            "note": "tous les jalons (7 / 5 / 3,5) sont derrière elle",
+        }
+    target = max(targets)
+    rate = None
+    window = points[-5:]
+    if len(window) >= 2:
+        (s0, l0), (s1, l1) = window[0], window[-1]
+        if s1 > s0 and l0 > l1:
+            rate = (l0 - l1) / (s1 - s0)
+    if rate is None:
+        return {
+            "cible": target,
+            "perte_actuelle": round(loss_now, 4),
+            "note": "pas encore de pente mesurée (il faut deux sessions en baisse)",
+        }
+    cfg = nc.read_config()
+    state = nc.read_state() or {}
+    tok_s = state.get("session_tok_s") or state.get("tok_s")
+    per_step_tokens = float(cfg["batch_size"]) * float(cfg["seq_len"])
+    needed = (loss_now - target) / rate
+    heures = None
+    if tok_s and float(tok_s) > 0:
+        heures = needed * per_step_tokens / float(tok_s) / 3600.0
+    return {
+        "cible": target,
+        "perte_actuelle": round(loss_now, 4),
+        "pas_restants": round(needed, 0),
+        "heures": None if heures is None else round(heures, 1),
+        "note": (
+            f"pente {rate * 1000:.3f} nats / 1000 pas"
+            + (f", {float(tok_s):.0f} tok/s mesurés" if tok_s else ", tok/s inconnu")
+        ),
+    }
+
+
+def _history_data() -> dict:
+    rows = _metrics_data()
+    cumul = 0.0
+    for row in rows:
+        try:
+            cumul += float(row.get("duree_min") or 0.0)
+        except (TypeError, ValueError):
+            continue
+    return {
+        "rows": rows,
+        "cumul_min": round(cumul, 1),
+        "next_milestone": _next_milestone(rows),
+    }
+
+
+def _eloquence_data() -> dict:
+    entries = nc.read_eloquence()
+    series = [
+        {
+            "date": row.get("date"),
+            "session": row.get("session"),
+            "mots_fr": row.get("mots_fr"),
+        }
+        for row in nc.read_metrics()
+        if isinstance(row.get("mots_fr"), (int, float))
+    ]
+    verdict = "premier point"
+    if len(series) >= 2:
+        last, previous = float(series[-1]["mots_fr"]), float(series[-2]["mots_fr"])
+        verdict = "mieux" if last > previous else ("pire" if last < previous else "pareil")
+    return {
+        "entries": entries,
+        "last": entries[-1] if entries else None,
+        "series": series,
+        "verdict": verdict,
+    }
+
+
+@app.route("/api/live", methods=["GET"])
+def api_live():
+    return jsonify(_live_data())
+
+
+@app.route("/api/history", methods=["GET"])
+def api_history():
+    return jsonify(_history_data())
+
+
+@app.route("/api/eloquence", methods=["GET"])
+def api_eloquence():
+    return jsonify(_eloquence_data())
+
+
+@app.route("/api/config", methods=["GET", "POST"])
+def api_config():
+    if request.method == "POST":
+        patch = request.get_json(silent=True) or {}
+        if not isinstance(patch, dict):
+            return jsonify({"ok": False, "error": "objet JSON attendu"}), 400
+        return jsonify({"ok": True, "config": nc.write_config(patch)})
+    return jsonify(nc.read_config())
+
+
 # -- Dashboard -------------------------------------------------------------
-DASHBOARD_HTML = """<!DOCTYPE html>
+# Chaîne brute : le JS qu'elle contient garde ses échappements (``\n`` dans un
+# join, ``\u2019``) au lieu que Python les convertisse en vrais caractères —
+# c'est ce qui cassait tout le bloc <script> du dashboard.
+DASHBOARD_HTML = r"""<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -306,16 +542,18 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   footer { max-width: 1080px; margin: 18px auto 0; color: #5d656f; font-size: 11.5px;
            display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   a { color: #6ee7a8; }
+__PANEL_STYLE__
 </style>
 </head>
 <body>
 <header>
   <h1>Nyra <span>·</span> Dashboard MYCELIA</h1>
   <div class="sub">voix locale · genome=data/genome.pt · aucun modèle externe</div>
+  __PANEL_TABS__
 </header>
 
 <main>
-  <section class="card">
+  <section class="card vis" data-panel="home">
     <h2>🫀 État</h2>
     <dl>
       <dt>Awake</dt><dd id="s-awake">__AWAKE__</dd>
@@ -325,7 +563,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     </dl>
   </section>
 
-  <section class="card">
+  <section class="card vis" data-panel="home">
     <h2>🧠 Cerveau</h2>
     <dl>
       <dt>Nodes</dt><dd id="s-nodes">pool __NODES_POOL__ · vivants __NODES_ALIVE__</dd>
@@ -334,17 +572,17 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     </dl>
   </section>
 
-  <section class="card wide">
+  <section class="card wide vis" data-panel="home">
     <h2>🗣️ Dernières paroles</h2>
     <div id="last-words" class="log">__LAST_WORDS__</div>
   </section>
 
-  <section class="card wide">
+  <section class="card wide vis" data-panel="home">
     <h2>💬 Conversations</h2>
     <div id="conversations" class="log scroll">__CONVERSATIONS__</div>
   </section>
 
-  <section class="card wide">
+  <section class="card wide vis" data-panel="home">
     <h2>📈 Croissance</h2>
     __GROWTH_SVG__
     <table>
@@ -355,6 +593,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     <ul class="commits">__COMMITS__</ul>
     <div class="milestone">Jalon suivant : __NEXT_MILESTONE__</div>
   </section>
+__PANEL_SECTIONS__
 </main>
 
 <footer>
@@ -402,6 +641,7 @@ async function refresh() {
 }
 refresh();
 setInterval(refresh, 10000);
+__PANEL_SCRIPT__
 </script>
 </body>
 </html>
@@ -505,6 +745,10 @@ def dashboard():
     html = html.replace("__METRICS_ROWS__", metrics_rows)
     html = html.replace("__COMMITS__", commits or "<li>historique indisponible</li>")
     html = html.replace("__NEXT_MILESTONE__", escape(NEXT_MILESTONE))
+    html = html.replace("__PANEL_STYLE__", PANEL_STYLE)
+    html = html.replace("__PANEL_TABS__", PANEL_TABS)
+    html = html.replace("__PANEL_SECTIONS__", PANEL_SECTIONS)
+    html = html.replace("__PANEL_SCRIPT__", PANEL_SCRIPT)
     return html
 
 
@@ -531,6 +775,7 @@ if __name__ == "__main__":
     print("  /awake     -> verification sante (200 ou erreur)")
     print("  /chat      -> POST JSON {\"message\": \"...\"}")
     print("  /api/status|chatlog|metrics -> JSON")
+    print("  /api/live|history|eloquence|config -> JSON (panel)")
     print("  /dashboard -> page HTML")
     print("Host: 0.0.0.0:8080 (local ONLY, pas de redirection)")
     app.run(host=FLASK_HOST, port=FLASK_PORT)

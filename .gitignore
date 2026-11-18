@@ -41,3 +41,7 @@ data/awake.flag
 data/webchat/
 # Sorties de run regroupees : jamais versionnees.
 data/runs/
+
+# Etat d'execution du lanceur : reecrit en continu, jamais versionne.
+data/nyra_state.json
+data/nyra_eloquence.json
