@@ -1,0 +1,145 @@
+{
+  "semences": [
+    1,
+    2,
+    3
+  ],
+  "sens": {
+    "dense_to_mycelia": {
+      "n": 3,
+      "avant_moyen": 5.1773,
+      "greffe_moyen": 5.2976,
+      "controle_moyen": 5.249,
+      "greffe_par_semence": [
+        5.2716,
+        5.2807,
+        5.3406
+      ],
+      "controle_par_semence": [
+        5.1648,
+        5.257,
+        5.3251
+      ],
+      "avant_par_semence": [
+        5.1558,
+        5.2102,
+        5.166
+      ],
+      "test_t": {
+        "n": 3,
+        "gain_moyen": -0.009366,
+        "ecart_type": 0.00983,
+        "t": -1.6503,
+        "ddl": 2,
+        "p": 0.24066,
+        "alpha": 0.05,
+        "gain_minimum": 0.01,
+        "significatif": false
+      },
+      "decision": {
+        "gain_significatif": false,
+        "gain_moyen": -0.009366,
+        "p": 0.24066,
+        "traduits_moyenne": 2.0,
+        "top3_greffe_moyenne": 0.0333,
+        "top3_controle_moyenne": 0.0333
+      },
+      "top3_par_semence": [
+        {
+          "jumeau_reference": 0.05,
+          "apres_amorce": 0.05,
+          "greffe": 0.05,
+          "controle": 0.025
+        },
+        {
+          "jumeau_reference": 0.025,
+          "apres_amorce": 0.0,
+          "greffe": 0.025,
+          "controle": 0.05
+        },
+        {
+          "jumeau_reference": 0.0,
+          "apres_amorce": 0.0,
+          "greffe": 0.025,
+          "controle": 0.025
+        }
+      ],
+      "traduits_par_semence": [
+        2,
+        1,
+        3
+      ]
+    },
+    "mycelia_to_dense": {
+      "n": 3,
+      "avant_moyen": 4.824,
+      "greffe_moyen": 4.5854,
+      "controle_moyen": 4.5858,
+      "greffe_par_semence": [
+        4.5016,
+        4.5899,
+        4.6648
+      ],
+      "controle_par_semence": [
+        4.5018,
+        4.5903,
+        4.6653
+      ],
+      "avant_par_semence": [
+        4.7644,
+        4.8384,
+        4.8691
+      ],
+      "test_t": {
+        "n": 3,
+        "gain_moyen": 8e-05,
+        "ecart_type": 3.2e-05,
+        "t": 4.3007,
+        "ddl": 2,
+        "p": 0.050041,
+        "alpha": 0.05,
+        "gain_minimum": 0.01,
+        "significatif": false
+      },
+      "decision": {
+        "gain_significatif": false,
+        "gain_moyen": 8e-05,
+        "p": 0.050041,
+        "traduits_moyenne": 2.0,
+        "top3_greffe_moyenne": 0.0,
+        "top3_controle_moyenne": 0.0
+      },
+      "top3_par_semence": [
+        {
+          "jumeau_reference": 0.0,
+          "apres_amorce": 0.0,
+          "greffe": 0.0,
+          "controle": 0.0
+        },
+        {
+          "jumeau_reference": 0.0,
+          "apres_amorce": 0.0,
+          "greffe": 0.0,
+          "controle": 0.0
+        },
+        {
+          "jumeau_reference": 0.0,
+          "apres_amorce": 0.0,
+          "greffe": 0.0,
+          "controle": 0.0
+        }
+      ],
+      "traduits_par_semence": [
+        2,
+        1,
+        3
+      ]
+    }
+  },
+  "decision": {
+    "traduits_max_moyenne": 2.0,
+    "gain_significatif_un_sens": false,
+    "top3_greffe_max": 0.0333,
+    "verdict": "MUR CONFIRMÉ"
+  }
+}

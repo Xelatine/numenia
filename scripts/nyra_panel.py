@@ -220,6 +220,9 @@ PANEL_SECTIONS = r"""
           <dt>Familles</dt><dd id="lab-fam">—</dd>
           <dt>Arêtes jamais co-actives</dt><dd id="lab-dead">—</dd>
           <dt>Paires co-actives sans arête</dt><dd id="lab-free">—</dd>
+          <dt>Engagement (scan)</dt><dd id="lab-engagement">—</dd>
+          <dt>Reproductible S1 → S2</dt><dd id="lab-repro">—</dd>
+          <dt>Scans enregistrés</dt><dd id="lab-scans">—</dd>
         </dl>
       </div>
       <div class="card">
@@ -649,7 +652,7 @@ document.addEventListener('click', ev => {
 });
 
 // --- 🧪 Labo -----------------------------------------------------------
-const LAB = { atlas: null, film: null, timer: null };
+const LAB = { atlas: null, film: null, scan: null, timer: null };
 
 function paintConversion(prefix, data) {
   const v = data && data.verdict;
@@ -663,6 +666,25 @@ function paintConversion(prefix, data) {
   setText('lab-' + prefix + '-gain',
     (100 * Number(v.gain_vs_avant)).toFixed(1) + ' % vs avant · '
     + (100 * Number(v.gain_vs_controle)).toFixed(2) + ' % vs contrôle');
+}
+
+function paintScan() {
+  // C4 : le taux d'engagement est la lecture la plus courte du scan recurrent.
+  // Il doit rester identique a S1 tant qu'aucun entrainement n'a tourne ; une
+  // variation signale soit un cerveau qui a bouge, soit un instrument instable.
+  const scans = (LAB.scan && LAB.scan.scans) || [];
+  if (!scans.length) {
+    setText('lab-engagement', 'aucun scan');
+    setText('lab-repro', '—');
+    setText('lab-scans', '0');
+    return;
+  }
+  const last = scans[scans.length - 1];
+  setText('lab-engagement', (100 * Number(last.engagement)).toFixed(1) + ' % · '
+    + last.actifs + '/' + last.vivants + ' nœuds · step ' + last.step);
+  setText('lab-repro', (last.reproductible ? 'oui' : 'non')
+    + ' — écart ' + last.ecart_max_matrice);
+  setText('lab-scans', scans.length + ' point(s) dans scan_history.json');
 }
 
 function paintAtlas() {
@@ -742,7 +764,9 @@ async function loadLab() {
     paintConversion('d', null);
     paintConversion('m', null);
   }
+  try { LAB.scan = await (await fetch('/api/lab/scan-history')).json(); } catch (e) { LAB.scan = null; }
   paintAtlas();
+  paintScan();
   paintFilmOptions();
 }
 

@@ -1,0 +1,24 @@
+{
+  "scans": [
+    {
+      "label": "S2",
+      "date": "2026-11-20T23:51:14",
+      "genome": "data/genome.pt",
+      "step": 56,
+      "noeuds": 532,
+      "vivants": 514,
+      "actifs": 285,
+      "engagement": 0.5545,
+      "familles": 6,
+      "inertie": 5.6119,
+      "aretes": 462,
+      "aretes_jamais_coactives": 162,
+      "paires_coactives_sans_arete": 4236,
+      "stimuli": 500,
+      "k": 6,
+      "top_par_stimulus": 64,
+      "reproductible": true,
+      "ecart_max_matrice": 0.0
+    }
+  ]
+}

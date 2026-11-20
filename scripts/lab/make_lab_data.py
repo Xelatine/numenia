@@ -233,8 +233,89 @@ def build_stimuli(seed: int = SEED) -> list[tuple[str, str]]:
     return rows
 
 
-def build_new_stimuli(corpus: list[str], seen: list[str], count: int = 20) -> list[str]:
-    """20 stimuli hors corpus, pour le test de langue (S3)."""
+EXTRA_PLAN = [
+    ("negation_composee", 500),
+    ("nombre_compose", 500),
+    ("ordre", 500),
+]
+
+
+def extend_stimuli(
+    rows: list[tuple[str, str]], per_category: int = 500, seed: int = SEED + 3,
+    vocab: list[str] | None = None,
+) -> list[tuple[str, str]]:
+    """Ajoute 1500 stimuli (S2) **apres** les 500 de S1, sans les toucher.
+
+    Pourquoi une fonction separee et pas un plan plus long : le scan de S1 doit
+    rester reproductible, donc les 500 premieres lignes de ``stimuli.txt``
+    doivent rester identiques au bit pres. Un generateur a part (graine
+    differente) garantit que l'extension ne decale pas la suite aleatoire.
+
+    ``vocab`` filtre les phrases : un mot inconnu du corpus jouet serait lu
+    ``<unk>``, et deux cerveaux qui ne lisent que des trous ne s'alignent sur
+    rien. Toute phrase contenant un mot hors vocabulaire est donc rejetee.
+    """
+    rng = random.Random(seed)
+    known = {text for _, text in rows}
+    safe = set(vocab) if vocab else None
+
+    def add(cat: str, text: str) -> bool:
+        text = " ".join(text.split())
+        if safe is not None and any(word not in safe for word in text.split()):
+            return False
+        if text in known:
+            return False
+        known.add(text)
+        rows.append((cat, text))
+        return True
+
+    for cat, need in EXTRA_PLAN:
+        wanted = int(need) if per_category is None else int(per_category)
+        made = 0
+        guard = 0
+        while made < wanted and guard < 40000:
+            guard += 1
+            det, det2 = rng.choice(DET), rng.choice(DET)
+            noun, noun2 = rng.choice(NOUN), rng.choice(NOUN)
+            verb, verb2 = pick_verb(noun, rng), pick_verb(noun2, rng)
+            if cat == "negation_composee":
+                text = rng.choice(
+                    [
+                        f"je ne {verb} pas et je ne {verb2} pas.",
+                        f"je ne {verb} pas {det} {noun} et je ne {verb2} pas {det2} {noun2}.",
+                        f"il ne {verb} jamais et il ne {verb2} pas.",
+                        f"{det} {noun} ne {verb} pas et {det2} {noun2} ne {verb2} pas.",
+                    ]
+                )
+            elif cat == "nombre_compose":
+                a, b, c = (rng.choice(NUM) for _ in range(3))
+                text = rng.choice(
+                    [
+                        f"{a} et {b} font {c}.",
+                        f"il y a {a} {noun} et {b} {noun2}.",
+                        f"{det} {noun} a {a} pattes et {b} ans.",
+                        f"j'ai {a} ans et {b} {noun}.",
+                    ]
+                )
+            else:
+                text = rng.choice(
+                    [
+                        f"ferme {det} {noun}.",
+                        f"regarde {det} {noun} maintenant.",
+                        f"écoute {det} {noun}.",
+                        f"ne {verb} pas {det} {noun}.",
+                        f"{verb} {det} {noun} vite.",
+                    ]
+                )
+            if add(cat, text):
+                made += 1
+        if made < wanted:
+            raise RuntimeError(f"categorie {cat} : {made}/{wanted} stimuli uniques")
+    return rows
+
+
+def build_new_stimuli(corpus: list[str], seen: list[str], count: int = 40) -> list[str]:
+    """Stimuli hors corpus, pour le test de langue (20 en S3, 40 en S2)."""
     rng = random.Random(SEED + 2)
     known = set(corpus) | set(seen)
     out: list[str] = []
@@ -268,16 +349,17 @@ def main() -> None:
     ensure_lab()
     corpus = build_sentences(1000)
     CORPUS_TOY.write_text("\n".join(corpus) + "\n", encoding="utf-8")
+    vocab = vocab_from(corpus)
 
     rows = build_stimuli()
+    rows = extend_stimuli(rows, 500, vocab=vocab)
     STIMULI.write_text(
         "\n".join(f"{cat}|{text}" for cat, text in rows) + "\n", encoding="utf-8"
     )
 
-    fresh = build_new_stimuli(corpus, [text for _, text in rows], 20)
+    fresh = build_new_stimuli(corpus, [text for _, text in rows], 40)
     STIMULI_NEW.write_text("\n".join(fresh) + "\n", encoding="utf-8")
 
-    vocab = vocab_from(corpus)
     write_json(
         LAB / "vocab.json",
         {"vocab": vocab, "size": len(vocab), "corpus": len(corpus), "stimuli": len(rows)},

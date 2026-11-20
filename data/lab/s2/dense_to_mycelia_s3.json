@@ -1,0 +1,1425 @@
+{
+  "sens": "dense -> mycelia",
+  "semence": 3,
+  "meta": {
+    "stimuli": 2000,
+    "k": 8,
+    "seuil": 0.6,
+    "amorce": 50,
+    "steps": 100,
+    "batch": 16,
+    "lr": 0.001,
+    "parametres_dense": 23748,
+    "parametres_mycelia": 23748,
+    "unites_source": 332,
+    "unites_receveuses": 7,
+    "inertie_source": 38.2674,
+    "inertie_receveuse": 0.0,
+    "secondes": 141.2
+  },
+  "table_alignement": [
+    {
+      "concept_source": 0,
+      "unites_source": 10,
+      "partenaire_propose": 3,
+      "correlation": 0.1656,
+      "meilleure_correlation": 0.1656,
+      "statut": "greffe",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "est-ce que les rivière se ferme ?",
+          "force": 0.9068
+        },
+        {
+          "texte": "est-ce que sa neige tombe ?",
+          "force": 0.8372
+        },
+        {
+          "texte": "est-ce que mon mer s'ouvre ?",
+          "force": 0.8364
+        }
+      ]
+    },
+    {
+      "concept_source": 1,
+      "unites_source": 1,
+      "partenaire_propose": 2,
+      "correlation": 0.4037,
+      "meilleure_correlation": 0.4235,
+      "statut": "greffe",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "il y a quatre forêt et vingt femme.",
+          "force": 0.1947
+        },
+        {
+          "texte": "il y a quatre frère et deux oiseau.",
+          "force": 0.1947
+        },
+        {
+          "texte": "il y a quatre ballon et neuf fenêtre.",
+          "force": 0.1947
+        }
+      ]
+    },
+    {
+      "concept_source": 2,
+      "unites_source": 27,
+      "partenaire_propose": 4,
+      "correlation": 0.6229,
+      "meilleure_correlation": 0.6229,
+      "statut": "traduit",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "il y a trente enfant et quatre jardin.",
+          "force": 1.1794
+        },
+        {
+          "texte": "il y a trente neige et trente forêt.",
+          "force": 1.1758
+        },
+        {
+          "texte": "il y a vingt forêt et trente fleur.",
+          "force": 1.1725
+        }
+      ]
+    },
+    {
+      "concept_source": 3,
+      "unites_source": 4,
+      "partenaire_propose": 5,
+      "correlation": 0.2964,
+      "meilleure_correlation": 0.3161,
+      "statut": "greffe",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "je ne s'ouvre pas une neige et je ne travaille pas mon voisine.",
+          "force": 0.1087
+        },
+        {
+          "texte": "cent plus douze font quatorze.",
+          "force": 0.0775
+        },
+        {
+          "texte": "est-ce que sa neige tombe ?",
+          "force": 0.0699
+        }
+      ]
+    },
+    {
+      "concept_source": 4,
+      "unites_source": 15,
+      "partenaire_propose": 1,
+      "correlation": 0.6716,
+      "meilleure_correlation": 0.6817,
+      "statut": "traduit",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "je ne se ferme pas et je ne brille pas.",
+          "force": 0.7884
+        },
+        {
+          "texte": "je ne se ferme pas et je ne dort pas.",
+          "force": 0.7884
+        },
+        {
+          "texte": "je ne se ferme pas et je ne attend pas.",
+          "force": 0.7884
+        }
+      ]
+    },
+    {
+      "concept_source": 5,
+      "unites_source": 119,
+      "partenaire_propose": 6,
+      "correlation": -0.0011,
+      "meilleure_correlation": 0.0,
+      "statut": "greffe",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "trente plus cinq font douze.",
+          "force": 1.136
+        },
+        {
+          "texte": "où est un frère ?",
+          "force": 1.1309
+        },
+        {
+          "texte": "ne tourne pas cette livre.",
+          "force": 1.1276
+        }
+      ]
+    },
+    {
+      "concept_source": 6,
+      "unites_source": 99,
+      "partenaire_propose": 0,
+      "correlation": 0.7831,
+      "meilleure_correlation": 0.7831,
+      "statut": "traduit",
+      "unites_receveuses": 1,
+      "stimuli_communs": [
+        {
+          "texte": "je ne reste pas et je ne se ferme pas.",
+          "force": 1.061
+        },
+        {
+          "texte": "je ne s'ouvre pas et je ne se ferme pas.",
+          "force": 1.0597
+        },
+        {
+          "texte": "je ne parle pas et je ne se ferme pas.",
+          "force": 1.0592
+        }
+      ]
+    },
+    {
+      "concept_source": 7,
+      "unites_source": 57,
+      "partenaire_propose": 7,
+      "correlation": 0.0,
+      "meilleure_correlation": 0.0,
+      "statut": "greffe",
+      "unites_receveuses": 0,
+      "stimuli_communs": []
+    }
+  ],
+  "concepts_traduits": [
+    6,
+    4,
+    2
+  ],
+  "concepts_greffes": [
+    0,
+    1,
+    3,
+    5,
+    7
+  ],
+  "transplants": [
+    {
+      "concept": 0,
+      "noeud": 8,
+      "partenaires": 0,
+      "norme_projetee": 0.0539
+    },
+    {
+      "concept": 1,
+      "noeud": 9,
+      "partenaires": 1,
+      "norme_projetee": 0.0738
+    },
+    {
+      "concept": 3,
+      "noeud": 10,
+      "partenaires": 0,
+      "norme_projetee": 0.0927
+    },
+    {
+      "concept": 5,
+      "noeud": 11,
+      "partenaires": 0,
+      "norme_projetee": 0.0101
+    },
+    {
+      "concept": 7,
+      "noeud": 12,
+      "partenaires": 0,
+      "norme_projetee": 0.01
+    }
+  ],
+  "verdict": {
+    "avant": 5.166,
+    "apres_greffe": 5.3406,
+    "controle": 5.3251,
+    "delta_brut": 0.1746,
+    "delta_vs_controle": 0.0155,
+    "gain_vs_avant": -0.0338,
+    "gain_vs_controle": -0.0029,
+    "train_avant": 4.9877,
+    "train_greffe": 4.6861,
+    "train_controle": 4.7033,
+    "train_gain_vs_controle": 0.0037,
+    "greffe_gagne": false,
+    "greffe_gagne_sur_controle": false,
+    "greffe_gagne_entrainement": true,
+    "traduits": 3,
+    "greffes": 5,
+    "top3": {
+      "jumeau_reference": 0.0,
+      "apres_amorce": 0.0,
+      "greffe": 0.025,
+      "controle": 0.025
+    },
+    "top1": {
+      "jumeau_reference": 0.0,
+      "apres_amorce": 0.0,
+      "greffe": 0.0,
+      "controle": 0.0
+    },
+    "perte_langue": {
+      "jumeau_reference": 6.2499,
+      "apres_amorce": 6.4752,
+      "greffe": 6.7493,
+      "controle": 6.7182
+    },
+    "phrases_gagnees_vs_controle": 11,
+    "phrases": 40
+  },
+  "courbes": {
+    "greffe": [
+      {
+        "step": 10,
+        "train": 4.993,
+        "val": 5.1679
+      },
+      {
+        "step": 20,
+        "train": 4.9853,
+        "val": 5.1958
+      },
+      {
+        "step": 30,
+        "train": 4.9798,
+        "val": 5.2376
+      },
+      {
+        "step": 40,
+        "train": 4.9431,
+        "val": 5.2154
+      },
+      {
+        "step": 50,
+        "train": 4.8589,
+        "val": 5.2145
+      },
+      {
+        "step": 60,
+        "train": 4.8754,
+        "val": 5.2823
+      },
+      {
+        "step": 70,
+        "train": 4.8117,
+        "val": 5.2624
+      },
+      {
+        "step": 80,
+        "train": 4.8018,
+        "val": 5.2727
+      },
+      {
+        "step": 90,
+        "train": 4.7109,
+        "val": 5.2752
+      },
+      {
+        "step": 100,
+        "train": 4.6861,
+        "val": 5.3406
+      }
+    ],
+    "controle": [
+      {
+        "step": 10,
+        "train": 4.9759,
+        "val": 5.1915
+      },
+      {
+        "step": 20,
+        "train": 4.9733,
+        "val": 5.205
+      },
+      {
+        "step": 30,
+        "train": 4.9747,
+        "val": 5.2549
+      },
+      {
+        "step": 40,
+        "train": 4.9361,
+        "val": 5.2319
+      },
+      {
+        "step": 50,
+        "train": 4.8583,
+        "val": 5.2321
+      },
+      {
+        "step": 60,
+        "train": 4.8762,
+        "val": 5.2851
+      },
+      {
+        "step": 70,
+        "train": 4.819,
+        "val": 5.2718
+      },
+      {
+        "step": 80,
+        "train": 4.8153,
+        "val": 5.3021
+      },
+      {
+        "step": 90,
+        "train": 4.7321,
+        "val": 5.2784
+      },
+      {
+        "step": 100,
+        "train": 4.7033,
+        "val": 5.3251
+      }
+    ]
+  },
+  "predictions_greffe": [
+    {
+      "phrase": "mon homme compte pour mon mer.",
+      "perte": 7.7247,
+      "predit": "je",
+      "attendu": "mer.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "mon maîtresse lit une vache.",
+      "perte": 7.4449,
+      "predit": "je",
+      "attendu": "vache.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ma père compte.",
+      "perte": 6.2593,
+      "predit": "?",
+      "attendu": "compte.",
+      "juste": false,
+      "top3": [
+        "?",
+        "je",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "cette sœur est inquiet.",
+      "perte": 8.8154,
+      "predit": "je",
+      "attendu": "inquiet.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "tu se ferme sa porte.",
+      "perte": 7.1215,
+      "predit": "je",
+      "attendu": "porte.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les chat est fort.",
+      "perte": 7.7068,
+      "predit": "je",
+      "attendu": "fort.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne attend pas sa maîtresse.",
+      "perte": 6.7179,
+      "predit": "je",
+      "attendu": "maîtresse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une oiseau court pour une ours.",
+      "perte": 6.6937,
+      "predit": "je",
+      "attendu": "ours.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le mère compte.",
+      "perte": 6.9682,
+      "predit": "je",
+      "attendu": "compte.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ce grenouille est fort.",
+      "perte": 7.7206,
+      "predit": "je",
+      "attendu": "fort.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ma loup doux nage.",
+      "perte": 6.1515,
+      "predit": "ferme",
+      "attendu": "nage.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "ne",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le oiseau crie avec le rivière.",
+      "perte": 6.802,
+      "predit": "je",
+      "attendu": "rivière.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "un pain pousse sous un maîtresse.",
+      "perte": 6.5427,
+      "predit": "je",
+      "attendu": "maîtresse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le boulanger est inquiet.",
+      "perte": 8.8014,
+      "predit": "je",
+      "attendu": "inquiet.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne brille pas ce étoile.",
+      "perte": 7.5973,
+      "predit": "je",
+      "attendu": "étoile.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a trente facteur.",
+      "perte": 5.9369,
+      "predit": "a",
+      "attendu": "facteur.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "mille"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne écoute pas ce ville.",
+      "perte": 7.028,
+      "predit": "je",
+      "attendu": "ville.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "loup et loup crie presque.",
+      "perte": 6.0648,
+      "predit": "ferme",
+      "attendu": "presque.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "ne",
+        "fenêtre"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son arbre est lourd.",
+      "perte": 7.8398,
+      "predit": "je",
+      "attendu": "lourd.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne dessine pas mon forêt.",
+      "perte": 7.0801,
+      "predit": "je",
+      "attendu": "forêt.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une garçon lit avec une montagne.",
+      "perte": 6.3736,
+      "predit": "je",
+      "attendu": "montagne.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "un fenêtre coule pour un voisine.",
+      "perte": 7.5131,
+      "predit": "je",
+      "attendu": "voisine.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a deux médecin.",
+      "perte": 6.0889,
+      "predit": "a",
+      "attendu": "médecin.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "mille"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le oiseau crie.",
+      "perte": 7.1203,
+      "predit": "je",
+      "attendu": "crie.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a zéro gâteau.",
+      "perte": 5.5903,
+      "predit": "a",
+      "attendu": "gâteau.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "mille"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les garçon écoute dans les ours.",
+      "perte": 6.3406,
+      "predit": "je",
+      "attendu": "ours.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "qui coule une route ?",
+      "perte": 5.0011,
+      "predit": "ferme",
+      "attendu": "?",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "?",
+        "pluie."
+      ],
+      "juste_top3": true
+    },
+    {
+      "phrase": "quelle saute les souris ?",
+      "perte": 5.144,
+      "predit": "ferme",
+      "attendu": "?",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "fenêtre",
+        "ne"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne attend pas la chaise.",
+      "perte": 6.9619,
+      "predit": "je",
+      "attendu": "chaise.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son poisson crie cette oiseau.",
+      "perte": 6.8107,
+      "predit": "je",
+      "attendu": "oiseau.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a quatorze porte.",
+      "perte": 5.589,
+      "predit": "a",
+      "attendu": "porte.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "mille"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les frère travaille sans les vache.",
+      "perte": 7.7416,
+      "predit": "je",
+      "attendu": "vache.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "tu tourne la jardin.",
+      "perte": 7.5567,
+      "predit": "je",
+      "attendu": "jardin.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le chien vole dans le mère.",
+      "perte": 6.164,
+      "predit": "je",
+      "attendu": "mère.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une vent froid s'ouvre.",
+      "perte": 5.5915,
+      "predit": "je",
+      "attendu": "s'ouvre.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "mon chat saute les sœur.",
+      "perte": 7.2966,
+      "predit": "je",
+      "attendu": "sœur.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "la école propre tombe.",
+      "perte": 5.3536,
+      "predit": "je",
+      "attendu": "tombe.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ce porte léger pousse.",
+      "perte": 6.068,
+      "predit": "je",
+      "attendu": "pousse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "?",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "cette enfant est curieux.",
+      "perte": 7.5247,
+      "predit": "je",
+      "attendu": "curieux.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son renard dort.",
+      "perte": 5.1259,
+      "predit": "ferme",
+      "attendu": "dort.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "ferme.",
+        "ne"
+      ],
+      "juste_top3": false
+    }
+  ],
+  "predictions_controle": [
+    {
+      "phrase": "mon homme compte pour mon mer.",
+      "perte": 7.5525,
+      "predit": "je",
+      "attendu": "mer.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "mon maîtresse lit une vache.",
+      "perte": 7.3482,
+      "predit": "je",
+      "attendu": "vache.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ma père compte.",
+      "perte": 6.103,
+      "predit": "?",
+      "attendu": "compte.",
+      "juste": false,
+      "top3": [
+        "?",
+        "cette",
+        "je"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "cette sœur est inquiet.",
+      "perte": 9.0018,
+      "predit": "je",
+      "attendu": "inquiet.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "tu se ferme sa porte.",
+      "perte": 7.2035,
+      "predit": "je",
+      "attendu": "porte.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les chat est fort.",
+      "perte": 7.7183,
+      "predit": "je",
+      "attendu": "fort.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne attend pas sa maîtresse.",
+      "perte": 6.7005,
+      "predit": "je",
+      "attendu": "maîtresse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une oiseau court pour une ours.",
+      "perte": 6.6712,
+      "predit": "je",
+      "attendu": "ours.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le mère compte.",
+      "perte": 7.2442,
+      "predit": "je",
+      "attendu": "compte.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ce grenouille est fort.",
+      "perte": 7.6858,
+      "predit": "je",
+      "attendu": "fort.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ma loup doux nage.",
+      "perte": 6.0903,
+      "predit": "ferme",
+      "attendu": "nage.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "?",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le oiseau crie avec le rivière.",
+      "perte": 6.7228,
+      "predit": "je",
+      "attendu": "rivière.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "un pain pousse sous un maîtresse.",
+      "perte": 6.4899,
+      "predit": "je",
+      "attendu": "maîtresse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le boulanger est inquiet.",
+      "perte": 8.7634,
+      "predit": "je",
+      "attendu": "inquiet.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne brille pas ce étoile.",
+      "perte": 7.5164,
+      "predit": "je",
+      "attendu": "étoile.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a trente facteur.",
+      "perte": 5.8664,
+      "predit": "a",
+      "attendu": "facteur.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "cinq"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne écoute pas ce ville.",
+      "perte": 7.0382,
+      "predit": "je",
+      "attendu": "ville.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "loup et loup crie presque.",
+      "perte": 6.0913,
+      "predit": "ferme",
+      "attendu": "presque.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "ne",
+        "fenêtre"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son arbre est lourd.",
+      "perte": 7.8303,
+      "predit": "je",
+      "attendu": "lourd.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne dessine pas mon forêt.",
+      "perte": 6.9837,
+      "predit": "je",
+      "attendu": "forêt.",
+      "juste": false,
+      "top3": [
+        "je",
+        "pas",
+        "les"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une garçon lit avec une montagne.",
+      "perte": 6.2901,
+      "predit": "je",
+      "attendu": "montagne.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "un fenêtre coule pour un voisine.",
+      "perte": 7.4804,
+      "predit": "je",
+      "attendu": "voisine.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a deux médecin.",
+      "perte": 6.0445,
+      "predit": "a",
+      "attendu": "médecin.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "cinq"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le oiseau crie.",
+      "perte": 7.18,
+      "predit": "je",
+      "attendu": "crie.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a zéro gâteau.",
+      "perte": 5.5601,
+      "predit": "a",
+      "attendu": "gâteau.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "cinq"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les garçon écoute dans les ours.",
+      "perte": 6.3387,
+      "predit": "je",
+      "attendu": "ours.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "qui coule une route ?",
+      "perte": 4.7952,
+      "predit": "ferme",
+      "attendu": "?",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "?",
+        "cette"
+      ],
+      "juste_top3": true
+    },
+    {
+      "phrase": "quelle saute les souris ?",
+      "perte": 5.0631,
+      "predit": "ferme",
+      "attendu": "?",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "fenêtre",
+        "ferme."
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "je ne attend pas la chaise.",
+      "perte": 6.9184,
+      "predit": "je",
+      "attendu": "chaise.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son poisson crie cette oiseau.",
+      "perte": 6.7138,
+      "predit": "je",
+      "attendu": "oiseau.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "il y a quatorze porte.",
+      "perte": 5.609,
+      "predit": "a",
+      "attendu": "porte.",
+      "juste": false,
+      "top3": [
+        "a",
+        "vingt",
+        "cinq"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "les frère travaille sans les vache.",
+      "perte": 7.7606,
+      "predit": "je",
+      "attendu": "vache.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "ce"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "tu tourne la jardin.",
+      "perte": 7.4171,
+      "predit": "je",
+      "attendu": "jardin.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "pas"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "le chien vole dans le mère.",
+      "perte": 6.1361,
+      "predit": "je",
+      "attendu": "mère.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "mon"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "une vent froid s'ouvre.",
+      "perte": 5.7953,
+      "predit": "je",
+      "attendu": "s'ouvre.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "mon chat saute les sœur.",
+      "perte": 7.0121,
+      "predit": "je",
+      "attendu": "sœur.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "la école propre tombe.",
+      "perte": 5.3201,
+      "predit": "je",
+      "attendu": "tombe.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "et"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "ce porte léger pousse.",
+      "perte": 6.0497,
+      "predit": "je",
+      "attendu": "pousse.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "cette"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "cette enfant est curieux.",
+      "perte": 7.5265,
+      "predit": "je",
+      "attendu": "curieux.",
+      "juste": false,
+      "top3": [
+        "je",
+        "les",
+        "?"
+      ],
+      "juste_top3": false
+    },
+    {
+      "phrase": "son renard dort.",
+      "perte": 5.0945,
+      "predit": "ferme",
+      "attendu": "dort.",
+      "juste": false,
+      "top3": [
+        "ferme",
+        "ferme.",
+        "fenêtre"
+      ],
+      "juste_top3": false
+    }
+  ]
+}

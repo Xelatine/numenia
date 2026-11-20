@@ -96,9 +96,17 @@ def mycelia_directions(brain) -> np.ndarray:
 
 
 def concept_direction(directions: np.ndarray, members) -> np.ndarray:
-    """Direction moyenne d'une famille (centre de gravite de ce qu'elle ecoute)."""
-    block = directions[np.asarray(members, dtype=int)]
-    return block.mean(axis=0)
+    """Direction moyenne d'une famille (centre de gravite de ce qu'elle ecoute).
+
+    Une famille vide rend un vecteur nul, jamais un ``nan`` : en S2 le k-means
+    peut demander 8 familles a un pool qui n'a que 7 unites actives, et la
+    moyenne d'un tableau vide empoisonnait toute la projection (greffe a val
+    ``nan`` mesuree au premier essai).
+    """
+    index = np.asarray(members, dtype=int)
+    if index.size == 0:
+        return np.zeros(directions.shape[1], dtype=np.float32)
+    return directions[index].mean(axis=0)
 
 
 def projection(source: np.ndarray, target: np.ndarray, lam: float = 1e-2) -> np.ndarray:
@@ -168,8 +176,13 @@ def fine_tune_mycelia(brain, batches, lr: float = 1e-3, weight_decay: float = 0.
 # ---------------------------------------------------------------------------
 # Test de langue : 20 phrases hors corpus
 # ---------------------------------------------------------------------------
-def heldout_sentences(corpus: ToyCorpus, count: int = 20) -> list[str]:
-    """20 phrases nouvelles, absentes du corpus et du split de validation."""
+def heldout_sentences(corpus: ToyCorpus, count: int = 40) -> list[str]:
+    """Phrases nouvelles, absentes du corpus et du split de validation.
+
+    S3 en demandait 20 ; S2 en demande 40 (et compte le top-3). Les phrases sont
+    fabriquees a partir des mots du corpus jouet : aucun ``<unk>`` ne vient
+    fausser la mesure.
+    """
     from make_lab_data import ADJ, DET, NOUN, PREP, PRON, QW, build_sentences
 
     known = set(corpus.lines)
@@ -182,8 +195,8 @@ def heldout_sentences(corpus: ToyCorpus, count: int = 20) -> list[str]:
                 rng_out.append(text)
             if len(rng_out) >= count:
                 break
-        if seed > 1010:
-            raise RuntimeError("impossible de trouver 20 phrases hors corpus")
+        if seed > 1100:
+            raise RuntimeError(f"impossible de trouver {count} phrases hors corpus")
     return rng_out[:count]
 
 
@@ -194,6 +207,7 @@ def test_dense(model, corpus: ToyCorpus, sentences: list[str]) -> dict:
     rows = []
     total = 0.0
     hits = 0
+    hits3 = 0
     for text in sentences:
         ids = corpus.encode(text)
         if len(ids) < 2:
@@ -204,20 +218,26 @@ def test_dense(model, corpus: ToyCorpus, sentences: list[str]) -> dict:
         logits = model(x)
         loss = float(F.cross_entropy(logits.reshape(-1, logits.shape[-1]), target.reshape(-1)))
         guess = logits[0, -1].argmax().item()
+        wanted = int(target[0, -1])
+        top3 = torch.topk(logits[0, -1], 3).indices.tolist()
         rows.append(
             {
                 "phrase": text,
                 "perte": round(loss, 4),
                 "predit": corpus.vocab[guess],
-                "attendu": corpus.vocab[int(target[0, -1])],
-                "juste": bool(guess == int(target[0, -1])),
+                "attendu": corpus.vocab[wanted],
+                "juste": bool(guess == wanted),
+                "top3": [corpus.vocab[int(i)] for i in top3],
+                "juste_top3": bool(wanted in top3),
             }
         )
         total += loss
-        hits += int(guess == int(target[0, -1]))
+        hits += int(guess == wanted)
+        hits3 += int(wanted in top3)
     return {
         "perte": round(total / max(1, len(rows)), 4),
         "exactitude": round(hits / max(1, len(rows)), 4),
+        "exactitude_top3": round(hits3 / max(1, len(rows)), 4),
         "exemples": rows,
     }
 
@@ -229,6 +249,7 @@ def test_mycelia(brain, corpus: ToyCorpus, sentences: list[str]) -> dict:
     rows = []
     total = 0.0
     hits = 0
+    hits3 = 0
     for text in sentences:
         ids = corpus.encode(text)[: SEQ + 1]
         if len(ids) < 2:
@@ -244,23 +265,28 @@ def test_mycelia(brain, corpus: ToyCorpus, sentences: list[str]) -> dict:
                 return_state=True,
             )
         logits = logits[0, 0]
-        wanted = torch.tensor(int(ids[-1]))
-        loss = float(F.cross_entropy(logits.unsqueeze(0), wanted.unsqueeze(0)))
+        wanted = int(ids[-1])
+        loss = float(F.cross_entropy(logits.unsqueeze(0), torch.tensor(wanted).unsqueeze(0)))
         guess = int(logits.argmax())
+        top3 = torch.topk(logits, 3).indices.tolist()
         rows.append(
             {
                 "phrase": text,
                 "perte": round(loss, 4),
                 "predit": corpus.vocab[guess],
-                "attendu": corpus.vocab[int(wanted)],
-                "juste": bool(guess == int(wanted)),
+                "attendu": corpus.vocab[wanted],
+                "juste": bool(guess == wanted),
+                "top3": [corpus.vocab[int(i)] for i in top3],
+                "juste_top3": bool(wanted in top3),
             }
         )
         total += loss
-        hits += int(guess == int(wanted))
+        hits += int(guess == wanted)
+        hits3 += int(wanted in top3)
     return {
         "perte": round(total / max(1, len(rows)), 4),
         "exactitude": round(hits / max(1, len(rows)), 4),
+        "exactitude_top3": round(hits3 / max(1, len(rows)), 4),
         "exemples": rows,
     }
 
@@ -290,10 +316,23 @@ def mycelia_clone(brain):
 
 
 def dense_clone(model):
-    """Copie independante du temoin dense (memes poids, autre objet)."""
+    """Copie independante du temoin dense (memes poids, autre objet).
+
+    La largeur cachee est lue sur le modele, pas supposee : les jumeaux de S2 ont
+    un MLP de 166, le temoin de S1 en a 64, et une copie qui se trompe de largeur
+    ne charge pas ses poids (lecon apprise a la premiere execution de S2).
+    """
     from micro_dense import DenseTransformer
 
-    clone = DenseTransformer(model.vocab, model.dim, len(model.blocks))
+    first = model.blocks[0]
+    clone = DenseTransformer(
+        model.vocab,
+        dim=model.dim,
+        layers=len(model.blocks),
+        heads=int(first.heads),
+        mlp=int(first.fc1.out_features),
+        seq=int(model.seq),
+    )
     clone.load_state_dict({k: v.detach().clone() for k, v in model.state_dict().items()})
     return clone
 

@@ -153,9 +153,9 @@ class DenseTransformer(nn.Module):
         return old_in + 1
 
 
-def build_model(vocab: int, seed: int = SEED) -> DenseTransformer:
+def build_model(vocab: int, seed: int = SEED, mlp: int = MLP) -> DenseTransformer:
     torch.manual_seed(int(seed))
-    return DenseTransformer(vocab)
+    return DenseTransformer(vocab, mlp=int(mlp))
 
 
 def n_parameters(model: nn.Module) -> int:
@@ -173,12 +173,17 @@ def train_dense(
     val_batches=None,
     weight_decay: float = 0.01,
     patience: int = 0,
+    stop_at: float | None = None,
 ) -> dict:
     """Entraine le temoin dense et rend la courbe de perte.
 
     ``patience`` > 0 garde l'etat de la **meilleure validation** et s'arrete
     quand elle ne s'ameliore plus (meme definition de la convergence que pour
     le micro-MYCELIA, sinon les deux courbes ne sont pas comparables).
+
+    ``stop_at`` arrete des que la validation passe sous cette valeur : c'est ce
+    qui permet aux jumeaux de S2 de s'arreter au **meme savoir** et pas au meme
+    nombre de pas.
     """
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     best = {"val": float("inf"), "step": 0, "state": None}
@@ -223,6 +228,9 @@ def train_dense(
                     "val": round(float(value), 4),
                 }
             )
+            if stop_at is not None and value <= float(stop_at):
+                curve[-1]["cible_atteinte"] = True
+                break
             if patience and stale >= int(patience):
                 break
     if best["state"] is not None:

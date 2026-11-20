@@ -307,6 +307,12 @@ def api_lab_film():
     return jsonify(_lab_json("film_nyra.json", {"noeuds": [], "stimuli": []}))
 
 
+@app.route("/api/lab/scan-history", methods=["GET"])
+def api_lab_scan_history():
+    """C4 : serie des scans recurrents, un point par relance de Nyra."""
+    return jsonify(_lab_json("scan_history.json", {"scans": []}))
+
+
 @app.route("/api/lab/conversions", methods=["GET"])
 def api_lab_conversions():
     return jsonify(

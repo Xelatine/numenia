@@ -10,6 +10,7 @@ l'accord interdit le ``pip install``.
 from __future__ import annotations
 
 import json
+import math
 import random
 import sys
 from pathlib import Path
@@ -341,3 +342,226 @@ def dense_loss(model, batches) -> float:
         )
         count += 1
     return total / max(1, count)
+
+
+# ---------------------------------------------------------------------------
+# S2 : correlation des activations brutes et appariement optimal
+# ---------------------------------------------------------------------------
+def pearson_columns(A, B) -> np.ndarray:
+    """Correlation de Pearson entre chaque colonne de ``A`` et de ``B``.
+
+    Pourquoi la correlation et pas le cosinus de S1 : le cosinus compare deux
+    profils *positifs* (une activation ne descend jamais sous zero) et recompense
+    donc les unites qui s'allument souvent ; la correlation centre chaque profil
+    sur sa moyenne et demande si les deux montent *et descendent ensemble*. Un
+    concept de S2 est une famille dont le profil suit les memes 2000 stimuli, pas
+    une famille qui a la meme intensite moyenne.
+    """
+    A = np.asarray(A, dtype=np.float64)
+    B = np.asarray(B, dtype=np.float64)
+    if A.ndim == 1:
+        A = A[:, None]
+    if B.ndim == 1:
+        B = B[:, None]
+    Ac = A - A.mean(axis=0, keepdims=True)
+    Bc = B - B.mean(axis=0, keepdims=True)
+    An = np.clip(np.linalg.norm(Ac, axis=0, keepdims=True), 1e-12, None)
+    Bn = np.clip(np.linalg.norm(Bc, axis=0, keepdims=True), 1e-12, None)
+    return np.clip((Ac / An).T @ (Bc / Bn), -1.0, 1.0)
+
+
+def hungarian(cost) -> list[tuple[int, int]]:
+    """Appariement optimal d'une matrice de cout, minimise le cout total.
+
+    Algorithme hongrois (Kuhn-Munkres) dans sa version a potentiels : a chaque
+    ligne on cherche un chemin augmentant par plus courtes distances, et les
+    potentiels ``u``/``v`` gardent les couts reduits positifs. Complexite
+    O(n^2 m), ecrit a la main pour ne rien installer.
+
+    Rectangulaire : il faut ``n <= m`` (moins de lignes que de colonnes).
+    Rend la liste des couples ``(ligne, colonne)`` retenus. Pour MAXIMISER un
+    score, passer ``-score``.
+    """
+    cost = np.asarray(cost, dtype=np.float64)
+    n, m = cost.shape
+    if n == 0 or m == 0:
+        return []
+    if n > m:
+        raise ValueError("hungarian attend n <= m : transposer d'abord")
+    big = float(cost.max() - cost.min() + 1.0) * (n + 1) + 1.0
+    u = np.zeros(n + 1)
+    v = np.zeros(m + 1)
+    p = np.zeros(m + 1, dtype=np.int64)
+    way = np.zeros(m + 1, dtype=np.int64)
+    for i in range(1, n + 1):
+        p[0] = i
+        j0 = 0
+        minv = np.full(m + 1, big)
+        used = np.zeros(m + 1, dtype=bool)
+        while True:
+            used[j0] = True
+            i0 = int(p[j0])
+            delta = big
+            j1 = -1
+            for j in range(1, m + 1):
+                if used[j]:
+                    continue
+                cur = cost[i0 - 1, j - 1] - u[i0] - v[j]
+                if cur < minv[j]:
+                    minv[j] = cur
+                    way[j] = j0
+                if minv[j] < delta:
+                    delta = minv[j]
+                    j1 = j
+            if j1 < 0:
+                break
+            for j in range(m + 1):
+                if used[j]:
+                    u[int(p[j])] += delta
+                    v[j] -= delta
+                else:
+                    minv[j] -= delta
+            j0 = j1
+            if p[j0] == 0:
+                break
+        while j0:
+            j1 = int(way[j0])
+            p[j0] = p[j1]
+            j0 = j1
+    return [(int(p[j]) - 1, j - 1) for j in range(1, m + 1) if p[j] != 0]
+
+
+def align_correlation(source, receiver, threshold: float = 0.6) -> dict:
+    """Appariement des concepts par correlation, au plus proche global.
+
+    Chaque concept source est mis en face d'une **seule** famille receveuse, et
+    l'ensemble maximise la somme des correlations (hongrois). La difference avec
+    l'appariement mutuel de S1 : un concept n'est pas perdu parce qu'une autre
+    ligne lui volait son meilleur partenaire — c'est un choix global.
+
+    Seuil : une paire n'est *traduite* que si sa correlation depasse
+    ``threshold``. Les autres concepts n'ont pas d'equivalent : ils seront
+    greffes, et la table doit le dire.
+    """
+    sim = pearson_columns(source, receiver)
+    if sim.size == 0:
+        return {
+            "pairs": [],
+            "traduits": [],
+            "greffes": [],
+            "source_unmatched": [],
+            "receiver_unmatched": [],
+            "similarity": sim,
+            "best": np.zeros((0,), dtype=np.float32),
+        }
+    transposed = sim.shape[0] > sim.shape[1]
+    cost = -sim.T if transposed else -sim
+    raw = []
+    for line, col in hungarian(cost):
+        i, j = (col, line) if transposed else (line, col)
+        raw.append((int(i), int(j), float(sim[i, j])))
+    pairs = [(i, j, score) for i, j, score in raw if score > float(threshold)]
+    translated = [i for i, _, _ in pairs]
+    used_r = {j for _, j, _ in pairs}
+    all_source = set(range(sim.shape[0]))
+    return {
+        "pairs": pairs,
+        "traduits": translated,
+        "greffes": sorted(all_source - set(translated)),
+        "source_unmatched": sorted(all_source - set(translated)),
+        "receiver_unmatched": [j for j in range(sim.shape[1]) if j not in used_r],
+        "similarity": sim,
+        "best": sim.max(axis=1),
+        "proposition": {i: (j, score) for i, j, score in raw},
+    }
+
+
+# ---------------------------------------------------------------------------
+# S2 : test t apparie, a la main (loi de Student, beta incomplete)
+# ---------------------------------------------------------------------------
+def _betacf(a: float, b: float, x: float, itmax: int = 200, eps: float = 3e-12) -> float:
+    """Fraction continue de la beta incomplete (Numerical Recipes, Lentz)."""
+    qab, qap, qam = a + b, a + 1.0, a - 1.0
+    c = 1.0
+    d = 1.0 - qab * x / qap
+    d = 1.0 / (d if abs(d) > 1e-30 else 1e-30)
+    h = d
+    for m in range(1, itmax + 1):
+        m2 = 2 * m
+        aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1.0 + aa * d
+        d = 1.0 / (d if abs(d) > 1e-30 else 1e-30)
+        c = 1.0 + aa / c
+        c = c if abs(c) > 1e-30 else 1e-30
+        h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + aa * d
+        d = 1.0 / (d if abs(d) > 1e-30 else 1e-30)
+        c = 1.0 + aa / c
+        c = c if abs(c) > 1e-30 else 1e-30
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < eps:
+            break
+    return h
+
+
+def _betai(a: float, b: float, x: float) -> float:
+    """Beta incomplete regularisee I_x(a, b)."""
+    if x <= 0.0:
+        return 0.0
+    if x >= 1.0:
+        return 1.0
+    lgamma = math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b)
+    front = math.exp(lgamma + a * math.log(x) + b * math.log(1.0 - x))
+    if x < (a + 1.0) / (a + b + 2.0):
+        return front * _betacf(a, b, x) / a
+    return 1.0 - front * _betacf(b, a, 1.0 - x) / b
+
+
+def student_t_p(t: float, df: int) -> float:
+    """p bilateral de la loi de Student, sans scipy."""
+    if df <= 0:
+        return 1.0
+    t = float(t)
+    if not math.isfinite(t):
+        return 0.0
+    return float(_betai(df / 2.0, 0.5, df / (df + t * t)))
+
+
+def paired_t(grafted, control, alpha: float = 0.05, min_gain: float = 0.01) -> dict:
+    """Test t apparie sur les semences : le gain relatif de la greffe.
+
+    ``d_i = (controle_i - greffe_i) / controle_i`` : un gain POSITIF veut dire
+    que la greffe a une validation plus basse que le controle de la meme
+    semence. Le t classique, ``t = moyenne(d) / (ecart-type(d) / sqrt(n))``,
+    avec ``n - 1`` degres de liberte.
+
+    Une traduction n'est retenue que si ``p < alpha`` ET ``gain > min_gain`` :
+    sur trois semences, un gain de 0,2 % peut passer le test sans rien dire ;
+    c'est du bruit de regularisation, et le rapport doit pouvoir l'ecrire.
+    """
+    g = np.asarray(grafted, dtype=np.float64)
+    c = np.asarray(control, dtype=np.float64)
+    if g.size != c.size or g.size == 0:
+        raise ValueError("paired_t attend deux listes de meme longueur, non vides")
+    d = (c - g) / np.clip(np.abs(c), 1e-9, None)
+    n = int(d.size)
+    mean = float(d.mean())
+    sd = float(d.std(ddof=1)) if n > 1 else 0.0
+    if sd <= 1e-12:
+        t = 0.0 if abs(mean) <= 1e-12 else math.copysign(float("inf"), mean)
+    else:
+        t = mean / (sd / math.sqrt(n))
+    p = student_t_p(t, n - 1)
+    return {
+        "n": n,
+        "gain_moyen": round(mean, 6),
+        "ecart_type": round(sd, 6),
+        "t": round(float(t), 4) if math.isfinite(t) else str(t),
+        "ddl": n - 1,
+        "p": round(p, 6),
+        "alpha": float(alpha),
+        "gain_minimum": float(min_gain),
+        "significatif": bool(p < float(alpha) and mean > float(min_gain)),
+    }

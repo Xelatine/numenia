@@ -131,6 +131,7 @@ def train_mycelia(
     val_batches=None,
     weight_decay: float = 0.0,
     patience: int = 0,
+    stop_at: float | None = None,
 ) -> dict:
     """Entraine le micro-MYCELIA et rend la courbe + les evenements vitaux.
 
@@ -138,6 +139,9 @@ def train_mycelia(
     phrases, les deux bacs memorisent en quelques centaines de pas et la
     validation remonte. Converger veut dire ici "la validation ne s'ameliore
     plus" ; l'etat garde est celui de ce minimum, pas le dernier pas.
+
+    ``stop_at`` arrete des que la validation passe sous cette valeur : les
+    jumeaux de S2 s'arretent au meme **savoir**, pas au meme nombre de pas.
     """
     optimizer = torch.optim.AdamW(brain.parameters(), lr=lr, weight_decay=weight_decay)
     best = {"val": float("inf"), "step": 0, "snap": snapshot(brain)}
@@ -149,6 +153,7 @@ def train_mycelia(
     pool_size = int(brain.n_nodes)
     last_n = int(brain.n_nodes)
     started = time.time()
+    reached = False
     brain.train()
     for step in range(1, int(steps) + 1):
         x, _ = corpus.batch(batch, generator=generator)
@@ -174,6 +179,7 @@ def train_mycelia(
             if report["edge_deaths"] or report["node_deaths"]:
                 events.append({"step": step, **report, "pool": int(brain.n_nodes)})
 
+        reached = False
         if step % int(log_every) == 0 or step == 1:
             brain.eval()
             value = float(mycelia_loss(brain, val))
@@ -192,7 +198,25 @@ def train_mycelia(
                     "edges": int(brain.ne),
                 }
             )
-    if patience and stale >= int(patience):
+            if stop_at is not None and value <= float(stop_at):
+                curve[-1]["cible_atteinte"] = True
+                best = {"val": value, "step": step, "snap": snapshot(brain)}
+                reached = True
+        if reached:
+            events.append({"step": step, "arret": "cible", "best_step": best["step"]})
+            brain = restore(brain, best["snap"])
+            curve.append(
+                {
+                    "step": int(best["step"]),
+                    "loss": curve[-1]["loss"],
+                    "val": round(float(best["val"]), 4),
+                    "pool": int(brain.n_nodes),
+                    "edges": int(brain.ne),
+                    "restaure": True,
+                }
+            )
+            break
+    if not reached and patience and stale >= int(patience):
         events.append({"step": step, "arret": "patience", "best_step": best["step"]})
         brain = restore(brain, best["snap"])
         curve.append(

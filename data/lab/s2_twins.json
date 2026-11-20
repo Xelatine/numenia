@@ -1,0 +1,761 @@
+{
+  "architecture": {
+    "dim": 16,
+    "layers": 2,
+    "heads": 2,
+    "mlp": 166,
+    "seq": 8,
+    "pool": 8,
+    "aretes_max": 100,
+    "vocab": 312
+  },
+  "cible": 4.0,
+  "semences": [
+    {
+      "semence": 1,
+      "parametres": 23748,
+      "egaux": true,
+      "cible": 4.0,
+      "cible_atteinte": false,
+      "perte_commune": 5.0783,
+      "motive": "cible 4,0 non atteinte par les deux : la perte commune est la meilleure perte atteignable par le plus faible",
+      "dense": {
+        "params": 23748,
+        "convergence_val": 3.649,
+        "convergence_step": 300,
+        "arret_val": 4.7961,
+        "arret_step": 50,
+        "secondes": 4.9,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.9415,
+            "val": 5.9787
+          },
+          {
+            "step": 50,
+            "loss": 4.8967,
+            "val": 4.7961
+          },
+          {
+            "step": 100,
+            "loss": 4.4998,
+            "val": 4.3959
+          },
+          {
+            "step": 150,
+            "loss": 3.8512,
+            "val": 3.9904
+          },
+          {
+            "step": 200,
+            "loss": 3.3937,
+            "val": 3.7941
+          },
+          {
+            "step": 250,
+            "loss": 3.2438,
+            "val": 3.7329
+          },
+          {
+            "step": 300,
+            "loss": 3.2808,
+            "val": 3.649
+          },
+          {
+            "step": 350,
+            "loss": 2.9432,
+            "val": 3.7556
+          },
+          {
+            "step": 400,
+            "loss": 2.9411,
+            "val": 3.8234
+          },
+          {
+            "step": 450,
+            "loss": 2.5077,
+            "val": 3.968
+          },
+          {
+            "step": 500,
+            "loss": 2.4012,
+            "val": 4.1275
+          },
+          {
+            "step": 550,
+            "loss": 2.2356,
+            "val": 4.2332
+          },
+          {
+            "step": 600,
+            "loss": 2.1299,
+            "val": 4.3862
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.9415,
+            "val": 5.9787
+          },
+          {
+            "step": 25,
+            "loss": 5.3181,
+            "val": 5.2301
+          },
+          {
+            "step": 50,
+            "loss": 4.8967,
+            "val": 4.7961,
+            "cible_atteinte": true
+          }
+        ]
+      },
+      "mycelia": {
+        "params": 23748,
+        "convergence_val": 5.0783,
+        "convergence_step": 50,
+        "arret_val": 5.0783,
+        "arret_step": 50,
+        "secondes": 75.0,
+        "pool": 8,
+        "aretes": 48,
+        "naissances": 36,
+        "aretes_mortes": 0,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.7458,
+            "val": 5.7296,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 50,
+            "loss": 5.1056,
+            "val": 5.0783,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 100,
+            "loss": 4.8904,
+            "val": 5.1716,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 150,
+            "loss": 4.4587,
+            "val": 5.4024,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 200,
+            "loss": 3.9972,
+            "val": 5.7112,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 250,
+            "loss": 3.8313,
+            "val": 6.0811,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 300,
+            "loss": 3.9412,
+            "val": 6.2763,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 350,
+            "loss": 3.6447,
+            "val": 6.5016,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 400,
+            "loss": 3.5512,
+            "val": 6.7712,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 450,
+            "loss": 3.3472,
+            "val": 6.8567,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 500,
+            "loss": 3.3115,
+            "val": 7.1208,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 550,
+            "loss": 3.2713,
+            "val": 7.2074,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 600,
+            "loss": 3.1911,
+            "val": 7.3885,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 3.1911,
+            "val": 5.0783,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.7458,
+            "val": 5.7296,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 25,
+            "loss": 5.3819,
+            "val": 5.3161,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 5.1056,
+            "val": 5.0783,
+            "pool": 8,
+            "edges": 48,
+            "cible_atteinte": true
+          },
+          {
+            "step": 50,
+            "loss": 5.1056,
+            "val": 5.0783,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ]
+      },
+      "secondes": 89.9
+    },
+    {
+      "semence": 2,
+      "parametres": 23748,
+      "egaux": true,
+      "cible": 4.0,
+      "cible_atteinte": false,
+      "perte_commune": 5.1079,
+      "motive": "cible 4,0 non atteinte par les deux : la perte commune est la meilleure perte atteignable par le plus faible",
+      "dense": {
+        "params": 23748,
+        "convergence_val": 3.6216,
+        "convergence_step": 350,
+        "arret_val": 4.8635,
+        "arret_step": 50,
+        "secondes": 6.9,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.9536,
+            "val": 5.9257
+          },
+          {
+            "step": 50,
+            "loss": 4.8763,
+            "val": 4.8635
+          },
+          {
+            "step": 100,
+            "loss": 4.5591,
+            "val": 4.4235
+          },
+          {
+            "step": 150,
+            "loss": 3.9688,
+            "val": 3.999
+          },
+          {
+            "step": 200,
+            "loss": 3.5936,
+            "val": 3.7527
+          },
+          {
+            "step": 250,
+            "loss": 3.1992,
+            "val": 3.6671
+          },
+          {
+            "step": 300,
+            "loss": 2.9079,
+            "val": 3.6257
+          },
+          {
+            "step": 350,
+            "loss": 2.9865,
+            "val": 3.6216
+          },
+          {
+            "step": 400,
+            "loss": 2.6166,
+            "val": 3.755
+          },
+          {
+            "step": 450,
+            "loss": 2.6167,
+            "val": 3.9477
+          },
+          {
+            "step": 500,
+            "loss": 2.4838,
+            "val": 4.1642
+          },
+          {
+            "step": 550,
+            "loss": 2.3161,
+            "val": 4.1856
+          },
+          {
+            "step": 600,
+            "loss": 2.1672,
+            "val": 4.4359
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.9536,
+            "val": 5.9257
+          },
+          {
+            "step": 25,
+            "loss": 5.3538,
+            "val": 5.2328
+          },
+          {
+            "step": 50,
+            "loss": 4.8763,
+            "val": 4.8635,
+            "cible_atteinte": true
+          }
+        ]
+      },
+      "mycelia": {
+        "params": 23748,
+        "convergence_val": 5.1079,
+        "convergence_step": 50,
+        "arret_val": 5.1079,
+        "arret_step": 50,
+        "secondes": 76.6,
+        "pool": 8,
+        "aretes": 48,
+        "naissances": 36,
+        "aretes_mortes": 0,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.7541,
+            "val": 5.7343,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 50,
+            "loss": 5.0935,
+            "val": 5.1079,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 100,
+            "loss": 4.7648,
+            "val": 5.2342,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 150,
+            "loss": 4.4864,
+            "val": 5.4817,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 200,
+            "loss": 4.144,
+            "val": 5.8312,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 250,
+            "loss": 3.9933,
+            "val": 6.081,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 300,
+            "loss": 3.6217,
+            "val": 6.3117,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 350,
+            "loss": 3.6766,
+            "val": 6.5961,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 400,
+            "loss": 3.4141,
+            "val": 6.7157,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 450,
+            "loss": 3.4748,
+            "val": 6.9826,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 500,
+            "loss": 3.4198,
+            "val": 7.0992,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 550,
+            "loss": 3.3074,
+            "val": 7.1991,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 600,
+            "loss": 3.0969,
+            "val": 7.3494,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 3.0969,
+            "val": 5.1079,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.7541,
+            "val": 5.7343,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 25,
+            "loss": 5.4183,
+            "val": 5.3579,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 5.0935,
+            "val": 5.1079,
+            "pool": 8,
+            "edges": 48,
+            "cible_atteinte": true
+          },
+          {
+            "step": 50,
+            "loss": 5.0935,
+            "val": 5.1079,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ]
+      },
+      "secondes": 91.4
+    },
+    {
+      "semence": 3,
+      "parametres": 23748,
+      "egaux": true,
+      "cible": 4.0,
+      "cible_atteinte": false,
+      "perte_commune": 5.0947,
+      "motive": "cible 4,0 non atteinte par les deux : la perte commune est la meilleure perte atteignable par le plus faible",
+      "dense": {
+        "params": 23748,
+        "convergence_val": 3.7437,
+        "convergence_step": 350,
+        "arret_val": 4.8926,
+        "arret_step": 50,
+        "secondes": 4.8,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.8727,
+            "val": 5.8859
+          },
+          {
+            "step": 50,
+            "loss": 4.9953,
+            "val": 4.8926
+          },
+          {
+            "step": 100,
+            "loss": 4.5793,
+            "val": 4.5312
+          },
+          {
+            "step": 150,
+            "loss": 4.0394,
+            "val": 4.0993
+          },
+          {
+            "step": 200,
+            "loss": 3.6228,
+            "val": 3.8393
+          },
+          {
+            "step": 250,
+            "loss": 3.4176,
+            "val": 3.7929
+          },
+          {
+            "step": 300,
+            "loss": 3.0116,
+            "val": 3.7448
+          },
+          {
+            "step": 350,
+            "loss": 2.7762,
+            "val": 3.7437
+          },
+          {
+            "step": 400,
+            "loss": 2.9172,
+            "val": 3.9961
+          },
+          {
+            "step": 450,
+            "loss": 2.666,
+            "val": 4.1348
+          },
+          {
+            "step": 500,
+            "loss": 2.3504,
+            "val": 4.1433
+          },
+          {
+            "step": 550,
+            "loss": 2.321,
+            "val": 4.4036
+          },
+          {
+            "step": 600,
+            "loss": 2.0746,
+            "val": 4.601
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.8727,
+            "val": 5.8859
+          },
+          {
+            "step": 25,
+            "loss": 5.279,
+            "val": 5.2245
+          },
+          {
+            "step": 50,
+            "loss": 4.9953,
+            "val": 4.8926,
+            "cible_atteinte": true
+          }
+        ]
+      },
+      "mycelia": {
+        "params": 23748,
+        "convergence_val": 5.0947,
+        "convergence_step": 50,
+        "arret_val": 5.0947,
+        "arret_step": 50,
+        "secondes": 75.8,
+        "pool": 8,
+        "aretes": 48,
+        "naissances": 36,
+        "aretes_mortes": 0,
+        "courbe_convergence": [
+          {
+            "step": 1,
+            "loss": 5.7491,
+            "val": 5.7246,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 50,
+            "loss": 5.2484,
+            "val": 5.0947,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 100,
+            "loss": 4.9339,
+            "val": 5.2513,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 150,
+            "loss": 4.5687,
+            "val": 5.4458,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 200,
+            "loss": 4.2459,
+            "val": 5.7044,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 250,
+            "loss": 4.0655,
+            "val": 5.9089,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 300,
+            "loss": 3.8849,
+            "val": 6.1231,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 350,
+            "loss": 3.5825,
+            "val": 6.3683,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 400,
+            "loss": 3.7239,
+            "val": 6.5677,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 450,
+            "loss": 3.5276,
+            "val": 6.6561,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 500,
+            "loss": 3.238,
+            "val": 6.8271,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 550,
+            "loss": 3.2897,
+            "val": 6.9699,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 600,
+            "loss": 3.2216,
+            "val": 7.0636,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 3.2216,
+            "val": 5.0947,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ],
+        "courbe_arret": [
+          {
+            "step": 1,
+            "loss": 5.7491,
+            "val": 5.7246,
+            "pool": 8,
+            "edges": 20
+          },
+          {
+            "step": 25,
+            "loss": 5.3753,
+            "val": 5.3363,
+            "pool": 8,
+            "edges": 48
+          },
+          {
+            "step": 50,
+            "loss": 5.2484,
+            "val": 5.0947,
+            "pool": 8,
+            "edges": 48,
+            "cible_atteinte": true
+          },
+          {
+            "step": 50,
+            "loss": 5.2484,
+            "val": 5.0947,
+            "pool": 8,
+            "edges": 48,
+            "restaure": true
+          }
+        ]
+      },
+      "secondes": 88.5
+    }
+  ],
+  "parametres": 23748,
+  "egalite": true
+}
