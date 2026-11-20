@@ -68,6 +68,7 @@ PANEL_TABS = r"""
   <button type="button" data-tab="live">📊 Performance</button>
   <button type="button" data-tab="history">📈 Évolution</button>
   <button type="button" data-tab="speech">🗣️ Éloquence</button>
+  <button type="button" data-tab="labo">🧪 Labo</button>
   <button type="button" data-tab="config">⚙️ Configuration</button>
 </nav>
 <span id="hdr-badge" class="badge" title="état du lanceur">—</span>
@@ -207,11 +208,60 @@ PANEL_SECTIONS = r"""
     <p class="note">Le lanceur relit ce fichier avant chaque session : un changement
     s'applique à la session suivante, sans redémarrer. Aucun seuil n'est codé en dur.</p>
   </section>
+
+  <section class="card wide" data-panel="labo">
+    <h2>🧪 Labo — MYCELI-SCAN et traducteur</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Atlas de Nyra</h2>
+        <dl class="kv">
+          <dt>Vivants</dt><dd id="lab-alive">—</dd>
+          <dt>Actifs au scan</dt><dd id="lab-active">—</dd>
+          <dt>Familles</dt><dd id="lab-fam">—</dd>
+          <dt>Arêtes jamais co-actives</dt><dd id="lab-dead">—</dd>
+          <dt>Paires co-actives sans arête</dt><dd id="lab-free">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>dense → MYCELIA</h2>
+        <dl class="kv">
+          <dt>Avant</dt><dd id="lab-d-avant">—</dd>
+          <dt>Après greffe</dt><dd id="lab-d-apres">—</dd>
+          <dt>Contrôle</dt><dd id="lab-d-controle">—</dd>
+          <dt>Gain</dt><dd id="lab-d-gain">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>MYCELIA → dense</h2>
+        <dl class="kv">
+          <dt>Avant</dt><dd id="lab-m-avant">—</dd>
+          <dt>Après greffe</dt><dd id="lab-m-apres">—</dd>
+          <dt>Contrôle</dt><dd id="lab-m-controle">—</dd>
+          <dt>Gain</dt><dd id="lab-m-gain">—</dd>
+        </dl>
+      </div>
+    </div>
+    <h2 style="margin-top:16px">Familles fonctionnelles</h2>
+    <table>
+      <thead><tr><th>#</th><th>Nœuds</th><th>Taille</th><th>Activation</th><th>Top stimulus</th></tr></thead>
+      <tbody id="lab-fam-body"></tbody>
+    </table>
+    <h2 style="margin-top:16px">Film d'activation</h2>
+    <div class="chatline">
+      <select id="lab-film" style="flex:1;background:#0a0c0f;border:1px solid #2a323c;
+        color:#e9edf2;border-radius:8px;padding:8px 10px;font:inherit"></select>
+      <button class="act" id="lab-play" type="button">▶︎ Lire</button>
+      <span id="lab-frame" class="badge">token —</span>
+    </div>
+    <canvas id="lab-canvas" class="chart" width="760" height="240"></canvas>
+    <p class="note">Une colonne par token, un point par nœud actif (plus il est haut,
+    plus il est actif). Les 5 stimuli filmés sont lus depuis data/lab/film_nyra.json.</p>
+  </section>
 """
 
 PANEL_SCRIPT = r"""
 // --- Onglets -----------------------------------------------------------
-const NYRA_TABS = ['home', 'live', 'history', 'speech', 'config'];
+const NYRA_TABS = ['home', 'live', 'history', 'speech', 'labo', 'config'];
 let CFG_CACHE = {};
 
 function showTab(name) {
@@ -226,6 +276,7 @@ function showTab(name) {
   if (name === 'live') loadLive();
   if (name === 'history') loadHistory();
   if (name === 'speech') loadSpeech();
+  if (name === 'labo') loadLab();
   if (name === 'config') loadConfig();
 }
 
@@ -595,6 +646,128 @@ document.addEventListener('click', ev => {
   if (ev.target.id === 'cfg-stop') {
     saveConfig({ stop_after_session: !CFG_CACHE.stop_after_session });
   }
+});
+
+// --- 🧪 Labo -----------------------------------------------------------
+const LAB = { atlas: null, film: null, timer: null };
+
+function paintConversion(prefix, data) {
+  const v = data && data.verdict;
+  if (!v) {
+    ['avant', 'apres', 'controle', 'gain'].forEach(k => setText('lab-' + prefix + '-' + k, '—'));
+    return;
+  }
+  setText('lab-' + prefix + '-avant', Number(v.avant).toFixed(4));
+  setText('lab-' + prefix + '-apres', Number(v.apres_greffe).toFixed(4));
+  setText('lab-' + prefix + '-controle', Number(v.controle).toFixed(4));
+  setText('lab-' + prefix + '-gain',
+    (100 * Number(v.gain_vs_avant)).toFixed(1) + ' % vs avant · '
+    + (100 * Number(v.gain_vs_controle)).toFixed(2) + ' % vs contrôle');
+}
+
+function paintAtlas() {
+  const a = LAB.atlas;
+  if (!a || !a.meta) { setText('lab-alive', 'labo non exécuté'); return; }
+  setText('lab-alive', a.meta.alive + ' / ' + a.meta.n_nodes);
+  setText('lab-active', a.noeuds.length);
+  setText('lab-fam', a.familles.length + ' (k=' + a.meta.k + ')');
+  const dead = a.divergences.cablees_jamais_coactives;
+  const free = a.divergences.coactifs_sans_arete;
+  setText('lab-dead', dead.nombre + ' (' + Math.round(dead.part * 100) + ' %)');
+  setText('lab-free', free.nombre + ' paires');
+  setHTML('lab-fam-body', a.familles.map(f => '<tr><td>' + f.famille
+    + '</td><td>' + f.noeuds.slice(0, 5).join(', ') + (f.taille > 5 ? '…' : '')
+    + '</td><td>' + f.taille + '</td><td>' + Number(f.activation_moyenne).toFixed(3)
+    + '</td><td>' + esc((f.top_stimuli[0] || {}).texte || '—') + '</td></tr>').join(''));
+}
+
+function paintFilmOptions() {
+  const sel = document.getElementById('lab-film');
+  if (!sel) return;
+  const items = (LAB.film && LAB.film.stimuli) || [];
+  sel.innerHTML = items.map((s, i) => '<option value="' + i + '">'
+    + esc(s.texte) + '</option>').join('');
+  if (items.length) drawFilm(0);
+}
+
+function drawFilm(index, frame) {
+  const cv = document.getElementById('lab-canvas');
+  const items = (LAB.film && LAB.film.stimuli) || [];
+  if (!cv || !items[index]) return;
+  const s = items[index];
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, padL = 14, padB = 26;
+  ctx.clearRect(0, 0, W, H);
+  const frames = s.frames;
+  const n = frames.length ? frames[0].length : 0;
+  let max = 0;
+  frames.forEach(f => f.forEach(v => { if (v > max) max = v; }));
+  if (!max) max = 1;
+  const colW = (W - padL - 8) / Math.max(1, frames.length);
+  for (let t = 0; t < frames.length; t++) {
+    for (let i = 0; i < n; i++) {
+      const v = frames[t][i];
+      if (v <= 0.2 * max) continue;
+      const a = Math.min(1, v / max);
+      const x = padL + t * colW + colW * 0.5;
+      const y = 10 + (1 - a) * (H - padB - 26);
+      ctx.fillStyle = 'rgba(110,231,168,' + (0.18 + 0.82 * a).toFixed(2) + ')';
+      ctx.beginPath();
+      ctx.arc(x, y, 1.2 + 3.6 * a, 0, 6.283);
+      ctx.fill();
+    }
+  }
+  ctx.font = '11px ui-monospace, monospace';
+  s.tokens.forEach((tok, t) => {
+    ctx.fillStyle = (t === frame) ? '#6ee7a8' : '#5d656f';
+    ctx.fillText(String(tok).slice(0, 9), padL + t * colW + 2, H - 8);
+  });
+  if (frame !== undefined) {
+    ctx.strokeStyle = '#6ee7a8';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(padL + frame * colW + 1, 6, Math.max(4, colW - 2), H - padB - 14);
+    setText('lab-frame', 'token ' + (frame + 1) + '/' + s.tokens.length
+      + ' « ' + s.tokens[frame] + ' »');
+  }
+}
+
+async function loadLab() {
+  try { LAB.atlas = await (await fetch('/api/lab/atlas')).json(); } catch (e) { LAB.atlas = null; }
+  try { LAB.film = await (await fetch('/api/lab/film')).json(); } catch (e) { LAB.film = null; }
+  try {
+    const c = await (await fetch('/api/lab/conversions')).json();
+    paintConversion('d', c.dense_to_mycelia);
+    paintConversion('m', c.mycelia_to_dense);
+  } catch (e) {
+    paintConversion('d', null);
+    paintConversion('m', null);
+  }
+  paintAtlas();
+  paintFilmOptions();
+}
+
+document.addEventListener('click', ev => {
+  if (ev.target.id !== 'lab-play') return;
+  const sel = document.getElementById('lab-film');
+  const items = (LAB.film && LAB.film.stimuli) || [];
+  const s = items[Number(sel && sel.value ? sel.value : 0)];
+  if (!s) return;
+  if (LAB.timer) { clearInterval(LAB.timer); LAB.timer = null; }
+  let t = 0;
+  drawFilm(Number(sel.value || 0), 0);
+  LAB.timer = setInterval(() => {
+    t += 1;
+    if (t >= s.tokens.length) {
+      clearInterval(LAB.timer);
+      LAB.timer = null;
+      return;
+    }
+    drawFilm(Number(sel.value || 0), t);
+  }, 420);
+});
+
+document.addEventListener('change', ev => {
+  if (ev.target.id === 'lab-film') drawFilm(Number(ev.target.value || 0));
 });
 
 // --- Démarrage ---------------------------------------------------------

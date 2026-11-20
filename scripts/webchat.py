@@ -285,6 +285,38 @@ def api_metrics():
     return jsonify(_metrics_data())
 
 
+# -- Labo S : atlas, film, conversions -------------------------------------
+LAB_DIR = ROOT / "data" / "lab"
+
+
+def _lab_json(name: str, default):
+    """Lit un artefact du labo ; un labo vide n'est pas une erreur serveur."""
+    try:
+        return json.loads((LAB_DIR / name).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return default
+
+
+@app.route("/api/lab/atlas", methods=["GET"])
+def api_lab_atlas():
+    return jsonify(_lab_json("atlas_nyra.json", {}))
+
+
+@app.route("/api/lab/film", methods=["GET"])
+def api_lab_film():
+    return jsonify(_lab_json("film_nyra.json", {"noeuds": [], "stimuli": []}))
+
+
+@app.route("/api/lab/conversions", methods=["GET"])
+def api_lab_conversions():
+    return jsonify(
+        {
+            "dense_to_mycelia": _lab_json("conversion_dense_to_mycelia.json", {}),
+            "mycelia_to_dense": _lab_json("conversion_mycelia_to_dense.json", {}),
+        }
+    )
+
+
 # -- Temps reel, historique, eloquence, configuration ----------------------
 GPU_CACHE: dict = {"at": 0.0, "value": {}}
 

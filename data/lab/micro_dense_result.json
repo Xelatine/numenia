@@ -1,0 +1,96 @@
+{
+  "params": 17016,
+  "vocab": 312,
+  "curve": [
+    {
+      "step": 1,
+      "loss": 5.9005,
+      "val": 5.7797
+    },
+    {
+      "step": 100,
+      "loss": 4.6307,
+      "val": 4.4576
+    },
+    {
+      "step": 200,
+      "loss": 3.6768,
+      "val": 3.9191
+    },
+    {
+      "step": 300,
+      "loss": 3.2614,
+      "val": 3.6774
+    },
+    {
+      "step": 400,
+      "loss": 2.5552,
+      "val": 3.7183
+    },
+    {
+      "step": 500,
+      "loss": 2.6342,
+      "val": 3.9544
+    },
+    {
+      "step": 600,
+      "loss": 2.3355,
+      "val": 4.2637
+    },
+    {
+      "step": 700,
+      "loss": 1.965,
+      "val": 4.5476
+    }
+  ],
+  "seconds": 5.8,
+  "final_val": 3.6774,
+  "best_step": 300,
+  "samples": [
+    {
+      "prefixe": "le chat mange",
+      "predit": [
+        "ce",
+        "une",
+        "ma"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "la fille dort",
+      "predit": [
+        "pas",
+        "pas.",
+        "sans"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "je ne veux pas",
+      "predit": [
+        "ce",
+        "mon",
+        "un"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "pourquoi le chien court",
+      "predit": [
+        "je",
+        "ce",
+        "cette"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "il y a trois",
+      "predit": [
+        "je",
+        "tu",
+        "une"
+      ],
+      "attendu": ""
+    }
+  ]
+}

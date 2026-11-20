@@ -45,3 +45,7 @@ data/runs/
 # Etat d'execution du lanceur : reecrit en continu, jamais versionne.
 data/nyra_state.json
 data/nyra_eloquence.json
+
+# Labo S : matrices et checkpoints regenerables par les scripts de scripts/lab/.
+data/lab/*.npy
+data/lab/*.pt

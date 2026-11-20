@@ -1,0 +1,224 @@
+{
+  "params": 167638,
+  "vocab": 312,
+  "best_val": 5.1248,
+  "best_step": 150,
+  "curve": [
+    {
+      "step": 1,
+      "loss": 5.746,
+      "val": 5.7358,
+      "pool": 24,
+      "edges": 20
+    },
+    {
+      "step": 50,
+      "loss": 5.4452,
+      "val": 5.3565,
+      "pool": 63,
+      "edges": 334
+    },
+    {
+      "step": 100,
+      "loss": 5.1437,
+      "val": 5.1307,
+      "pool": 94,
+      "edges": 408
+    },
+    {
+      "step": 150,
+      "loss": 5.0079,
+      "val": 5.1248,
+      "pool": 94,
+      "edges": 470
+    },
+    {
+      "step": 200,
+      "loss": 4.759,
+      "val": 5.2166,
+      "pool": 94,
+      "edges": 512
+    },
+    {
+      "step": 250,
+      "loss": 4.7196,
+      "val": 5.4185,
+      "pool": 96,
+      "edges": 563
+    },
+    {
+      "step": 300,
+      "loss": 4.4777,
+      "val": 5.4986,
+      "pool": 96,
+      "edges": 607
+    },
+    {
+      "step": 350,
+      "loss": 4.4079,
+      "val": 5.548,
+      "pool": 96,
+      "edges": 658
+    },
+    {
+      "step": 400,
+      "loss": 4.3475,
+      "val": 5.6232,
+      "pool": 96,
+      "edges": 684
+    },
+    {
+      "step": 450,
+      "loss": 4.1776,
+      "val": 5.7222,
+      "pool": 96,
+      "edges": 708
+    },
+    {
+      "step": 500,
+      "loss": 4.1485,
+      "val": 5.8051,
+      "pool": 96,
+      "edges": 728
+    },
+    {
+      "step": 550,
+      "loss": 3.996,
+      "val": 5.9015,
+      "pool": 96,
+      "edges": 738
+    },
+    {
+      "step": 600,
+      "loss": 3.8965,
+      "val": 5.9146,
+      "pool": 96,
+      "edges": 757
+    },
+    {
+      "step": 650,
+      "loss": 3.877,
+      "val": 5.9851,
+      "pool": 96,
+      "edges": 772
+    },
+    {
+      "step": 700,
+      "loss": 3.8788,
+      "val": 6.0703,
+      "pool": 96,
+      "edges": 780
+    },
+    {
+      "step": 150,
+      "loss": 3.8788,
+      "val": 5.1248,
+      "pool": 94,
+      "edges": 470,
+      "restaure": true
+    }
+  ],
+  "events": [
+    {
+      "step": 25,
+      "naissances": 1,
+      "pool": 32
+    },
+    {
+      "step": 50,
+      "naissances": 2,
+      "pool": 63
+    },
+    {
+      "step": 75,
+      "naissances": 2,
+      "pool": 94
+    },
+    {
+      "step": 100,
+      "edge_deaths": 5,
+      "node_deaths": 0,
+      "revived": 0,
+      "pool": 94
+    },
+    {
+      "step": 225,
+      "naissances": 1,
+      "pool": 96
+    },
+    {
+      "step": 300,
+      "edge_deaths": 1,
+      "node_deaths": 0,
+      "revived": 0,
+      "pool": 96
+    },
+    {
+      "step": 700,
+      "edge_deaths": 1,
+      "node_deaths": 0,
+      "revived": 0,
+      "pool": 96
+    },
+    {
+      "step": 700,
+      "arret": "patience",
+      "best_step": 150
+    }
+  ],
+  "seconds": 170.9,
+  "final_val": 5.1248,
+  "pool": 94,
+  "pool_start": 24,
+  "edges": 470,
+  "node_births": 5,
+  "node_deaths": 0,
+  "edge_deaths": 5,
+  "samples": [
+    {
+      "prefixe": "le chat mange",
+      "predit": [
+        "je",
+        "les",
+        "y"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "la fille dort",
+      "predit": [
+        "je",
+        "les",
+        "?"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "je ne veux pas",
+      "predit": [
+        "je",
+        "pas",
+        "ce"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "pourquoi le chien court",
+      "predit": [
+        "je",
+        "?",
+        "son"
+      ],
+      "attendu": ""
+    },
+    {
+      "prefixe": "il y a trois",
+      "predit": [
+        "cent",
+        "quatre",
+        "vingt"
+      ],
+      "attendu": ""
+    }
+  ]
+}

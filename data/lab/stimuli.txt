@@ -1,0 +1,500 @@
+phrase|sa ours fort nage.
+phrase|les sœur part les route.
+phrase|ce ville reste ma village.
+phrase|les souris saute.
+phrase|vous court maintenant.
+phrase|je tourne jamais.
+phrase|sa table coule.
+phrase|ma vache fort attend.
+phrase|nous crie là.
+phrase|cette ville lourd brille.
+phrase|son lapin vole.
+phrase|on s'ouvre ensemble.
+phrase|son route se ferme.
+phrase|une pomme froid tombe.
+phrase|ma étoile s'ouvre les ballon.
+phrase|les pomme beau reste.
+phrase|sa médecin est triste.
+phrase|un chat est lent.
+phrase|il pousse presque.
+phrase|sa pluie propre pousse.
+phrase|tu pousse trop.
+phrase|le femme gentil écrit.
+phrase|vous tourne jamais.
+phrase|une lapin est fort.
+phrase|on arrive toujours.
+phrase|une soleil tourne mon médecin.
+phrase|une lune froid s'ouvre.
+phrase|nous attend trop.
+phrase|la vent tourne.
+phrase|ma poisson rapide vole.
+phrase|elle coule demain.
+phrase|les mère écrit.
+phrase|cette village est lourd.
+phrase|la garçon est gentil.
+phrase|son boulanger est content.
+phrase|vous arrive beaucoup.
+phrase|le chat petit court.
+phrase|je brille jamais.
+phrase|un maison est froid.
+phrase|la jardin tourne ce médecin.
+phrase|il tourne encore.
+phrase|une femme content écrit.
+phrase|ce chaise s'ouvre.
+phrase|cette enfant compte.
+phrase|mon rivière brille.
+phrase|ils brille ici.
+phrase|cette voisine rit.
+phrase|un maison sale tourne.
+phrase|une grenouille crie.
+phrase|ma neige est sale.
+phrase|vous parle trop.
+phrase|la forêt beau pousse.
+phrase|les vache court le porte.
+phrase|mon facteur est heureux.
+phrase|il attend assez.
+phrase|vous pousse ici.
+phrase|mon poisson saute les vélo.
+phrase|les boulanger calme arrive.
+phrase|ce lapin crie cette femme.
+phrase|ma village est beau.
+phrase|mon voisine compte.
+phrase|il mange jamais.
+phrase|son soleil pousse.
+phrase|il brille aussi.
+phrase|je tourne toujours.
+phrase|les enfant est curieux.
+phrase|la pomme coule.
+phrase|un ours nage.
+phrase|cette facteur arrive sa montagne.
+phrase|il parle demain.
+phrase|ma vent sale coule.
+phrase|un enfant dessine une homme.
+phrase|son montagne sale tourne.
+phrase|mon porte beau coule.
+phrase|son chat lent crie.
+phrase|la neige coule.
+phrase|tu attend maintenant.
+phrase|son sœur écoute ce voisine.
+phrase|la route tourne.
+phrase|vous pousse assez.
+phrase|la cheval nage.
+phrase|la ville chaud pousse.
+phrase|la école tourne mon poule.
+phrase|je reste vite.
+phrase|sa forêt est chaud.
+phrase|sa soleil s'ouvre.
+phrase|cette rivière se ferme.
+phrase|tu vole aussi.
+phrase|les étoile est beau.
+phrase|une garçon triste parle.
+phrase|un vache court les ami.
+phrase|ce enfant est content.
+phrase|un porte froid tourne.
+phrase|vous compte trop.
+phrase|elle attend ici.
+phrase|le père est triste.
+phrase|les oiseau crie.
+phrase|le chat est lent.
+phrase|sa livre froid brille.
+phrase|la maison tourne.
+phrase|tu tourne souvent.
+phrase|vous brille souvent.
+phrase|son étoile brille.
+phrase|les poisson vole ce fleur.
+phrase|le cheval attend.
+phrase|une médecin est content.
+phrase|un garçon part.
+phrase|un médecin triste lit.
+phrase|le fille travaille.
+phrase|son jardin lourd tourne.
+phrase|un village froid se ferme.
+phrase|sa poisson court.
+phrase|la pluie reste.
+phrase|cette voiture chaud tourne.
+phrase|les oiseau lent court.
+phrase|ma voisine dessine les route.
+phrase|la loup vieux nage.
+phrase|tu court peu.
+phrase|ma oiseau est petit.
+phrase|il coule jamais.
+question|où est le chat ?
+question|quel est une chat ?
+question|qui coule un forêt ?
+question|est-ce que la femme compte ?
+question|est-ce que un voiture tourne ?
+question|est-ce que mon mer s'ouvre ?
+question|quel compte un homme ?
+question|est-ce que la gâteau coule ?
+question|qui vole une renard ?
+question|où est un mer ?
+question|est-ce que les loup attend ?
+question|est-ce que une poule mange ?
+question|où est les forêt ?
+question|quelle tombe mon soleil ?
+question|où est la pomme ?
+question|comment parle ce femme ?
+question|est-ce que sa neige tombe ?
+question|est-ce que le souris attend ?
+question|où est les gâteau ?
+question|où est le poule ?
+question|est-ce que les rivière se ferme ?
+question|qui est la voisine ?
+question|où coule les ville ?
+question|pourquoi reste une maison ?
+question|quelle est son maison ?
+question|quand pousse ma soleil ?
+question|où est ce gâteau ?
+question|qui est la montagne ?
+question|pourquoi pousse un jardin ?
+question|quand est mon mer ?
+question|où est le cheval ?
+question|où nage le vache ?
+question|comment est les neige ?
+question|où est son femme ?
+question|est-ce que ma gâteau s'ouvre ?
+question|qui est cette ours ?
+question|où est un frère ?
+question|où est un pomme ?
+question|est-ce que la lapin attend ?
+question|où est une médecin ?
+question|quand brille ce route ?
+question|où est le frère ?
+question|quand est sa sœur ?
+question|est-ce que ce chaise coule ?
+question|où est le pain ?
+question|où est la arbre ?
+question|où est la facteur ?
+question|comment est une rivière ?
+question|quelle est sa oiseau ?
+question|comment est ce poule ?
+question|pourquoi part mon fille ?
+question|où est la lapin ?
+question|où est le table ?
+question|pourquoi est mon garçon ?
+question|où est ce facteur ?
+question|quelle crie le singe ?
+question|quelle attend mon cheval ?
+question|où est sa pluie ?
+question|combien reste cette maison ?
+question|où est les chambre ?
+question|comment coule une neige ?
+question|est-ce que la loup crie ?
+question|où est son ami ?
+question|comment dessine les mère ?
+question|où est un vent ?
+question|où est la montagne ?
+question|quel se ferme un maison ?
+question|qui coule les fleur ?
+question|comment est son table ?
+question|est-ce que la sœur arrive ?
+question|où est ce père ?
+question|comment est sa ami ?
+question|est-ce que ce canard saute ?
+question|qui se ferme ce pluie ?
+question|quelle est mon femme ?
+question|est-ce que mon facteur attend ?
+question|quelle se ferme une chambre ?
+question|où est cette père ?
+question|où est sa cheval ?
+question|combien est sa neige ?
+question|où est cette vache ?
+question|quel coule sa étoile ?
+question|comment nage ce grenouille ?
+question|où est mon porte ?
+question|quelle rit un facteur ?
+question|quelle attend un sœur ?
+question|quelle dort ce cheval ?
+question|pourquoi reste son pomme ?
+question|est-ce que son singe nage ?
+question|quand est ma neige ?
+negation|il n'y a pas mon canard.
+negation|il n'y a pas sa maison.
+negation|il ne crie jamais la loup.
+negation|il n'y a pas la fille.
+negation|il n'y a pas la étoile.
+negation|je ne reste pas.
+negation|je ne écrit pas sa sœur.
+negation|je ne tombe pas.
+negation|il ne part jamais un boulanger.
+negation|je ne parle pas.
+negation|je ne reste pas ma porte.
+negation|je ne mange jamais son chien.
+negation|je ne dessine pas un maîtresse.
+negation|elle ne parle jamais sa enfant.
+negation|nous ne attend jamais un singe.
+negation|je ne pousse pas une vent.
+negation|je ne se ferme pas les village.
+negation|je ne nage pas son grenouille.
+negation|je ne attend pas.
+negation|je ne part pas les frère.
+negation|je ne tourne pas sa pomme.
+negation|je ne coule pas une forêt.
+negation|je ne nage pas ma loup.
+negation|il n'y a pas ma souris.
+negation|je ne s'ouvre pas.
+negation|je ne rit pas ma maîtresse.
+negation|vous ne brille jamais un arbre.
+negation|il n'y a pas mon pain.
+negation|il n'y a pas cette pluie.
+negation|je ne court pas.
+negation|tu ne écoute jamais son boulanger.
+negation|je ne attend pas ma lapin.
+negation|elle ne arrive jamais une boulanger.
+negation|je ne saute pas.
+negation|elle ne nage jamais ce oiseau.
+negation|je ne dessine pas un femme.
+negation|il n'y a pas son chat.
+negation|il n'y a pas mon arbre.
+negation|il n'y a pas la enfant.
+negation|tu ne s'ouvre jamais un pluie.
+negation|je ne parle pas mon père.
+negation|il n'y a pas ce cheval.
+negation|elle ne brille jamais mon ballon.
+negation|je ne brille pas.
+negation|je ne pousse pas.
+negation|je ne s'ouvre pas les vent.
+negation|vous ne pousse jamais son étoile.
+negation|il n'y a pas sa vent.
+negation|il n'y a pas le vélo.
+negation|vous ne coule jamais ma neige.
+negation|je ne tourne pas ma montagne.
+negation|tu ne vole jamais la renard.
+negation|je ne tourne jamais les pluie.
+negation|je ne se ferme pas les chambre.
+negation|je ne mange pas ma poule.
+negation|je ne compte pas mon maîtresse.
+negation|il n'y a pas une canard.
+negation|ils ne coule jamais sa neige.
+negation|je ne arrive jamais ma père.
+negation|je ne dort pas le souris.
+negation|je ne regarde pas.
+negation|il n'y a pas cette loup.
+negation|nous ne brille jamais une gâteau.
+negation|je ne part pas son frère.
+negation|je ne dort pas.
+negation|je ne reste pas ce route.
+negation|je ne lit pas cette femme.
+negation|je ne tourne jamais ma jardin.
+negation|elle ne compte jamais un maîtresse.
+negation|il n'y a pas ma canard.
+negation|il n'y a pas la vache.
+negation|je ne crie pas mon poule.
+negation|il n'y a pas sa singe.
+negation|il n'y a pas son rivière.
+negation|je ne mange pas ce poisson.
+negation|nous ne court jamais ma oiseau.
+negation|je ne dort pas une cheval.
+negation|je ne tourne pas.
+negation|il n'y a pas le souris.
+negation|elle ne lit jamais son homme.
+mot|maison
+mot|là
+mot|homme
+mot|jardin
+mot|part
+mot|pomme
+mot|ensemble
+mot|maîtresse
+mot|triste
+mot|lent
+mot|tombe
+mot|écoute
+mot|souris
+mot|noir
+mot|coule
+mot|travaille
+mot|blanc
+mot|toujours
+mot|femme
+mot|canard
+mot|hier
+mot|brille
+mot|plein
+mot|grenouille
+mot|vieux
+mot|assez
+mot|presque
+mot|poule
+mot|rapide
+mot|jaune
+mot|s'ouvre
+mot|beaucoup
+mot|trop
+mot|tourne
+mot|souvent
+mot|poisson
+mot|aussi
+mot|fenêtre
+mot|voisine
+mot|compte
+mot|vélo
+mot|dort
+mot|ici
+mot|froid
+mot|curieux
+mot|joli
+mot|école
+mot|chaud
+mot|fatigué
+mot|crie
+mot|attend
+mot|vide
+mot|arbre
+mot|lentement
+mot|beau
+mot|arrive
+mot|fille
+mot|bon
+mot|bleu
+mot|ville
+mot|mange
+mot|montagne
+mot|route
+mot|mal
+mot|saute
+mot|rit
+mot|mauvais
+mot|étoile
+mot|livre
+mot|parle
+emotion|j'ai peur.
+emotion|je me sens beau aujourd'hui.
+emotion|je suis beau.
+emotion|je suis gentil.
+emotion|je suis grand.
+emotion|j'ai mal.
+emotion|je me sens jaune aujourd'hui.
+emotion|j'ai espoir.
+emotion|je me sens calme aujourd'hui.
+emotion|je me sens lent aujourd'hui.
+emotion|je suis rouge.
+emotion|je suis calme.
+emotion|je suis fort.
+emotion|ils a peur sans mère.
+emotion|il a peur avec canard.
+emotion|je suis inquiet.
+emotion|j'ai surprise.
+emotion|je suis lourd.
+emotion|ils a peur sur gâteau.
+emotion|nous a peur près pomme.
+emotion|je suis content.
+emotion|j'ai tristesse.
+emotion|j'ai joie.
+emotion|j'ai soif.
+emotion|je suis bon.
+emotion|je me sens grand aujourd'hui.
+emotion|je me sens froid aujourd'hui.
+emotion|je me sens bleu aujourd'hui.
+emotion|je suis mauvais.
+emotion|je a peur dans pain.
+emotion|nous a peur chez route.
+emotion|tu a peur dans gâteau.
+emotion|je me sens blanc aujourd'hui.
+emotion|je suis blanc.
+emotion|ils a peur près livre.
+emotion|je me sens heureux aujourd'hui.
+emotion|je suis noir.
+emotion|je suis curieux.
+emotion|je suis doux.
+emotion|tu a peur sous canard.
+emotion|je suis lent.
+emotion|j'ai honte.
+emotion|je suis bleu.
+emotion|j'ai faim.
+emotion|je a peur sur enfant.
+emotion|je suis vieux.
+emotion|je me sens léger aujourd'hui.
+emotion|je suis plein.
+emotion|je me sens méchant aujourd'hui.
+emotion|il a peur pour fleur.
+emotion|je suis joli.
+emotion|je a peur avec oiseau.
+emotion|j'ai sommeil.
+emotion|je me sens noir aujourd'hui.
+emotion|tu a peur sous oiseau.
+emotion|je me sens plein aujourd'hui.
+emotion|je a peur vers mer.
+emotion|on a peur vers forêt.
+emotion|je me sens fatigué aujourd'hui.
+emotion|vous a peur sans lapin.
+emotion|tu a peur avec route.
+emotion|il a peur sur frère.
+emotion|il a peur près village.
+emotion|je suis sale.
+emotion|elle a peur vers route.
+emotion|je me sens fort aujourd'hui.
+emotion|on a peur près vache.
+emotion|nous a peur vers livre.
+emotion|tu a peur dans chien.
+emotion|je me sens bon aujourd'hui.
+nombre|cette pomme a neuf pattes.
+nombre|j'ai seize ans.
+nombre|il y a neuf homme.
+nombre|ma femme a deux pattes.
+nombre|j'ai quinze ans.
+nombre|ce grenouille a huit pattes.
+nombre|treize plus neuf font quinze.
+nombre|ma chambre a quatorze pattes.
+nombre|il y a douze étoile.
+nombre|j'ai six ans.
+nombre|son souris a onze pattes.
+nombre|treize plus dix font mille.
+nombre|j'ai huit ans.
+nombre|un plus dix font cinq.
+nombre|mille plus sept font cinq.
+nombre|ce facteur a trente pattes.
+nombre|j'ai dix ans.
+nombre|j'ai mille ans.
+nombre|il y a neuf fleur.
+nombre|j'ai quatorze ans.
+nombre|j'ai treize ans.
+nombre|dix plus un font deux.
+nombre|douze plus quatre font trente.
+nombre|neuf plus zéro font onze.
+nombre|huit plus treize font quinze.
+nombre|il y a six mère.
+nombre|quinze plus huit font mille.
+nombre|la canard a six pattes.
+nombre|sept plus six font treize.
+nombre|il y a vingt village.
+nombre|cinq plus onze font seize.
+nombre|seize plus cinq font quatre.
+nombre|dix plus vingt font quatre.
+nombre|six plus trois font six.
+nombre|deux plus quinze font seize.
+nombre|une boulanger a dix pattes.
+nombre|ma forêt a cent pattes.
+nombre|quatre plus trois font zéro.
+nombre|les femme a six pattes.
+nombre|il y a un vache.
+nombre|j'ai cent ans.
+nombre|six plus onze font treize.
+nombre|neuf plus un font sept.
+nombre|j'ai douze ans.
+nombre|trente plus cinq font douze.
+nombre|cent plus douze font quatorze.
+nombre|treize plus six font dix.
+nombre|ma table a sept pattes.
+nombre|il y a douze rivière.
+nombre|sa poule a trois pattes.
+nombre|il y a cinq homme.
+nombre|la village a neuf pattes.
+nombre|il y a six chambre.
+nombre|un plus quinze font vingt.
+nombre|un plus un font huit.
+nombre|douze plus quinze font quatre.
+nombre|trois plus neuf font trois.
+nombre|il y a six ville.
+nombre|j'ai zéro ans.
+nombre|mon sœur a six pattes.
+nombre|mille plus deux font quatorze.
+nombre|il y a vingt homme.
+nombre|j'ai deux ans.
+nombre|j'ai un ans.
+nombre|un arbre a trente pattes.
+nombre|ce montagne a seize pattes.
+nombre|seize plus quatorze font cinq.
+nombre|il y a seize rivière.
+nombre|sa pluie a cinq pattes.
+nombre|mon gâteau a cent pattes.
