@@ -340,3 +340,9 @@ run, and the honest verdict is "architecture works, language not yet".
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+Additional terms apply and prevail over the MIT text: the author keeps a **right
+of veto** on any use, and any sale (resale, commercial licence, paid product
+built on it) must be **notified in advance, with a copy sent to the author** —
+the sale contract and the exact version sold. See
+[CONDITIONS-ADDITIONNELLES.md](CONDITIONS-ADDITIONNELLES.md).

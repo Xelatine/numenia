@@ -356,3 +356,9 @@ paramètres avant un vrai run de 10 000 pas ; le verdict honnête est
 ## Licence
 
 MIT. Voir [LICENSE](../LICENSE).
+
+Des conditions additionnelles s'appliquent et prévalent sur le texte de la MIT :
+l'auteur garde un **droit de veto** sur toute utilisation, et toute vente (revente,
+licence commerciale, produit payant bâti dessus) doit être **notifiée à l'avance,
+avec une copie envoyée à l'auteur** — le contrat de vente et la version exacte
+cédée. Voir [CONDITIONS-ADDITIONNELLES.md](../CONDITIONS-ADDITIONNELLES.md).
