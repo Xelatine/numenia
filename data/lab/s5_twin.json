@@ -1,0 +1,34 @@
+{
+  "pool": 24,
+  "aretes_max": 220,
+  "paires_possibles": 552,
+  "densite_plafond": 0.3986,
+  "mycelia": {
+    "noeuds_lus": 24,
+    "dimensions_lues": 384,
+    "voie_lente": 6928,
+    "temoin_noeud1": 32,
+    "voie_rapide": 5024,
+    "mixage": 784,
+    "ajoutes": 12768,
+    "total_modele": 63276,
+    "deux_vitesses": true
+  },
+  "mycelia_actifs_par_token": 63276,
+  "dense": {
+    "mlp": 768,
+    "parametres": 63480,
+    "parametres_formule": 63480,
+    "ratio_dense_sur_mycelia": 1.0032,
+    "val_600pas": 3.8632,
+    "colonnes": {
+      "nouvelle": 3.8775,
+      "ancienne": 3.8632,
+      "contextes_nouvelle": 406,
+      "contextes_ancienne": 464
+    },
+    "secondes": 6.5
+  },
+  "egalite": true,
+  "regle": "le dense est au moins aussi gros que MYCELIA : la comparaison reste defavorable a MYCELIA"
+}

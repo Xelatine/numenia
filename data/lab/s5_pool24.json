@@ -1,0 +1,1951 @@
+{
+  "protocole": {
+    "pool": 24,
+    "aretes_max": 220,
+    "pas": 600,
+    "semences": [
+      1,
+      2,
+      3
+    ],
+    "lr": 0.002,
+    "batch": 32,
+    "weight_decay": 0.01,
+    "mesure": "colonne nouvelle (token courant)",
+    "s4_reference_deux_vitesses": 3.9039,
+    "s4_reference_pleine": 3.8354,
+    "bigramme": 3.046586
+  },
+  "jumeau": {
+    "pool": 24,
+    "aretes_max": 220,
+    "paires_possibles": 552,
+    "densite_plafond": 0.3986,
+    "mycelia": {
+      "noeuds_lus": 24,
+      "dimensions_lues": 384,
+      "voie_lente": 6928,
+      "temoin_noeud1": 32,
+      "voie_rapide": 5024,
+      "mixage": 784,
+      "ajoutes": 12768,
+      "total_modele": 63276,
+      "deux_vitesses": true
+    },
+    "mycelia_actifs_par_token": 63276,
+    "dense": {
+      "mlp": 768,
+      "parametres": 63480,
+      "parametres_formule": 63480,
+      "ratio_dense_sur_mycelia": 1.0032,
+      "val_600pas": 3.8632,
+      "colonnes": {
+        "nouvelle": 3.8775,
+        "ancienne": 3.8632,
+        "contextes_nouvelle": 406,
+        "contextes_ancienne": 464
+      },
+      "secondes": 6.5
+    },
+    "egalite": true,
+    "regle": "le dense est au moins aussi gros que MYCELIA : la comparaison reste defavorable a MYCELIA"
+  },
+  "entrainements": [
+    {
+      "semence": 1,
+      "nouvelle": 3.7654,
+      "ancienne": 7.2852,
+      "contextes_nouvelle": 406,
+      "contextes_ancienne": 464,
+      "honnete_0_7": 3.9799,
+      "decalee_0_7": 7.2852,
+      "pas": 400,
+      "positions": [
+        5.481,
+        4.2137,
+        3.6826,
+        4.0812,
+        3.9142,
+        4.0367,
+        3.1965,
+        3.2331
+      ],
+      "parametres_ajoutes": 12768,
+      "parametres_total": 63276,
+      "pool": 24,
+      "aretes": 220,
+      "aretes_creees": 208,
+      "aretes_coupees": 0,
+      "densite": 0.3986,
+      "secondes": 152.5,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7411,
+          "aretes": 20
+        },
+        {
+          "step": 50,
+          "val": 5.078,
+          "aretes": 220
+        },
+        {
+          "step": 100,
+          "val": 4.731,
+          "aretes": 220
+        },
+        {
+          "step": 150,
+          "val": 4.4544,
+          "aretes": 220
+        },
+        {
+          "step": 200,
+          "val": 4.2877,
+          "aretes": 220
+        },
+        {
+          "step": 250,
+          "val": 4.1866,
+          "aretes": 220
+        },
+        {
+          "step": 300,
+          "val": 4.0764,
+          "aretes": 220
+        },
+        {
+          "step": 350,
+          "val": 4.0092,
+          "aretes": 220
+        },
+        {
+          "step": 400,
+          "val": 3.9799,
+          "aretes": 220
+        },
+        {
+          "step": 450,
+          "val": 3.9959,
+          "aretes": 220
+        },
+        {
+          "step": 500,
+          "val": 4.0439,
+          "aretes": 220
+        },
+        {
+          "step": 550,
+          "val": 4.1312,
+          "aretes": 220
+        },
+        {
+          "step": 600,
+          "val": 4.1776,
+          "aretes": 220
+        }
+      ]
+    },
+    {
+      "semence": 2,
+      "nouvelle": 3.6772,
+      "ancienne": 7.4829,
+      "contextes_nouvelle": 406,
+      "contextes_ancienne": 464,
+      "honnete_0_7": 3.9066,
+      "decalee_0_7": 7.4829,
+      "pas": 400,
+      "positions": [
+        5.5125,
+        4.3702,
+        3.6453,
+        3.7502,
+        3.8179,
+        3.915,
+        3.1111,
+        3.1309
+      ],
+      "parametres_ajoutes": 12768,
+      "parametres_total": 63276,
+      "pool": 24,
+      "aretes": 220,
+      "aretes_creees": 208,
+      "aretes_coupees": 0,
+      "densite": 0.3986,
+      "secondes": 157.3,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7395,
+          "aretes": 20
+        },
+        {
+          "step": 50,
+          "val": 5.0845,
+          "aretes": 220
+        },
+        {
+          "step": 100,
+          "val": 4.6836,
+          "aretes": 220
+        },
+        {
+          "step": 150,
+          "val": 4.4004,
+          "aretes": 220
+        },
+        {
+          "step": 200,
+          "val": 4.2477,
+          "aretes": 220
+        },
+        {
+          "step": 250,
+          "val": 4.1054,
+          "aretes": 220
+        },
+        {
+          "step": 300,
+          "val": 3.9959,
+          "aretes": 220
+        },
+        {
+          "step": 350,
+          "val": 3.9539,
+          "aretes": 220
+        },
+        {
+          "step": 400,
+          "val": 3.9066,
+          "aretes": 220
+        },
+        {
+          "step": 450,
+          "val": 3.9166,
+          "aretes": 220
+        },
+        {
+          "step": 500,
+          "val": 3.9896,
+          "aretes": 220
+        },
+        {
+          "step": 550,
+          "val": 4.0152,
+          "aretes": 220
+        },
+        {
+          "step": 600,
+          "val": 4.0413,
+          "aretes": 220
+        }
+      ]
+    },
+    {
+      "semence": 3,
+      "nouvelle": 3.7662,
+      "ancienne": 7.5675,
+      "contextes_nouvelle": 406,
+      "contextes_ancienne": 464,
+      "honnete_0_7": 3.9817,
+      "decalee_0_7": 7.5675,
+      "pas": 400,
+      "positions": [
+        5.4907,
+        4.3278,
+        3.5759,
+        3.8856,
+        3.9165,
+        4.0279,
+        3.2332,
+        3.3962
+      ],
+      "parametres_ajoutes": 12768,
+      "parametres_total": 63276,
+      "pool": 24,
+      "aretes": 220,
+      "aretes_creees": 208,
+      "aretes_coupees": 0,
+      "densite": 0.3986,
+      "secondes": 156.4,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7439,
+          "aretes": 20
+        },
+        {
+          "step": 50,
+          "val": 5.0609,
+          "aretes": 220
+        },
+        {
+          "step": 100,
+          "val": 4.774,
+          "aretes": 220
+        },
+        {
+          "step": 150,
+          "val": 4.4652,
+          "aretes": 220
+        },
+        {
+          "step": 200,
+          "val": 4.2819,
+          "aretes": 220
+        },
+        {
+          "step": 250,
+          "val": 4.1262,
+          "aretes": 220
+        },
+        {
+          "step": 300,
+          "val": 4.0244,
+          "aretes": 220
+        },
+        {
+          "step": 350,
+          "val": 3.9853,
+          "aretes": 220
+        },
+        {
+          "step": 400,
+          "val": 3.9817,
+          "aretes": 220
+        },
+        {
+          "step": 450,
+          "val": 4.0143,
+          "aretes": 220
+        },
+        {
+          "step": 500,
+          "val": 4.0564,
+          "aretes": 220
+        },
+        {
+          "step": 550,
+          "val": 4.1004,
+          "aretes": 220
+        },
+        {
+          "step": 600,
+          "val": 4.1621,
+          "aretes": 220
+        }
+      ]
+    }
+  ],
+  "contexte": [
+    {
+      "semence": 1,
+      "pool": 24,
+      "aretes": 220,
+      "fenetres_validation": 58,
+      "fenetres_sonde": 150,
+      "conditions": {
+        "normal": {
+          "perte": 3.7654,
+          "exactitude": 0.1626,
+          "entropie_predite": 3.6455
+        },
+        "melange": {
+          "perte": 5.783,
+          "exactitude": 0.069,
+          "entropie_predite": 3.7583
+        },
+        "vide": {
+          "perte": 7.1381,
+          "exactitude": 0.0369,
+          "entropie_predite": 2.8575
+        }
+      },
+      "ecart_max_conditions": 3.3727,
+      "ecart_normal_melange": 2.0176,
+      "perte_par_position": [
+        5.481,
+        4.2137,
+        3.6826,
+        4.0812,
+        3.9142,
+        4.0367,
+        3.1965,
+        3.2331
+      ],
+      "sondes": {
+        "noeud1_16d": {
+          "perte": 5.3216,
+          "exactitude": 0.0369,
+          "dims": 16
+        },
+        "toutes_384d": {
+          "perte": 4.9941,
+          "exactitude": 0.1478,
+          "dims": 391
+        },
+        "lecture": {
+          "perte": 4.3085,
+          "exactitude": 0.1527,
+          "dims": 23
+        }
+      },
+      "seuil_ecart": 2.0,
+      "contexte_utilise": true,
+      "colonnes": {
+        "nouvelle": 3.7654,
+        "ancienne": 7.2852,
+        "nouvelle_0_7": 3.9799,
+        "contextes_nouvelle": 406,
+        "contextes_ancienne": 464
+      },
+      "honnete_0_7": 3.9799
+    },
+    {
+      "semence": 2,
+      "pool": 24,
+      "aretes": 220,
+      "fenetres_validation": 58,
+      "fenetres_sonde": 150,
+      "conditions": {
+        "normal": {
+          "perte": 3.6772,
+          "exactitude": 0.17,
+          "entropie_predite": 3.6008
+        },
+        "melange": {
+          "perte": 5.9811,
+          "exactitude": 0.0493,
+          "entropie_predite": 3.7462
+        },
+        "vide": {
+          "perte": 6.5703,
+          "exactitude": 0.0197,
+          "entropie_predite": 3.4138
+        }
+      },
+      "ecart_max_conditions": 2.8931,
+      "ecart_normal_melange": 2.3039,
+      "perte_par_position": [
+        5.5125,
+        4.3702,
+        3.6453,
+        3.7502,
+        3.8179,
+        3.915,
+        3.1111,
+        3.1309
+      ],
+      "sondes": {
+        "noeud1_16d": {
+          "perte": 5.3216,
+          "exactitude": 0.0369,
+          "dims": 16
+        },
+        "toutes_384d": {
+          "perte": 4.9171,
+          "exactitude": 0.1453,
+          "dims": 391
+        },
+        "lecture": {
+          "perte": 4.2391,
+          "exactitude": 0.165,
+          "dims": 23
+        }
+      },
+      "seuil_ecart": 2.0,
+      "contexte_utilise": true,
+      "colonnes": {
+        "nouvelle": 3.6772,
+        "ancienne": 7.4829,
+        "nouvelle_0_7": 3.9066,
+        "contextes_nouvelle": 406,
+        "contextes_ancienne": 464
+      },
+      "honnete_0_7": 3.9066
+    },
+    {
+      "semence": 3,
+      "pool": 24,
+      "aretes": 220,
+      "fenetres_validation": 58,
+      "fenetres_sonde": 150,
+      "conditions": {
+        "normal": {
+          "perte": 3.7662,
+          "exactitude": 0.1576,
+          "entropie_predite": 3.6455
+        },
+        "melange": {
+          "perte": 6.0397,
+          "exactitude": 0.0517,
+          "entropie_predite": 3.7396
+        },
+        "vide": {
+          "perte": 6.7014,
+          "exactitude": 0.0246,
+          "entropie_predite": 3.5225
+        }
+      },
+      "ecart_max_conditions": 2.9352,
+      "ecart_normal_melange": 2.2735,
+      "perte_par_position": [
+        5.4907,
+        4.3278,
+        3.5759,
+        3.8856,
+        3.9165,
+        4.0279,
+        3.2332,
+        3.3962
+      ],
+      "sondes": {
+        "noeud1_16d": {
+          "perte": 5.3216,
+          "exactitude": 0.0369,
+          "dims": 16
+        },
+        "toutes_384d": {
+          "perte": 5.3228,
+          "exactitude": 0.1232,
+          "dims": 391
+        },
+        "lecture": {
+          "perte": 4.2319,
+          "exactitude": 0.1576,
+          "dims": 23
+        }
+      },
+      "seuil_ecart": 2.0,
+      "contexte_utilise": true,
+      "colonnes": {
+        "nouvelle": 3.7662,
+        "ancienne": 7.5675,
+        "nouvelle_0_7": 3.9817,
+        "contextes_nouvelle": 406,
+        "contextes_ancienne": 464
+      },
+      "honnete_0_7": 3.9817
+    }
+  ],
+  "survie": [
+    {
+      "semence": 1,
+      "l_professeur": 3.8775,
+      "l_ref": 5.082888,
+      "regimes": {
+        "defaut": {
+          "prune_ratio": 0.1,
+          "perte_avant": 3.7654,
+          "perte_apres": 3.7654,
+          "R_avant": 1.093,
+          "R_apres": 1.093,
+          "ratio": 1.0,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 220,
+          "aretes_creees": 0,
+          "aretes_coupees": 0,
+          "aretes_mortes": 0,
+          "naissances": 0,
+          "noeuds_morts": 0,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3986,
+          "evenements": [],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 200,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 300,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 400,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 500,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 600,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 700,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 800,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 900,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 1000,
+              "perte": 3.7654,
+              "R": 1.093,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            }
+          ],
+          "degres_avant": [
+            12,
+            11,
+            8,
+            10,
+            10,
+            13,
+            7,
+            9,
+            6,
+            9,
+            3,
+            11,
+            9,
+            5,
+            10,
+            5,
+            9,
+            8,
+            7,
+            13,
+            12,
+            13,
+            10,
+            10
+          ],
+          "degres_apres": [
+            12,
+            11,
+            8,
+            10,
+            10,
+            13,
+            7,
+            9,
+            6,
+            9,
+            3,
+            11,
+            9,
+            5,
+            10,
+            5,
+            9,
+            8,
+            7,
+            13,
+            12,
+            13,
+            10,
+            10
+          ],
+          "noeuds_amputes": [],
+          "secondes": 126.8
+        },
+        "faim": {
+          "prune_ratio": 0.5,
+          "perte_avant": 3.7654,
+          "perte_apres": 4.609,
+          "R_avant": 1.093,
+          "R_apres": 0.3931,
+          "ratio": 0.3597,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 198,
+          "aretes_creees": 411,
+          "aretes_coupees": 433,
+          "aretes_mortes": 433,
+          "naissances": 411,
+          "noeuds_morts": 6,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3587,
+          "evenements": [
+            {
+              "step": 50,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 100,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 150,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 200,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 250,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 300,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 350,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 400,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 450,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 500,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 550,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 600,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 650,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 700,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 750,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 800,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 850,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 900,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 950,
+              "edge_deaths": 15,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 1000,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            }
+          ],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.9024,
+              "R": 0.9793,
+              "aretes": 198,
+              "coupees": 44,
+              "creees": 22
+            },
+            {
+              "pas": 200,
+              "perte": 4.0805,
+              "R": 0.8316,
+              "aretes": 198,
+              "coupees": 88,
+              "creees": 66
+            },
+            {
+              "pas": 300,
+              "perte": 4.3878,
+              "R": 0.5767,
+              "aretes": 198,
+              "coupees": 132,
+              "creees": 110
+            },
+            {
+              "pas": 400,
+              "perte": 4.4418,
+              "R": 0.5319,
+              "aretes": 198,
+              "coupees": 176,
+              "creees": 154
+            },
+            {
+              "pas": 500,
+              "perte": 4.5851,
+              "R": 0.413,
+              "aretes": 198,
+              "coupees": 220,
+              "creees": 198
+            },
+            {
+              "pas": 600,
+              "perte": 4.5619,
+              "R": 0.4322,
+              "aretes": 198,
+              "coupees": 264,
+              "creees": 242
+            },
+            {
+              "pas": 700,
+              "perte": 4.6372,
+              "R": 0.3697,
+              "aretes": 198,
+              "coupees": 308,
+              "creees": 286
+            },
+            {
+              "pas": 800,
+              "perte": 4.6269,
+              "R": 0.3783,
+              "aretes": 198,
+              "coupees": 352,
+              "creees": 330
+            },
+            {
+              "pas": 900,
+              "perte": 4.629,
+              "R": 0.3765,
+              "aretes": 198,
+              "coupees": 396,
+              "creees": 374
+            },
+            {
+              "pas": 1000,
+              "perte": 4.609,
+              "R": 0.3931,
+              "aretes": 198,
+              "coupees": 433,
+              "creees": 411
+            }
+          ],
+          "degres_avant": [
+            12,
+            11,
+            8,
+            10,
+            10,
+            13,
+            7,
+            9,
+            6,
+            9,
+            3,
+            11,
+            9,
+            5,
+            10,
+            5,
+            9,
+            8,
+            7,
+            13,
+            12,
+            13,
+            10,
+            10
+          ],
+          "degres_apres": [
+            7,
+            1,
+            13,
+            16,
+            16,
+            12,
+            16,
+            17,
+            14,
+            6,
+            0,
+            2,
+            7,
+            4,
+            9,
+            12,
+            12,
+            1,
+            1,
+            4,
+            12,
+            0,
+            4,
+            12
+          ],
+          "noeuds_amputes": [
+            10,
+            21
+          ],
+          "secondes": 173.6
+        }
+      },
+      "verdict": {
+        "code": "🔴",
+        "phrase": "la vie devore le savoir : c'est le vrai cout du metabolisme",
+        "ratio": 0.3597,
+        "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+      }
+    },
+    {
+      "semence": 2,
+      "l_professeur": 3.8775,
+      "l_ref": 5.082888,
+      "regimes": {
+        "defaut": {
+          "prune_ratio": 0.1,
+          "perte_avant": 3.6772,
+          "perte_apres": 3.6772,
+          "R_avant": 1.1662,
+          "R_apres": 1.1662,
+          "ratio": 1.0,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 220,
+          "aretes_creees": 0,
+          "aretes_coupees": 0,
+          "aretes_mortes": 0,
+          "naissances": 0,
+          "noeuds_morts": 0,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3986,
+          "evenements": [],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 200,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 300,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 400,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 500,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 600,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 700,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 800,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 900,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 1000,
+              "perte": 3.6772,
+              "R": 1.1662,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            }
+          ],
+          "degres_avant": [
+            16,
+            7,
+            11,
+            11,
+            8,
+            12,
+            12,
+            9,
+            9,
+            9,
+            9,
+            1,
+            12,
+            11,
+            9,
+            11,
+            9,
+            7,
+            9,
+            4,
+            9,
+            5,
+            10,
+            10
+          ],
+          "degres_apres": [
+            16,
+            7,
+            11,
+            11,
+            8,
+            12,
+            12,
+            9,
+            9,
+            9,
+            9,
+            1,
+            12,
+            11,
+            9,
+            11,
+            9,
+            7,
+            9,
+            4,
+            9,
+            5,
+            10,
+            10
+          ],
+          "noeuds_amputes": [],
+          "secondes": 165.5
+        },
+        "faim": {
+          "prune_ratio": 0.5,
+          "perte_avant": 3.6772,
+          "perte_apres": 4.2249,
+          "R_avant": 1.1662,
+          "R_apres": 0.7118,
+          "ratio": 0.6104,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 198,
+          "aretes_creees": 418,
+          "aretes_coupees": 440,
+          "aretes_mortes": 440,
+          "naissances": 418,
+          "noeuds_morts": 13,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3587,
+          "evenements": [
+            {
+              "step": 50,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 100,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 150,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 200,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 250,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 300,
+              "edge_deaths": 22,
+              "node_deaths": 2,
+              "revived": 0
+            },
+            {
+              "step": 350,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 400,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 450,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 500,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 550,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 600,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 650,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 700,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 750,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 800,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 850,
+              "edge_deaths": 22,
+              "node_deaths": 2,
+              "revived": 0
+            },
+            {
+              "step": 900,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 950,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 1000,
+              "edge_deaths": 22,
+              "node_deaths": 3,
+              "revived": 0
+            }
+          ],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.9265,
+              "R": 0.9593,
+              "aretes": 198,
+              "coupees": 44,
+              "creees": 22
+            },
+            {
+              "pas": 200,
+              "perte": 3.9938,
+              "R": 0.9035,
+              "aretes": 198,
+              "coupees": 88,
+              "creees": 66
+            },
+            {
+              "pas": 300,
+              "perte": 3.9817,
+              "R": 0.9136,
+              "aretes": 198,
+              "coupees": 132,
+              "creees": 110
+            },
+            {
+              "pas": 400,
+              "perte": 4.0206,
+              "R": 0.8813,
+              "aretes": 198,
+              "coupees": 176,
+              "creees": 154
+            },
+            {
+              "pas": 500,
+              "perte": 4.0168,
+              "R": 0.8844,
+              "aretes": 198,
+              "coupees": 220,
+              "creees": 198
+            },
+            {
+              "pas": 600,
+              "perte": 4.1524,
+              "R": 0.7719,
+              "aretes": 198,
+              "coupees": 264,
+              "creees": 242
+            },
+            {
+              "pas": 700,
+              "perte": 4.2385,
+              "R": 0.7005,
+              "aretes": 198,
+              "coupees": 308,
+              "creees": 286
+            },
+            {
+              "pas": 800,
+              "perte": 4.307,
+              "R": 0.6437,
+              "aretes": 198,
+              "coupees": 352,
+              "creees": 330
+            },
+            {
+              "pas": 900,
+              "perte": 4.2376,
+              "R": 0.7013,
+              "aretes": 198,
+              "coupees": 396,
+              "creees": 374
+            },
+            {
+              "pas": 1000,
+              "perte": 4.2249,
+              "R": 0.7118,
+              "aretes": 198,
+              "coupees": 440,
+              "creees": 418
+            }
+          ],
+          "degres_avant": [
+            16,
+            7,
+            11,
+            11,
+            8,
+            12,
+            12,
+            9,
+            9,
+            9,
+            9,
+            1,
+            12,
+            11,
+            9,
+            11,
+            9,
+            7,
+            9,
+            4,
+            9,
+            5,
+            10,
+            10
+          ],
+          "degres_apres": [
+            7,
+            7,
+            21,
+            14,
+            13,
+            11,
+            18,
+            18,
+            15,
+            4,
+            3,
+            9,
+            0,
+            8,
+            7,
+            0,
+            5,
+            4,
+            4,
+            17,
+            0,
+            7,
+            2,
+            4
+          ],
+          "noeuds_amputes": [
+            12,
+            15,
+            20
+          ],
+          "secondes": 174.5
+        }
+      },
+      "verdict": {
+        "code": "🔴",
+        "phrase": "la vie devore le savoir : c'est le vrai cout du metabolisme",
+        "ratio": 0.6104,
+        "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+      }
+    },
+    {
+      "semence": 3,
+      "l_professeur": 3.8775,
+      "l_ref": 5.082888,
+      "regimes": {
+        "defaut": {
+          "prune_ratio": 0.1,
+          "perte_avant": 3.7662,
+          "perte_apres": 3.7662,
+          "R_avant": 1.0923,
+          "R_apres": 1.0923,
+          "ratio": 1.0,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 220,
+          "aretes_creees": 0,
+          "aretes_coupees": 0,
+          "aretes_mortes": 0,
+          "naissances": 0,
+          "noeuds_morts": 0,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3986,
+          "evenements": [],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 200,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 300,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 400,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 500,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 600,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 700,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 800,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 900,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            },
+            {
+              "pas": 1000,
+              "perte": 3.7662,
+              "R": 1.0923,
+              "aretes": 220,
+              "coupees": 0,
+              "creees": 0
+            }
+          ],
+          "degres_avant": [
+            16,
+            9,
+            9,
+            9,
+            12,
+            13,
+            9,
+            16,
+            9,
+            5,
+            8,
+            6,
+            11,
+            13,
+            5,
+            7,
+            9,
+            7,
+            7,
+            12,
+            7,
+            6,
+            7,
+            8
+          ],
+          "degres_apres": [
+            16,
+            9,
+            9,
+            9,
+            12,
+            13,
+            9,
+            16,
+            9,
+            5,
+            8,
+            6,
+            11,
+            13,
+            5,
+            7,
+            9,
+            7,
+            7,
+            12,
+            7,
+            6,
+            7,
+            8
+          ],
+          "noeuds_amputes": [],
+          "secondes": 145.1
+        },
+        "faim": {
+          "prune_ratio": 0.5,
+          "perte_avant": 3.7662,
+          "perte_apres": 3.9527,
+          "R_avant": 1.0923,
+          "R_apres": 0.9376,
+          "ratio": 0.8584,
+          "pas": 1000,
+          "aretes_debut": 220,
+          "aretes_fin": 198,
+          "aretes_creees": 409,
+          "aretes_coupees": 431,
+          "aretes_mortes": 431,
+          "naissances": 409,
+          "noeuds_morts": 5,
+          "densite_debut": 0.3986,
+          "densite_fin": 0.3587,
+          "evenements": [
+            {
+              "step": 50,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 100,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 150,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 200,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 250,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 300,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 350,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 400,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 450,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 500,
+              "edge_deaths": 19,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 550,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 600,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 650,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 700,
+              "edge_deaths": 17,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 750,
+              "edge_deaths": 21,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 800,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 850,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 900,
+              "edge_deaths": 22,
+              "node_deaths": 1,
+              "revived": 0
+            },
+            {
+              "step": 950,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            },
+            {
+              "step": 1000,
+              "edge_deaths": 22,
+              "node_deaths": 0,
+              "revived": 0
+            }
+          ],
+          "courbe": [
+            {
+              "pas": 100,
+              "perte": 3.8905,
+              "R": 0.9892,
+              "aretes": 198,
+              "coupees": 44,
+              "creees": 22
+            },
+            {
+              "pas": 200,
+              "perte": 3.9113,
+              "R": 0.972,
+              "aretes": 198,
+              "coupees": 88,
+              "creees": 66
+            },
+            {
+              "pas": 300,
+              "perte": 3.919,
+              "R": 0.9656,
+              "aretes": 198,
+              "coupees": 132,
+              "creees": 110
+            },
+            {
+              "pas": 400,
+              "perte": 4.0063,
+              "R": 0.8931,
+              "aretes": 198,
+              "coupees": 176,
+              "creees": 154
+            },
+            {
+              "pas": 500,
+              "perte": 3.9475,
+              "R": 0.9419,
+              "aretes": 201,
+              "coupees": 217,
+              "creees": 198
+            },
+            {
+              "pas": 600,
+              "perte": 3.9769,
+              "R": 0.9175,
+              "aretes": 198,
+              "coupees": 261,
+              "creees": 239
+            },
+            {
+              "pas": 700,
+              "perte": 3.9569,
+              "R": 0.9341,
+              "aretes": 203,
+              "coupees": 300,
+              "creees": 283
+            },
+            {
+              "pas": 800,
+              "perte": 3.9706,
+              "R": 0.9228,
+              "aretes": 198,
+              "coupees": 343,
+              "creees": 321
+            },
+            {
+              "pas": 900,
+              "perte": 3.9571,
+              "R": 0.934,
+              "aretes": 198,
+              "coupees": 387,
+              "creees": 365
+            },
+            {
+              "pas": 1000,
+              "perte": 3.9527,
+              "R": 0.9376,
+              "aretes": 198,
+              "coupees": 431,
+              "creees": 409
+            }
+          ],
+          "degres_avant": [
+            16,
+            9,
+            9,
+            9,
+            12,
+            13,
+            9,
+            16,
+            9,
+            5,
+            8,
+            6,
+            11,
+            13,
+            5,
+            7,
+            9,
+            7,
+            7,
+            12,
+            7,
+            6,
+            7,
+            8
+          ],
+          "degres_apres": [
+            6,
+            0,
+            17,
+            14,
+            8,
+            15,
+            17,
+            8,
+            5,
+            3,
+            14,
+            4,
+            11,
+            15,
+            10,
+            1,
+            6,
+            9,
+            4,
+            7,
+            10,
+            1,
+            7,
+            6
+          ],
+          "noeuds_amputes": [
+            1
+          ],
+          "secondes": 127.7
+        }
+      },
+      "verdict": {
+        "code": "🟡",
+        "phrase": "survie partielle : la faim coupe des porteurs du savoir",
+        "ratio": 0.8584,
+        "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+      }
+    }
+  ],
+  "pool32": {
+    "pool": 32,
+    "aretes_max": 396,
+    "paires_possibles": 992,
+    "densite": 0.3992,
+    "pas_entrainement": 200,
+    "aretes_creees_entrainement": 384,
+    "aretes_coupees_entrainement": 0,
+    "vie_libre": {
+      "pas": 300,
+      "aretes_debut": 396,
+      "aretes_fin": 396,
+      "aretes_creees": 0,
+      "aretes_coupees": 0,
+      "aretes_mortes": 0,
+      "naissances": 384,
+      "noeuds_morts": 0,
+      "densite_debut": 0.3992,
+      "densite_fin": 0.3992,
+      "evenements": [],
+      "courbe": []
+    },
+    "usage_min": 0.019061,
+    "usage_max": 0.115429,
+    "seuil_faim_defaut": 0.008373,
+    "secondes": 167.6
+  },
+  "diagnostic_faim": {
+    "aretes": 220,
+    "usage_min": 0.017124,
+    "usage_median": 0.045535,
+    "usage_max": 0.114615,
+    "seuil_defaut": 0.00804,
+    "sous_le_seuil": 0,
+    "aretes_a_usage_nul": 0
+  },
+  "resume": {
+    "nouvelle_moyenne": 3.7363,
+    "nouvelle_ecart_type": 0.0512,
+    "ancienne_moyenne": 7.4452,
+    "ancienne_ecart_type": 0.1449,
+    "parametres_actifs": 63276,
+    "dense_parametres": 63480,
+    "aretes_moyennes": 220.0,
+    "densite_moyenne": 0.3986,
+    "verdict": {
+      "code": "🥈",
+      "phrase": "le pool 24 bat le dense jumeau du pool 24"
+    }
+  },
+  "survie_resume": {
+    "defaut": {
+      "R_avant": 1.1172,
+      "R_apres": 1.1172,
+      "ratio": 1.0,
+      "coupees": 0.0,
+      "creees": 0.0
+    },
+    "faim": {
+      "R_avant": 1.1172,
+      "R_apres": 0.6808,
+      "ratio": 0.6095,
+      "coupees": 434.6667,
+      "creees": 412.6667,
+      "verdict": {
+        "code": "🔴",
+        "phrase": "la vie devore le savoir : c'est le vrai cout du metabolisme",
+        "ratio": 0.6095,
+        "codes_par_semence": [
+          "🔴",
+          "🔴",
+          "🟡"
+        ],
+        "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+      }
+    }
+  }
+}

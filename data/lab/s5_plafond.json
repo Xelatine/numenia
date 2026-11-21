@@ -1,0 +1,38 @@
+{
+  "professeurs": {
+    "A": {
+      "graine": 1,
+      "mlp": 768,
+      "parametres": 63480
+    },
+    "B": {
+      "graine": 2,
+      "mlp": 768,
+      "parametres": 63480
+    }
+  },
+  "accord": {
+    "contextes": 5376,
+    "kl_A_vers_B": 0.8582,
+    "kl_B_vers_A": 0.8356,
+    "kl_symetrique": 0.8469,
+    "top3_identiques": 0.0115,
+    "top3_recouvrement": 0.3053,
+    "top3_uniforme": 0.0096
+  },
+  "definition": "KL comportementale entre deux professeurs independants : c'est le plafond theorique de la fidelite d'un eleve",
+  "jumeau": {
+    "mlp": 768,
+    "parametres": 63480,
+    "parametres_formule": 63480,
+    "ratio_dense_sur_mycelia": 1.0032,
+    "val_600pas": 3.8632,
+    "colonnes": {
+      "nouvelle": 3.8775,
+      "ancienne": 3.8632,
+      "contextes_nouvelle": 406,
+      "contextes_ancienne": 464
+    },
+    "secondes": 6.5
+  }
+}

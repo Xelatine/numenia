@@ -320,7 +320,39 @@ def align(source: np.ndarray, receiver: np.ndarray, threshold: float = 0.35) -> 
 # ---------------------------------------------------------------------------
 @torch.no_grad()
 def mycelia_loss(brain, batches) -> float:
-    """Perte moyenne (cross-entropy) du micro-MYCELIA sur des lots fixes."""
+    """Perte moyenne (cross-entropy) du micro-MYCELIA sur des lots fixes.
+
+    S5-MAX M1 : la cible est le token **courant** (``x``), pas le suivant.
+    ``Brain.forward`` lit le token avant de l'injecter, donc a la position ``t``
+    il predit ``x[t]`` ; c'est aussi la cible de son entrainement
+    (``corpus.targets``) et la tache du dense. L'ancienne version comparait au
+    couple ``y`` (token suivant), soit un pas de plus que ce que le cerveau
+    apprend : sur un modele au plancher les deux se valent (5,1484 contre
+    5,1509), sur un modele qui predit l'ecart devient enorme (4,06 contre 6,64
+    au meme instantane). La fonction d'origine est gardee, intacte, sous
+    ``mycelia_loss_legacy`` pour la tracabilite des chiffres publies.
+    """
+    total = 0.0
+    count = 0
+    for x, _y in batches:
+        logits = brain(x, grow=False, trace=False)[0]
+        total += float(
+            torch.nn.functional.cross_entropy(
+                logits.reshape(-1, logits.shape[-1]), x.reshape(-1)
+            )
+        )
+        count += 1
+    return total / max(1, count)
+
+
+@torch.no_grad()
+def mycelia_loss_legacy(brain, batches) -> float:
+    """La metrique publiee de S2/S3-BIS, **inchangee** : cible ``y`` (suivant).
+
+    Conservee telle quelle (meme corps, meme resultat) pour que chaque chiffre
+    deja publie reste reproductible. Ce n'est pas la mesure honnete : elle
+    demande au cerveau un token de plus que ce qu'il apprend.
+    """
     total = 0.0
     count = 0
     for x, y in batches:

@@ -1,0 +1,447 @@
+{
+  "semence": 1,
+  "l_professeur": 3.8775,
+  "l_ref": 5.082888,
+  "regimes": {
+    "defaut": {
+      "prune_ratio": 0.1,
+      "perte_avant": 3.7654,
+      "perte_apres": 3.7654,
+      "R_avant": 1.093,
+      "R_apres": 1.093,
+      "ratio": 1.0,
+      "pas": 1000,
+      "aretes_debut": 220,
+      "aretes_fin": 220,
+      "aretes_creees": 0,
+      "aretes_coupees": 0,
+      "aretes_mortes": 0,
+      "naissances": 0,
+      "noeuds_morts": 0,
+      "densite_debut": 0.3986,
+      "densite_fin": 0.3986,
+      "evenements": [],
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 200,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 300,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 400,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 500,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 600,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 700,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 800,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 900,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 1000,
+          "perte": 3.7654,
+          "R": 1.093,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        }
+      ],
+      "degres_avant": [
+        12,
+        11,
+        8,
+        10,
+        10,
+        13,
+        7,
+        9,
+        6,
+        9,
+        3,
+        11,
+        9,
+        5,
+        10,
+        5,
+        9,
+        8,
+        7,
+        13,
+        12,
+        13,
+        10,
+        10
+      ],
+      "degres_apres": [
+        12,
+        11,
+        8,
+        10,
+        10,
+        13,
+        7,
+        9,
+        6,
+        9,
+        3,
+        11,
+        9,
+        5,
+        10,
+        5,
+        9,
+        8,
+        7,
+        13,
+        12,
+        13,
+        10,
+        10
+      ],
+      "noeuds_amputes": [],
+      "secondes": 126.8
+    },
+    "faim": {
+      "prune_ratio": 0.5,
+      "perte_avant": 3.7654,
+      "perte_apres": 4.609,
+      "R_avant": 1.093,
+      "R_apres": 0.3931,
+      "ratio": 0.3597,
+      "pas": 1000,
+      "aretes_debut": 220,
+      "aretes_fin": 198,
+      "aretes_creees": 411,
+      "aretes_coupees": 433,
+      "aretes_mortes": 433,
+      "naissances": 411,
+      "noeuds_morts": 6,
+      "densite_debut": 0.3986,
+      "densite_fin": 0.3587,
+      "evenements": [
+        {
+          "step": 50,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 100,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 150,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 200,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 250,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 300,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 350,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 400,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 450,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 500,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 550,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 600,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 650,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 700,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 750,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 800,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 850,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 900,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 950,
+          "edge_deaths": 15,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 1000,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        }
+      ],
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.9024,
+          "R": 0.9793,
+          "aretes": 198,
+          "coupees": 44,
+          "creees": 22
+        },
+        {
+          "pas": 200,
+          "perte": 4.0805,
+          "R": 0.8316,
+          "aretes": 198,
+          "coupees": 88,
+          "creees": 66
+        },
+        {
+          "pas": 300,
+          "perte": 4.3878,
+          "R": 0.5767,
+          "aretes": 198,
+          "coupees": 132,
+          "creees": 110
+        },
+        {
+          "pas": 400,
+          "perte": 4.4418,
+          "R": 0.5319,
+          "aretes": 198,
+          "coupees": 176,
+          "creees": 154
+        },
+        {
+          "pas": 500,
+          "perte": 4.5851,
+          "R": 0.413,
+          "aretes": 198,
+          "coupees": 220,
+          "creees": 198
+        },
+        {
+          "pas": 600,
+          "perte": 4.5619,
+          "R": 0.4322,
+          "aretes": 198,
+          "coupees": 264,
+          "creees": 242
+        },
+        {
+          "pas": 700,
+          "perte": 4.6372,
+          "R": 0.3697,
+          "aretes": 198,
+          "coupees": 308,
+          "creees": 286
+        },
+        {
+          "pas": 800,
+          "perte": 4.6269,
+          "R": 0.3783,
+          "aretes": 198,
+          "coupees": 352,
+          "creees": 330
+        },
+        {
+          "pas": 900,
+          "perte": 4.629,
+          "R": 0.3765,
+          "aretes": 198,
+          "coupees": 396,
+          "creees": 374
+        },
+        {
+          "pas": 1000,
+          "perte": 4.609,
+          "R": 0.3931,
+          "aretes": 198,
+          "coupees": 433,
+          "creees": 411
+        }
+      ],
+      "degres_avant": [
+        12,
+        11,
+        8,
+        10,
+        10,
+        13,
+        7,
+        9,
+        6,
+        9,
+        3,
+        11,
+        9,
+        5,
+        10,
+        5,
+        9,
+        8,
+        7,
+        13,
+        12,
+        13,
+        10,
+        10
+      ],
+      "degres_apres": [
+        7,
+        1,
+        13,
+        16,
+        16,
+        12,
+        16,
+        17,
+        14,
+        6,
+        0,
+        2,
+        7,
+        4,
+        9,
+        12,
+        12,
+        1,
+        1,
+        4,
+        12,
+        0,
+        4,
+        12
+      ],
+      "noeuds_amputes": [
+        10,
+        21
+      ],
+      "secondes": 173.6
+    }
+  },
+  "verdict": {
+    "code": "🔴",
+    "phrase": "la vie devore le savoir : c'est le vrai cout du metabolisme",
+    "ratio": 0.3597,
+    "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+  }
+}

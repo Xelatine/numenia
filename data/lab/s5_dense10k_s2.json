@@ -1,0 +1,11 @@
+{
+  "corpus": "10k",
+  "semence": 2,
+  "pas": 600,
+  "nouvelle": 3.3403,
+  "ancienne": 3.3263,
+  "contextes_nouvelle": 700,
+  "contextes_ancienne": 800,
+  "best_step": 600,
+  "secondes": 6.4
+}

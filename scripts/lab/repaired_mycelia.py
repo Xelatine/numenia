@@ -77,7 +77,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from lab_common import LAB, SEED, ToyCorpus, set_seed
+from lab_common import LAB, SEED, ToyCorpus, mycelia_loss, mycelia_loss_legacy, set_seed
 from micro_mycelia import KW, _swap_population, n_parameters, snapshot as base_snapshot
 from mycelia.brain import OUTPUT_NODE, Brain
 from mycelia.growth import apply_pending_node_births
@@ -180,14 +180,24 @@ def build_repaired(
     seed: int = SEED,
     two_speeds: bool = True,
     overrides: dict | None = None,
+    nodes_read: int | None = None,
 ) -> RepairedBrain:
-    """Meme construction que ``micro_mycelia.build_mycelia``, tete reparee."""
+    """Meme construction que ``micro_mycelia.build_mycelia``, tete reparee.
+
+    ``nodes_read`` vaut par defaut **toute la population** : au pool 8 de S4
+    c'etait deja le cas, et au pool 24 de S5 lire huit membranes sur vingt-quatre
+    gaspillerait les seize autres sans le dire.
+    """
     set_seed(seed)
     kwargs = dict(KW)
     kwargs.update(overrides or {})
     n_nodes = int(kwargs.pop("n_nodes", 24))
     return RepairedBrain(
-        n_nodes=n_nodes, vocab=int(vocab), two_speeds=bool(two_speeds), **kwargs
+        n_nodes=n_nodes,
+        vocab=int(vocab),
+        two_speeds=bool(two_speeds),
+        nodes_read=int(nodes_read if nodes_read is not None else n_nodes),
+        **kwargs,
     )
 
 
@@ -274,35 +284,17 @@ def restore(brain: Brain, snap: dict) -> Brain:
 def aligned_loss(brain: Brain, batches) -> float:
     """Perte honnete : MYCELIA predit le token ``t``, on compare a ``x[:, t]``.
 
-    ``lab_common.mycelia_loss`` compare au couple ``y`` (token suivant) : c'est
-    un pas de plus que ce que le cerveau apprend, et sur un modele qui predit
-    l'ecart n'est plus une constante (mesure : 4,06 contre 6,64 au meme
-    instantane). ``Brain.forward`` lit avant d'injecter, donc la cible de la
-    position ``t`` est ``x[:, t]`` -- exactement ``corpus.targets``.
+    Depuis S5-MAX M1 ``lab_common.mycelia_loss`` fait exactement cela ; cette
+    fonction en est l'alias historique des scripts S4 et ne peut plus diverger
+    de la mesure commune (elle l'appelle).
     """
-    total = 0.0
-    count = 0
-    for x, _y in batches:
-        logits = brain(x, grow=False, trace=False)[0]
-        total += float(
-            F.cross_entropy(logits.reshape(-1, logits.shape[-1]), x.reshape(-1))
-        )
-        count += 1
-    return total / max(1, count)
+    return mycelia_loss(brain, batches)
 
 
 @torch.no_grad()
 def shifted_loss(brain: Brain, batches) -> float:
     """La metrique publiee de S2/S3-BIS (cible ``y``), pour la continuite."""
-    total = 0.0
-    count = 0
-    for x, y in batches:
-        logits = brain(x, grow=False, trace=False)[0]
-        total += float(
-            F.cross_entropy(logits.reshape(-1, logits.shape[-1]), y.reshape(-1))
-        )
-        count += 1
-    return total / max(1, count)
+    return mycelia_loss_legacy(brain, batches)
 
 
 @torch.no_grad()
@@ -321,16 +313,26 @@ def per_position_loss(brain: Brain, batches, seq: int = SEQ) -> list[float]:
 # ---------------------------------------------------------------------------
 # Distillation : le projecteur jetable et la lecture des deux cerveaux
 # ---------------------------------------------------------------------------
-def make_projector(dim: int) -> nn.Linear:
-    """P = identite au depart : d(P h, h_prof) mesure alors l'ecart reel.
+def make_projector(dim: int, init: str = "identity") -> nn.Linear:
+    """Le projecteur jetable qui rend les deux espaces comparables.
 
+    ``init="identity"`` (defaut S4) part de l'egalite : la MSE mesure alors
+    l'ecart reel des deux representations. ``init="random"`` (S5 D2) est le
+    second correctif du diagnostic S4 : a l'identite le projecteur n'avait pas
+    de quoi se deplier (MSE 0,74 incompressible), il ne pouvait que translater.
     Il est optimise avec le cerveau puis **jete** : ce n'est pas une partie du
-    cerveau, seulement l'echelle qui rend les deux espaces comparables.
+    cerveau, seulement la carte entre les deux espaces.
     """
     proj = nn.Linear(dim, dim)
     with torch.no_grad():
-        proj.weight.copy_(torch.eye(dim))
-        proj.bias.zero_()
+        if str(init) == "identity":
+            proj.weight.copy_(torch.eye(dim))
+            proj.bias.zero_()
+        else:
+            # Echelle 1/sqrt(dim) : une carte dense mais petite au depart, pour
+            # que le terme d'alignement ne domine pas la KL au premier pas.
+            proj.weight.copy_(torch.randn(dim, dim) / max(1.0, dim) ** 0.5)
+            proj.bias.zero_()
     return proj
 
 
@@ -368,17 +370,26 @@ def train_repaired(
     lam: float = 0.5,
     teacher_perm: torch.Tensor | None = None,
     clip: float = 1.0,
+    alpha: float = 1.0,
+    beta: float = 0.0,
+    gamma: float | None = None,
+    temperature: float = 1.0,
+    projector_init: str = "identity",
 ) -> dict:
     """Entraine (ou distille) le cerveau repare, metabolisme actif.
 
-    ``teacher`` est soit None (controle M0 : cross-entropy seule), soit un dense
-    jouet. Dans ce cas la perte est exactement celle de la mission :
+    ``teacher`` est soit None (controle M0 : cross-entropy seule, ``beta``
+    force a 1), soit un dense jouet. Dans ce cas la perte est la formule
+    complete de S5-MAX D2 :
 
-        KL(logits_MYC || logits_prof) + lambda * MSE(P h_MYC, h_prof)
+        L = alpha * T^2 * KL(p_T(MYC) || p_T(prof))
+          + beta  * CE(logits_MYC, tokens_reels)      <- l'ancrage
+          + gamma * MSE(P h_MYC, h_prof)              <- P appris
 
-    sans terme de cross-entropy : le savoir doit venir du professeur, pas des
-    etiquettes (sinon le gain de distillation serait indiscernable d'un simple
-    entrainement supervise).
+    Le terme d'ancrage est le premier correctif du diagnostic S4 : la KL seule
+    laissait la tete prendre la forme du professeur sans son avantage sur le
+    corpus. Le projecteur aleatoire est le second. Les valeurs par defaut
+    (1, 0, 0.5, T=1, identite) reproduisent exactement la formule S4.
 
     La validation est ``aligned_loss`` (cible du cerveau) ; ``best_step`` et la
     courbe sont choisis dessus. La metrique decalee de S3-BIS est ajoutee au
@@ -387,8 +398,12 @@ def train_repaired(
     extra = []
     projector = None
     if teacher is not None:
-        projector = make_projector(int(brain.dim))
+        projector = make_projector(int(brain.dim), init=projector_init)
         extra = list(projector.parameters())
+    gamma = float(lam) if gamma is None else float(gamma)
+    beta = 0.0 if teacher is None else float(beta)
+    alpha = float(alpha)
+    temp = max(1e-3, float(temperature))
     optimizer = torch.optim.AdamW(
         list(brain.parameters()) + extra, lr=lr, weight_decay=weight_decay
     )
@@ -410,12 +425,20 @@ def train_repaired(
             parts = {"ce": float(loss.detach()), "kl": None, "align": None}
         else:
             t_logits, t_hidden = teacher_parts(teacher, x, teacher_perm)
-            logp = F.log_softmax(logits[:, 1:], dim=-1)
-            logq = F.log_softmax(t_logits, dim=-1)
-            kl = (logp.exp() * (logp - logq)).sum(-1).mean()
+            logp = F.log_softmax(logits[:, 1:] / temp, dim=-1)
+            logq = F.log_softmax(t_logits / temp, dim=-1)
+            kl = (logp.exp() * (logp - logq)).sum(-1).mean() * (temp * temp)
             align = F.mse_loss(projector(brain.readout_rows()[:, 1:]), t_hidden)
-            loss = kl + float(lam) * align
-            parts = {"ce": None, "kl": float(kl.detach()), "align": float(align.detach())}
+            ce = F.cross_entropy(
+                logits[:, 1:].reshape(-1, logits.shape[-1]),
+                target[:, 1:].reshape(-1),
+            )
+            loss = alpha * kl + beta * ce + gamma * align
+            parts = {
+                "ce": float(ce.detach()),
+                "kl": float(kl.detach()),
+                "align": float(align.detach()),
+            }
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         brain.freeze_newborn_gradients()
@@ -474,36 +497,53 @@ def train_repaired(
 
 @torch.no_grad()
 def free_life(brain: RepairedBrain, corpus: ToyCorpus, steps: int = 1000, batch: int = 16,
-              seed: int = SEED, lifecycle_every: int = 50) -> dict:
+              seed: int = SEED, lifecycle_every: int = 50, probe=None,
+              probe_every: int = 0, step_offset: int = 0) -> dict:
     """R8 : le metabolisme tourne LIBRE, sans entrainement ni gradient.
 
     Naissances d'aretes (payees par le trafic), adresses honorees, coupe des
     synapses faminees : exactement la vie du cerveau, mais aucun pas
     d'optimiseur. C'est la seule facon de demander si le savoir greffe survit
     a l'organisme qui le porte.
+
+    ``probe`` (optionnel) est appele toutes les ``probe_every`` pas avec
+    ``(brain, step)`` : c'est la courbe de survie de l'onglet, et c'est aussi ce
+    qui permet de chiffrer R avant / apres sans relancer la vie.
     """
     generator = torch.Generator().manual_seed(int(seed) + 991)
     brain.eval()
     events: list[dict] = []
+    curve: list[dict] = []
+    ne_start = int(brain.ne)
+    born_start = int(brain.births)
+    deaths_start = int(brain.edge_deaths)
     for step in range(1, int(steps) + 1):
+        brain.clock = int(step_offset) + step
         x, _y = corpus.batch(batch, generator=generator)
-        brain.clock = step
         brain(x, grow=True, trace=False)
         if step % 25 == 0:
             born = apply_pending_node_births(brain)
             if born:
-                events.append({"step": step, "naissances": len(born)})
+                events.append({"step": step, "naissances_noeuds": len(born)})
         if lifecycle_every and step % int(lifecycle_every) == 0:
-            report = apply_lifecycle(brain, step=step)
+            report = apply_lifecycle(brain, step=brain.clock)
             if report["edge_deaths"] or report["node_deaths"]:
                 events.append({"step": step, **report})
+        if probe is not None and probe_every and step % int(probe_every) == 0:
+            curve.append({"pas": step, **probe(brain, step)})
     return {
         "pas": int(steps),
+        "aretes_debut": ne_start,
         "aretes_fin": int(brain.ne),
+        "aretes_creees": int(brain.births) - born_start,
+        "aretes_coupees": int(brain.edge_deaths) - deaths_start,
         "aretes_mortes": int(brain.edge_deaths),
         "naissances": int(brain.births),
         "noeuds_morts": int(brain.node_deaths),
+        "densite_debut": round(ne_start / max(1, brain.n_nodes * (brain.n_nodes - 1)), 4),
+        "densite_fin": round(int(brain.ne) / max(1, brain.n_nodes * (brain.n_nodes - 1)), 4),
         "evenements": events[:40],
+        "courbe": curve,
     }
 
 

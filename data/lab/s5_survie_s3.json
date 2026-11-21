@@ -1,0 +1,446 @@
+{
+  "semence": 3,
+  "l_professeur": 3.8775,
+  "l_ref": 5.082888,
+  "regimes": {
+    "defaut": {
+      "prune_ratio": 0.1,
+      "perte_avant": 3.7662,
+      "perte_apres": 3.7662,
+      "R_avant": 1.0923,
+      "R_apres": 1.0923,
+      "ratio": 1.0,
+      "pas": 1000,
+      "aretes_debut": 220,
+      "aretes_fin": 220,
+      "aretes_creees": 0,
+      "aretes_coupees": 0,
+      "aretes_mortes": 0,
+      "naissances": 0,
+      "noeuds_morts": 0,
+      "densite_debut": 0.3986,
+      "densite_fin": 0.3986,
+      "evenements": [],
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 200,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 300,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 400,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 500,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 600,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 700,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 800,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 900,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        },
+        {
+          "pas": 1000,
+          "perte": 3.7662,
+          "R": 1.0923,
+          "aretes": 220,
+          "coupees": 0,
+          "creees": 0
+        }
+      ],
+      "degres_avant": [
+        16,
+        9,
+        9,
+        9,
+        12,
+        13,
+        9,
+        16,
+        9,
+        5,
+        8,
+        6,
+        11,
+        13,
+        5,
+        7,
+        9,
+        7,
+        7,
+        12,
+        7,
+        6,
+        7,
+        8
+      ],
+      "degres_apres": [
+        16,
+        9,
+        9,
+        9,
+        12,
+        13,
+        9,
+        16,
+        9,
+        5,
+        8,
+        6,
+        11,
+        13,
+        5,
+        7,
+        9,
+        7,
+        7,
+        12,
+        7,
+        6,
+        7,
+        8
+      ],
+      "noeuds_amputes": [],
+      "secondes": 145.1
+    },
+    "faim": {
+      "prune_ratio": 0.5,
+      "perte_avant": 3.7662,
+      "perte_apres": 3.9527,
+      "R_avant": 1.0923,
+      "R_apres": 0.9376,
+      "ratio": 0.8584,
+      "pas": 1000,
+      "aretes_debut": 220,
+      "aretes_fin": 198,
+      "aretes_creees": 409,
+      "aretes_coupees": 431,
+      "aretes_mortes": 431,
+      "naissances": 409,
+      "noeuds_morts": 5,
+      "densite_debut": 0.3986,
+      "densite_fin": 0.3587,
+      "evenements": [
+        {
+          "step": 50,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 100,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 150,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 200,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 250,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 300,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 350,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 400,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 450,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 500,
+          "edge_deaths": 19,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 550,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 600,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 650,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 700,
+          "edge_deaths": 17,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 750,
+          "edge_deaths": 21,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 800,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 850,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 900,
+          "edge_deaths": 22,
+          "node_deaths": 1,
+          "revived": 0
+        },
+        {
+          "step": 950,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        },
+        {
+          "step": 1000,
+          "edge_deaths": 22,
+          "node_deaths": 0,
+          "revived": 0
+        }
+      ],
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.8905,
+          "R": 0.9892,
+          "aretes": 198,
+          "coupees": 44,
+          "creees": 22
+        },
+        {
+          "pas": 200,
+          "perte": 3.9113,
+          "R": 0.972,
+          "aretes": 198,
+          "coupees": 88,
+          "creees": 66
+        },
+        {
+          "pas": 300,
+          "perte": 3.919,
+          "R": 0.9656,
+          "aretes": 198,
+          "coupees": 132,
+          "creees": 110
+        },
+        {
+          "pas": 400,
+          "perte": 4.0063,
+          "R": 0.8931,
+          "aretes": 198,
+          "coupees": 176,
+          "creees": 154
+        },
+        {
+          "pas": 500,
+          "perte": 3.9475,
+          "R": 0.9419,
+          "aretes": 201,
+          "coupees": 217,
+          "creees": 198
+        },
+        {
+          "pas": 600,
+          "perte": 3.9769,
+          "R": 0.9175,
+          "aretes": 198,
+          "coupees": 261,
+          "creees": 239
+        },
+        {
+          "pas": 700,
+          "perte": 3.9569,
+          "R": 0.9341,
+          "aretes": 203,
+          "coupees": 300,
+          "creees": 283
+        },
+        {
+          "pas": 800,
+          "perte": 3.9706,
+          "R": 0.9228,
+          "aretes": 198,
+          "coupees": 343,
+          "creees": 321
+        },
+        {
+          "pas": 900,
+          "perte": 3.9571,
+          "R": 0.934,
+          "aretes": 198,
+          "coupees": 387,
+          "creees": 365
+        },
+        {
+          "pas": 1000,
+          "perte": 3.9527,
+          "R": 0.9376,
+          "aretes": 198,
+          "coupees": 431,
+          "creees": 409
+        }
+      ],
+      "degres_avant": [
+        16,
+        9,
+        9,
+        9,
+        12,
+        13,
+        9,
+        16,
+        9,
+        5,
+        8,
+        6,
+        11,
+        13,
+        5,
+        7,
+        9,
+        7,
+        7,
+        12,
+        7,
+        6,
+        7,
+        8
+      ],
+      "degres_apres": [
+        6,
+        0,
+        17,
+        14,
+        8,
+        15,
+        17,
+        8,
+        5,
+        3,
+        14,
+        4,
+        11,
+        15,
+        10,
+        1,
+        6,
+        9,
+        4,
+        7,
+        10,
+        1,
+        7,
+        6
+      ],
+      "noeuds_amputes": [
+        1
+      ],
+      "secondes": 127.7
+    }
+  },
+  "verdict": {
+    "code": "🟡",
+    "phrase": "survie partielle : la faim coupe des porteurs du savoir",
+    "ratio": 0.8584,
+    "critere": "R_apres >= 0,9 x R_avant (regime faim)"
+  }
+}

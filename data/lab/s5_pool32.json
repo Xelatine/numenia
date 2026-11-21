@@ -1,0 +1,27 @@
+{
+  "pool": 32,
+  "aretes_max": 396,
+  "paires_possibles": 992,
+  "densite": 0.3992,
+  "pas_entrainement": 200,
+  "aretes_creees_entrainement": 384,
+  "aretes_coupees_entrainement": 0,
+  "vie_libre": {
+    "pas": 300,
+    "aretes_debut": 396,
+    "aretes_fin": 396,
+    "aretes_creees": 0,
+    "aretes_coupees": 0,
+    "aretes_mortes": 0,
+    "naissances": 384,
+    "noeuds_morts": 0,
+    "densite_debut": 0.3992,
+    "densite_fin": 0.3992,
+    "evenements": [],
+    "courbe": []
+  },
+  "usage_min": 0.019061,
+  "usage_max": 0.115429,
+  "seuil_faim_defaut": 0.008373,
+  "secondes": 167.6
+}

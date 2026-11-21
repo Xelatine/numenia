@@ -1,0 +1,103 @@
+{
+  "plafond": {
+    "contextes": 5376,
+    "kl_A_vers_B": 0.8582,
+    "kl_B_vers_A": 0.8356,
+    "kl_symetrique": 0.8469,
+    "top3_identiques": 0.0115,
+    "top3_recouvrement": 0.3053,
+    "top3_uniforme": 0.0096
+  },
+  "l_professeur": 3.8775,
+  "l_ref": 5.082888,
+  "phrases_neuves": {
+    "n": 40,
+    "top3_uniforme": 0.0096
+  },
+  "bras": {
+    "M0": [
+      {
+        "modele": "s5_pool24_s1.pt",
+        "perte": 3.7654,
+        "perte_ancienne": 7.2852,
+        "R": 1.093,
+        "kl_A_vers_MYC": 0.6672,
+        "kl_B_vers_MYC": 0.6764,
+        "top3_identiques_avec_A": 0.0169,
+        "top3_recouvrement_avec_A": 0.3356,
+        "contextes": 5376,
+        "F": 0.2226,
+        "top3": 0.3279
+      },
+      {
+        "modele": "s5_pool24_s2.pt",
+        "perte": 3.6772,
+        "perte_ancienne": 7.4829,
+        "R": 1.1662,
+        "kl_A_vers_MYC": 0.7147,
+        "kl_B_vers_MYC": 0.6791,
+        "top3_identiques_avec_A": 0.019,
+        "top3_recouvrement_avec_A": 0.3308,
+        "contextes": 5376,
+        "F": 0.1672,
+        "top3": 0.3005
+      }
+    ],
+    "a1b1g0": [
+      {
+        "modele": "s5_grid_a1b1g0_s1.pt",
+        "perte": 3.5207,
+        "perte_ancienne": 7.9373,
+        "R": 1.296,
+        "kl_A_vers_MYC": 0.4467,
+        "kl_B_vers_MYC": 0.6576,
+        "top3_identiques_avec_A": 0.0283,
+        "top3_recouvrement_avec_A": 0.4404,
+        "contextes": 5376,
+        "F": 0.4795,
+        "top3": 0.2568
+      },
+      {
+        "modele": "s5_grid_a1b1g0_s2.pt",
+        "perte": 3.5355,
+        "perte_ancienne": 7.7704,
+        "R": 1.2837,
+        "kl_A_vers_MYC": 0.427,
+        "kl_B_vers_MYC": 0.5975,
+        "top3_identiques_avec_A": 0.0426,
+        "top3_recouvrement_avec_A": 0.4225,
+        "contextes": 5376,
+        "F": 0.5024,
+        "top3": 0.224
+      }
+    ],
+    "melange": [
+      {
+        "modele": "s5_melange_s1.pt",
+        "perte": 4.7461,
+        "perte_ancienne": 6.7069,
+        "R": 0.2794,
+        "kl_A_vers_MYC": 1.4377,
+        "kl_B_vers_MYC": 1.5064,
+        "top3_identiques_avec_A": 0.0,
+        "top3_recouvrement_avec_A": 0.0781,
+        "contextes": 5376,
+        "F": -0.6753,
+        "top3": 0.1311
+      },
+      {
+        "modele": "s5_melange_s2.pt",
+        "perte": 4.7728,
+        "perte_ancienne": 6.8098,
+        "R": 0.2573,
+        "kl_A_vers_MYC": 1.4737,
+        "kl_B_vers_MYC": 1.5137,
+        "top3_identiques_avec_A": 0.0,
+        "top3_recouvrement_avec_A": 0.0694,
+        "contextes": 5376,
+        "F": -0.7172,
+        "top3": 0.1366
+      }
+    ]
+  }
+}

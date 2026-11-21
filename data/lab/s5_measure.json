@@ -1,0 +1,171 @@
+{
+  "protocole": {
+    "corpus": "1000 phrases (et 10k pour le second bloc)",
+    "semences": [
+      1,
+      2,
+      3
+    ],
+    "colonnes": {
+      "nouvelle": "predire x[t] a partir du prefixe (tache reelle du cerveau)",
+      "ancienne": "predire y[t] = x[t+1] (metrique publiee S2/S3-BIS)"
+    },
+    "l_ref": 5.082888
+  },
+  "planchers": {
+    "unigramme": {
+      "nouvelle": 5.082888,
+      "ancienne": 5.082888,
+      "mle": 5.0818,
+      "tokens": 4664,
+      "reference_s3bis": 5.082888
+    },
+    "bigramme": {
+      "nouvelle": 3.046586,
+      "ancienne": 3.046586,
+      "mle": 2.719511,
+      "contextes": 170,
+      "reference_s3bis": 3.046586
+    },
+    "trigramme": {
+      "nouvelle": 1.982794,
+      "ancienne": 1.982794,
+      "mle": 1.630368,
+      "contextes": 2723,
+      "reference_s3bis": 1.982794
+    }
+  },
+  "table": {
+    "mycelia/1000/pleine": {
+      "n": 3,
+      "nouvelle_moyenne": 3.5936,
+      "nouvelle_ecart_type": 0.0368,
+      "ancienne_moyenne": 7.4155,
+      "ancienne_ecart_type": 0.2447,
+      "valeurs_nouvelle": [
+        3.6032,
+        3.553,
+        3.6247
+      ],
+      "note": "MYCELIA repare S4, re-mesure"
+    },
+    "mycelia/1000/deux_vitesses": {
+      "n": 3,
+      "nouvelle_moyenne": 3.6672,
+      "nouvelle_ecart_type": 0.0559,
+      "ancienne_moyenne": 7.9402,
+      "ancienne_ecart_type": 0.4059,
+      "valeurs_nouvelle": [
+        3.6093,
+        3.6715,
+        3.7208
+      ],
+      "note": "MYCELIA repare S4, re-mesure"
+    },
+    "mycelia/10k/pleine": {
+      "n": 3,
+      "nouvelle_moyenne": 3.3394,
+      "nouvelle_ecart_type": 0.0053,
+      "ancienne_moyenne": 7.6286,
+      "ancienne_ecart_type": 0.0199,
+      "valeurs_nouvelle": [
+        3.3384,
+        3.3451,
+        3.3346
+      ],
+      "note": "MYCELIA repare S4, re-mesure"
+    },
+    "mycelia/10k/deux_vitesses": {
+      "n": 3,
+      "nouvelle_moyenne": 3.379,
+      "nouvelle_ecart_type": 0.0162,
+      "ancienne_moyenne": 8.1441,
+      "ancienne_ecart_type": 0.1085,
+      "valeurs_nouvelle": [
+        3.3814,
+        3.3939,
+        3.3618
+      ],
+      "note": "MYCELIA repare S4, re-mesure"
+    },
+    "dense/1000": {
+      "n": 3,
+      "nouvelle_moyenne": 3.9229,
+      "nouvelle_ecart_type": 0.0657,
+      "ancienne_moyenne": 3.9193,
+      "ancienne_ecart_type": 0.0578,
+      "valeurs_nouvelle": [
+        3.8985,
+        3.8729,
+        3.9973
+      ],
+      "note": "dense jumeau"
+    },
+    "dense/10k": {
+      "n": 3,
+      "nouvelle_moyenne": 3.3308,
+      "nouvelle_ecart_type": 0.0189,
+      "ancienne_moyenne": 3.3169,
+      "ancienne_ecart_type": 0.025,
+      "valeurs_nouvelle": [
+        3.309,
+        3.3403,
+        3.343
+      ],
+      "note": "dense jumeau"
+    },
+    "plancher/unigramme": {
+      "n": 1,
+      "nouvelle_moyenne": 5.082888,
+      "nouvelle_ecart_type": 0.0,
+      "ancienne_moyenne": 5.082888,
+      "ancienne_ecart_type": 0.0,
+      "valeurs_nouvelle": [
+        5.082888
+      ],
+      "note": "n-gramme lissee alpha=0,5"
+    },
+    "plancher/bigramme": {
+      "n": 1,
+      "nouvelle_moyenne": 3.046586,
+      "nouvelle_ecart_type": 0.0,
+      "ancienne_moyenne": 3.046586,
+      "ancienne_ecart_type": 0.0,
+      "valeurs_nouvelle": [
+        3.046586
+      ],
+      "note": "n-gramme lissee alpha=0,5"
+    },
+    "plancher/trigramme": {
+      "n": 1,
+      "nouvelle_moyenne": 1.982794,
+      "nouvelle_ecart_type": 0.0,
+      "ancienne_moyenne": 1.982794,
+      "ancienne_ecart_type": 0.0,
+      "valeurs_nouvelle": [
+        1.982794
+      ],
+      "note": "n-gramme lissee alpha=0,5"
+    }
+  },
+  "classement": {
+    "nouvelle": [
+      "bigramme",
+      "MYCELIA",
+      "dense"
+    ],
+    "ancienne": [
+      "bigramme",
+      "dense",
+      "MYCELIA"
+    ],
+    "mycelia_nouvelle": 3.6672,
+    "mycelia_pleine_nouvelle": 3.5936,
+    "mycelia_ancienne": 7.9402,
+    "bigramme": 3.046586,
+    "dense_nouvelle": 3.9229,
+    "dense_ancienne": 3.9193,
+    "inverse": true
+  },
+  "valeur_lue_dans_les_cerveaux": "les cerveaux re-mesures sont ceux de S4 (aucun re-entrainement)"
+}

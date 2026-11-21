@@ -1,0 +1,78 @@
+{
+  "version": "S5-MAX",
+  "F_avant": 0.4909,
+  "F_apres": 0.0478,
+  "plafond_kl": 0.8582,
+  "survie_code": "🔴",
+  "survie_phrase": "la vie devore le savoir : c'est le vrai cout du metabolisme",
+  "vie_creees": 413,
+  "vie_coupees": 435,
+  "densite": 0.3986,
+  "mesure_mycelia": 3.6672,
+  "mesure_dense": 3.9229,
+  "mesure_bigramme": 3.046586,
+  "pool24_moyenne": 3.7363,
+  "distillation_gain": 0.1602,
+  "courbe_survie": [
+    {
+      "pas": 100,
+      "R": 1.1944,
+      "coupees": 44,
+      "aretes": 198
+    },
+    {
+      "pas": 200,
+      "R": 1.0672,
+      "coupees": 88,
+      "aretes": 198
+    },
+    {
+      "pas": 300,
+      "R": 1.044,
+      "coupees": 132,
+      "aretes": 198
+    },
+    {
+      "pas": 400,
+      "R": 0.9757,
+      "coupees": 176,
+      "aretes": 198
+    },
+    {
+      "pas": 500,
+      "R": 0.9536,
+      "coupees": 220,
+      "aretes": 198
+    },
+    {
+      "pas": 600,
+      "R": 0.8126,
+      "coupees": 264,
+      "aretes": 198
+    },
+    {
+      "pas": 700,
+      "R": 0.8105,
+      "coupees": 308,
+      "aretes": 198
+    },
+    {
+      "pas": 800,
+      "R": 0.8223,
+      "coupees": 352,
+      "aretes": 198
+    },
+    {
+      "pas": 900,
+      "R": 0.7808,
+      "coupees": 394,
+      "aretes": 199
+    },
+    {
+      "pas": 1000,
+      "R": 0.7893,
+      "coupees": 433,
+      "aretes": 203
+    }
+  ]
+}

@@ -300,6 +300,26 @@ PANEL_SECTIONS = r"""
         aucun CDN.</p>
       </div>
     </div>
+    <h2 style="margin-top:16px">Plafond physique S5 — F avant/après la vie</h2>
+    <div class="grid two">
+      <div class="card">
+        <h2>Score F (plafond inter-donneurs)</h2>
+        <dl class="kv">
+          <dt>F avant la vie</dt><dd id="lab-s5-f-avant">—</dd>
+          <dt>F après la vie</dt><dd id="lab-s5-f-apres">—</dd>
+          <dt>Plafond KL(A‖B)</dt><dd id="lab-s5-plafond">—</dd>
+          <dt>Survie du receveur</dt><dd id="lab-s5-verdict">—</dd>
+          <dt>Vie libre (faim)</dt><dd id="lab-s5-vie">—</dd>
+          <dt>Mesure corrigée</dt><dd id="lab-s5-mesure">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Survie du savoir, 1000 pas libres</h2>
+        <canvas id="lab-s5-curve" class="chart" width="520" height="200"></canvas>
+        <p class="note">Orange : R (gain relatif à l'unigramme) pendant la vie libre ;
+        rouge : arêtes coupées cumulées. Lecture seule, aucun CDN.</p>
+      </div>
+    </div>
   </section>
 """
 
@@ -693,7 +713,7 @@ document.addEventListener('click', ev => {
 });
 
 // --- 🧪 Labo -----------------------------------------------------------
-const LAB = { atlas: null, film: null, scan: null, s3bis: null, s4: null, timer: null };
+const LAB = { atlas: null, film: null, scan: null, s3bis: null, s4: null, s5: null, timer: null };
 
 function paintConversion(prefix, data) {
   const v = data && data.verdict;
@@ -866,6 +886,68 @@ function paintS4() {
   drawS4();
 }
 
+function drawS5() {
+  // Deux axes : R (orange, gauche) et arêtes coupées cumulées (rouge, droite).
+  const cv = document.getElementById('lab-s5-curve');
+  const s = (LAB.s5 && LAB.s5.summary) || {};
+  const rows = s.courbe_survie || [];
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, padL = 34, padB = 18, padT = 8, padR = 34;
+  ctx.clearRect(0, 0, W, H);
+  if (!rows.length) {
+    ctx.fillStyle = '#8b939e';
+    ctx.font = '11px ui-monospace, monospace';
+    ctx.fillText('S5 non exécuté', padL, H / 2);
+    return;
+  }
+  const rs = rows.map(r => Number(r.R));
+  const cs = rows.map(r => Number(r.coupees || 0));
+  const rlo = Math.min.apply(null, rs) - 0.1, rhi = Math.max.apply(null, rs) + 0.1;
+  const cmax = Math.max(1, Math.max.apply(null, cs));
+  const end = Number(rows[rows.length - 1].pas) || 1;
+  const x = v => padL + (W - padL - padR) * Number(v) / end;
+  const yR = v => padT + (H - padT - padB) * (1 - (Number(v) - rlo) / ((rhi - rlo) || 1));
+  const yC = v => padT + (H - padT - padB) * (1 - Number(v) / cmax);
+  ctx.font = '10px ui-monospace, monospace';
+  ctx.strokeStyle = '#e06c75'; ctx.lineWidth = 1.2; ctx.beginPath();
+  rows.forEach((r, i) => {
+    const px = x(r.pas), py = yC(r.coupees || 0);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.strokeStyle = '#f5a86b'; ctx.lineWidth = 1.8; ctx.beginPath();
+  rows.forEach((r, i) => {
+    const px = x(r.pas), py = yR(r.R);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.fillStyle = '#8b939e';
+  ctx.fillText('pas 0', padL, H - 4);
+  ctx.fillText('pas ' + end, W - 52, H - 4);
+  ctx.fillText('R', padL - 10, padT + 8);
+  ctx.fillStyle = '#e06c75';
+  ctx.fillText('coupes ' + cmax, W - padR + 2, padT + 8);
+}
+
+function paintS5() {
+  const s = (LAB.s5 && LAB.s5.summary) || {};
+  const fmt = v => (v === undefined || v === null) ? '—' : Number(v).toFixed(3);
+  setText('lab-s5-f-avant', fmt(s.F_avant));
+  setText('lab-s5-f-apres', fmt(s.F_apres));
+  setText('lab-s5-plafond', fmt(s.plafond_kl))
+  setText('lab-s5-verdict', (s.survie_code ? (s.survie_code + ' — ' + (s.survie_phrase || ''))
+    : 'S5 non exécuté'));
+  setText('lab-s5-vie', (s.vie_creees === undefined || s.vie_creees === null) ? '—'
+    : 'créées ' + s.vie_creees + ' · coupées ' + s.vie_coupees
+      + ' · densité ' + (s.densite === null || s.densite === undefined
+        ? '—' : Math.round(Number(s.densite) * 100) + ' %'));
+  setText('lab-s5-mesure', (s.mesure_mycelia === undefined || s.mesure_mycelia === null)
+    ? '—' : 'MYCELIA ' + Number(s.mesure_mycelia).toFixed(3)
+      + ' · dense ' + fmt(s.mesure_dense) + ' · bigramme ' + fmt(s.mesure_bigramme));
+  drawS5();
+}
+
 function paintAtlas() {
   const a = LAB.atlas;
   if (!a || !a.meta) { setText('lab-alive', 'labo non exécuté'); return; }
@@ -946,10 +1028,12 @@ async function loadLab() {
   try { LAB.scan = await (await fetch('/api/lab/scan-history')).json(); } catch (e) { LAB.scan = null; }
   try { LAB.s3bis = await (await fetch('/api/lab/s3bis')).json(); } catch (e) { LAB.s3bis = null; }
   try { LAB.s4 = await (await fetch('/api/lab/s4')).json(); } catch (e) { LAB.s4 = null; }
+  try { LAB.s5 = await (await fetch('/api/lab/s5')).json(); } catch (e) { LAB.s5 = null; }
   paintAtlas();
   paintScan();
   paintS3bis();
   paintS4();
+  paintS5();
   paintFilmOptions();
 }
 

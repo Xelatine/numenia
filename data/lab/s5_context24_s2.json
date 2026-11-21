@@ -1,0 +1,63 @@
+{
+  "semence": 2,
+  "pool": 24,
+  "aretes": 220,
+  "fenetres_validation": 58,
+  "fenetres_sonde": 150,
+  "conditions": {
+    "normal": {
+      "perte": 3.6772,
+      "exactitude": 0.17,
+      "entropie_predite": 3.6008
+    },
+    "melange": {
+      "perte": 5.9811,
+      "exactitude": 0.0493,
+      "entropie_predite": 3.7462
+    },
+    "vide": {
+      "perte": 6.5703,
+      "exactitude": 0.0197,
+      "entropie_predite": 3.4138
+    }
+  },
+  "ecart_max_conditions": 2.8931,
+  "ecart_normal_melange": 2.3039,
+  "perte_par_position": [
+    5.5125,
+    4.3702,
+    3.6453,
+    3.7502,
+    3.8179,
+    3.915,
+    3.1111,
+    3.1309
+  ],
+  "sondes": {
+    "noeud1_16d": {
+      "perte": 5.3216,
+      "exactitude": 0.0369,
+      "dims": 16
+    },
+    "toutes_384d": {
+      "perte": 4.9171,
+      "exactitude": 0.1453,
+      "dims": 391
+    },
+    "lecture": {
+      "perte": 4.2391,
+      "exactitude": 0.165,
+      "dims": 23
+    }
+  },
+  "seuil_ecart": 2.0,
+  "contexte_utilise": true,
+  "colonnes": {
+    "nouvelle": 3.6772,
+    "ancienne": 7.4829,
+    "nouvelle_0_7": 3.9066,
+    "contextes_nouvelle": 406,
+    "contextes_ancienne": 464
+  },
+  "honnete_0_7": 3.9066
+}

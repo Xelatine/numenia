@@ -1,0 +1,787 @@
+{
+  "protocole": {
+    "professeurs": "deux denses independants (graines 1 et 2), mlp 768",
+    "formule": "alpha*T^2*KL + beta*CE + gamma*MSE(P h, h_prof), P aleatoire appris",
+    "grille": {
+      "a1b1g05": {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "gamma": 0.5
+      },
+      "a1b1g0": {
+        "alpha": 1.0,
+        "beta": 1.0,
+        "gamma": 0.0
+      },
+      "a1b05g05": {
+        "alpha": 1.0,
+        "beta": 0.5,
+        "gamma": 0.5
+      },
+      "a05b1g05": {
+        "alpha": 0.5,
+        "beta": 1.0,
+        "gamma": 0.5
+      }
+    },
+    "semences": [
+      1,
+      2
+    ],
+    "pas": 600,
+    "fidelite": "12 lots x 64 fenetres x 7 positions",
+    "score": "F = 1 - KL(A||MYC) / KL(A||B)",
+    "vie": "1000 pas libres, prune_ratio 0,5"
+  },
+  "plafond": {
+    "professeurs": {
+      "A": {
+        "graine": 1,
+        "mlp": 768,
+        "parametres": 63480
+      },
+      "B": {
+        "graine": 2,
+        "mlp": 768,
+        "parametres": 63480
+      }
+    },
+    "accord": {
+      "contextes": 5376,
+      "kl_A_vers_B": 0.8582,
+      "kl_B_vers_A": 0.8356,
+      "kl_symetrique": 0.8469,
+      "top3_identiques": 0.0115,
+      "top3_recouvrement": 0.3053,
+      "top3_uniforme": 0.0096
+    },
+    "definition": "KL comportementale entre deux professeurs independants : c'est le plafond theorique de la fidelite d'un eleve",
+    "jumeau": {
+      "mlp": 768,
+      "parametres": 63480,
+      "parametres_formule": 63480,
+      "ratio_dense_sur_mycelia": 1.0032,
+      "val_600pas": 3.8632,
+      "colonnes": {
+        "nouvelle": 3.8775,
+        "ancienne": 3.8632,
+        "contextes_nouvelle": 406,
+        "contextes_ancienne": 464
+      },
+      "secondes": 6.5
+    }
+  },
+  "grille": {
+    "a1b1g05": {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "gamma": 0.5,
+      "n": 2,
+      "perte_moyenne": 3.547,
+      "perte_ecart_type": 0.0123,
+      "valeurs": [
+        3.5383,
+        3.5557
+      ]
+    },
+    "a1b1g0": {
+      "alpha": 1.0,
+      "beta": 1.0,
+      "gamma": 0.0,
+      "n": 2,
+      "perte_moyenne": 3.5281,
+      "perte_ecart_type": 0.0105,
+      "valeurs": [
+        3.5207,
+        3.5355
+      ]
+    },
+    "a1b05g05": {
+      "alpha": 1.0,
+      "beta": 0.5,
+      "gamma": 0.5,
+      "n": 2,
+      "perte_moyenne": 3.5789,
+      "perte_ecart_type": 0.0254,
+      "valeurs": [
+        3.5609,
+        3.5968
+      ]
+    },
+    "a05b1g05": {
+      "alpha": 0.5,
+      "beta": 1.0,
+      "gamma": 0.5,
+      "n": 2,
+      "perte_moyenne": 3.5477,
+      "perte_ecart_type": 0.0018,
+      "valeurs": [
+        3.549,
+        3.5464
+      ]
+    }
+  },
+  "meilleur_par_validation": "a1b1g0",
+  "meilleur_retenu": "a1b1g0",
+  "bras": {
+    "M0": [
+      {
+        "modele": "s5_pool24_s1.pt",
+        "perte": 3.7654,
+        "perte_ancienne": 7.2852,
+        "R": 1.093,
+        "kl_A_vers_MYC": 0.6672,
+        "kl_B_vers_MYC": 0.6764,
+        "top3_identiques_avec_A": 0.0169,
+        "top3_recouvrement_avec_A": 0.3356,
+        "contextes": 5376,
+        "F": 0.2226,
+        "top3": 0.3279
+      },
+      {
+        "modele": "s5_pool24_s2.pt",
+        "perte": 3.6772,
+        "perte_ancienne": 7.4829,
+        "R": 1.1662,
+        "kl_A_vers_MYC": 0.7147,
+        "kl_B_vers_MYC": 0.6791,
+        "top3_identiques_avec_A": 0.019,
+        "top3_recouvrement_avec_A": 0.3308,
+        "contextes": 5376,
+        "F": 0.1672,
+        "top3": 0.3005
+      }
+    ],
+    "a1b1g0": [
+      {
+        "modele": "s5_grid_a1b1g0_s1.pt",
+        "perte": 3.5207,
+        "perte_ancienne": 7.9373,
+        "R": 1.296,
+        "kl_A_vers_MYC": 0.4467,
+        "kl_B_vers_MYC": 0.6576,
+        "top3_identiques_avec_A": 0.0283,
+        "top3_recouvrement_avec_A": 0.4404,
+        "contextes": 5376,
+        "F": 0.4795,
+        "top3": 0.2568
+      },
+      {
+        "modele": "s5_grid_a1b1g0_s2.pt",
+        "perte": 3.5355,
+        "perte_ancienne": 7.7704,
+        "R": 1.2837,
+        "kl_A_vers_MYC": 0.427,
+        "kl_B_vers_MYC": 0.5975,
+        "top3_identiques_avec_A": 0.0426,
+        "top3_recouvrement_avec_A": 0.4225,
+        "contextes": 5376,
+        "F": 0.5024,
+        "top3": 0.224
+      }
+    ],
+    "melange": [
+      {
+        "modele": "s5_melange_s1.pt",
+        "perte": 4.7461,
+        "perte_ancienne": 6.7069,
+        "R": 0.2794,
+        "kl_A_vers_MYC": 1.4377,
+        "kl_B_vers_MYC": 1.5064,
+        "top3_identiques_avec_A": 0.0,
+        "top3_recouvrement_avec_A": 0.0781,
+        "contextes": 5376,
+        "F": -0.6753,
+        "top3": 0.1311
+      },
+      {
+        "modele": "s5_melange_s2.pt",
+        "perte": 4.7728,
+        "perte_ancienne": 6.8098,
+        "R": 0.2573,
+        "kl_A_vers_MYC": 1.4737,
+        "kl_B_vers_MYC": 1.5137,
+        "top3_identiques_avec_A": 0.0,
+        "top3_recouvrement_avec_A": 0.0694,
+        "contextes": 5376,
+        "F": -0.7172,
+        "top3": 0.1366
+      }
+    ]
+  },
+  "resume": {
+    "M0": {
+      "n": 2,
+      "perte_moyenne": 3.7213,
+      "perte_ecart_type": 0.0624,
+      "R_moyen": 1.1296,
+      "kl_A_vers_MYC": 0.6909,
+      "F_moyen": 0.1949,
+      "F_valeurs": [
+        0.2226,
+        0.1672
+      ],
+      "top3_moyen": 0.3142
+    },
+    "distille": {
+      "n": 2,
+      "perte_moyenne": 3.5281,
+      "perte_ecart_type": 0.0105,
+      "R_moyen": 1.2898,
+      "kl_A_vers_MYC": 0.4368,
+      "F_moyen": 0.4909,
+      "F_valeurs": [
+        0.4795,
+        0.5024
+      ],
+      "top3_moyen": 0.2404
+    },
+    "melange": {
+      "n": 2,
+      "perte_moyenne": 4.7595,
+      "perte_ecart_type": 0.0189,
+      "R_moyen": 0.2683,
+      "kl_A_vers_MYC": 1.4557,
+      "F_moyen": -0.6963,
+      "F_valeurs": [
+        -0.6753,
+        -0.7172
+      ],
+      "top3_moyen": 0.1338
+    },
+    "gain_distillation_isole": 0.1602,
+    "controle_bruit": {
+      "R_melange": 0.2683,
+      "R_distille": 1.2898,
+      "ecart": 1.0215,
+      "propre": true
+    },
+    "plafond_kl_A_B": 0.8582,
+    "F_avant_vie": 0.4909,
+    "F_apres_vie": 0.0478,
+    "F_ratio_vie": 0.0974
+  },
+  "leviers": {
+    "T2": {
+      "label": "temperature T=2",
+      "perte": 3.5548,
+      "temperature": 2.0,
+      "pas": 600
+    },
+    "T4": {
+      "label": "temperature T=4",
+      "perte": 3.5802,
+      "temperature": 4.0,
+      "pas": 600
+    },
+    "budget": {
+      "label": "budget x4 (2400 pas)",
+      "perte": 3.5245,
+      "temperature": 1.0,
+      "pas": 2400
+    },
+    "alpha": {
+      "label": "alpha/beta raffines (0,5/0,5) autour du meilleur point",
+      "perte": 3.5463,
+      "temperature": 1.0,
+      "pas": 600
+    }
+  },
+  "survie_transfert": [
+    {
+      "semence": 1,
+      "modele": "s5_grid_a1b1g0_s1.pt",
+      "kl_plafond": 0.8582,
+      "regime": {
+        "prune_ratio": 0.5,
+        "pas_libres": 1000
+      },
+      "avant": {
+        "perte": 3.5207,
+        "R": 1.296,
+        "kl_A_vers_MYC": 0.4467,
+        "F": 0.4795,
+        "aretes": 220,
+        "coupees": 0,
+        "creees": 0
+      },
+      "apres": {
+        "perte": 4.1315,
+        "R": 0.7893,
+        "kl_A_vers_MYC": 0.9401,
+        "F": -0.0954,
+        "top3_identiques_avec_A": 0.0048,
+        "aretes": 203,
+        "coupees": 433,
+        "creees": 416
+      },
+      "R_ratio": 0.609,
+      "F_ratio": -0.199,
+      "vie": {
+        "pas": 1000,
+        "aretes_debut": 220,
+        "aretes_fin": 203,
+        "aretes_creees": 416,
+        "aretes_coupees": 433,
+        "aretes_mortes": 433,
+        "naissances": 416,
+        "noeuds_morts": 5,
+        "densite_debut": 0.3986,
+        "densite_fin": 0.3678,
+        "evenements": [
+          {
+            "step": 50,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 100,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 150,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 200,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 250,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 300,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 350,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 400,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 450,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 500,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 550,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 600,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 650,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 700,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 750,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 800,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 850,
+            "edge_deaths": 21,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 900,
+            "edge_deaths": 21,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 950,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 1000,
+            "edge_deaths": 17,
+            "node_deaths": 1,
+            "revived": 0
+          }
+        ]
+      },
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.6432,
+          "R": 1.1944,
+          "aretes": 198,
+          "coupees": 44,
+          "creees": 22
+        },
+        {
+          "pas": 200,
+          "perte": 3.7965,
+          "R": 1.0672,
+          "aretes": 198,
+          "coupees": 88,
+          "creees": 66
+        },
+        {
+          "pas": 300,
+          "perte": 3.8245,
+          "R": 1.044,
+          "aretes": 198,
+          "coupees": 132,
+          "creees": 110
+        },
+        {
+          "pas": 400,
+          "perte": 3.9068,
+          "R": 0.9757,
+          "aretes": 198,
+          "coupees": 176,
+          "creees": 154
+        },
+        {
+          "pas": 500,
+          "perte": 3.9334,
+          "R": 0.9536,
+          "aretes": 198,
+          "coupees": 220,
+          "creees": 198
+        },
+        {
+          "pas": 600,
+          "perte": 4.1034,
+          "R": 0.8126,
+          "aretes": 198,
+          "coupees": 264,
+          "creees": 242
+        },
+        {
+          "pas": 700,
+          "perte": 4.1059,
+          "R": 0.8105,
+          "aretes": 198,
+          "coupees": 308,
+          "creees": 286
+        },
+        {
+          "pas": 800,
+          "perte": 4.0917,
+          "R": 0.8223,
+          "aretes": 198,
+          "coupees": 352,
+          "creees": 330
+        },
+        {
+          "pas": 900,
+          "perte": 4.1417,
+          "R": 0.7808,
+          "aretes": 199,
+          "coupees": 394,
+          "creees": 373
+        },
+        {
+          "pas": 1000,
+          "perte": 4.1315,
+          "R": 0.7893,
+          "aretes": 203,
+          "coupees": 433,
+          "creees": 416
+        }
+      ],
+      "secondes": 144.7
+    },
+    {
+      "semence": 2,
+      "modele": "s5_grid_a1b1g0_s2.pt",
+      "kl_plafond": 0.8582,
+      "regime": {
+        "prune_ratio": 0.5,
+        "pas_libres": 1000
+      },
+      "avant": {
+        "perte": 3.5355,
+        "R": 1.2837,
+        "kl_A_vers_MYC": 0.427,
+        "F": 0.5024,
+        "aretes": 220,
+        "coupees": 0,
+        "creees": 0
+      },
+      "apres": {
+        "perte": 3.9066,
+        "R": 0.9759,
+        "kl_A_vers_MYC": 0.6942,
+        "F": 0.1911,
+        "top3_identiques_avec_A": 0.0188,
+        "aretes": 198,
+        "coupees": 440,
+        "creees": 418
+      },
+      "R_ratio": 0.7602,
+      "F_ratio": 0.3804,
+      "vie": {
+        "pas": 1000,
+        "aretes_debut": 220,
+        "aretes_fin": 198,
+        "aretes_creees": 418,
+        "aretes_coupees": 440,
+        "aretes_mortes": 440,
+        "naissances": 418,
+        "noeuds_morts": 4,
+        "densite_debut": 0.3986,
+        "densite_fin": 0.3587,
+        "evenements": [
+          {
+            "step": 50,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 100,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 150,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 200,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 250,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 300,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 350,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 400,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 450,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 500,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 550,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 600,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 650,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 700,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 750,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 800,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 850,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 900,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          },
+          {
+            "step": 950,
+            "edge_deaths": 22,
+            "node_deaths": 1,
+            "revived": 0
+          },
+          {
+            "step": 1000,
+            "edge_deaths": 22,
+            "node_deaths": 0,
+            "revived": 0
+          }
+        ]
+      },
+      "courbe": [
+        {
+          "pas": 100,
+          "perte": 3.7216,
+          "R": 1.1293,
+          "aretes": 198,
+          "coupees": 44,
+          "creees": 22
+        },
+        {
+          "pas": 200,
+          "perte": 3.8405,
+          "R": 1.0307,
+          "aretes": 198,
+          "coupees": 88,
+          "creees": 66
+        },
+        {
+          "pas": 300,
+          "perte": 3.881,
+          "R": 0.9971,
+          "aretes": 198,
+          "coupees": 132,
+          "creees": 110
+        },
+        {
+          "pas": 400,
+          "perte": 3.891,
+          "R": 0.9888,
+          "aretes": 198,
+          "coupees": 176,
+          "creees": 154
+        },
+        {
+          "pas": 500,
+          "perte": 3.8794,
+          "R": 0.9984,
+          "aretes": 198,
+          "coupees": 220,
+          "creees": 198
+        },
+        {
+          "pas": 600,
+          "perte": 3.8787,
+          "R": 0.999,
+          "aretes": 198,
+          "coupees": 264,
+          "creees": 242
+        },
+        {
+          "pas": 700,
+          "perte": 3.9097,
+          "R": 0.9733,
+          "aretes": 198,
+          "coupees": 308,
+          "creees": 286
+        },
+        {
+          "pas": 800,
+          "perte": 3.9028,
+          "R": 0.979,
+          "aretes": 198,
+          "coupees": 352,
+          "creees": 330
+        },
+        {
+          "pas": 900,
+          "perte": 3.9077,
+          "R": 0.9749,
+          "aretes": 198,
+          "coupees": 396,
+          "creees": 374
+        },
+        {
+          "pas": 1000,
+          "perte": 3.9066,
+          "R": 0.9759,
+          "aretes": 198,
+          "coupees": 440,
+          "creees": 418
+        }
+      ],
+      "secondes": 143.2
+    }
+  ],
+  "optimisation_restante": true
+}

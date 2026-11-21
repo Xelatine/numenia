@@ -1,0 +1,90 @@
+{
+  "bras": "grid_a1b1g0",
+  "semence": 2,
+  "alpha": 1.0,
+  "beta": 1.0,
+  "gamma": 0.0,
+  "temperature": 1.0,
+  "pas": 600,
+  "projecteur": "random",
+  "etiquettes_melangees": false,
+  "nouvelle": 3.5355,
+  "ancienne": 7.7704,
+  "nouvelle_0_7": 3.9408,
+  "contextes_nouvelle": 406,
+  "contextes_ancienne": 464,
+  "honnete_0_7": 3.9408,
+  "pas_meilleur": 400,
+  "positions": [
+    6.778,
+    4.1856,
+    3.4694,
+    3.5924,
+    3.6791,
+    3.8045,
+    2.962,
+    3.0557
+  ],
+  "aretes": 220,
+  "aretes_creees": 208,
+  "aretes_coupees": 0,
+  "secondes": 242.5,
+  "courbe": [
+    {
+      "step": 1,
+      "val": 5.7395,
+      "kl": 2.5362,
+      "ce": 5.7529,
+      "align": 4.4343,
+      "aretes": 20
+    },
+    {
+      "step": 100,
+      "val": 4.6518,
+      "kl": 1.572,
+      "ce": 4.4432,
+      "align": 10.0008,
+      "aretes": 220
+    },
+    {
+      "step": 200,
+      "val": 4.076,
+      "kl": 0.6495,
+      "ce": 3.6446,
+      "align": 7.6945,
+      "aretes": 220
+    },
+    {
+      "step": 300,
+      "val": 3.9668,
+      "kl": 0.3774,
+      "ce": 3.1832,
+      "align": 7.8266,
+      "aretes": 220
+    },
+    {
+      "step": 400,
+      "val": 3.9408,
+      "kl": 0.3593,
+      "ce": 3.0356,
+      "align": 7.0355,
+      "aretes": 220
+    },
+    {
+      "step": 500,
+      "val": 3.9822,
+      "kl": 0.3904,
+      "ce": 3.0404,
+      "align": 6.8464,
+      "aretes": 220
+    },
+    {
+      "step": 600,
+      "val": 4.0063,
+      "kl": 0.3565,
+      "ce": 2.7704,
+      "align": 6.5284,
+      "aretes": 220
+    }
+  ]
+}

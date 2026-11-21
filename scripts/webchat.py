@@ -340,6 +340,21 @@ def api_lab_s4():
     )
 
 
+@app.route("/api/lab/s5", methods=["GET"])
+@app.route("/api/lab/s5/", methods=["GET"])
+def api_lab_s5():
+    """S5-max : mesure corrigee, plafond inter-donneurs, score F, survie du receveur."""
+    return jsonify(
+        {
+            "summary": _lab_json("s5_summary.json", {}),
+            "mesure": _lab_json("s5_measure.json", {}),
+            "pool24": _lab_json("s5_pool24.json", {}),
+            "distill": _lab_json("s5_distill.json", {}),
+            "plafond": _lab_json("s5_plafond.json", {}),
+        }
+    )
+
+
 @app.route("/api/lab/conversions", methods=["GET"])
 def api_lab_conversions():
     return jsonify(

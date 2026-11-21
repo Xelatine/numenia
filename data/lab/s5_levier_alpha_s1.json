@@ -1,0 +1,91 @@
+{
+  "bras": "levier_alpha",
+  "semence": 1,
+  "alpha": 0.5,
+  "beta": 0.5,
+  "gamma": 0.0,
+  "temperature": 1.0,
+  "pas": 600,
+  "projecteur": "random",
+  "etiquettes_melangees": false,
+  "nouvelle": 3.5463,
+  "ancienne": 7.7871,
+  "nouvelle_0_7": 3.8312,
+  "contextes_nouvelle": 406,
+  "contextes_ancienne": 464,
+  "honnete_0_7": 3.8312,
+  "pas_meilleur": 400,
+  "positions": [
+    5.8254,
+    4.0991,
+    3.4936,
+    3.7579,
+    3.6683,
+    3.744,
+    3.0109,
+    3.0504
+  ],
+  "aretes": 220,
+  "aretes_creees": 208,
+  "aretes_coupees": 0,
+  "secondes": 179.8,
+  "courbe": [
+    {
+      "step": 1,
+      "val": 5.7413,
+      "kl": 2.5556,
+      "ce": 5.7549,
+      "align": 3.7351,
+      "aretes": 20
+    },
+    {
+      "step": 100,
+      "val": 4.5981,
+      "kl": 1.5299,
+      "ce": 4.4824,
+      "align": 9.8311,
+      "aretes": 220
+    },
+    {
+      "step": 200,
+      "val": 3.9712,
+      "kl": 0.539,
+      "ce": 3.4,
+      "align": 7.8305,
+      "aretes": 220
+    },
+    {
+      "step": 300,
+      "val": 3.8453,
+      "kl": 0.4456,
+      "ce": 3.4246,
+      "align": 7.1619,
+      "aretes": 220
+    },
+    {
+      "step": 400,
+      "val": 3.8312,
+      "kl": 0.3568,
+      "ce": 3.1891,
+      "align": 6.6653,
+      "aretes": 220
+    },
+    {
+      "step": 500,
+      "val": 3.8541,
+      "kl": 0.3997,
+      "ce": 2.9252,
+      "align": 6.1712,
+      "aretes": 220
+    },
+    {
+      "step": 600,
+      "val": 3.8862,
+      "kl": 0.3859,
+      "ce": 2.7807,
+      "align": 6.0028,
+      "aretes": 220
+    }
+  ],
+  "levier": "alpha/beta raffines (0,5/0,5) autour du meilleur point"
+}

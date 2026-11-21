@@ -1,0 +1,95 @@
+{
+  "semence": 1,
+  "nouvelle": 3.7654,
+  "ancienne": 7.2852,
+  "contextes_nouvelle": 406,
+  "contextes_ancienne": 464,
+  "honnete_0_7": 3.9799,
+  "decalee_0_7": 7.2852,
+  "pas": 400,
+  "positions": [
+    5.481,
+    4.2137,
+    3.6826,
+    4.0812,
+    3.9142,
+    4.0367,
+    3.1965,
+    3.2331
+  ],
+  "parametres_ajoutes": 12768,
+  "parametres_total": 63276,
+  "pool": 24,
+  "aretes": 220,
+  "aretes_creees": 208,
+  "aretes_coupees": 0,
+  "densite": 0.3986,
+  "secondes": 152.5,
+  "courbe": [
+    {
+      "step": 1,
+      "val": 5.7411,
+      "aretes": 20
+    },
+    {
+      "step": 50,
+      "val": 5.078,
+      "aretes": 220
+    },
+    {
+      "step": 100,
+      "val": 4.731,
+      "aretes": 220
+    },
+    {
+      "step": 150,
+      "val": 4.4544,
+      "aretes": 220
+    },
+    {
+      "step": 200,
+      "val": 4.2877,
+      "aretes": 220
+    },
+    {
+      "step": 250,
+      "val": 4.1866,
+      "aretes": 220
+    },
+    {
+      "step": 300,
+      "val": 4.0764,
+      "aretes": 220
+    },
+    {
+      "step": 350,
+      "val": 4.0092,
+      "aretes": 220
+    },
+    {
+      "step": 400,
+      "val": 3.9799,
+      "aretes": 220
+    },
+    {
+      "step": 450,
+      "val": 3.9959,
+      "aretes": 220
+    },
+    {
+      "step": 500,
+      "val": 4.0439,
+      "aretes": 220
+    },
+    {
+      "step": 550,
+      "val": 4.1312,
+      "aretes": 220
+    },
+    {
+      "step": 600,
+      "val": 4.1776,
+      "aretes": 220
+    }
+  ]
+}

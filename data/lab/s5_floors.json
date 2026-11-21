@@ -1,0 +1,32 @@
+{
+  "corpus": "corpus_toy.txt",
+  "phrases": 1000,
+  "alpha": 0.5,
+  "vocabulaire": 312,
+  "uniforme_ln_v": 5.743003,
+  "planchers": {
+    "unigramme": {
+      "nouvelle": 5.082888,
+      "ancienne": 5.082888,
+      "mle": 5.0818,
+      "tokens": 4664,
+      "reference_s3bis": 5.082888
+    },
+    "bigramme": {
+      "nouvelle": 3.046586,
+      "ancienne": 3.046586,
+      "mle": 2.719511,
+      "contextes": 170,
+      "reference_s3bis": 3.046586
+    },
+    "trigramme": {
+      "nouvelle": 1.982794,
+      "ancienne": 1.982794,
+      "mle": 1.630368,
+      "contextes": 2723,
+      "reference_s3bis": 1.982794
+    }
+  },
+  "reproduit_s3bis": true,
+  "note": "les deux colonnes d'un n-gramme sont le meme nombre : la table de paires ne change pas, seul le nom de la cible change"
+}
