@@ -1,0 +1,250 @@
+{
+  "corpus": "1000",
+  "mode": "deux_vitesses",
+  "fenetres_validation": 58,
+  "protocole": {
+    "pas": 600,
+    "semences": [
+      1,
+      2,
+      3
+    ],
+    "lr": 0.002,
+    "batch": 32,
+    "weight_decay": 0.01,
+    "cible": "token courant (aligned_loss)"
+  },
+  "lignes": [
+    {
+      "corpus": "1000",
+      "mode": "deux_vitesses",
+      "semence": 1,
+      "honnete": 3.8421,
+      "decalee": 7.9814,
+      "derniere": 3.8421,
+      "pas": 500,
+      "positions": [
+        5.4716,
+        4.1927,
+        3.382,
+        3.8972,
+        3.7297,
+        3.7498,
+        3.1807,
+        3.1329
+      ],
+      "parametres_ajoutes": 8160,
+      "parametres_total": 31908,
+      "aretes": 48,
+      "secondes": 118.5,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7379
+        },
+        {
+          "step": 50,
+          "val": 5.0966
+        },
+        {
+          "step": 100,
+          "val": 4.6974
+        },
+        {
+          "step": 150,
+          "val": 4.3723
+        },
+        {
+          "step": 200,
+          "val": 4.1771
+        },
+        {
+          "step": 250,
+          "val": 4.0761
+        },
+        {
+          "step": 300,
+          "val": 3.9701
+        },
+        {
+          "step": 350,
+          "val": 3.9003
+        },
+        {
+          "step": 400,
+          "val": 3.8737
+        },
+        {
+          "step": 450,
+          "val": 3.8689
+        },
+        {
+          "step": 500,
+          "val": 3.8421
+        },
+        {
+          "step": 550,
+          "val": 3.897
+        },
+        {
+          "step": 600,
+          "val": 3.9363
+        }
+      ]
+    },
+    {
+      "corpus": "1000",
+      "mode": "deux_vitesses",
+      "semence": 2,
+      "honnete": 3.9115,
+      "decalee": 8.324,
+      "derniere": 3.9115,
+      "pas": 600,
+      "positions": [
+        5.5917,
+        4.3104,
+        3.6631,
+        3.679,
+        3.8951,
+        3.9624,
+        3.0648,
+        3.1254
+      ],
+      "parametres_ajoutes": 8160,
+      "parametres_total": 31908,
+      "aretes": 48,
+      "secondes": 117.3,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7389
+        },
+        {
+          "step": 50,
+          "val": 5.0571
+        },
+        {
+          "step": 100,
+          "val": 4.7376
+        },
+        {
+          "step": 150,
+          "val": 4.4697
+        },
+        {
+          "step": 200,
+          "val": 4.2964
+        },
+        {
+          "step": 250,
+          "val": 4.2131
+        },
+        {
+          "step": 300,
+          "val": 4.1103
+        },
+        {
+          "step": 350,
+          "val": 4.0329
+        },
+        {
+          "step": 400,
+          "val": 3.9898
+        },
+        {
+          "step": 450,
+          "val": 3.9394
+        },
+        {
+          "step": 500,
+          "val": 3.9387
+        },
+        {
+          "step": 550,
+          "val": 3.9156
+        },
+        {
+          "step": 600,
+          "val": 3.9115
+        }
+      ]
+    },
+    {
+      "corpus": "1000",
+      "mode": "deux_vitesses",
+      "semence": 3,
+      "honnete": 3.9582,
+      "decalee": 7.5153,
+      "derniere": 3.9582,
+      "pas": 400,
+      "positions": [
+        5.6195,
+        4.4127,
+        3.6499,
+        3.8761,
+        3.695,
+        3.927,
+        3.2415,
+        3.2436
+      ],
+      "parametres_ajoutes": 8160,
+      "parametres_total": 31908,
+      "aretes": 48,
+      "secondes": 117.0,
+      "courbe": [
+        {
+          "step": 1,
+          "val": 5.7421
+        },
+        {
+          "step": 50,
+          "val": 5.1022
+        },
+        {
+          "step": 100,
+          "val": 4.7263
+        },
+        {
+          "step": 150,
+          "val": 4.4882
+        },
+        {
+          "step": 200,
+          "val": 4.3059
+        },
+        {
+          "step": 250,
+          "val": 4.1753
+        },
+        {
+          "step": 300,
+          "val": 4.0799
+        },
+        {
+          "step": 350,
+          "val": 4.0097
+        },
+        {
+          "step": 400,
+          "val": 3.9582
+        },
+        {
+          "step": 450,
+          "val": 3.9629
+        },
+        {
+          "step": 500,
+          "val": 3.9738
+        },
+        {
+          "step": 550,
+          "val": 3.9665
+        },
+        {
+          "step": 600,
+          "val": 4.0143
+        }
+      ]
+    }
+  ]
+}

@@ -279,6 +279,27 @@ PANEL_SECTIONS = r"""
         Lecture seule, aucun CDN.</p>
       </div>
     </div>
+    <h2 style="margin-top:16px">Lecture réparée S4 — avant/après et survie au métabolisme</h2>
+    <div class="grid two">
+      <div class="card">
+        <h2>Verdict S4</h2>
+        <dl class="kv">
+          <dt>Verdict</dt><dd id="lab-s4-verdict">—</dd>
+          <dt>Ancien MYCELIA</dt><dd id="lab-s4-avant">—</dd>
+          <dt>Réparé (deux vitesses)</dt><dd id="lab-s4-repare">—</dd>
+          <dt>Dense / bigramme</dt><dd id="lab-s4-refs">—</dd>
+          <dt>Distillation (R)</dt><dd id="lab-s4-dist">—</dd>
+          <dt>Survie 1000 pas</dt><dd id="lab-s4-survie">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Perte de validation, 600 pas</h2>
+        <canvas id="lab-s4-curve" class="chart" width="520" height="200"></canvas>
+        <p class="note">Orange : MYCELIA réparé (deux vitesses, semence 1). Gris :
+        l'ancien plafond (5,15) ; vert : le dense jumeau (3,79). Lecture seule,
+        aucun CDN.</p>
+      </div>
+    </div>
   </section>
 """
 
@@ -672,7 +693,7 @@ document.addEventListener('click', ev => {
 });
 
 // --- 🧪 Labo -----------------------------------------------------------
-const LAB = { atlas: null, film: null, scan: null, s3bis: null, timer: null };
+const LAB = { atlas: null, film: null, scan: null, s3bis: null, s4: null, timer: null };
 
 function paintConversion(prefix, data) {
   const v = data && data.verdict;
@@ -774,6 +795,77 @@ function paintS3bis() {
   drawS3bis();
 }
 
+function drawS4() {
+  // Une courbe, deux reperes horizontaux : l'ancien plafond et le dense.
+  const cv = document.getElementById('lab-s4-curve');
+  const s = LAB.s4 && LAB.s4.summary;
+  if (!cv || !s) return;
+  const rows = (s.courbes && s.courbes.apres) || [];
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, padL = 34, padB = 18, padT = 8, padR = 6;
+  ctx.clearRect(0, 0, W, H);
+  if (!rows.length) {
+    ctx.fillStyle = '#8b939e';
+    ctx.font = '11px ui-monospace, monospace';
+    ctx.fillText('S4 non exécuté', padL, H / 2);
+    return;
+  }
+  const refs = [Number(s.ancien || 5.15), Number(s.dense || 3.79)];
+  const vals = rows.map(r => Number(r.val)).concat(refs);
+  const lo = Math.min.apply(null, vals) - 0.1, hi = Math.max.apply(null, vals) + 0.1;
+  const span = (hi - lo) || 1;
+  const end = Number(rows[rows.length - 1].step) || 1;
+  const x = v => padL + (W - padL - padR) * Number(v) / end;
+  const y = v => padT + (H - padT - padB) * (1 - (Number(v) - lo) / span);
+  ctx.font = '10px ui-monospace, monospace';
+  ctx.lineWidth = 1;
+  [s.ancien, s.dense].forEach((v, i) => {
+    if (v === undefined || v === null) return;
+    ctx.strokeStyle = i === 0 ? '#5d656f' : '#6ee7a8';
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(padL, y(v)); ctx.lineTo(W - padR, y(v)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = i === 0 ? '#8b939e' : '#6ee7a8';
+    ctx.fillText(Number(v).toFixed(2), W - padR - 26, y(v) - 3);
+  });
+  ctx.strokeStyle = '#f5a86b'; ctx.lineWidth = 1.6; ctx.beginPath();
+  rows.forEach((r, i) => {
+    const px = x(r.step), py = y(r.val);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.fillStyle = '#8b939e';
+  ctx.fillText('pas 0', padL, H - 4);
+  ctx.fillText('pas ' + end, W - 52, H - 4);
+}
+
+function paintS4() {
+  const s = (LAB.s4 && LAB.s4.summary) || {};
+  const verdict = s.verdict;
+  setText('lab-s4-verdict', verdict ? (verdict + ' — ' + (s.verdict_phrase || ''))
+    : 'S4 non exécuté');
+  setText('lab-s4-avant', s.ancien === undefined ? '—' : Number(s.ancien).toFixed(4));
+  setText('lab-s4-repare', s.mycelia_repere === undefined || s.mycelia_repere === null
+    ? '—' : Number(s.mycelia_repere).toFixed(4));
+  setText('lab-s4-refs',
+    (s.dense === undefined ? 'dense —' : 'dense ' + Number(s.dense).toFixed(4))
+    + ' · ' + (s.bigramme === undefined ? 'bigramme —'
+      : 'bigramme ' + Number(s.bigramme).toFixed(4))
+    + (s.dense_meme_validation === undefined ? ''
+      : ' · même validation : dense ' + Number(s.dense_meme_validation).toFixed(4)));
+  const d = s.distillation || {};
+  const fmtR = v => (v === undefined || v === null) ? '—' : Number(v).toFixed(3);
+  setText('lab-s4-dist', (d.R_distille === undefined || d.R_distille === null)
+    ? '—'
+    : 'M0 ' + fmtR(d.R_m0) + ' → distillé ' + fmtR(d.R_distille)
+      + ' (gain ' + fmtR(d.gain_isole) + ', bruit ' + fmtR(d.R_melange) + ')');
+  const v = s.survie || {};
+  setText('lab-s4-survie', (v.survit === undefined || v.survit === null) ? '—'
+    : v.survit + '/' + v.sur + ' semences · R ' + fmtR(v.R_avant)
+      + ' → ' + fmtR(v.R_apres));
+  drawS4();
+}
+
 function paintAtlas() {
   const a = LAB.atlas;
   if (!a || !a.meta) { setText('lab-alive', 'labo non exécuté'); return; }
@@ -853,9 +945,11 @@ async function loadLab() {
   }
   try { LAB.scan = await (await fetch('/api/lab/scan-history')).json(); } catch (e) { LAB.scan = null; }
   try { LAB.s3bis = await (await fetch('/api/lab/s3bis')).json(); } catch (e) { LAB.s3bis = null; }
+  try { LAB.s4 = await (await fetch('/api/lab/s4')).json(); } catch (e) { LAB.s4 = null; }
   paintAtlas();
   paintScan();
   paintS3bis();
+  paintS4();
   paintFilmOptions();
 }
 

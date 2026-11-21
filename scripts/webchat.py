@@ -327,6 +327,19 @@ def api_lab_s3bis():
     )
 
 
+@app.route("/api/lab/s4", methods=["GET"])
+def api_lab_s4():
+    """S4 : lecture reparee, validation, distillation, survie au metabolisme."""
+    return jsonify(
+        {
+            "summary": _lab_json("s4_summary.json", {}),
+            "validation": _lab_json("s4_validation.json", {}),
+            "context": _lab_json("s4_context.json", {}),
+            "distill": _lab_json("s4_distill.json", {}),
+        }
+    )
+
+
 @app.route("/api/lab/conversions", methods=["GET"])
 def api_lab_conversions():
     return jsonify(

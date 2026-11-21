@@ -1,0 +1,210 @@
+{
+  "protocole": {
+    "fenetres_validation": 58,
+    "fenetres_sonde_entrainement": 400,
+    "conditions": [
+      "normal",
+      "melange",
+      "vide"
+    ],
+    "seuil_ecart_contexte": 0.5
+  },
+  "avant": {
+    "nom": "avant (S2)",
+    "fenetres_validation": 58,
+    "conditions": {
+      "normal": {
+        "perte": 5.0817,
+        "exactitude": 0.1108,
+        "entropie_predite": 5.3764
+      },
+      "melange": {
+        "perte": 5.1031,
+        "exactitude": 0.064,
+        "entropie_predite": 5.3738
+      },
+      "vide": {
+        "perte": 5.1354,
+        "exactitude": 0.0369,
+        "entropie_predite": 5.3227
+      }
+    },
+    "ecart_max_conditions": 0.0537,
+    "ecart_normal_melange": 0.0214,
+    "kl_normal_vs_melange": 0.00356,
+    "kl_normal_vs_vide": 0.0135,
+    "perte_par_position": [
+      5.6152,
+      5.3766,
+      4.9161,
+      5.1525,
+      5.2608,
+      5.1488,
+      4.7578,
+      4.9595
+    ],
+    "sondes": {
+      "noeud1_16d": {
+        "perte": 5.368,
+        "exactitude": 0.0369,
+        "dims": 23
+      },
+      "milieu_96d": {
+        "perte": 4.9233,
+        "exactitude": 0.1256,
+        "dims": 103
+      },
+      "tous_128d": {
+        "perte": 4.9246,
+        "exactitude": 0.1256,
+        "dims": 135
+      },
+      "lecture": {
+        "perte": 5.368,
+        "exactitude": 0.0369,
+        "dims": 23
+      },
+      "embeddings_128d": {
+        "perte": 5.4016,
+        "exactitude": 0.0862,
+        "dims": 135
+      }
+    },
+    "routage": {
+      "energie_par_saut": [
+        9.5117,
+        58.5402,
+        93.4157,
+        111.0413
+      ],
+      "portes": [
+        0.498,
+        0.99,
+        0.448,
+        1.0,
+        0.995,
+        0.005,
+        1.0,
+        0.051
+      ],
+      "noeuds_muets": [
+        5,
+        7
+      ],
+      "decodage_dernier_token_2": 0.4071,
+      "decodage_dernier_token_7": 0.1314,
+      "aretes": 48
+    },
+    "honnete": 5.1484,
+    "decalee": 5.1621,
+    "contexte_utilise": false,
+    "planchers": {
+      "unigramme": 5.082888,
+      "bigramme": 3.046586,
+      "trigramme": 1.982794
+    }
+  },
+  "apres": {
+    "nom": "apres (S4)",
+    "fenetres_validation": 58,
+    "conditions": {
+      "normal": {
+        "perte": 3.6093,
+        "exactitude": 0.1749,
+        "entropie_predite": 3.4394
+      },
+      "melange": {
+        "perte": 6.1809,
+        "exactitude": 0.0468,
+        "entropie_predite": 3.5885
+      },
+      "vide": {
+        "perte": 6.8009,
+        "exactitude": 0.0369,
+        "entropie_predite": 3.0502
+      }
+    },
+    "ecart_max_conditions": 3.1916,
+    "ecart_normal_melange": 2.5716,
+    "kl_normal_vs_melange": 2.61922,
+    "kl_normal_vs_vide": 3.44864,
+    "perte_par_position": [
+      5.4716,
+      4.1927,
+      3.382,
+      3.8972,
+      3.7297,
+      3.7498,
+      3.1807,
+      3.1329
+    ],
+    "sondes": {
+      "noeud1_16d": {
+        "perte": 5.368,
+        "exactitude": 0.0369,
+        "dims": 23
+      },
+      "milieu_96d": {
+        "perte": 4.4542,
+        "exactitude": 0.17,
+        "dims": 103
+      },
+      "tous_128d": {
+        "perte": 4.4466,
+        "exactitude": 0.1576,
+        "dims": 135
+      },
+      "lecture": {
+        "perte": 4.0458,
+        "exactitude": 0.1724,
+        "dims": 23
+      },
+      "embeddings_128d": {
+        "perte": 5.386,
+        "exactitude": 0.0887,
+        "dims": 135
+      }
+    },
+    "routage": {
+      "energie_par_saut": [
+        11.6044,
+        46.5886,
+        100.6794,
+        188.0651
+      ],
+      "portes": [
+        0.548,
+        0.967,
+        0.993,
+        0.999,
+        1.0,
+        0.066,
+        0.371,
+        0.883
+      ],
+      "noeuds_muets": [
+        5
+      ],
+      "decodage_dernier_token_2": 0.3205,
+      "decodage_dernier_token_7": 0.1058,
+      "aretes": 48
+    },
+    "honnete": 3.8421,
+    "decalee": 7.9814,
+    "contexte_utilise": true,
+    "planchers": {
+      "unigramme": 5.082888,
+      "bigramme": 3.046586,
+      "trigramme": 1.982794
+    }
+  },
+  "verdict": {
+    "ecart_avant": 0.0537,
+    "ecart_apres": 3.1916,
+    "ecart_large": true,
+    "noeud1_avant": 5.368,
+    "noeud1_apres": 5.368,
+    "tous_avant": 4.9246,
+    "tous_apres": 4.4466
+  }
+}

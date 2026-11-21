@@ -1,0 +1,14 @@
+{
+  "semence": 1,
+  "R_avant": 0.8852,
+  "R_apres": 0.8852,
+  "ratio": 1.0,
+  "survit": true,
+  "aretes_debut": 48,
+  "pas": 1000,
+  "aretes_fin": 48,
+  "aretes_mortes": 0,
+  "naissances": 0,
+  "noeuds_morts": 0,
+  "evenements": []
+}

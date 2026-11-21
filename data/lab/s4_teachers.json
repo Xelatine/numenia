@@ -1,0 +1,14 @@
+{
+  "s1": 3.8934,
+  "s1_pas": 300,
+  "s2": 3.879,
+  "s2_pas": 300,
+  "kl_inter_professeurs": 0.7775,
+  "top3_s1": 0.2568,
+  "top3_s2": 0.2131,
+  "parametres": 23748,
+  "phrases_neuves": 40,
+  "graine_phrases": 20261123,
+  "dense_10k_600pas": 3.2886,
+  "dense_10k_pas": 600
+}

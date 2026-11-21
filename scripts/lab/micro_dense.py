@@ -77,7 +77,7 @@ class DenseTransformer(nn.Module):
         mask = torch.triu(torch.full((seq, seq), float("-inf")), diagonal=1)
         self.register_buffer("mask", mask)
 
-    def forward(self, tokens: torch.Tensor) -> torch.Tensor:
+    def _encode(self, tokens: torch.Tensor) -> torch.Tensor:
         batch, seq = tokens.shape
         x = self.embed(tokens) + self.pos(torch.arange(seq, device=tokens.device)).unsqueeze(0)
         # Masque decoupe a la longueur lue : une prediction sur un prefixe de
@@ -86,7 +86,15 @@ class DenseTransformer(nn.Module):
         mask = self.mask[:seq, :seq]
         for block in self.blocks:
             x = block(x, mask)
-        return self.head(self.ln_f(x))
+        return self.ln_f(x)
+
+    def forward(self, tokens: torch.Tensor) -> torch.Tensor:
+        return self.head(self._encode(tokens))
+
+    def parts(self, tokens: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """Etat cache final et logits : ce que la distillation doit aligner."""
+        hidden = self._encode(tokens)
+        return hidden, self.head(hidden)
 
     # ------------------------------------------------------------------
     # Scan : les unites cachees sont les "noeuds" du temoin dense

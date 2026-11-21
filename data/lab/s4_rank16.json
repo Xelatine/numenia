@@ -1,0 +1,14 @@
+{
+  "modele": "bigramme de rang 16 (embedding 312x16 -> 16 -> tete)",
+  "parametres": 10632,
+  "best_val": 4.0288,
+  "best_step": 500,
+  "pas": 600,
+  "val_finale": 4.0288,
+  "secondes": 2.0,
+  "reference": {
+    "dense": 3.7921,
+    "bigramme_lisse": 3.0466,
+    "unigramme": 5.0829
+  }
+}
