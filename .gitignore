@@ -49,3 +49,5 @@ data/nyra_eloquence.json
 # Labo S : matrices et checkpoints regenerables par les scripts de scripts/lab/.
 data/lab/*.npy
 data/lab/*.pt
+# Journaux des experiences S3-bis : sortie de console, pas un resultat.
+data/lab/log_*.txt

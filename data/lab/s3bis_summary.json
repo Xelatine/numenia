@@ -1,0 +1,12 @@
+{
+  "verdict": "🐛 BUG",
+  "phrase": "le plafond de MYCELIA est exactement le plancher sans contexte : il ne s'agit pas d'un plafond d'apprentissage mais d'un défaut d'usage du contexte, localisé dans l'agrégation et la lecture.",
+  "L_ref": 5.082888,
+  "mycelia": 5.1509,
+  "dense": 3.7921,
+  "verdict_ab": "B",
+  "suspect": "agregation",
+  "ablations": "PAS_LE_ROUTAGE",
+  "fair_ecart": 1.2291,
+  "big_plafond_tient": true
+}

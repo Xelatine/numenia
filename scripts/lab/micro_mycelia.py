@@ -132,6 +132,8 @@ def train_mycelia(
     weight_decay: float = 0.0,
     patience: int = 0,
     stop_at: float | None = None,
+    restore_best: bool = False,
+    stop_births_at: int | None = None,
 ) -> dict:
     """Entraine le micro-MYCELIA et rend la courbe + les evenements vitaux.
 
@@ -142,6 +144,11 @@ def train_mycelia(
 
     ``stop_at`` arrete des que la validation passe sous cette valeur : les
     jumeaux de S2 s'arretent au meme **savoir**, pas au meme nombre de pas.
+
+    ``restore_best`` (S3-bis) : quand ``patience`` vaut 0 (courbe longue, aucun
+    arret anticipe), le cerveau rendu reste au dernier pas — or la validation
+    remonte apres le minimum. Le drapeau rend l'etat du **meilleur** pas, ce que
+    ``best_val`` annonce deja ; sans lui, le chiffre et le modele divergent.
     """
     optimizer = torch.optim.AdamW(brain.parameters(), lr=lr, weight_decay=weight_decay)
     best = {"val": float("inf"), "step": 0, "snap": snapshot(brain)}
@@ -156,6 +163,10 @@ def train_mycelia(
     reached = False
     brain.train()
     for step in range(1, int(steps) + 1):
+        if stop_births_at is not None and step >= int(stop_births_at) and brain.max_births:
+            # Ablation S3-bis D4(ii) : metabolisme gele. Le cablage atteint au
+            # pas N reste tel quel ; plus aucune synapse ne nait.
+            brain.max_births = 0
         x, _ = corpus.batch(batch, generator=generator)
         target = corpus.targets(x)
         brain.clock = step
@@ -174,7 +185,8 @@ def train_mycelia(
         if brain.n_nodes != last_n:
             optimizer = _swap_population(brain, optimizer, lr)
             last_n = int(brain.n_nodes)
-        if step % int(lifecycle_every) == 0:
+        # lifecycle_every = 0 desactive la mort cellulaire (ablation S3-bis D4).
+        if lifecycle_every and step % int(lifecycle_every) == 0:
             report = apply_lifecycle(brain, step=step)
             if report["edge_deaths"] or report["node_deaths"]:
                 events.append({"step": step, **report, "pool": int(brain.n_nodes)})
@@ -216,7 +228,8 @@ def train_mycelia(
                 }
             )
             break
-    if not reached and patience and stale >= int(patience):
+    patience_stop = bool(patience) and stale >= int(patience)
+    if not reached and patience_stop:
         events.append({"step": step, "arret": "patience", "best_step": best["step"]})
         brain = restore(brain, best["snap"])
         curve.append(
@@ -229,6 +242,11 @@ def train_mycelia(
                 "restaure": True,
             }
         )
+    elif restore_best and best["step"]:
+        # Courbe longue : on mesure jusqu'au dernier pas, mais on rend le modele
+        # du minimum de validation (aucun arret anticipe, aucune triche).
+        events.append({"step": step, "arret": "meilleur", "best_step": best["step"]})
+        brain = restore(brain, best["snap"])
     return {
         "brain": brain,
         "best_val": round(float(best["val"]), 4),

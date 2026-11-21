@@ -221,6 +221,11 @@ class Brain(nn.Module):
         self.route_fraction: float | None = (
             None if route_fraction is None else float(route_fraction)
         )
+        # Ablation S3-bis D4(i) : affinite par arete. True = la synapse module
+        # son message par sigmoid(q.k) ; False = chaque arete transmet a pleine
+        # puissance, « routage quasi-dense ». Le defaut preserve le genome et
+        # tous les runs existants au bit pres.
+        self.route_affinity: bool = True
         self.last_awake_nodes: int = int(self.n_nodes)
         # Readout of the routed experts: mean of the outputs of the nodes woken
         # by the previous token. None for a brain without routing.
@@ -747,9 +752,14 @@ class Brain(nn.Module):
             recv_c = receivers[inv_c]
             key_c = self.bank.keys(state[recv_c], recv_c)
             query_c = self.bank.queries(out[rows_c], src_e[start:stop])
-            score_c = torch.sigmoid(
-                (query_c * key_c).sum(dim=-1, keepdim=True) * self.inv_sqrt_dim
-            )
+            if self.route_affinity:
+                score_c = torch.sigmoid(
+                    (query_c * key_c).sum(dim=-1, keepdim=True) * self.inv_sqrt_dim
+                )
+            else:
+                score_c = torch.ones_like(
+                    (query_c * key_c).sum(dim=-1, keepdim=True)
+                )
             message_c = out[rows_c] * score_c * mask_c.view(-1, 1, 1) * self.dissipation
             inbox.index_add_(0, inv_c, message_c)
             # Detached: the caller applies them to the usage buffer, once.

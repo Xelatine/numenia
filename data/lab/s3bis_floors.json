@@ -1,0 +1,31 @@
+{
+  "corpus": "corpus_toy.txt",
+  "phrases": 1000,
+  "vocabulaire": 312,
+  "uniforme_ln_v": 5.743003,
+  "alpha": 0.5,
+  "unigramme": {
+    "tokens": 4664,
+    "types": 310,
+    "entropie_mle": 5.0818,
+    "entropie_lissee": 5.082888,
+    "alpha": 0.5
+  },
+  "bigramme": {
+    "contextes": 170,
+    "paires": 2148,
+    "entropie_mle": 2.719511,
+    "entropie_lissee": 3.046586
+  },
+  "trigramme": {
+    "contextes": 2723,
+    "triplets": 2723,
+    "entropie_mle": 1.630368,
+    "entropie_lissee": 1.982794
+  },
+  "L_ref": 5.082888,
+  "mycelia_s2": 5.1,
+  "ecart_mycelia_unigramme": 0.017112,
+  "verdict": "BUG",
+  "phrase": "l'unigramme vaut déjà le niveau de MYCELIA : il prédit comme un sac de mots, ce n'est PAS un plafond d'apprentissage mais un bug d'usage du contexte"
+}

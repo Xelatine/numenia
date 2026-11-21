@@ -85,14 +85,20 @@ class ToyCorpus:
     l'injecter (meme tache, ecriture decalee).
     """
 
-    def __init__(self, seq_len: int = 8, val_fraction: float = 0.1) -> None:
+    def __init__(
+        self, seq_len: int = 8, val_fraction: float = 0.1, path: Path | str | None = None
+    ) -> None:
         meta = read_json(LAB / "vocab.json")
         self.vocab: list[str] = list(meta["vocab"])
         self.stoi = {word: i for i, word in enumerate(self.vocab)}
         self.seq_len = int(seq_len)
+        # S3-bis D6 : meme grammaire, corpus 10x plus grand. Le vocabulaire ne
+        # change pas (les deux cerveaux gardent leur embedding de 312 mots), seul
+        # le flux de phrases change. Par defaut : le corpus de S1/S2, inchange.
+        source = Path(path) if path else CORPUS_TOY
         lines = [
             line.strip()
-            for line in CORPUS_TOY.read_text(encoding="utf-8").splitlines()
+            for line in source.read_text(encoding="utf-8").splitlines()
             if line.strip()
         ]
         stream: list[int] = []

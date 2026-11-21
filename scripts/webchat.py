@@ -313,6 +313,20 @@ def api_lab_scan_history():
     return jsonify(_lab_json("scan_history.json", {"scans": []}))
 
 
+@app.route("/api/lab/s3bis", methods=["GET"])
+def api_lab_s3bis():
+    """S3-bis : courbe longue, verdict A/B, planchers, suspect D2."""
+    return jsonify(
+        {
+            "summary": _lab_json("s3bis_summary.json", {}),
+            "long": _lab_json("s3bis_long.json", {}),
+            "ablations": _lab_json("s3bis_ablations.json", {}),
+            "context": _lab_json("s3bis_context.json", {}),
+            "floors": _lab_json("s3bis_floors.json", {}),
+        }
+    )
+
+
 @app.route("/api/lab/conversions", methods=["GET"])
 def api_lab_conversions():
     return jsonify(
@@ -321,6 +335,7 @@ def api_lab_conversions():
             "mycelia_to_dense": _lab_json("conversion_mycelia_to_dense.json", {}),
         }
     )
+
 
 
 # -- Temps reel, historique, eloquence, configuration ----------------------

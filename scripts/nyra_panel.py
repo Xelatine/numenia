@@ -259,6 +259,26 @@ PANEL_SECTIONS = r"""
     <canvas id="lab-canvas" class="chart" width="760" height="240"></canvas>
     <p class="note">Une colonne par token, un point par nœud actif (plus il est haut,
     plus il est actif). Les 5 stimuli filmés sont lus depuis data/lab/film_nyra.json.</p>
+    <h2 style="margin-top:16px">Plafond S3-bis — courbe longue et verdict A/B</h2>
+    <div class="grid two">
+      <div class="card">
+        <h2>Verdict</h2>
+        <dl class="kv">
+          <dt>Verdict</dt><dd id="lab-s3-verdict">—</dd>
+          <dt>L∞ MYCELIA</dt><dd id="lab-s3-linf">—</dd>
+          <dt>Dense (contrôle)</dt><dd id="lab-s3-dense">—</dd>
+          <dt>Suspect D2</dt><dd id="lab-s3-suspect">—</dd>
+          <dt>L_ref (unigramme)</dt><dd id="lab-s3-ref">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>L(t) sur 500 pas</h2>
+        <canvas id="lab-curve" class="chart" width="520" height="200"></canvas>
+        <p class="note">Orange : MYCELIA · vert : dense jumeau. Ordonnée : perte de
+        validation (borne basse = meilleure validation atteinte), abscisse : pas.
+        Lecture seule, aucun CDN.</p>
+      </div>
+    </div>
   </section>
 """
 
@@ -652,7 +672,7 @@ document.addEventListener('click', ev => {
 });
 
 // --- 🧪 Labo -----------------------------------------------------------
-const LAB = { atlas: null, film: null, scan: null, timer: null };
+const LAB = { atlas: null, film: null, scan: null, s3bis: null, timer: null };
 
 function paintConversion(prefix, data) {
   const v = data && data.verdict;
@@ -685,6 +705,73 @@ function paintScan() {
   setText('lab-repro', (last.reproductible ? 'oui' : 'non')
     + ' — écart ' + last.ecart_max_matrice);
   setText('lab-scans', scans.length + ' point(s) dans scan_history.json');
+}
+
+function drawS3bis() {
+  // Deux courbes, une seule echelle : c'est la comparaison A/B qu'on doit voir.
+  const cv = document.getElementById('lab-curve');
+  const data = LAB.s3bis && LAB.s3bis.long;
+  if (!cv || !data) return;
+  const my = (data.mycelia && data.mycelia.envelope) || [];
+  const de = (data.dense && data.dense.envelope) || [];
+  if (!my.length) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, padL = 34, padB = 18, padT = 8, padR = 6;
+  const end = Number(my[my.length - 1].step) || 1;
+  const vals = my.concat(de).map(r => Number(r.val));
+  const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+  const span = (hi - lo) || 1;
+  const x = s => padL + (W - padL - padR) * Number(s) / end;
+  const y = v => padT + (H - padT - padB) * (1 - (Number(v) - lo) / span);
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#1e242c';
+  ctx.fillStyle = '#8b939e';
+  ctx.font = '10px ui-monospace, monospace';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 3; i++) {
+    const v = lo + span * i / 3;
+    const py = y(v);
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillText(v.toFixed(2), 2, py + 3);
+  }
+  const line = (rows, color) => {
+    if (!rows.length) return;
+    ctx.strokeStyle = color; ctx.lineWidth = 1.6; ctx.beginPath();
+    rows.forEach((r, i) => {
+      const px = x(r.step), py = y(r.val);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+  };
+  line(de, '#6ee7a8');
+  line(my, '#f5a86b');
+  ctx.fillStyle = '#8b939e';
+  ctx.fillText('pas 0', padL, H - 4);
+  ctx.fillText('pas ' + end, W - 52, H - 4);
+}
+
+const SUSPECT_LABEL = {
+  agregation: 'agrégation', lecture: 'lecture', routage: 'routage',
+  'agregation+lecture': 'agrégation + lecture', aucun: 'aucun'
+};
+
+function paintS3bis() {
+  const d = LAB.s3bis || {};
+  const verdict = d.summary && d.summary.verdict;
+  setText('lab-s3-verdict', verdict || 'S3-bis non exécuté');
+  const long = d.long || {};
+  const my = long.mycelia || {}, de = long.dense || {};
+  const myL = (my.decision && my.decision.L_inf_effectif) || my.best_val;
+  const deL = (de.decision && de.decision.L_inf_effectif) || de.best_val;
+  setText('lab-s3-linf', myL === undefined ? '—'
+    : Number(myL).toFixed(4) + ' (meilleur pas ' + my.best_step + ', A/B : '
+      + ((long.verdict) || '—') + ')');
+  setText('lab-s3-dense', deL === undefined ? '—' : Number(deL).toFixed(4));
+  const suspect = d.context && d.context.suspect;
+  setText('lab-s3-suspect', suspect ? (SUSPECT_LABEL[suspect] || suspect) : '—');
+  setText('lab-s3-ref', (d.floors && d.floors.L_ref !== undefined)
+    ? Number(d.floors.L_ref).toFixed(4) : '—');
+  drawS3bis();
 }
 
 function paintAtlas() {
@@ -765,8 +852,10 @@ async function loadLab() {
     paintConversion('m', null);
   }
   try { LAB.scan = await (await fetch('/api/lab/scan-history')).json(); } catch (e) { LAB.scan = null; }
+  try { LAB.s3bis = await (await fetch('/api/lab/s3bis')).json(); } catch (e) { LAB.s3bis = null; }
   paintAtlas();
   paintScan();
+  paintS3bis();
   paintFilmOptions();
 }
 
