@@ -1897,50 +1897,6 @@ def _s8_corpus():
 
 
 
-def _s8_predict_tag(tag, texts, temperature, top_k):
-    """Prédiction unifiée : retourne rows ou None."""
-    rows = None
-    try:
-        _s8_paths()
-    except Exception:
-        return rows
-    if not DONORS_DIR.exists():
-        return rows
-    pt = DONORS_DIR / (tag + ".pt")
-    if not pt.exists():
-        return rows
-    try:
-        corpus = _s8_corpus()
-    except Exception:
-        return rows
-    try:
-        blob = torch.load(str(pt), map_location="cpu", weights_only=False, mmap=True)
-    except Exception:
-        return rows
-    cfg = blob.get("config", {})
-    try:
-        if cfg.get("type") == "dense":
-            from micro_dense import DenseTransformer
-            m = DenseTransformer(
-                int(blob.get("vocab_size", len(blob.get("vocab", corpus.vocab)))),
-                dim=cfg.get("dim", 16), layers=cfg.get("layers", 2),
-                heads=cfg.get("heads", 2), mlp=cfg.get("mlp", 768),
-                seq=cfg.get("seq", S8_SEQ),
-            )
-            m.load_state_dict(blob["state_dict"])
-            m.eval()
-            rows = _predict_dense(m, texts, temperature, top_k)
-        elif cfg.get("type") == "brain":
-            from repaired_mycelia import load_brain
-            brain = load_brain(pt)
-            rows = _predict_brain(brain, texts, temperature, top_k)
-        else:
-            rows = None
-    except Exception:
-        rows = None
-    return rows
-# -- S8 — banc multi-donneurs : chat donneur / traduit ---------------
-# ═══════════════════════════════════════════════════════════════════════
 DONORS_DIR = None
 FAMILY_JSON = None
 BENCH_JSON = None
