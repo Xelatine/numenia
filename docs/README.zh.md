@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia（中文）
+# Numenia（中文）
 
 **一个会自发长连接的类脑系统，正在学习法语。**
 
-Mycelia 不是层堆叠，而是一群小型自主节点组成的群落。它们通过消息交谈，自己
+Numenia 不是层堆叠，而是一群小型自主节点组成的群落。它们通过消息交谈，自己
 决定向谁发话；想联系谁就长出突触，长期无用的连接会被剪掉，再无信号到达的
 节点会死亡，而当一条消息叫它时，它会以完全相同的权重复活。它与 Transformer
 的赌注相反：智能也许来自**动态结构**（节点诞生、死亡、专门化），而不是单纯

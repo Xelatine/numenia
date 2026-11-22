@@ -7,7 +7,7 @@ differences imposees par le receveur :
   neurone ajoute a ``fc1``/``fc2`` recoit le concept dans sa ligne d'entree et
   ecrit zero dans sa colonne de sortie, donc la fonction du modele est
   exactement preservee jusqu'au premier pas d'affinage ;
-* les noeuds du mycelia qui portent le concept sont adresses par ``k_b``, et le
+* les noeuds du numenia qui portent le concept sont adresses par ``k_b``, et le
   dense ecoute une direction de son espace residuel (ligne de ``fc1``). La
   projection ridge relie les deux espaces, comme dans l'autre sens.
 
@@ -56,7 +56,7 @@ from translate_lib import (
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="conversion mycelia -> dense (S4)")
+    parser = argparse.ArgumentParser(description="conversion numenia -> dense (S4)")
     parser.add_argument("--k", type=int, default=8)
     parser.add_argument("--steps", type=int, default=100)
     parser.add_argument("--batch", type=int, default=16)
@@ -81,7 +81,7 @@ def main() -> None:
         f"(reference convergee : data/lab/micro_dense.pt, val 4,4869)"
     )
 
-    # 1. cartographie source : familles de noeuds du mycelia
+    # 1. cartographie source : familles de noeuds du numenia
     scan_source = scan_mycelia(brain, corpus, texts)
     alive = brain.node_alive.cpu().numpy()
     nodes = np.nonzero(alive)[0]
@@ -193,7 +193,7 @@ def main() -> None:
     write_json(
         LAB / "conversion_mycelia_to_dense.json",
         {
-            "sens": "mycelia -> dense",
+            "sens": "numenia -> dense",
             "meta": {
                 "stimuli": len(texts),
                 "k": int(args.k),

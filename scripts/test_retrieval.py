@@ -143,7 +143,7 @@ def main() -> None:
     if args.encoder == "lexical":
         print("  rappel : preuve LEXICALE du pipeline, pas sémantique")
     if args.encoder == "qwen":
-        print("  rappel : sens EMPRUNTÉ à Qwen (organe externe), souvenirs = nœuds MYCELIA")
+        print("  rappel : sens EMPRUNTÉ à Qwen (organe externe), souvenirs = nœuds NUMENIA")
     md5 = memory.save(ROOT / "data" / "mem_golden_test.npz")
     print(f"md5 {md5}")
     assert hits == len(GOLDEN), "RETRIEVAL EN ÉCHEC — ne pas construire dessus"

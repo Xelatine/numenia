@@ -1,10 +1,10 @@
 """S3-bis D1 — les planchers n-gram du corpus jouet.
 
-La question que ce script tranche avant toute autre : MYCELIA plafonne a ~5,1 de
+La question que ce script tranche avant toute autre : NUMENIA plafonne a ~5,1 de
 perte. Est-ce un *plafond d'apprentissage*, ou simplement le niveau qu'atteint
 un modele qui ne regarde pas le contexte ? Un modele qui predit chaque mot sans
 regarder ce qui precede ne peut pas descendre sous l'entropie **unigramme** du
-corpus. Si cette borne vaut deja 5,0-5,1, alors MYCELIA n'a pas de plafond
+corpus. Si cette borne vaut deja 5,0-5,1, alors NUMENIA n'a pas de plafond
 structurel : il predit exactement comme un sac de mots, et le probleme est
 l'usage du contexte (bug de routage/agregation/lecture), pas la capacite.
 
@@ -24,7 +24,7 @@ le trigramme) :
 avec ``alpha = 0.5``. Pourquoi ce lissage et pas un add-1 : avec 312 mots et
 1000 phrases, un add-1 uniforme ajoute 312 pseudo-occurrences a chaque contexte,
 ce qui ecrase les contextes rares et *surestime* la perte du bigramme (le
-plancher deviendrait trop haut, et on accuserait MYCELIA a tort). Le prior
+plancher deviendrait trop haut, et on accuserait NUMENIA a tort). Le prior
 d'ordre inferieur ne rajoute que la masse d'un demi-contexte virtuel, et il est
 le seul choix qui rende les trois ordres comparables : chacun est un modele
 "ordre n + repli sur ordre n-1".
@@ -168,26 +168,26 @@ def main() -> None:
 
     uniform = round(math.log(vocab), 6)
     floor = uni["entropie_lissee"]
-    mycelia = 5.1
+    numenia = 5.1
     # Le seuil du brief : unigramme dans 5,0-5,1 -> pas de plafond, bug d'usage.
     if 5.0 <= floor <= 5.15:
         verdict = "BUG"
         phrase = (
-            "l'unigramme vaut déjà le niveau de MYCELIA : il prédit comme un sac "
+            "l'unigramme vaut déjà le niveau de NUMENIA : il prédit comme un sac "
             "de mots, ce n'est PAS un plafond d'apprentissage mais un bug d'usage "
             "du contexte"
         )
     elif floor < 4.5:
         verdict = "APPRENTISSAGE"
         phrase = (
-            "le plancher sans contexte est bien plus bas que 5,1 : MYCELIA laisse "
+            "le plancher sans contexte est bien plus bas que 5,1 : NUMENIA laisse "
             "de l'information contextuelle sur la table, le plafond est un vrai "
             "problème d'apprentissage"
         )
     else:
         verdict = "ZONE"
         phrase = (
-            "l'unigramme tombe entre 4,5 et 5,0 : le plafond de MYCELIA n'est ni "
+            "l'unigramme tombe entre 4,5 et 5,0 : le plafond de NUMENIA n'est ni "
             "expliqué ni absous par le sans-contexte, la zone reste ambiguë"
         )
 
@@ -201,8 +201,8 @@ def main() -> None:
         "bigramme": higher["bigramme"],
         "trigramme": higher["trigramme"],
         "L_ref": floor,
-        "mycelia_s2": mycelia,
-        "ecart_mycelia_unigramme": round(mycelia - floor, 6),
+        "mycelia_s2": numenia,
+        "ecart_mycelia_unigramme": round(numenia - floor, 6),
         "verdict": verdict,
         "phrase": phrase,
     }
@@ -219,7 +219,7 @@ def main() -> None:
         f"trigramme  MLE    : {higher['trigramme']['entropie_mle']:.4f}   "
         f"lisse : {higher['trigramme']['entropie_lissee']:.4f}"
     )
-    print(f"MYCELIA S2        : {mycelia:.4f}  (ecart a l'unigramme : {mycelia - floor:+.4f})")
+    print(f"NUMENIA S2        : {numenia:.4f}  (ecart a l'unigramme : {numenia - floor:+.4f})")
     print(f"VERDICT D1        : {verdict} — {phrase}")
     print("ecrit : data/lab/s3bis_floors.json")
 

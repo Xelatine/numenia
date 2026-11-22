@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia (русский)
+# Numenia (русский)
 
 **Искусственный мозг с возникающими связями, который учит французский.**
 
-Mycelia — это не стопка слоёв, а колония маленьких автономных узлов. Они
+Numenia — это не стопка слоёв, а колония маленьких автономных узлов. Они
 разговаривают сообщениями, сами выбирают, к кому обратиться, отращивают синапсы,
 когда хотят кого-то достичь, обрезают их, когда те голодают, умирают, когда их
 ничто не достигает, и возвращаются в точности такими, какими были, когда

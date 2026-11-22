@@ -100,7 +100,7 @@ def main() -> None:
     line("  professeur choisi", f"semence {best_seed}, val {min(results):.4f}")
 
     # ── 2. Receveur vierge ─────────────────────────────────────────────────
-    print("\n[2] RECEVEUR VIERGE (MYCELIA pool 24, jamais entrené sur ce corpus)")
+    print("\n[2] RECEVEUR VIERGE (NUMENIA pool 24, jamais entrené sur ce corpus)")
     brain = build_repaired(vocab, 7, two_speeds=True, overrides=POOL24)
     # mesurer l'élève vierge
     brain.eval()

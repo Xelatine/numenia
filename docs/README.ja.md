@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia（日本語）
+# Numenia（日本語）
 
 **創発的な配線を持つ人工脳が、フランス語を学ぶ。**
 
-Mycelia は層の積み重ねではありません。小さな自律ノードのコロニーです。ノード
+Numenia は層の積み重ねではありません。小さな自律ノードのコロニーです。ノード
 同士はメッセージで会話し、誰に話しかけるかを自分で決め、届きたい相手がいれば
 シナプスを生やし、使われなければ切り、何も届かなくなれば死に、メッセージに
 呼ばれれば元とまったく同じ重みで戻ってきます。Transformer とは逆の賭けです。

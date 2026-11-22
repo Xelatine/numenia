@@ -61,7 +61,7 @@ def sandbox_section(name: str, result: dict) -> list[str]:
 
 def main() -> None:
     dense = load("micro_dense_result.json")
-    mycelia = load("micro_mycelia_result.json")
+    numenia = load("micro_mycelia_result.json")
     atlas = load("atlas_nyra.json")
     s3 = load("conversion_dense_to_mycelia.json")
     s4 = load("conversion_mycelia_to_dense.json")
@@ -69,9 +69,9 @@ def main() -> None:
 
     v3, v4 = s3["verdict"], s4["verdict"]
     lines = [
-        "# RAPPORT DU TRADUCTEUR — dense ↔ MYCELIA",
+        "# RAPPORT DU TRADUCTEUR — dense ↔ NUMENIA",
         "",
-        "MYCELI-SCAN v0 + mini-labo de conversion. Toutes les mesures viennent des "
+        "NUMENIA-SCAN v0 + mini-labo de conversion. Toutes les mesures viennent des "
         "fichiers de `data/lab/` ; les courbes sont celles relevees pendant "
         "l'execution, pas des estimations.",
         "",
@@ -86,26 +86,26 @@ def main() -> None:
         f"({atlas['divergences']['cablees_jamais_coactives']['part']:.1%}), "
         f"{atlas['divergences']['coactifs_sans_arete']['nombre']} paires co-actives "
         f"sans arete.",
-        f"- Dense → MYCELIA : {v3['avant']:.4f} → {v3['apres_greffe']:.4f} apres greffe "
+        f"- Dense → NUMENIA : {v3['avant']:.4f} → {v3['apres_greffe']:.4f} apres greffe "
         f"({v3['gain_vs_avant']:.1%} de gain), controle au meme budget "
         f"{v3['controle']:.4f}.",
-        f"- MYCELIA → dense : {v4['avant']:.4f} → {v4['apres_greffe']:.4f} "
+        f"- NUMENIA → dense : {v4['avant']:.4f} → {v4['apres_greffe']:.4f} "
         f"({v4['gain_vs_avant']:.1%}), controle {v4['controle']:.4f}.",
         "",
         "## 2. Les deux bacs a sable (S2)",
         "",
         "Meme tache (mot suivant), meme flux de mots, meme vocabulaire, "
-        f"{dense['vocab']} mots. Le dense a {dense['params']} parametres, MYCELIA "
-        f"{mycelia['params']} — l'ecart est assume : MYCELIA paie un pool, des "
+        f"{dense['vocab']} mots. Le dense a {dense['params']} parametres, NUMENIA "
+        f"{numenia['params']} — l'ecart est assume : NUMENIA paie un pool, des "
         "aretes et un metabolisme que le dense n'a pas.",
         "",
     ]
     lines += sandbox_section("micro-transformer dense (2 couches, 16 dims)", dense)
-    lines += sandbox_section("micro-MYCELIA (pool, aretes, metabolisme)", mycelia)
+    lines += sandbox_section("micro-MYCELIA (pool, aretes, metabolisme)", numenia)
     lines += [
-        f"Metabolisme du bac MYCELIA : pool {mycelia['pool_start']} → "
-        f"{mycelia['pool']} noeuds, {mycelia['node_births']} naissances reelles, "
-        f"{mycelia['node_deaths']} enterrements, {mycelia['edge_deaths']} aretes coupees.",
+        f"Metabolisme du bac NUMENIA : pool {numenia['pool_start']} → "
+        f"{numenia['pool']} noeuds, {numenia['node_births']} naissances reelles, "
+        f"{numenia['node_deaths']} enterrements, {numenia['edge_deaths']} aretes coupees.",
         "",
         "## 3. Le dictionnaire bilingue (alignement fonctionnel)",
         "",
@@ -113,15 +113,15 @@ def main() -> None:
         "L'alignement est mutuel : une paire ne compte que si chacun est le "
         "meilleur partenaire de l'autre, au-dessus du seuil.",
         "",
-        "### Dense → MYCELIA",
+        "### Dense → NUMENIA",
         "",
     ]
     lines += table_alignement(s3["table_alignement"], "concept source", "famille receveuse")
-    lines += ["", "### MYCELIA → dense", ""]
+    lines += ["", "### NUMENIA → dense", ""]
     lines += table_alignement(s4["table_alignement"], "famille source", "concept receveur")
     lines += [
         "",
-        "## 4. Verdict dense → MYCELIA (S3)",
+        "## 4. Verdict dense → NUMENIA (S3)",
         "",
         f"- **AVANT** : validation {v3['avant']:.4f}, entrainement {v3['train_avant']:.4f}.",
         f"- **APRES 100 pas avec greffe** : validation {v3['apres_greffe']:.4f} "
@@ -143,7 +143,7 @@ def main() -> None:
         f"pool {s3['meta']['noeuds_receveur']} noeuds receveurs → "
         f"{s3['meta']['noeuds_receveur'] + len(s3['transplants'])}.",
         "",
-        "## 5. Verdict MYCELIA → dense (S4)",
+        "## 5. Verdict NUMENIA → dense (S4)",
         "",
         f"- **AVANT** : validation {v4['avant']:.4f}, entrainement {v4['train_avant']:.4f}.",
         f"- **APRES 100 pas avec greffe** : validation {v4['apres_greffe']:.4f} "
@@ -171,11 +171,11 @@ def main() -> None:
         f"- **Le gain vient surtout du transplant, pas de l'alignement** : "
         f"{len(s3['transplants'])} noeuds ajoutes, dont aucun ne correspond a une "
         "famille existante. Un traducteur qui greffe tout ne traduit rien.",
-        f"- **Le sens MYCELIA → dense est presque neutre** : "
+        f"- **Le sens NUMENIA → dense est presque neutre** : "
         f"{v4['gain_vs_controle']:+.2%} de validation contre le controle, "
         f"{v4['phrases_gagnees_vs_controle']}/{v4['phrases']} phrases. "
         "Sept neurones zero-initialises n'apportent presque rien en 100 pas.",
-        f"- **Entrainement contre validation** : dans le sens dense → MYCELIA, la "
+        f"- **Entrainement contre validation** : dans le sens dense → NUMENIA, la "
         f"greffe gagne en validation ({v3['gain_vs_controle']:+.2%}) mais perd un "
         f"peu en entrainement ({v3['train_gain_vs_controle']:+.2%}). Un gain de "
         "generalisation qui n'est pas un gain d'apprentissage doit etre lu comme "

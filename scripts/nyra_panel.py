@@ -308,7 +308,7 @@ PANEL_SECTIONS = r"""
   </section>
 
   <section class="card wide" data-panel="labo">
-    <h2>🧪 Labo — MYCELI-SCAN et traducteur</h2>
+    <h2>🧪 Labo — NUMENIA-SCAN et traducteur</h2>
     <div class="grid">
       <div class="card">
         <h2>Atlas de Nyra</h2>

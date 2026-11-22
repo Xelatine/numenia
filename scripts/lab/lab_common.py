@@ -78,9 +78,9 @@ class ToyCorpus:
     """Le corpus jouet comme un flux continu, avec 10 % tenus a part.
 
     Les deux bacs lisent **le meme** flux et tirent leurs lots avec le meme
-    generateur : sans ca, une difference de perte entre dense et mycelia
+    generateur : sans ca, une difference de perte entre dense et numenia
     pourrait venir d'un autre ordre de lecture, pas de l'architecture. Pour le
-    dense, ``y[t]`` est le mot suivant du flux ; pour MYCELIA, la cible est la
+    dense, ``y[t]`` est le mot suivant du flux ; pour NUMENIA, la cible est la
     fenetre elle-meme, parce que son forward predit le token lu *avant* de
     l'injecter (meme tache, ecriture decalee).
     """
@@ -143,7 +143,7 @@ class ToyCorpus:
         return out
 
     def targets(self, x: torch.Tensor) -> torch.Tensor:
-        """Cible MYCELIA : la fenetre elle-meme (il lit avant d'injecter)."""
+        """Cible NUMENIA : la fenetre elle-meme (il lit avant d'injecter)."""
         return x
 
     def encode(self, text: str) -> list[int]:

@@ -14,7 +14,7 @@ Toutes les mesures sont donnees deux fois :
   continuite des chiffres 5,1509 / 3,7921.
 
 Le point de comparaison est ecrit ici une fois pour toutes : bigramme 3,0466,
-dense 3,7921, ancien MYCELIA 5,1509 (mesure decalee ; la mesure honnete de
+dense 3,7921, ancien NUMENIA 5,1509 (mesure decalee ; la mesure honnete de
 l'ancien est 5,1484, donc la conclusion de S3-BIS ne bouge pas).
 
 Le script tourne **par bras** (un corpus + un mode = 3 semences, ~7 min sur CPU)
@@ -174,11 +174,11 @@ def merge() -> None:
         raise SystemExit("aucun fragment '1000/deux_vitesses' : lancer le bras d'abord")
     mean_1000 = sum(float(r["honnete"]) for r in main_rows) / len(main_rows)
     if mean_1000 < REFERENCE["bigramme"]:
-        verdict, phrase = "🥇", "le MYCELIA réparé bat le bigramme : l'architecture dépasse son professeur dense"
+        verdict, phrase = "🥇", "le NUMENIA réparé bat le bigramme : l'architecture dépasse son professeur dense"
     elif mean_1000 < REFERENCE["dense"]:
-        verdict, phrase = "🥈", "le MYCELIA réparé bat le dense : la distillation peut commencer"
+        verdict, phrase = "🥈", "le NUMENIA réparé bat le dense : la distillation peut commencer"
     else:
-        verdict, phrase = "🥉", "le MYCELIA réparé ne bat pas le seuil publié du dense : le goulot restant doit être diagnostiqué"
+        verdict, phrase = "🥉", "le NUMENIA réparé ne bat pas le seuil publié du dense : le goulot restant doit être diagnostiqué"
     payload["verdict"] = {
         "code": verdict,
         "phrase": phrase,
@@ -187,7 +187,7 @@ def merge() -> None:
         "seuil_dense": REFERENCE["dense"],
     }
     write_json(LAB / "s4_validation.json", payload)
-    print(f"verdict {verdict} — MYCELIA réparé (1000 phrases, moyenne) : {mean_1000:.4f}")
+    print(f"verdict {verdict} — NUMENIA réparé (1000 phrases, moyenne) : {mean_1000:.4f}")
     for name, block in payload["runs"].items():
         for mode, row in block["resume"].items():
             print(f"  {name:4s} {mode:13s} {row['moyenne']:.4f} ± {row['ecart_type']:.4f}")

@@ -1,8 +1,8 @@
-# Mycelia
+# Numenia
 
 **Un cerveau artificiel à câblage émergent qui apprend le français.**
 
-Mycelia n'est pas une pile de couches. C'est une colonie de petits nœuds
+Numenia n'est pas une pile de couches. C'est une colonie de petits nœuds
 autonomes qui se parlent par messages, décident seuls à qui s'adresser, font
 naître des synapses quand ils veulent atteindre quelqu'un, les coupent quand
 elles ne servent plus, meurent quand plus rien ne les atteint — et reviennent
@@ -267,7 +267,7 @@ est laissé vide là où il doit l'être, plutôt que rempli de chiffres invent�
 * **FlyWire / FLYNN** (Dorkenwald et al., *Nature*, 2024,
   <https://www.nature.com/articles/s41586-024-07558-y> ; Lappalainen et al.,
   *Nature*, 2024, <https://www.nature.com/articles/s41586-024-07763-9>)
-  cartographient un vrai connectome et le simulent. Mycelia emprunte la
+  cartographient un vrai connectome et le simulent. Numenia emprunte la
   *philosophie d'échelle* (beaucoup d'unités simples, arêtes creuses, calcul
   local) mais le connectome est appris, pas copié : aucun diagramme de câblage
   n'est fourni au modèle.
@@ -279,7 +279,7 @@ est laissé vide là où il doit l'être, plutôt que rempli de chiffres invent�
   neurones change.
 * **Generative Agents** (Park et al., 2023,
   <https://arxiv.org/abs/2304.03442>) donnent à des agents un flux de mémoire et
-  de la réflexion, au-dessus d'un LLM. Mycelia n'a aucun LLM en dessous : la
+  de la réflexion, au-dessus d'un LLM. Numenia n'a aucun LLM en dessous : la
   mémoire est une membrane qui refroidit, et ce qui émerge s'observe par la
   circulation, pas par un prompt.
 

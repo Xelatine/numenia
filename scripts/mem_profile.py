@@ -1,4 +1,4 @@
-"""Memory and capacity diagnostic for Mycelia — measures, never optimises.
+"""Memory and capacity diagnostic for Numenia — measures, never optimises.
 
 Why this file exists: the 8 November run could not be launched because nobody
 knew *what* was consuming the card. The project only ever recorded "MiB free"
@@ -1195,7 +1195,7 @@ def campaign_sessionf(
 # CLI
 # ----------------------------------------------------------------------
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Mycelia memory diagnostic (measures only)")
+    parser = argparse.ArgumentParser(description="Numenia memory diagnostic (measures only)")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("static", help="campaign 1: static inventory")

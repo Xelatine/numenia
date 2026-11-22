@@ -1,7 +1,7 @@
-# AUDIT-ETAT — MYCELIA / Nyra
+# AUDIT-ETAT — NUMENIA / Nyra
 
 Audit réalisé le 15 novembre 2026, **en lecture seule**, depuis le PC principal Windows
-(`G:\mycelia`, branche `main`, HEAD `e029d4c`).
+(`G:\numenia`, branche `main`, HEAD `e029d4c`).
 Aucun fichier de code n'a été modifié, déplacé ou supprimé. Aucune connexion au serveur.
 Aucun entraînement lancé. Ce fichier est le seul ajout au dépôt.
 
@@ -58,7 +58,7 @@ l'arbre de travail.**
 | B1 | `self.json` existe et contient « Nyra » | ❌ | Aucun fichier `self.json` sur le PC (`find . -name "self*.json"` → vide) ; `data/genome_myc/` **n'existe pas**. Le code sait l'écrire (`mycelia/identity.py:94` `identity.save(Path(genome_dir) / "self.json")`) mais rien ne l'a jamais appelé sur cette machine. Le nom « Nyra » n'apparaît dans **aucun** `self.json` — il n'y en a pas |
 | B2 | `self.json` est lu à chaque éveil | ❌ | Un seul lecteur dans tout le dépôt : `scripts/chat.py:123` `Identity.load(path)` (chat **terminal**, non lancé et sans rapport avec `webchat.py`). `scripts/webchat.py` ne contient **aucune** référence à `self.json` / `Identity`. Le nom affiché est une constante : `scripts/webchat.py:2`, `:153`, `:203`, `:220`, `:222` |
 | B3 | Étiquette affichée `[nyra]` dans `webchat.py` (attendu ≥ 2) | ✅ | `grep -c -i "nyra" scripts/webchat.py` → **11**. Étiquette explicite : `scripts/webchat.py:142-148` `label = "[nyra]"` (deux branches) |
-| B4 | Restes de `[mycelia]` dans les affichages | ✅ (aucun reste) | `grep -rn "\[mycelia\]"` → **0** occurrence dans tout le dépôt. `mycelia` n'apparaît que comme **nom de paquet Python** (`from mycelia.brain import Brain`, etc.) — usage légitime, pas une étiquette visible |
+| B4 | Restes de `[numenia]` dans les affichages | ✅ (aucun reste) | `grep -rn "\[numenia\]"` → **0** occurrence dans tout le dépôt. `numenia` n'apparaît que comme **nom de paquet Python** (`from mycelia.brain import Brain`, etc.) — usage légitime, pas une étiquette visible |
 
 ### C. LE CHAT
 

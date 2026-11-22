@@ -847,7 +847,7 @@ class Trainer:
 # CLI
 # ----------------------------------------------------------------------
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="train the mycelia brain")
+    parser = argparse.ArgumentParser(description="train the numenia brain")
     parser.add_argument("--data", choices=["toy", "text"], default=None)
     parser.add_argument("--scale", type=int, default=0, choices=[0, 1, 2, 3, 4])
     parser.add_argument("--steps", type=int, default=None)

@@ -31,7 +31,7 @@ DONOR_CONFIG_MAPPING = {
     "A": {"type": "dense", "label": "Dense A — lignée S5 (2 couches)"},
     "B": {"type": "dense", "label": "Dense B — variant graine+arch (3 couches)"},
     "C": {"type": "dense", "label": "Dense C — ordre mélangé (contextualisation)"},
-    "D": {"type": "brain", "label": "MYCELIA pool 24 — cerveau reparatrice (seuil)"},
+    "D": {"type": "brain", "label": "NUMENIA pool 24 — cerveau reparatrice (seuil)"},
 }
 SEQ_LEN = 8
 VAL_WINDOWS = 100

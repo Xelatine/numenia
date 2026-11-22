@@ -1,6 +1,6 @@
 """S3-bis D6 — le corpus 10x : capacite ou surapprentissage ?
 
-Le corpus de S2 fait 1000 phrases (4 664 tokens). MYCELIA y atteint sa meilleure
+Le corpus de S2 fait 1000 phrases (4 664 tokens). NUMENIA y atteint sa meilleure
 validation au pas 50 puis la validation **remonte** jusqu'a 7,4 pendant que la
 perte d'entrainement descend a 3,2 : c'est du surapprentissage franc. La question
 que ce script tranche : le plafond de 5,1 tient-il quand il n'y a plus rien a
@@ -11,7 +11,7 @@ memoriser ?
   mots — sinon les embeddings des deux cerveaux ne correspondraient plus ;
 * planchers n-grammes recalcules sur le gros corpus (les bornes bougent : plus
   de phrases, donc moins de contextes rares) ;
-* MYCELIA et le dense jumeau reentraines au **meme budget court** (300 pas) sur
+* NUMENIA et le dense jumeau reentraines au **meme budget court** (300 pas) sur
   ce corpus, memes lots de validation.
 
 Si le plafond tient alors que le surapprentissage a disparu, c'est la capacite
@@ -70,20 +70,20 @@ def main() -> None:
     set_seed(SEED)
     brain = mycelia_twin(corpus.vocab_size, SEED)
     started = time.time()
-    mycelia = train_mycelia(
+    numenia = train_mycelia(
         brain, corpus, STEPS, lr=MYCELIA_LR, batch=MYCELIA_BATCH, seed=SEED,
         log_every=LOG_EVERY, val_batches=val, weight_decay=MYCELIA_WD,
         patience=0, restore_best=True,
     )
     mycelia_row = {
-        "params": int(mycelia_parameters(mycelia["brain"])),
-        "best_val": mycelia["best_val"],
-        "best_step": mycelia["best_step"],
+        "params": int(mycelia_parameters(numenia["brain"])),
+        "best_val": numenia["best_val"],
+        "best_step": numenia["best_step"],
         "secondes": round(time.time() - started, 1),
-        "aretes": int(mycelia["edges"]),
-        "courbe": [{"step": r["step"], "val": r["val"], "loss": r["loss"]} for r in mycelia["curve"]],
+        "aretes": int(numenia["edges"]),
+        "courbe": [{"step": r["step"], "val": r["val"], "loss": r["loss"]} for r in numenia["curve"]],
     }
-    print(f"MYCELIA  : {mycelia_row['best_val']:.4f} au pas {mycelia_row['best_step']} "
+    print(f"NUMENIA  : {mycelia_row['best_val']:.4f} au pas {mycelia_row['best_step']} "
           f"({mycelia_row['secondes']} s)")
 
     set_seed(SEED)
@@ -123,7 +123,7 @@ def main() -> None:
         "plafond_tient": bool(mycelia_hold),
     }
     write_json(LAB / "s3bis_bigcorpus.json", payload)
-    print(f"ecart MYCELIA - dense : {payload['ecart']:+.4f} — plafond tient : {mycelia_hold}")
+    print(f"ecart NUMENIA - dense : {payload['ecart']:+.4f} — plafond tient : {mycelia_hold}")
     print("ecrit : data/lab/s3bis_bigcorpus.json")
 
 

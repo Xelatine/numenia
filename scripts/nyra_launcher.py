@@ -41,7 +41,7 @@ sys.path.insert(0, str(ROOT))
 
 import torch
 
-from mycelia import nyra_control as nc
+from numenia import nyra_control as nc
 from mycelia.config import load_config
 from mycelia.train import Trainer, acquire_lock, process_memory, release_lock
 

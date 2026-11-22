@@ -102,7 +102,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 try:
-    from mycelia import nyra_control as nc
+    from numenia import nyra_control as nc
 except Exception:
     nc = None
 try:

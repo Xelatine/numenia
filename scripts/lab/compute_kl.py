@@ -40,7 +40,7 @@ def load_all_donors():
         state_dict = blob.get('state_dict', {})
         config = blob.get('config', {})
         
-        # Determine type: dense vs MYCELIA brain
+        # Determine type: dense vs NUMENIA brain
         has_embed = 'embed.weight' in state_dict
         has_edge_index = 'edge_index' in blob or '_edge_mask' in blob
         has_clock_or_ne = 'clock' in blob or 'ne' in blob
@@ -89,7 +89,7 @@ def load_all_donors():
             donateurs[tag] = model
             
         elif is_brain:
-            # Donneur MYCELIA (brain) - charge via repaired_mycelia
+            # Donneur NUMENIA (brain) - charge via repaired_mycelia
             from repaired_mycelia import load_brain
             brain = load_brain(path)
             donateurs[tag] = brain
@@ -99,7 +99,7 @@ def load_all_donors():
     return donateurs
 
 def forward_model(model, x, generator=None):
-    """Forward un modèle (dense ou MYCELIA) et retourne les logits [batch, seq-1, vocab]
+    """Forward un modèle (dense ou NUMENIA) et retourne les logits [batch, seq-1, vocab]
     
     Retourne None si le modèle ne peut pas faire de prédiction.
     """
@@ -124,7 +124,7 @@ def forward_model(model, x, generator=None):
             return logits
         
         elif hasattr(model, '_edge_mask'):
-            # MYCELIA: forward avec état
+            # NUMENIA: forward avec état
             state = model._fresh_state(x.size(0)) if hasattr(model, '_fresh_state') else None
             if state is not None:
                 out = model(x, state=state, grow=False)
@@ -253,11 +253,11 @@ def compute_kl_matrix(donateurs, corpus, num_samples=50, batch_size=64):
     return matrix, top3_matrix, all_stats
 
 def compute_plafond_kl(donateurs, corpus):
-    """Calculer un plafond de KL: KL inter-famille (dense vs MYCELIA pool24)
+    """Calculer un plafond de KL: KL inter-famille (dense vs NUMENIA pool24)
     
     Le plafond represente la difference maximale attendue entre deux architectures
     differentes. Pour S8, on compare:
-    - A, B, C (dense) vs D (MYCELIA pool24): KL > plafond
+    - A, B, C (dense) vs D (NUMENIA pool24): KL > plafond
     - KL entre donateurs de meme famille < plafond
     """
     dense_tags = [t for t in donateurs if t != 'D']
@@ -375,7 +375,7 @@ def main():
                 "A": "dense (lignee S5)",
                 "B": "dense variant (graine+arch)",
                 "C": "dense ordre melange (contextualite)",
-                "D": "MYCELIA pool24 donneur",
+                "D": "NUMENIA pool24 donneur",
             }.get(tag, f"donneur-{tag}"),
             "type": "dense" if hasattr(model, 'vocab') else "brain",
             "config": {},

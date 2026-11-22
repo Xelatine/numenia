@@ -1,10 +1,10 @@
-"""S5-MAX Verrou 2 — le receveur qui vit : MYCELIA au pool 24.
+"""S5-MAX Verrou 2 — le receveur qui vit : NUMENIA au pool 24.
 
 V1. ``RepairedBrain`` porte au **pool 24** (meme sous-classe, ``brain.py`` de
     Nyra intact). La lecture lit les 24 membranes (384 dims) plus le noeud 1 et
     la voie rapide. Le jumeau equitable est **recalcule** : on compte les
     parametres actifs par token, puis on choisit la taille MLP du dense pour
-    qu'il soit au moins aussi gros (comparaison defavorable a MYCELIA).
+    qu'il soit au moins aussi gros (comparaison defavorable a NUMENIA).
 
 V2. Meme budget que S4 (600 pas, 32 par lot, memes reglages), mesure corrigee.
     Le test de contexte est refait sur le cerveau du pool 24.
@@ -126,11 +126,11 @@ def arm_twin() -> None:
             "secondes": result["seconds"],
         },
         "egalite": bool(dparams >= active),
-        "regle": "le dense est au moins aussi gros que MYCELIA : la comparaison "
-                 "reste defavorable a MYCELIA",
+        "regle": "le dense est au moins aussi gros que NUMENIA : la comparaison "
+                 "reste defavorable a NUMENIA",
     }
     write_json(fragment("twin"), payload)
-    print(f"MYCELIA pool 24 : {active} parametres actifs ({account['ajoutes']} ajoutes "
+    print(f"NUMENIA pool 24 : {active} parametres actifs ({account['ajoutes']} ajoutes "
           f"par la lecture) ; dense mlp {mlp} : {dparams} "
           f"({payload['dense']['ratio_dense_sur_mycelia']}x)", flush=True)
     print(f"professeur A (dense jumeau) : val 600 pas {result['final_val']:.4f} ; "

@@ -1,10 +1,10 @@
 """S4 — le controle de capacite : un bigramme de rang 16, seul.
 
-Le MYCELIA repare et le dense jumeau convergent tous les deux vers ~3,8 nats sur
+Le NUMENIA repare et le dense jumeau convergent tous les deux vers ~3,8 nats sur
 1000 phrases. Est-ce la force du dense, ou le plafond de **toute** lecture de
 dimension 16 ? Ce script entraine le plus petit modele possible qui reponde :
 `embedding(312x16) -> LayerNorm -> lineaire 16x16 -> LayerNorm -> tete(16x312)`,
-c'est-a-dire exactement la voie rapide du MYCELIA repare, sans graphe, sans
+c'est-a-dire exactement la voie rapide du NUMENIA repare, sans graphe, sans
 contexte au-dela d'un mot.
 
 Si ce modele atteint ~3,8, alors la barre du dense n'est pas « le dense » : c'est

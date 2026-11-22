@@ -1,4 +1,4 @@
-"""S4 R1-R2 — la lecture reparee du MYCELIA jouet.
+"""S4 R1-R2 — la lecture reparee du NUMENIA jouet.
 
 Le rapport S3-BIS a mesure le defaut : l'etat de la colonie contient le contexte
 (sonde "toutes membranes" a 4,914 nats) mais la tete ne lit qu'**une** membrane
@@ -40,14 +40,14 @@ Cout exact (compte par ``readout_accounting``, jamais suppose) :
     ajoutes       : 8 160   (modele : 23 748 -> 31 908)
 
 Le jumeau equitable de S3-BIS comptait 16 711 parametres actifs par token ; le
-MYCELIA repare en compte ~24 871. C'est **plus** que le jumeau (1,49x) : la
-comparaison est donc defavorable a MYCELIA, et c'est le sens honnete.
+NUMENIA repare en compte ~24 871. C'est **plus** que le jumeau (1,49x) : la
+comparaison est donc defavorable a NUMENIA, et c'est le sens honnete.
 
 LE DECALAGE D'UN CRAN (mesure pendant cette mission)
 ----------------------------------------------------
 
-``lab_common.mycelia_loss`` compare les logits de MYCELIA au couple ``y`` des
-lots, c'est-a-dire au token **suivant** ; or MYCELIA predit, a la position
+``lab_common.mycelia_loss`` compare les logits de NUMENIA au couple ``y`` des
+lots, c'est-a-dire au token **suivant** ; or NUMENIA predit, a la position
 ``t``, le token ``t`` (il lit avant d'injecter). La validation de S2/S3-BIS
 demandait donc au cerveau un pas de plus que ce qu'il apprend. Sur un modele au
 plancher (5,08) les deux cibles se valent ; sur un modele qui predit, l'ecart
@@ -64,9 +64,9 @@ naissances d'aretes payees par le trafic, adresses honorees entre deux pas,
 coupe des synapses faminees et enterrement des noeuds isoles. Il ajoute la
 distillation (R5) : ``L = KL(logits_MYC || logits_prof) + lambda * d(P h_MYC, h_prof)``
 ou ``P`` est un projecteur lineaire **jete apres usage** (il ne fait pas partie du
-cerveau). L'alignement compare le pas ``t`` de MYCELIA (qui predit le token ``t``)
+cerveau). L'alignement compare le pas ``t`` de NUMENIA (qui predit le token ``t``)
 au pas ``t-1`` du dense (qui predit le meme token a partir du meme prefixe) ; le
-pas 0 de MYCELIA n'a aucun contexte et est donc exclu des deux termes.
+pas 0 de NUMENIA n'a aucun contexte et est donc exclu des deux termes.
 """
 
 from __future__ import annotations
@@ -282,7 +282,7 @@ def restore(brain: Brain, snap: dict) -> Brain:
 # ---------------------------------------------------------------------------
 @torch.no_grad()
 def aligned_loss(brain: Brain, batches) -> float:
-    """Perte honnete : MYCELIA predit le token ``t``, on compare a ``x[:, t]``.
+    """Perte honnete : NUMENIA predit le token ``t``, on compare a ``x[:, t]``.
 
     Depuis S5-MAX M1 ``lab_common.mycelia_loss`` fait exactement cela ; cette
     fonction en est l'alias historique des scripts S4 et ne peut plus diverger
@@ -340,7 +340,7 @@ def make_projector(dim: int, init: str = "identity") -> nn.Linear:
 def teacher_parts(model, tokens: torch.Tensor, perm: torch.Tensor | None = None):
     """Logits et etat cache du professeur, alignes sur les pas de MYCELIA.
 
-    MYCELIA predit le token ``t`` a partir des tokens ``0..t-1`` ; le dense predit
+    NUMENIA predit le token ``t`` a partir des tokens ``0..t-1`` ; le dense predit
     ``x[t+1]`` a partir de ``0..t``. Les deux familles n'ont donc pas le meme
     cran a couper, et c'est le piege que S8-REPAIR-AD a paye :
 

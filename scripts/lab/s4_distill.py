@@ -12,10 +12,10 @@ entrainement supervise ordinaire.
 
 Trois bras, memes donnees, meme budget, metabolisme actif dans les trois :
 
-* ``M0``       — le MYCELIA repare entraine SEUL : c'est le bras
+* ``M0``       — le NUMENIA repare entraine SEUL : c'est le bras
   ``deux_vitesses`` de la validation (memes pas, memes lots, memes semences).
   Le controle cle : sans lui, rien ne prouve le transfert.
-* ``distille`` — MYCELIA repare + professeur, lambda = 0,5.
+* ``distille`` — NUMENIA repare + professeur, lambda = 0,5.
 * ``melange``  — le meme professeur, **etiquettes permutees** : forme et entropie
   identiques, lien mot -> distribution detruit. Le gain doit tomber a ~zero.
 
@@ -256,7 +256,7 @@ def arm_teachers(corpus: ToyCorpus) -> None:
     teacher1, blob1 = train_teacher(corpus, 1, val)
     teacher2, blob2 = train_teacher(corpus, 2, val)
     # Controle de la section 2 : le dense jumeau sur le corpus 10k, **au meme
-    # budget de 600 pas** que le MYCELIA repare (S3-bis ne l'avait entraine que
+    # budget de 600 pas** que le NUMENIA repare (S3-bis ne l'avait entraine que
     # 300 pas : 3,7268). Sans ce chiffre, comparer 3,57 a 3,73 serait comparer
     # deux budgets.
     corpus10k = ToyCorpus(seq_len=SEQ, path=LAB / "corpus_toy10k.txt")

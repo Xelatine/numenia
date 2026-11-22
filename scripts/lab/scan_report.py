@@ -1,4 +1,4 @@
-"""C4 — le scan recurrent : MYCELI-SCAN sur le genome actuel, et son historique.
+"""C4 — le scan recurrent : NUMENIA-SCAN sur le genome actuel, et son historique.
 
 Le scan de S1 a ete fait sur ``data/genome.pt`` au step 56. Aucun entrainement
 n'a tourne depuis (Alex a suspendu le 24/7) : reexecuter le scan doit donc
@@ -28,7 +28,7 @@ from scan_mycelia import coactivation, degree_tables, divergences, load_brain, r
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="MYCELI-SCAN recurrent + historique")
+    parser = argparse.ArgumentParser(description="NUMENIA-SCAN recurrent + historique")
     parser.add_argument("--genome", default="data/genome.pt")
     parser.add_argument("--k", type=int, default=6)
     parser.add_argument("--top", type=int, default=64)

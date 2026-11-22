@@ -4,14 +4,14 @@ Quatre phases, dans cet ordre :
 
 1. **Cartographie source** : les 128 neurones caches du dense sont presentes aux
    500 phrases du bac ; leur profil d'activation les groupe en concepts.
-2. **Cartographie receveur** : le meme scan sur MYCELIA donne des familles de
+2. **Cartographie receveur** : le meme scan sur NUMENIA donne des familles de
    noeuds (c'est S1, applique au bac).
 3. **Alignement fonctionnel** : chaque concept source est apparie a la famille
    receveuse qui repond aux memes phrases. L'alignement est semantique (meme
    profil sur les memes stimuli), jamais structurel — c'est la regle du
    traducteur universel.
 4. **Transplant** : les concepts sans equivalent font naitre un noeud dans
-   MYCELIA, avec l'embedding projete (projection lineaire ridge 16 -> 16) et des
+   NUMENIA, avec l'embedding projete (projection lineaire ridge 16 -> 16) et des
    aretes vers les familles co-activees.
 
 Puis le verdict chiffre : perte AVANT, perte APRES 100 pas d'affinage, et le
@@ -101,7 +101,7 @@ def shared_stimuli(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="conversion dense -> mycelia (S3)")
+    parser = argparse.ArgumentParser(description="conversion dense -> numenia (S3)")
     parser.add_argument("--k", type=int, default=8)
     parser.add_argument("--steps", type=int, default=100)
     parser.add_argument("--batch", type=int, default=16)
@@ -245,7 +245,7 @@ def main() -> None:
     write_json(
         LAB / "conversion_dense_to_mycelia.json",
         {
-            "sens": "dense -> mycelia",
+            "sens": "dense -> numenia",
             "meta": {
                 "stimuli": len(texts),
                 "k": int(args.k),

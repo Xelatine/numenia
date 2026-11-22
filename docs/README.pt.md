@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia (português)
+# Numenia (português)
 
 **Um cérebro artificial com ligações emergentes que aprende francês.**
 
-Mycelia não é uma pilha de camadas: é uma colónia de nós pequenos e autónomos que
+Numenia não é uma pilha de camadas: é uma colónia de nós pequenos e autónomos que
 falam por mensagens, escolhem sozinhos a quem se dirigir, criam sinapses quando
 querem alcançar alguém, cortam-nas quando definham, morrem quando nada os alcança
 e voltam exatamente como eram quando uma mensagem os chama. A aposta é o inverso

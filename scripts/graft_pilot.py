@@ -1,4 +1,4 @@
-"""Greffe 1 — pilote mesuré : Qwen 896-d → MYCELIA 32-d.
+"""Greffe 1 — pilote mesuré : Qwen 896-d → NUMENIA 32-d.
 
 Seuils CONSIGNÉS AVANT le calcul (dans ce fichier, puis dans le JSON) :
 
@@ -12,7 +12,7 @@ Deux cartographies comparées, même protocole :
   * projection aléatoire (Johnson-Lindenstrauss, graine fixe) ;
   * PCA ajustée sur 4 096 tokens du vocabulaire Qwen (hors phrases de test).
 
-Aucun poids de MYCELIA n'est modifié ici : c'est la preuve de la projection
+Aucun poids de NUMENIA n'est modifié ici : c'est la preuve de la projection
 avant toute greffe réelle.
 """
 

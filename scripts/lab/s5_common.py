@@ -15,7 +15,7 @@ un plafond bas est ce qui laisse des slots libres a la naissance suivante.
 repare (sans routage, tout le pool diffuse a chaque token : le total est
 l'actif), puis on choisit la taille MLP du dense telle que
 ``12792 + 66 * mlp >= actifs``. Le dense est donc **au moins aussi gros** que
-MYCELIA : la comparaison reste defavorable a MYCELIA, comme en S4.
+NUMENIA : la comparaison reste defavorable a NUMENIA, comme en S4.
 
 **Les deux colonnes de mesure.** ``colonne_nouvelle`` predit le token courant
 (``x[t]``) a partir du prefixe, c'est la tache reelle du cerveau ;
@@ -119,7 +119,7 @@ def dense_params_of(path) -> int:
 # ---------------------------------------------------------------------------
 @torch.no_grad()
 def columns_mycelia(brain, batches) -> dict:
-    """Colonnes d'un MYCELIA : nouvelle = x[t], ancienne = y[t].
+    """Colonnes d'un NUMENIA : nouvelle = x[t], ancienne = y[t].
 
     La position 0 est exclue de la colonne nouvelle : elle n'a aucun contexte,
     et aucun dense ne peut y predire quoi que ce soit. La colonne ancienne la

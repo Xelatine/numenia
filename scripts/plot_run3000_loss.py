@@ -53,7 +53,7 @@ def main() -> None:
         f'viewBox="0 0 {W} {H}" font-family="system-ui, sans-serif">',
         f'<rect width="{W}" height="{H}" fill="#ffffff"/>',
         f'<text x="{W/2}" y="20" text-anchor="middle" font-size="15" '
-        f'font-weight="600">MYCELIA — run 3 000 pas, perte (échelle log)</text>',
+        f'font-weight="600">NUMENIA — run 3 000 pas, perte (échelle log)</text>',
     ]
     for power in range(lo, hi + 1):
         y = sy(10**power)

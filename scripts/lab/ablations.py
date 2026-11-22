@@ -1,6 +1,6 @@
 """S3-bis D4 — ablations du routage : quel composant est le goulot ?
 
-Trois variantes du MYCELIA jouet, **meme budget que la courbe longue** (500 pas,
+Trois variantes du NUMENIA jouet, **meme budget que la courbe longue** (500 pas,
 semence 1, memes lots de validation) :
 
 * ``controle``            — la config de S2 (8 noeuds, affinite par arete,
@@ -198,7 +198,7 @@ def assemble(rows: dict[str, dict], diagnostics: dict) -> dict:
     if arm_i <= dense_reference + 0.15:
         verdict = "ROUTAGE"
         phrase = (
-            "sans sélection par affinité, MYCELIA rejoint le dense : le goulot "
+            "sans sélection par affinité, NUMENIA rejoint le dense : le goulot "
             "est le routage, pas la colonie"
         )
     else:
@@ -279,7 +279,7 @@ def main() -> None:
     if arm_i <= dense_reference + 0.15:
         verdict = "ROUTAGE"
         phrase = (
-            "sans sélection par affinité, MYCELIA rejoint le dense : le goulot "
+            "sans sélection par affinité, NUMENIA rejoint le dense : le goulot "
             "est le routage, pas la colonie"
         )
     else:

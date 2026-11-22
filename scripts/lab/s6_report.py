@@ -164,7 +164,7 @@ def build() -> str:
     add("")
     add("### 2.1 Diagnostic de capacité (B1)")
     add("")
-    add("On entraîne MYCELIA pool 24 **sans professeur** mais avec un budget ×10 sur le corpus 10k. "
+    add("On entraîne NUMENIA pool 24 **sans professeur** mais avec un budget ×10 sur le corpus 10k. "
         "Si elle converge vers ~3,52 quand même, la forme est saturée ; si elle descend, c'était du budget "
         "et le S5 était prématuré.")
     add("")
@@ -183,7 +183,7 @@ def build() -> str:
 
     add("### 2.2 Formes élargies — pool 48 vs membranes 256")
     add("")
-    add("Deux extensions, comparées à **paramètres actifs égaux** (jumeau récalculé, défavorable à MYCELIA) :")
+    add("Deux extensions, comparées à **paramètres actifs égaux** (jumeau récalculé, défavorable à NUMENIA) :")
     add("")
     add("| forme | perte distillée (nouvelle) | F | top-3 | verdict |")
     add("|---|---|---|---|---|")

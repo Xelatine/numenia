@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia (العربية)
+# Numenia (العربية)
 
 **دماغ اصطناعي بتوصيلات ناشئة يتعلّم الفرنسية.**
 
-‏Mycelia ليس كومة من الطبقات، بل مستعمرة من عُقد صغيرة مستقلة. تتحدّث برسائل،
+‏Numenia ليس كومة من الطبقات، بل مستعمرة من عُقد صغيرة مستقلة. تتحدّث برسائل،
 وتختار بنفسها مَن تخاطب، وتنشئ مشابك عندما تريد الوصول إلى أحد، وتقطعها عندما
 تجوع، وتموت عندما لا يصل إليها شيء، وتعود تمامًا كما كانت عندما تناديها رسالة.
 الرهان هو عكس Transformer: قد يأتي الذكاء من **البنية الديناميكية** (عُقد تولد

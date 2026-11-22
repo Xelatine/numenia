@@ -27,5 +27,5 @@
   "mycelia_s2": 5.1,
   "ecart_mycelia_unigramme": 0.017112,
   "verdict": "BUG",
-  "phrase": "l'unigramme vaut déjà le niveau de MYCELIA : il prédit comme un sac de mots, ce n'est PAS un plafond d'apprentissage mais un bug d'usage du contexte"
+  "phrase": "l'unigramme vaut déjà le niveau de NUMENIA : il prédit comme un sac de mots, ce n'est PAS un plafond d'apprentissage mais un bug d'usage du contexte"
 }

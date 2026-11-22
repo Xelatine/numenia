@@ -15,7 +15,7 @@ Pour qui :
 * les **planchers n-grammes** (uni, bi, tri) recalcules sur les memes paires ;
   les deux colonnes y sont identiques *par construction* (meme table de paires,
   decalage d'un cran) et le script le verifie au lieu de l'affirmer ;
-* le **MYCELIA repare** de S4 (lecture pleine et deux vitesses, 1000 et 10k,
+* le **NUMENIA repare** de S4 (lecture pleine et deux vitesses, 1000 et 10k,
   trois semences) : les cerveaux sauvegardes sont re-mesures, pas re-entraines ;
 * le **dense jumeau** (S2 a 1000, et trois semences re-entrainees a 10k au meme
   budget de 600 pas).
@@ -67,7 +67,7 @@ def arm_floors() -> None:
 
     Un n-gramme *predit deja* le token courant a partir du prefixe : sa table de
     paires est la meme dans les deux colonnes, et le decalage d'un cran ne vivait
-    que dans la comparaison des logits de MYCELIA (ou la cible ``y`` n'est pas
+    que dans la comparaison des logits de NUMENIA (ou la cible ``y`` n'est pas
     celle que le modele apprend). Les deux colonnes d'un plancher sont donc le
     **meme nombre**, et c'est ecrit ici plutot que suppose : la fonction de S3-BIS
     est re-executee telle quelle, et sa valeur doit retomber sur celle qui est
@@ -205,8 +205,8 @@ def arm_dense1000(seed: int) -> None:
     """Le dense jumeau de S4 (mlp 166, 23 748 parametres), 600 pas, 3 semences.
 
     Les ``s2_dense`` ne conviennent pas : la passe "meme savoir" de S2 les avait
-    arretes au plancher de MYCELIA (5,08). Ici c'est le protocole S4 exact, memes
-    600 pas que le MYCELIA repare.
+    arretes au plancher de NUMENIA (5,08). Ici c'est le protocole S4 exact, memes
+    600 pas que le NUMENIA repare.
     """
     corpus = load_corpus("1000")
     windows = corpus.fixed(CORPORA["1000"]["val"], "val")
@@ -278,7 +278,7 @@ def arm_merge() -> None:
                     if r["corpus"] == corpus_name and r["mode"] == mode]
             if rows:
                 table[f"mycelia/{corpus_name}/{mode}"] = summarise(
-                    rows, "MYCELIA repare S4, re-mesure"
+                    rows, "NUMENIA repare S4, re-mesure"
                 )
     for corpus_name in CORPORA:
         rows = [r for r in dense if r.get("corpus") == corpus_name]
@@ -300,13 +300,13 @@ def arm_merge() -> None:
 
     def rank(value: float) -> list[str]:
         order = sorted(
-            [("MYCELIA", value), ("bigramme", bigram), ("dense", dense_new)],
+            [("NUMENIA", value), ("bigramme", bigram), ("dense", dense_new)],
             key=lambda pair: pair[1],
         )
         return [name for name, _ in order]
 
     old_rank = [name for name, _ in sorted(
-        [("MYCELIA", mycelia_old), ("bigramme", bigram), ("dense", dense_old)],
+        [("NUMENIA", mycelia_old), ("bigramme", bigram), ("dense", dense_old)],
         key=lambda pair: pair[1],
     )]
     payload = {

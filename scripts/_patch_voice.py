@@ -26,7 +26,7 @@ if i != -1:
                 "\ndef chat():\n"
                 "    \"\"\"Genere une reponse de Nyra via la voix locale MYCELIA.\"\"\"\n"
                 "    if not VOICE_READY or respond is None:\n"
-                "        return jsonify({\"erreur\": \"voix locale MYCELIA indisponible\", \"succes\": False}), 503\n"
+                "        return jsonify({\"erreur\": \"voix locale NUMENIA indisponible\", \"succes\": False}), 503\n"
                 + block[block.find("\n    data = request.get_json"):]
             ) + s[j:]
 

@@ -1,13 +1,13 @@
 > **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
-> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> comme Numenia dans les titres et la documentation). Session, chiffres, fichiers de
 > données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
 > conservé tel quel, et seul le nom du projet passe à Numenia.
 
-# Mycelia (Deutsch)
+# Numenia (Deutsch)
 
 **Ein künstliches Gehirn mit emergentem Verdrahten, das Französisch lernt.**
 
-Mycelia ist kein Stapel von Schichten, sondern eine Kolonie kleiner autonomer
+Numenia ist kein Stapel von Schichten, sondern eine Kolonie kleiner autonomer
 Knoten. Sie sprechen über Nachrichten, wählen selbst, wen sie adressieren, bilden
 Synapsen, wenn sie jemanden erreichen wollen, verlieren sie, wenn sie verkümmern,
 sterben, wenn sie niemand mehr erreicht — und kehren exakt so zurück, wie sie

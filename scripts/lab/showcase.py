@@ -25,7 +25,7 @@ DONOR_LABEL = {
     "A": "Dense A — lignée S5 (2 couches, 63 480 params)",
     "B": "Dense B — variant graine+arch (3 couches, 89 992 params)",
     "C": "Dense C — ordre mélangé, contextualisation (2 couches, 63 480 params)",
-    "D": "MYCELIA D — cerveau reparatrice pool 24, seuil (24 nœuds, ~∞ params)",
+    "D": "NUMENIA D — cerveau reparatrice pool 24, seuil (24 nœuds, ~∞ params)",
 }
 DONOR_TYPE = {"A": "dense", "B": "dense", "C": "dense", "D": "brain"}
 
@@ -220,7 +220,7 @@ def main():
     lines.append("(KL ~0,57-0,60 vs ~0,42-0,46) : plus le donneur est incertain, plus le")
     lines.append("traducteur a de mal à capturer sa distribution.")
     lines.append("")
-    lines.append("Le **MYCELIA D** se traduit le mieux des quatre : KL 0,26-0,28 et top-3")
+    lines.append("Le **NUMENIA D** se traduit le mieux des quatre : KL 0,26-0,28 et top-3")
     lines.append("identique jusqu'à 11,7 %, contre 2,4-3,1 % pour les denses. Ce n'est pas une")
     lines.append("anomalie : D est le seul donneur qui partage l'architecture du traduit")
     lines.append("(pool 24, deux vitesses). Le cerveau élève peut donc copier la *forme* de son")

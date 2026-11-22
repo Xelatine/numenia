@@ -21,7 +21,7 @@ D4. Survie apres transfert : 1000 pas de metabolisme libre (regime de faim
     vivante du verrou 2), R et F avant / apres.
 
 P1-P3. Le plafond : accord inter-donneurs KL(A||B) et top-3 croise sur ~5 400
-    contextes = le maximum atteignable ; fidelite de MYCELIA mesuree pareil ;
+    contextes = le maximum atteignable ; fidelite de NUMENIA mesuree pareil ;
     score **F = 1 - KL(A||MYC) / KL(A||B)**, rapporte avant et apres la vie.
 
 P4. Si F < 0,9 : budget x4, temperatures T=2 et T=4, alpha/beta raffines autour

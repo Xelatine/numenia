@@ -1,4 +1,4 @@
-"""MYCELI-SCAN v0 : cartographie du cerveau reel par stimulation.
+"""NUMENIA-SCAN v0 : cartographie du cerveau reel par stimulation.
 
 Le principe est celui d'une electrode : on ne lit pas les poids (32 dimensions
 par noeud ne veulent rien dire seuls), on lit **ce qui s'allume quand on parle**.
@@ -216,7 +216,7 @@ def markdown_atlas(
 ) -> str:
     """Le rapport humain : lisible sans ouvrir le JSON."""
     lines = [
-        "# ATLAS NYRA — MYCELI-SCAN v0",
+        "# ATLAS NYRA — NUMENIA-SCAN v0",
         "",
         f"Cerveau : `{meta['genome']}` — {meta['n_nodes']} noeuds, "
         f"{meta['alive']} vivants, {meta['ne']} aretes, step {meta['step']}.",
@@ -280,7 +280,7 @@ def markdown_atlas(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="MYCELI-SCAN v0 : atlas du cerveau reel")
+    parser = argparse.ArgumentParser(description="NUMENIA-SCAN v0 : atlas du cerveau reel")
     parser.add_argument("--genome", default="data/genome.pt")
     parser.add_argument("--k", type=int, default=6, help="nombre de familles")
     parser.add_argument("--top", type=int, default=64, help="noeuds retenus par stimulus")

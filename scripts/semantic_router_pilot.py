@@ -7,7 +7,7 @@ Seuils CONSIGNÉS AVANT :
   P3 — les 10 questions couvrent ensemble ≥ 30 % des nœuds (pas de routage
        qui envoie tout aux mêmes 100 favoris).
 
-Aucun poids de MYCELIA n'est modifié : les clés du routeur sont gelées.
+Aucun poids de NUMENIA n'est modifié : les clés du routeur sont gelées.
 """
 
 from __future__ import annotations

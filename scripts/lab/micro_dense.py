@@ -106,7 +106,7 @@ class DenseTransformer(nn.Module):
         Pourquoi les sorties MLP et pas les embeddings : ce sont les seules
         unites qui *calculent* quelque chose de partage entre positions, comme
         un noeud de la colonie. Pourquoi un max sur les positions : meme
-        reduction que MYCELI-SCAN (S1) sur la membrane d'un noeud, sans quoi
+        reduction que NUMENIA-SCAN (S1) sur la membrane d'un noeud, sans quoi
         les deux profils d'activation ne seraient pas comparables.
         """
         batch, seq = tokens.shape
@@ -130,7 +130,7 @@ class DenseTransformer(nn.Module):
         return torch.cat(rows, dim=-1)
 
     # ------------------------------------------------------------------
-    # Croissance, pour la traduction inverse (mycelia -> dense)
+    # Croissance, pour la traduction inverse (numenia -> dense)
     # ------------------------------------------------------------------
     @torch.no_grad()
     def grow_mlp(self, block_index: int, incoming: torch.Tensor) -> int:

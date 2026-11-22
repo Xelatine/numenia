@@ -47,11 +47,11 @@ def _label_for(tag: str) -> str:
         "A": "dense (lignee S5)",
         "B": "dense variant (graine+arch)",
         "C": "dense ordre melange (contextualite)",
-        "D": "MYCELIA sparse entrainee (test symbolique)",
-        "trad_A": "MYCELIA traduite d'A (a1b1g0)",
-        "trad_B": "MYCELIA traduite de B (a1b1g0)",
-        "trad_C": "MYCELIA traduite de C (a1b1g0)",
-        "trad_D": "MYCELIA traduite de D (a1b1g0)",
+        "D": "NUMENIA sparse entrainee (test symbolique)",
+        "trad_A": "NUMENIA traduite d'A (a1b1g0)",
+        "trad_B": "NUMENIA traduite de B (a1b1g0)",
+        "trad_C": "NUMENIA traduite de C (a1b1g0)",
+        "trad_D": "NUMENIA traduite de D (a1b1g0)",
     }
     return m.get(tag, tag)
 

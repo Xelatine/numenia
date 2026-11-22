@@ -1,4 +1,4 @@
-"""Premier chat avec MYCELIA — identité offline, mémoire, Qwen local.
+"""Premier chat avec NUMENIA — identité offline, mémoire, Qwen local.
 
 Chaque ligne est une question. La réponse dit **par quel étage** elle est passée :
 
@@ -142,7 +142,7 @@ def main() -> int:
         result = llm.create_chat_completion(
             messages=[
                 {"role": "system", "content": (
-                    "Tu es MYCELIA, un organisme local. Réponds en français, "
+                    "Tu es NUMENIA, un organisme local. Réponds en français, "
                     "brièvement, sans prétendre avoir fait une action."
                 )},
                 {"role": "user", "content": question},
@@ -153,7 +153,7 @@ def main() -> int:
         return result["choices"][0]["message"]["content"]
 
     engine = ChatEngine(encoder=encoder, generator=generator, identity=load_identity())
-    print("MYCELIA — chat. (ligne vide pour quitter)")
+    print("NUMENIA — chat. (ligne vide pour quitter)")
     print(f"(mémoire : {len(engine.memory)} souvenirs | seuil {CONFIDENCE})")
     while True:
         try:
@@ -164,7 +164,7 @@ def main() -> int:
         if not message:
             break
         level, answer = engine.ask(message)
-        print(f"mycelia> [{level}] {answer}")
+        print(f"numenia> [{level}] {answer}")
     return 0
 
 

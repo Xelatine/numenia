@@ -122,7 +122,7 @@
     },
     {
       "donneur": "D",
-      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_label": "NUMENIA pool 24 — cerveau reparatrice (seuil)",
       "donneur_type": "brain",
       "seed_receveur": 1,
       "F_avant": 0.26,
@@ -134,7 +134,7 @@
     },
     {
       "donneur": "D",
-      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_label": "NUMENIA pool 24 — cerveau reparatrice (seuil)",
       "donneur_type": "brain",
       "seed_receveur": 2,
       "F_avant": 0.2752,
@@ -146,7 +146,7 @@
     },
     {
       "donneur": "D",
-      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_label": "NUMENIA pool 24 — cerveau reparatrice (seuil)",
       "donneur_type": "brain",
       "seed_receveur": 3,
       "F_avant": 0.2572,

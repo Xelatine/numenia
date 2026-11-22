@@ -1,7 +1,7 @@
 """Grounding minimal : chaque phrase générée est confrontée aux souvenirs.
 
 Un claim non attesté est SIGNALÉ (incertitude), jamais censé. Contrairement à
-un LLM pur, MYCELIA possède ses sources sous forme de nœuds vérifiables.
+un LLM pur, NUMENIA possède ses sources sous forme de nœuds vérifiables.
 
 Honnêteté structurelle : ce module ne devine pas d'embedding. Si aucun
 ``encode`` n'est fourni, ``check_grounded`` renvoie un ratio ``None`` et des

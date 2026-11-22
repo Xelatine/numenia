@@ -1,6 +1,6 @@
 """S3-bis D2 — le test de contexte (inference seulement).
 
-MYCELIA jouet de S2 (semence 1) atteint 5,078 de validation, exactement
+NUMENIA jouet de S2 (semence 1) atteint 5,078 de validation, exactement
 l'entropie unigramme du corpus (D1). Deux lectures possibles : le modele ignore
 le contexte, ou il l'utilise si mal que le gain est nul. Ce script separe les
 deux et, si le contexte est perdu, designe le composant fautif.

@@ -21,9 +21,9 @@ correspond au donneur, avant même qu'il ne commence à vivre.
 | Dense C — ordre mélangé, contextualisation | 1 | 0.5718 | 0.0007 | 0.2135 | 4.1075 | 🟢 0.57 |
 | Dense C — ordre mélangé, contextualisation | 2 | 0.5719 | 0.0005 | 0.2697 | 4.1068 | 🟢 0.57 |
 | Dense C — ordre mélangé, contextualisation | 3 | 0.5999 | 0.0002 | 0.2416 | 4.1295 | 🟢 0.60 |
-| MYCELIA D — cerveau reparatrice pool 24, seuil | 1 | 0.2600 | 0.1111 | 0.2360 | 3.5319 | 🟢 0.26 |
-| MYCELIA D — cerveau reparatrice pool 24, seuil | 2 | 0.2752 | 0.1174 | 0.2865 | 3.5353 | 🟢 0.28 |
-| MYCELIA D — cerveau reparatrice pool 24, seuil | 3 | 0.2572 | 0.0939 | 0.2416 | 3.5546 | 🟢 0.26 |
+| NUMENIA D — cerveau reparatrice pool 24, seuil | 1 | 0.2600 | 0.1111 | 0.2360 | 3.5319 | 🟢 0.26 |
+| NUMENIA D — cerveau reparatrice pool 24, seuil | 2 | 0.2752 | 0.1174 | 0.2865 | 3.5353 | 🟢 0.28 |
+| NUMENIA D — cerveau reparatrice pool 24, seuil | 3 | 0.2572 | 0.0939 | 0.2416 | 3.5546 | 🟢 0.26 |
 
 ### Lecture de la table
 
@@ -45,7 +45,7 @@ Le **dense C** (contextualisé, entropie 4,73) se traduit moins bien que A et B
 (KL ~0,57-0,60 vs ~0,42-0,46) : plus le donneur est incertain, plus le
 traducteur a de mal à capturer sa distribution.
 
-Le **MYCELIA D** se traduit le mieux des quatre : KL 0,26-0,28 et top-3
+Le **NUMENIA D** se traduit le mieux des quatre : KL 0,26-0,28 et top-3
 identique jusqu'à 11,7 %, contre 2,4-3,1 % pour les denses. Ce n'est pas une
 anomalie : D est le seul donneur qui partage l'architecture du traduit
 (pool 24, deux vitesses). Le cerveau élève peut donc copier la *forme* de son
@@ -202,7 +202,7 @@ l'entropie (incertitude) de chaque modèle.
 > Comparaison : les top-3 du donneur et du traduit partagent au moins un
 > token sur 2/5 phrases.
 
-### MYCELIA D — cerveau reparatrice pool 24, seuil (24 nœuds, ~∞ params) → traduit (semence 1, KL=0.2600)
+### NUMENIA D — cerveau reparatrice pool 24, seuil (24 nœuds, ~∞ params) → traduit (semence 1, KL=0.2600)
 
 **`la fille`** (📖 corpus)
 

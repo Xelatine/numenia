@@ -2,7 +2,7 @@
 import sys, os, time
 from pathlib import Path
 
-# Réduction minimale : on part des helpers lab sans importer mycelia
+# Réduction minimale : on part des helpers lab sans importer numenia
 sys.path.insert(0, "scripts")
 sys.path.insert(0, "scripts/lab")
 
@@ -26,11 +26,11 @@ TAG_LABELS = {
     "A": "dense (lignee S5)",
     "B": "dense variant (graine+arch)",
     "C": "dense ordre melange (contextualite)",
-    "D": "MYCELIA sparse entrainee (test symbolique)",
-    "trad_A": "MYCELIA traduite d'A (a1b1g0)",
-    "trad_B": "MYCELIA traduite de B (a1b1g0)",
-    "trad_C": "MYCELIA traduite de C (a1b1g0)",
-    "trad_D": "MYCELIA traduite de D (a1b1g0)",
+    "D": "NUMENIA sparse entrainee (test symbolique)",
+    "trad_A": "NUMENIA traduite d'A (a1b1g0)",
+    "trad_B": "NUMENIA traduite de B (a1b1g0)",
+    "trad_C": "NUMENIA traduite de C (a1b1g0)",
+    "trad_D": "NUMENIA traduite de D (a1b1g0)",
 }
 
 ALLOWED_TAGS = list(TAG_LABELS.keys())

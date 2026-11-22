@@ -3,7 +3,7 @@
 
 La version simplifiée ne fait pas la vie 2000 pas (trop lente, ~4 min/traduction).
 Elle mesure juste F avant vie : KL entre le donneur et son receveur après
-distillation MYCELIA pool 24 + entraînement 600 pas.
+distillation NUMENIA pool 24 + entraînement 600 pas.
 """
 
 from __future__ import annotations
@@ -45,7 +45,7 @@ def _import_file(name: str, rel: str):
     spec = importlib.util.spec_from_file_location(name, path)
     mod = importlib.util.module_from_spec(spec)
     sys.modules[name] = mod
-    # Register mycelia package so intra-project imports like
+    # Register numenia package so intra-project imports like
     # `from mycelia.lifecycle import ...` resolve.
     pkg = sys.modules.setdefault("mycelia", importlib.util.module_from_spec(
         importlib.util.spec_from_file_location("mycelia", ROOT / "__init__.py")
@@ -279,7 +279,7 @@ class _DenseDonor:
 
 
 def build_vierge_pool24(seed: int) -> Brain:
-    """MYCELIA pool 24 vierge — cerveau receveur de la traduction."""
+    """NUMENIA pool 24 vierge — cerveau receveur de la traduction."""
     cfg = dict(CONFIG["brain"])
     cfg["n_nodes"] = 24
     cfg["birth_seed"] = seed
@@ -393,7 +393,7 @@ def compute_top3(recipient: Brain, donor: Brain, seed: int) -> dict:
 
 
 def run_translation(donor_name: str, seed: int) -> dict:
-    """Une traduction complète : donneur → receveur MYCELIA pool 24."""
+    """Une traduction complète : donneur → receveur NUMENIA pool 24."""
     print(f"[S8] traduction {donor_name}/seed{seed} — démarrage")
     donor = load_donor(donor_name)
     recipient = build_vierge_pool24(seed)

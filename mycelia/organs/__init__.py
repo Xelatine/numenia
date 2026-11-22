@@ -1,1 +1,1 @@
-"""Organes externes de MYCELIA (hiérarchie d'escalade)."""
+"""Organes externes de NUMENIA (hiérarchie d'escalade)."""

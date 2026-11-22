@@ -2,12 +2,12 @@
 
 Egaliser le nombre total de parametres (S2, 23 748 des deux cotes) ne compare pas
 le meme travail : le dense consulte **tous** ses parametres a chaque token, alors
-que MYCELIA n'en touche qu'une partie. Le vrai benchmark du sparse, c'est un
-dense dimensionne sur ce que MYCELIA utilise reellement.
+que NUMENIA n'en touche qu'une partie. Le vrai benchmark du sparse, c'est un
+dense dimensionne sur ce que NUMENIA utilise reellement.
 
 Estimation, documentee et mesuree (pas supposee) :
 
-    actifs(MYCELIA) = dim                          (une ligne d'embedding lue)
+    actifs(NUMENIA) = dim                          (une ligne d'embedding lue)
                     + dim * vocab                  (la tete de lecture, entiere)
                     + noeuds_actifs * 1 121        (gate + corps + LayerNorm)
                     + noeuds_actifs * 544          (requete + cle, par noeud)
@@ -25,7 +25,7 @@ unique degre de liberte est la largeur MLP :
     params_dense = 4 992 (embed) + 128 (position) + 32 (ln_f) + 5 304 (tete)
                  + 2 * (1 184 + 32 * mlp)
 
-On resout ``mlp`` pour que ``params_dense`` egale ``actifs(MYCELIA)``, puis on
+On resout ``mlp`` pour que ``params_dense`` egale ``actifs(NUMENIA)``, puis on
 entraine ce dense au meme budget que la courbe longue (500 pas, memes lots).
 
 Ecrit ``data/lab/s3bis_fair.json``.
@@ -123,7 +123,7 @@ def main() -> None:
     set_seed(SEED)
     model = DenseTransformer(corpus.vocab_size, dim=16, layers=2, heads=2, mlp=mlp, seq=SEQ)
     params = int(n_parameters(model))
-    print(f"MYCELIA actifs/token : {estimate['total']:.0f} ({estimate['noeuds_actifs_par_token']} noeuds)")
+    print(f"NUMENIA actifs/token : {estimate['total']:.0f} ({estimate['noeuds_actifs_par_token']} noeuds)")
     print(f"dense equitable      : MLP {mlp} -> {params} parametres total")
 
     started = time.time()
@@ -155,7 +155,7 @@ def main() -> None:
     print(f"dense equitable : {result['final_val']:.4f} au pas {result['best_step']} "
           f"en {result['seconds']} s")
     if mycelia_best is not None:
-        print(f"MYCELIA (500 pas) : {mycelia_best:.4f} — ecart {payload['ecart']:+.4f}")
+        print(f"NUMENIA (500 pas) : {mycelia_best:.4f} — ecart {payload['ecart']:+.4f}")
     print("ecrit : data/lab/s3bis_fair.json")
 
 

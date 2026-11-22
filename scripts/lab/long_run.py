@@ -1,7 +1,7 @@
 """S3-bis D3 — la courbe longue, et le verdict A/B.
 
-S2 arretait MYCELIA apres 50 pas : on ne savait pas si 5,078 etait un plancher
-ou un point d'arret premature. Ici le meme MYCELIA (semence 1, config S2 exacte)
+S2 arretait NUMENIA apres 50 pas : on ne savait pas si 5,078 etait un plancher
+ou un point d'arret premature. Ici le meme NUMENIA (semence 1, config S2 exacte)
 court **500 pas**, dix fois plus, et on enregistre toute la courbe. Le dense jumeau
 court le meme budget, avec les memes lots de validation, comme controle.
 
@@ -21,7 +21,7 @@ bootstrap sur les points (200 reechantillonnages, intervalle a 90 %).
 Verdict ecrit dans le JSON :
 
 * ``L_inf >= 4,95`` -> **B**, plafond structurel a ce dimensionnement ;
-* ``L_inf < 4,80``  -> **A**, lenteur : MYCELIA y arrive, il lui faut plus de pas ;
+* ``L_inf < 4,80``  -> **A**, lenteur : NUMENIA y arrive, il lui faut plus de pas ;
 * entre les deux    -> **partiel**, zone d'ambiguite assumee.
 
 Ecrit ``data/lab/s3bis_long.json``.
@@ -123,7 +123,7 @@ def fit_power_law(curve: list[dict], start: int = 10, resamples: int = 200) -> d
     # Un minimum pose sur le bord du domaine n'est pas un ajustement : c'est le
     # signe que la somme des carres decroit jusque-la sans jamais remonter. Sur
     # une courbe plate, c'est le cas (mesure : 3,6509 = minimum observe - 1,5
-    # pour MYCELIA, 2,2921 pour le dense). Le drapeau le dit au rapport.
+    # pour NUMENIA, 2,2921 pour le dense). Le drapeau le dit au rapport.
     at_bound = abs(float(l_inf) - float(floor - 1.5)) < 1e-6
 
     if l_inf >= 4.95:
@@ -268,12 +268,12 @@ def main() -> None:
     print(f"courbe longue : {STEPS} pas, log tous les {LOG_EVERY}, "
           f"{VAL_WINDOWS} fenetres de validation")
 
-    print("MYCELIA (semence 1) ...")
-    mycelia = run_mycelia(corpus, val)
-    mycelia["fit"] = fit_power_law(mycelia["envelope"])
-    print(f"  meilleure validation {mycelia['best_val']:.4f} au pas {mycelia['best_step']} "
-          f"en {mycelia['secondes']} s — L_inf {mycelia['fit'].get('L_inf')} "
-          f"({mycelia['fit'].get('verdict')})")
+    print("NUMENIA (semence 1) ...")
+    numenia = run_mycelia(corpus, val)
+    numenia["fit"] = fit_power_law(numenia["envelope"])
+    print(f"  meilleure validation {numenia['best_val']:.4f} au pas {numenia['best_step']} "
+          f"en {numenia['secondes']} s — L_inf {numenia['fit'].get('L_inf')} "
+          f"({numenia['fit'].get('verdict')})")
 
     print("dense jumeau (controle) ...")
     dense = run_dense(corpus, val)
@@ -282,9 +282,9 @@ def main() -> None:
           f"en {dense['secondes']} s — L_inf {dense['fit'].get('L_inf')} "
           f"({dense['fit'].get('verdict')})")
 
-    mycelia["decision"] = decide(mycelia["fit"], mycelia["envelope"])
+    numenia["decision"] = decide(numenia["fit"], numenia["envelope"])
     dense["decision"] = decide(dense["fit"], dense["envelope"])
-    verdict = mycelia["decision"]["verdict"]
+    verdict = numenia["decision"]["verdict"]
     payload = {
         "protocole": {
             "pas": STEPS,
@@ -298,14 +298,14 @@ def main() -> None:
             "dense_batch": DENSE_BATCH,
             "forme": "L(t) = L_inf + a * t^-b sur l'enveloppe (meilleure validation)",
         },
-        "mycelia": mycelia,
+        "mycelia": numenia,
         "dense": dense,
         "verdict": verdict,
-        "decision": mycelia["decision"],
-        "gain_dense_final": round(float(dense["best_val"]) - float(mycelia["best_val"]), 4),
+        "decision": numenia["decision"],
+        "gain_dense_final": round(float(dense["best_val"]) - float(numenia["best_val"]), 4),
     }
     write_json(LAB / "s3bis_long.json", payload)
-    print(f"VERDICT A/B : {verdict} ({mycelia['decision']['raison']})")
+    print(f"VERDICT A/B : {verdict} ({numenia['decision']['raison']})")
     print("ecrit : data/lab/s3bis_long.json")
 
 

@@ -1,6 +1,6 @@
 """S2 — les jumeaux paramétriquement egaux.
 
-La Mission S comparait un dense de 17 016 parametres a un MYCELIA de 167 638 :
+La Mission S comparait un dense de 17 016 parametres a un NUMENIA de 167 638 :
 la taille etait la variable cachee, et aucun resultat de conversion ne pouvait
 dire si l'echec venait de l'architecture ou du budget. Ici les deux cerveaux
 ont **exactement** le meme nombre de parametres, le meme vocabulaire (312 mots),
@@ -11,11 +11,11 @@ Pourquoi 23 748 et pas 17 016 : le vrai ``Brain`` refuse moins de 8 noeuds (ses
 12 aretes de depart occupent les noeuds 0..7), et a ``dim=16`` avec 312 mots,
 l'embedding (4 992) plus la tete de lecture (5 304) pesent deja 10 296. Huit
 noeuds a 1 665 parametres chacun mettent le plancher a 23 664. La cible
-« ~17k » est donc hors d'atteinte pour l'architecture MYCELIA ; on egalise vers
+« ~17k » est donc hors d'atteinte pour l'architecture NUMENIA ; on egalise vers
 le haut, ce qui satisfait la contrainte qui compte (egalite stricte) :
 
     dense  : embed 4 992 + pos 128 + 2 blocs a MLP 166 + ln_f 32 = 23 748
-    MYCELIA: embed 4 992 + tete 5 304 + ln 32 + 8 noeuds (13 320) + 100 aretes = 23 748
+    NUMENIA: embed 4 992 + tete 5 304 + ln 32 + 8 noeuds (13 320) + 100 aretes = 23 748
 
 Metabolisme : la population est **fixee** a 8 noeuds (sinon chaque naissance
 ajouterait 1 665 parametres et l'egalite tomberait en cours d'entrainement),
@@ -135,11 +135,11 @@ def train_one_seed(corpus: ToyCorpus, seed: int, verbose: bool = True) -> dict:
 
     # ---- passe 1 : convergence de chacun, a son rythme -------------------
     dense = dense_twin(corpus.vocab_size, seed)
-    mycelia = mycelia_twin(corpus.vocab_size, seed)
-    if n_parameters(dense) != mycelia_parameters(mycelia):
+    numenia = mycelia_twin(corpus.vocab_size, seed)
+    if n_parameters(dense) != mycelia_parameters(numenia):
         raise SystemExit(
             f"jumeaux non egaux : dense {n_parameters(dense)} != "
-            f"mycelia {mycelia_parameters(mycelia)}"
+            f"numenia {mycelia_parameters(numenia)}"
         )
     params = int(n_parameters(dense))
 
@@ -148,7 +148,7 @@ def train_one_seed(corpus: ToyCorpus, seed: int, verbose: bool = True) -> dict:
         log_every=50, patience=6,
     )
     first_mycelia = train_mycelia(
-        mycelia, corpus, 600, lr=MYCELIA_LR, batch=MYCELIA_BATCH, seed=seed,
+        numenia, corpus, 600, lr=MYCELIA_LR, batch=MYCELIA_BATCH, seed=seed,
         log_every=50, patience=5, weight_decay=MYCELIA_WD,
     )
 
@@ -222,9 +222,9 @@ def train_one_seed(corpus: ToyCorpus, seed: int, verbose: bool = True) -> dict:
     if verbose:
         print(
             f"semence {seed} : {params} parametres — dense {best_dense:.4f} / "
-            f"MYCELIA {best_mycelia:.4f} -> commun {common:.4f} ; "
+            f"NUMENIA {best_mycelia:.4f} -> commun {common:.4f} ; "
             f"arret dense pas {row['dense']['arret_step']}, "
-            f"MYCELIA pas {row['mycelia']['arret_step']} "
+            f"NUMENIA pas {row['mycelia']['arret_step']} "
             f"({row['mycelia']['aretes']} aretes, {row['mycelia']['secondes']} s)"
         )
     return row

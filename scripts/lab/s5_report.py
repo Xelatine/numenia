@@ -87,7 +87,7 @@ def build() -> str:
     # ------------------------------------------------------- 1. mesure corrigee
     add("## 1. La mesure corrigée (M1/M2)")
     add("")
-    add("`lab_common.mycelia_loss` comparait les logits de MYCELIA au token")
+    add("`lab_common.mycelia_loss` comparait les logits de NUMENIA au token")
     add("**suivant** (`y`) alors que le cerveau predit le token **courant** (`x`) :")
     add("il lit le token avant de l'injecter, et sa cible d'entrainement est")
     add("`corpus.targets(x) = x`. La fonction compare desormais a `x` ; l'ancienne")
@@ -125,7 +125,7 @@ def build() -> str:
         row = table.get(key)
         if not row:
             continue
-        name = key.replace("mycelia/", "MYCELIA repare ").replace("dense/", "dense jumeau ")
+        name = key.replace("mycelia/", "NUMENIA repare ").replace("dense/", "dense jumeau ")
         name = name.replace("plancher/", "plancher ")
         sd = row.get("nouvelle_ecart_type") or 0.0
         sd_old = row.get("ancienne_ecart_type") or 0.0
@@ -149,11 +149,11 @@ def build() -> str:
         add(f"| nouvelle | {' < '.join(classement.get('nouvelle', []))} |")
         add(f"| ancienne | {' < '.join(classement.get('ancienne', []))} |")
         add("")
-        add("Dans la metrique publiee, MYCELIA (reparation deux vitesses) valait")
+        add("Dans la metrique publiee, NUMENIA (reparation deux vitesses) valait")
         add(f"**{fmt(classement.get('mycelia_ancienne'))}** contre **{fmt(classement.get('dense_ancienne'))}**")
         add("pour le dense : il perdait largement. Dans la mesure juste il vaut")
         add(f"**{fmt(classement.get('mycelia_nouvelle'))}** contre **{fmt(classement.get('dense_nouvelle'))}** : il")
-        add("gagne. **Les deux places s'echangent** (MYCELIA passe de dernier a")
+        add("gagne. **Les deux places s'echangent** (NUMENIA passe de dernier a")
         add("deuxieme, le dense l'inverse), et l'ancienne mesure n'etait pas une")
         add("penalite constante : plus le cerveau apprend, plus la cible decalee")
         add("s'eloigne de ce qu'il predit (5,15 quand il etait au plancher, 7,9")
@@ -184,7 +184,7 @@ def build() -> str:
         f"{fmt(accord.get('kl_A_vers_B'))} nat** par contexte, et leurs top-3 ne sont")
     add(f"identiques que dans **{pct(accord.get('top3_identiques'))}** des cas (recouvrement")
     add(f"moyen {fmt(accord.get('top3_recouvrement'), 3)} des trois mots). C'est le maximum :")
-    add("demander a MYCELIA d'etre plus proche de A que B ne l'est serait demander")
+    add("demander a NUMENIA d'etre plus proche de A que B ne l'est serait demander")
     add("l'impossible.")
     add("")
 
@@ -196,7 +196,7 @@ def build() -> str:
     add(f"| parametres actifs / token | **{jumeau.get('mycelia_actifs_par_token', '—')}** |")
     add(f"| dense jumeau (mlp {jumeau.get('dense', {}).get('mlp', '—')}) | "
         f"**{jumeau.get('dense', {}).get('parametres', '—')}** |")
-    add(f"| ratio dense / MYCELIA | {fmt(jumeau.get('dense', {}).get('ratio_dense_sur_mycelia'))} |")
+    add(f"| ratio dense / NUMENIA | {fmt(jumeau.get('dense', {}).get('ratio_dense_sur_mycelia'))} |")
     add(f"| aretes (plafond) | {jumeau.get('aretes_max', '—')} / "
         f"{jumeau.get('paires_possibles', '—')} paires = {pct(jumeau.get('densite_plafond'))} |")
     add(f"| perte nouvelle (3 semences) | **{fmt(resume.get('nouvelle_moyenne'))} ± "
@@ -352,12 +352,12 @@ def build() -> str:
     add("## 7. Le score final F (P3)")
     add("")
     add("```")
-    add("F = 1 - KL(prof A ‖ MYCELIA) / KL(prof A ‖ prof B)")
+    add("F = 1 - KL(prof A ‖ NUMENIA) / KL(prof A ‖ prof B)")
     add("```")
     add("")
     decile = dres.get("distille") or {}
     add(f"- plafond KL(A‖B) : **{fmt(dres.get('plafond_kl_A_B'))} nat**")
-    add(f"- KL(A‖MYCELIA) distille : **{fmt(decile.get('kl_A_vers_MYC'))} nat**")
+    add(f"- KL(A‖NUMENIA) distille : **{fmt(decile.get('kl_A_vers_MYC'))} nat**")
     add(f"- **F avant la vie : {signed(dres.get('F_avant_vie'))}**")
     add(f"- **F apres la vie : {signed(dres.get('F_apres_vie'))}**")
     if dres.get("F_ratio_vie") is not None:
@@ -366,19 +366,19 @@ def build() -> str:
     f_avant = dres.get("F_avant_vie")
     if f_avant is not None:
         if float(f_avant) >= 0.9:
-            phrase = ("MYCELIA est a moins de 10 % du plafond physique : la distillation "
+            phrase = ("NUMENIA est a moins de 10 % du plafond physique : la distillation "
                       "a fait le travail demande.")
         elif float(f_avant) >= 0.5:
-            phrase = ("MYCELIA couvre une part majoritaire du chemin entre « aucun "
+            phrase = ("NUMENIA couvre une part majoritaire du chemin entre « aucun "
                       "transfert » et le plafond inter-donneurs, mais il reste du "
                       "chemin : le levier est la forme de l'eleve, pas la quantite de "
                       "professeur.")
         elif float(f_avant) > 0.0:
-            phrase = ("MYCELIA ne couvre qu'une part minoritaire du chemin : le "
+            phrase = ("NUMENIA ne couvre qu'une part minoritaire du chemin : le "
                       "transfert existe mais l'eleve ne peut pas porter la forme du "
                       "professeur.")
         else:
-            phrase = ("MYCELIA est *derriere* « aucun transfert » : sa distribution "
+            phrase = ("NUMENIA est *derriere* « aucun transfert » : sa distribution "
                       "s'ecarte du professeur plus que deux professeurs ne s'ecartent "
                       "l'un de l'autre. F negatif est un resultat, pas un bug : eleve "
                       "trop petit, et KL tiree vers l'uniforme.")

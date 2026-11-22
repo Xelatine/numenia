@@ -1,8 +1,8 @@
-# Mycelia
+# NUMENIA
 
 **An artificial brain with emergent wiring that learns French.**
 
-Mycelia is not a stack of layers. It is a colony of small autonomous nodes that
+Numenia is not a stack of layers. It is a colony of small autonomous nodes that
 talk by messages, decide on their own whom to address, grow synapses when they
 want to reach someone, cut them when they starve, die when nothing reaches them
 any more — and come back exactly as they were when a message calls them.
@@ -276,13 +276,13 @@ here, empty where it must be, rather than filled with invented numbers.
 
 * **Neural Cellular Automata** (Mordvintsev et al., *Distill*, 2020,
   <https://distill.pub/2020/growing-ca/>) grow a *fixed* grid of cells with a
-  shared rule. Mycelia's cells are heterogeneous, individually plastic, and the
+  shared rule. Numenia's cells are heterogeneous, individually plastic, and the
   graph itself is created and destroyed locally; there is no shared update rule,
   and a node's identity is its address, not its position.
 * **FlyWire / FLYNN** (Dorkenwald et al., *Nature*, 2024,
   <https://www.nature.com/articles/s41586-024-07558-y>; Lappalainen et al.,
   *Nature*, 2024, <https://www.nature.com/articles/s41586-024-07763-9>) map a real
-  connectome and simulate it. Mycelia borrows the *scale philosophy* (many simple
+  connectome and simulate it. Numenia borrows the *scale philosophy* (many simple
   units, sparse edges, local computation) but the connectome is learned, not
   copied: no wiring diagram is given to the model.
 * **Dynamic Sparse Training** (Evci et al., 2020,
@@ -292,7 +292,7 @@ here, empty where it must be, rather than filled with invented numbers.
   address, deletion is a local usage rule, and the count of neurons changes.
 * **Generative Agents** (Park et al., 2023,
   <https://arxiv.org/abs/2304.03442>) give LLM agents a memory stream and
-  reflection. Mycelia has no LLM underneath: memory is a decaying membrane, and
+  reflection. Numenia has no LLM underneath: memory is a decaying membrane, and
   what emerges is observed through circulation, not prompted.
 
 ## The traps

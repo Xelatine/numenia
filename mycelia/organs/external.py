@@ -1,6 +1,6 @@
 """Hiérarchie d'escalade à quatre niveaux — STUBBÉE aux niveaux 3-4.
 
-Niveau 1 : mémoire locale (MYCELIA + souvenirs), toujours d'abord.
+Niveau 1 : mémoire locale (NUMENIA + souvenirs), toujours d'abord.
 Niveau 2 : modèle local (Qwen GGUF), sans sortie réseau.
 Niveau 3 : Gemini API — seulement si un détecteur d'ignorance existe.
 Niveau 4 : recherche web — même condition, et le résultat devient un INPUT.

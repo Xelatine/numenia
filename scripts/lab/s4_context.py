@@ -1,7 +1,7 @@
 """S4 R3/R4 — le test de contexte et les sondes, avant et apres reparation.
 
 Copie locale du protocole D2 de S3-BIS (memes trois conditions, memes sondes,
-meme budget), appliquee deux fois : au MYCELIA de S2 (avant) et au MYCELIA
+meme budget), appliquee deux fois : au NUMENIA de S2 (avant) et au NUMENIA
 repare (apres). La seule difference assumee est le nombre de fenetres de
 validation : 58, c'est-a-dire **toutes** celles du flux tenu a part (D2 en
 prenait 64 sur 58 disponibles).
@@ -303,13 +303,13 @@ def main() -> None:
     }
 
     old = load_mycelia(str(LAB / "s2_mycelia_s1.pt"))
-    print("— avant : MYCELIA de S2 (lecture du noeud 1)")
+    print("— avant : NUMENIA de S2 (lecture du noeud 1)")
     before = analyze(old, corpus, "avant (S2)", reference)
     print(f"  conditions : {before['conditions']} — ecart {before['ecart_max_conditions']}")
     print(f"  sondes : { {k: v['perte'] for k, v in before['sondes'].items()} }")
 
     repaired = load_brain(LAB / "s4_1000_deux_vitesses_s1.pt")
-    print("— apres : MYCELIA repare (deux vitesses)")
+    print("— apres : NUMENIA repare (deux vitesses)")
     after = analyze(repaired, corpus, "apres (S4)", reference)
     print(f"  conditions : {after['conditions']} — ecart {after['ecart_max_conditions']}")
     print(f"  sondes : { {k: v['perte'] for k, v in after['sondes'].items()} }")

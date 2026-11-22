@@ -13,8 +13,8 @@ import json
 from lab_common import LAB
 
 DIRS = (
-    ("dense_to_mycelia", "dense → MYCELIA", "concept dense", "nœud MYCELIA"),
-    ("mycelia_to_dense", "MYCELIA → dense", "nœud MYCELIA", "concept dense"),
+    ("dense_to_mycelia", "dense → NUMENIA", "concept dense", "nœud NUMENIA"),
+    ("mycelia_to_dense", "NUMENIA → dense", "nœud NUMENIA", "concept dense"),
 )
 
 
@@ -35,16 +35,16 @@ def courbe(rows: list[dict], key: str = "val") -> str:
 
 def table_jumeaux(twins: dict) -> list[str]:
     rows = [
-        "| semence | paramètres | dense (convergence) | MYCELIA (convergence) | perte commune | pas d'arrêt dense | pas d'arrêt MYCELIA |",
+        "| semence | paramètres | dense (convergence) | NUMENIA (convergence) | perte commune | pas d'arrêt dense | pas d'arrêt NUMENIA |",
         "|---|---|---|---|---|---|---|",
     ]
     for row in twins.get("semences", []):
-        dense, mycelia = row["dense"], row["mycelia"]
+        dense, numenia = row["dense"], row["mycelia"]
         rows.append(
             f"| {row['semence']} | {row['parametres']} | {dense['convergence_val']:.4f} "
-            f"(pas {dense['convergence_step']}) | {mycelia['convergence_val']:.4f} "
-            f"(pas {mycelia['convergence_step']}) | {row['perte_commune']:.4f} | "
-            f"{dense['arret_step']} | {mycelia['arret_step']} |"
+            f"(pas {dense['convergence_step']}) | {numenia['convergence_val']:.4f} "
+            f"(pas {numenia['convergence_step']}) | {row['perte_commune']:.4f} | "
+            f"{dense['arret_step']} | {numenia['arret_step']} |"
         )
     return rows
 
@@ -185,13 +185,13 @@ def main() -> None:
         "atteignable par le vrai `Brain` : il refuse moins de 8 nœuds (ses 12 arêtes de "
         "départ occupent les nœuds 0..7), et à `dim=16` avec 312 mots l'embedding "
         "(4 992) et la tête de lecture (5 304) pèsent déjà 10 296. Huit nœuds à 1 665 "
-        "paramètres mettent le plancher à 23 664 : le jumeau MYCELIA a donc été laissé "
+        "paramètres mettent le plancher à 23 664 : le jumeau NUMENIA a donc été laissé "
         "au minimum, et le dense a été remonté à 23 748 (MLP 166 au lieu de 64) pour "
         "que l'égalité soit **exacte**. L'égalité stricte est la contrainte qui compte ; "
         "17 016 était l'ordre de grandeur, pas la propriété testée.",
         "",
         "**Même savoir.** Les deux jumeaux ne s'arrêtent pas au même pas mais à la même "
-        "perte de validation. Le dense descend sous 4,0 sans difficulté ; MYCELIA, non : "
+        "perte de validation. Le dense descend sous 4,0 sans difficulté ; NUMENIA, non : "
         "`train_mycelia` plafonne vers 5,1 quelle que soit la combinaison "
         "d'hyperparamètres essayée (lr, weight decay, taille de lot, nombre de sauts), et "
         "se met à surapprendre au-delà. La perte commune retenue est donc celle du plus "
@@ -204,7 +204,7 @@ def main() -> None:
     for row in twins.get("semences", []):
         lignes.append(
             f"- semence {row['semence']} — dense : "
-            f"{courbe(row['dense']['courbe_arret'][-4:])} ; MYCELIA : "
+            f"{courbe(row['dense']['courbe_arret'][-4:])} ; NUMENIA : "
             f"{courbe(row['mycelia']['courbe_arret'][-4:])} ; métabolisme "
             f"{row['mycelia']['aretes']} arêtes, {row['mycelia']['naissances']} naissances, "
             f"{row['mycelia']['aretes_mortes']} arêtes coupées."
@@ -286,7 +286,7 @@ def main() -> None:
         "",
         "Le génome de Nyra n'a pas bougé (step "
         f"{scan.get('meta', {}).get('step')}, aucun entraînement depuis S1). Rejouer "
-        "MYCELI-SCAN sur les mêmes 500 stimuli doit donc redonner la même carte : "
+        "NUMENIA-SCAN sur les mêmes 500 stimuli doit donc redonner la même carte : "
         "c'est la preuve que l'instrument est reproductible.",
         "",
         "| mesure | S1 | S2 |",
@@ -326,7 +326,7 @@ def main() -> None:
         communs = sorted({row["perte_commune"] for row in twins.get("semences", [])})
         arrets = sorted({row["mycelia"]["arret_step"] for row in twins.get("semences", [])})
         lignes.append(
-            "- **La cible de 4,0 n'est pas atteinte.** MYCELIA plafonne vers "
+            "- **La cible de 4,0 n'est pas atteinte.** NUMENIA plafonne vers "
             f"{', '.join(f'{value:.4f}' for value in communs)} même à paramètres égaux : "
             "1 616 de ses 1 665 paramètres par nœud passent dans le corps (b1/b2) et le "
             "routage (q/k), et huit nœuds ne suffisent pas à couvrir 312 mots. Les "
@@ -352,14 +352,14 @@ def main() -> None:
     lignes.append(
         "- **Le top-3 ne franchit pas 20 %** avec des jumeaux arrêtés à la perte commune : "
         "les trois propositions restent dominées par la fréquence des mots. Un top-3 "
-        "élevé aurait exigé des jumeaux entraînés jusqu'à 4,0, ce que MYCELIA ne permet pas."
+        "élevé aurait exigé des jumeaux entraînés jusqu'à 4,0, ce que NUMENIA ne permet pas."
     )
     lignes += [
         "- **Trois semences, c'est peu.** Le test t apparié a 2 degrés de liberté : il "
         "faut un gain très régulier pour être significatif, et un gain régulier de 1 % "
         "peut aussi passer. Les deux chiffres (p et amplitude) sont donc donnés ensemble, "
         "jamais l'un sans l'autre.",
-        "- **La population MYCELIA est fixée à 8 nœuds** (métabolisme de câblage actif : "
+        "- **La population NUMENIA est fixée à 8 nœuds** (métabolisme de câblage actif : "
         "naissances d'arêtes, coupes, enterrements). Autoriser des naissances de nœuds "
         "aurait ajouté 1 665 paramètres par nœud et cassé l'égalité en cours de route : "
         "c'est un choix imposé par le contrôle, pas par l'architecture.",

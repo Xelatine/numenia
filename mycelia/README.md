@@ -17,7 +17,7 @@ its voice in `scripts/webchat.py`). The project that builds it is **Numenia**.
 
 | Session | Titre | Verdict | Chiffre clé |
 |---|---|---|---|
-| S1 | Scan récurrent MYCELI-SCAN — reproductibilité de l'instrument | 🟢 | Taux d'engagement 55,5 % ; écart maximal entre deux scans : 0,0 (reproductible) |
+| S1 | Scan récurrent NUMENIA-SCAN — reproductibilité de l'instrument | 🟢 | Taux d'engagement 55,5 % ; écart maximal entre deux scans : 0,0 (reproductible) |
 | S2 | Jumeaux comparables (dense ↔ Numenia, 23 748 paramètres égaux) | 🔴 Mur confirmé | Numenia plafond ~5,1 (5,078–5,108) ; 2,00 concepts traduits / 8 ; top-3 3,3 % |
 | S3-bis | Pourquoi Numenia plafonne à ~5,1 | 🐛 BUG (plafond réparable) | Plancher unigramme 5,0829 ; Numenia 5,1509 = sac de mots ; contexte ignoré (écart normal/mélangé 0,0535 nat) |
 | S4 | Réparer la lecture, puis distiller | 🥉 | Numenia réparé 3,9039 vs dense 3,7921 ; gain +1,2445 nat ; distillation : gain isolé −0,1245 |
@@ -159,7 +159,7 @@ licence commerciale, produit payant construit sur ce projet) doit être
 ---
 
 > **Renommage —** Ce projet a été renommé **Numenia** (auparavant référencé comme
-> Mycelia dans les titres et la documentation). La session, les chiffres, les fichiers
+> Numenia dans les titres et la documentation). La session, les chiffres, les fichiers
 > de données et le cerveau **Nyra** sont inchangés. Les rapports historiques
 > (dont `AUDIT-ETAT.md`) conservent leur contenu d'origine ; un bandeau en tête les
 > signale. Seul le nom du projet/ dépôt passe à Numenia.

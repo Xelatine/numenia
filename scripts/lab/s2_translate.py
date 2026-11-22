@@ -139,7 +139,7 @@ def scans_for_seed(seed: int, corpus: ToyCorpus, texts: list[str]) -> dict:
     }
     print(
         f"  scan semence {seed} : dense {dscan.shape}, "
-        f"MYCELIA {len(nodes)} noeuds actifs ({_CACHE[seed]['seconds']} s)"
+        f"NUMENIA {len(nodes)} noeuds actifs ({_CACHE[seed]['seconds']} s)"
     )
     return _CACHE[seed]
 
@@ -362,7 +362,7 @@ def run_direction(direction: str, seed: int, corpus: ToyCorpus, texts: list[str]
     )
 
     payload = {
-        "sens": "dense -> mycelia" if direction == "dense_to_mycelia" else "mycelia -> dense",
+        "sens": "dense -> numenia" if direction == "dense_to_mycelia" else "numenia -> dense",
         "semence": int(seed),
         "meta": {
             "stimuli": len(texts),

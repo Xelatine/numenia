@@ -1,1 +1,1 @@
-"""Mycelia — an artificial brain that is wired, not built."""
+"""Numenia — an artificial brain that is wired, not built."""

@@ -95,20 +95,20 @@ def main() -> None:
     add("")
     if code == "🥉":
         phrase = (
-            f"**Verdict {code}** — le MYCELIA réparé n'atteint pas le dense "
+            f"**Verdict {code}** — le NUMENIA réparé n'atteint pas le dense "
             f"({fmt(mycelia_1000)} contre {fmt(REF_DENSE)}) : la réparation fonctionne "
             "(la tête lit enfin la mémoire, et le modèle gagne plus d'un nat) mais la "
             "porte R3 n'est pas franchie. La distillation a quand même été exécutée, "
             "parce que c'est elle qui répond à la question de survie (R8) et que le "
             "rapport doit la chiffrer."
             if distill.get("resume") else
-            f"**Verdict {code}** — le MYCELIA réparé n'atteint pas le dense "
+            f"**Verdict {code}** — le NUMENIA réparé n'atteint pas le dense "
             f"({fmt(mycelia_1000)} contre {fmt(REF_DENSE)}) : la réparation fonctionne "
             "mais le goulot restant est mesuré et nommé en section 3."
         )
     else:
         phrase = (
-            f"**Verdict {code}** — le MYCELIA réparé atteint {fmt(mycelia_1000)} nats "
+            f"**Verdict {code}** — le NUMENIA réparé atteint {fmt(mycelia_1000)} nats "
             f"contre {fmt(REF_DENSE)} pour le dense et {fmt(REF_BIGRAMME)} pour le "
             "bigramme. La tête lit désormais la mémoire du graphe, et le résultat de la "
             "distillation est en section 4."
@@ -116,7 +116,7 @@ def main() -> None:
     add(phrase)
     add("")
     add(
-        "Mission : corriger l'interface de lecture du MYCELIA jouet (R1-R2), valider "
+        "Mission : corriger l'interface de lecture du NUMENIA jouet (R1-R2), valider "
         "contre le bigramme et le dense (R3-R4), puis distiller le professeur dense dans "
         "un organisme dont le métabolisme reste actif (R5-R8). `mycelia/brain.py` — le "
         "cerveau de Nyra — n'est pas modifié : la réparation est une **sous-classe** "
@@ -165,8 +165,8 @@ def main() -> None:
     add("")
     add(
         f"Le jumeau équitable de S3-BIS comptait 16 711 paramètres actifs par token ; le "
-        f"MYCELIA réparé en compte ~24 871, soit **1,49×** : la comparaison est "
-        "défavorable à MYCELIA, et c'est le sens honnête. La variante « pleine lecture "
+        f"NUMENIA réparé en compte ~24 871, soit **1,49×** : la comparaison est "
+        "défavorable à NUMENIA, et c'est le sens honnête. La variante « pleine lecture "
         f"seule » n'ajoute que {fmt(account_slow.get('ajoutes'), 0)} paramètres "
         f"({fmt(account_slow.get('total_modele'), 0)} au total)."
     )
@@ -175,7 +175,7 @@ def main() -> None:
     add("")
     add(
         "En réparant la tête, une mesure de contrôle a révélé un défaut de mesure : "
-        "`lab_common.mycelia_loss` compare les logits de MYCELIA au couple `y` des lots, "
+        "`lab_common.mycelia_loss` compare les logits de NUMENIA au couple `y` des lots, "
         "c'est-à-dire au token **suivant**, alors que `Brain.forward` lit avant "
         "d'injecter et prédit donc le token **courant**. La validation de S2/S3-BIS "
         "demandait au cerveau un pas de plus que ce qu'il apprenait."
@@ -184,8 +184,8 @@ def main() -> None:
     add(table(
         ["Modèle", "mesure honnête (cible `x`)", "mesure publiée (cible `y`)"],
         [
-            ["ancien MYCELIA (S2)", fmt(REF_ANCIEN_HONNETE), fmt(REF_ANCIEN)],
-            ["MYCELIA réparé, même instantané", fmt(4.06), fmt(6.64)],
+            ["ancien NUMENIA (S2)", fmt(REF_ANCIEN_HONNETE), fmt(REF_ANCIEN)],
+            ["NUMENIA réparé, même instantané", fmt(4.06), fmt(6.64)],
         ],
     ))
     add("")
@@ -227,7 +227,7 @@ def main() -> None:
     add("")
     add(
         f"Contrôles : bigramme lissé **{fmt(REF_BIGRAMME)}** · dense jumeau "
-        f"**{fmt(REF_DENSE)}** · ancien MYCELIA **{fmt(REF_ANCIEN)}** "
+        f"**{fmt(REF_DENSE)}** · ancien NUMENIA **{fmt(REF_ANCIEN)}** "
         f"(honnête {fmt(REF_ANCIEN_HONNETE)}) · unigramme {fmt(REF_UNIGRAMME)}."
     )
     add("")
@@ -237,7 +237,7 @@ def main() -> None:
             "**Contrôle de capacité : le bigramme de rang 16.** Le plus petit modèle "
             "qui ait la même largeur de lecture que le jouet (embedding 312×16 → 16 → "
             "tête, aucun graphe, aucun contexte au-delà d'un mot) vaut "
-            f"**{fmt(rank16['best_val'])}** sur ce même jeu de validation. Le MYCELIA "
+            f"**{fmt(rank16['best_val'])}** sur ce même jeu de validation. Le NUMENIA "
             f"réparé (3,8354) le bat de "
             f"{fmt(3.8354 - float(rank16['best_val']))} nat : l'agrégat des membranes "
             "apporte donc du contexte au-delà de la récence pure. La barre n'est ni « le "
@@ -254,7 +254,7 @@ def main() -> None:
             "3,79 là-bas). Pour comparer honnêtement, le dense jumeau a été réentraîné "
             f"dans les mêmes conditions et mesuré sur les mêmes 58 fenêtres : "
             f"**{fmt(dense58)}** (semence 1) et {fmt(professor.get('s2'))} (semence 2). "
-            f"Le MYCELIA réparé (lecture pleine, {fmt(m1000_pleine)}) est donc **devant le "
+            f"Le NUMENIA réparé (lecture pleine, {fmt(m1000_pleine)}) est donc **devant le "
             f"dense de {fmt(float(dense58) - float(m1000_pleine))} nat à jeu de validation "
             "égal**. Par la règle chiffrée de la mission — qui garde le seuil publié — le "
             "verdict reste 🥉 ; en comparaison appariée, la réparation franchit la barre."
@@ -269,7 +269,7 @@ def main() -> None:
             old_gap = round(float(big["mycelia"]["best_val"]) - float(big["dense"]["best_val"]), 4)
         add(
             f"**Le corpus change l'échelle, pas le classement.** Sur les 10 000 phrases, "
-            f"au même budget de 600 pas, le MYCELIA réparé (lecture pleine) vaut "
+            f"au même budget de 600 pas, le NUMENIA réparé (lecture pleine) vaut "
             f"**{fmt(m10)}** contre **{fmt(d10)}** pour le dense jumeau : le dense reste "
             f"devant de {fmt(float(m10) - float(d10))} nat. Mais l'écart de S3-bis, mesuré "
             f"sur 300 pas, était de {fmt(old_gap)} : la réparation le divise par "
@@ -281,7 +281,7 @@ def main() -> None:
         add("")
     add(
         f"**Verdict chiffré : {code} — {verdict.get('phrase', '')}** "
-        f"(MYCELIA réparé, 1000 phrases, moyenne : **{fmt(mycelia_1000)}**)."
+        f"(NUMENIA réparé, 1000 phrases, moyenne : **{fmt(mycelia_1000)}**)."
     )
     add("")
     add(
@@ -548,7 +548,7 @@ def main() -> None:
     add("")
     if code in ("🥇", "🥈"):
         add(
-            f"Le MYCELIA réparé vaut **{fmt(mycelia_1000)}** contre {fmt(REF_DENSE)} pour "
+            f"Le NUMENIA réparé vaut **{fmt(mycelia_1000)}** contre {fmt(REF_DENSE)} pour "
             f"le dense et {fmt(REF_BIGRAMME)} pour le bigramme lissé. "
             + (
                 "Il dépasse son professeur dense : la barre de 90 % du convertisseur "
@@ -562,7 +562,7 @@ def main() -> None:
         )
     else:
         add(
-            f"Le MYCELIA réparé vaut **{fmt(mycelia_1000)}** sur 1000 phrases (deux "
+            f"Le NUMENIA réparé vaut **{fmt(mycelia_1000)}** sur 1000 phrases (deux "
             "vitesses), **3,8354** en lecture pleine, et **3,5636** sur le corpus 10k. "
             "La réparation rend la tête fonctionnelle — elle gagne plus de 1,2 nat et "
             "l'écart normal/mélangé passe de 0,05 à 3,19 — mais elle ne franchit pas le "
@@ -594,7 +594,7 @@ def main() -> None:
         add("")
         add(
             "Pour la barre des 90 % du convertisseur, la conclusion tient en une phrase : "
-            "le point dur n'est plus « MYCELIA peut-il apprendre ? » mais « que coûte une "
+            "le point dur n'est plus « NUMENIA peut-il apprendre ? » mais « que coûte une "
             "mémoire de séquence dans un graphe à somme ? ». Et la distillation n'est pas "
             "encore la réponse : telle qu'elle est formulée ici, elle transfère la forme "
             "du professeur sans transférer son avantage (section 4)."

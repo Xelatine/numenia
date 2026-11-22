@@ -60,12 +60,12 @@ def headline(data: dict) -> tuple[str, str]:
     if floors["verdict"] == "BUG" or not context["contexte_utilise"]:
         return (
             "🐛 BUG",
-            "le plafond de MYCELIA est exactement le plancher sans contexte : "
+            "le plafond de NUMENIA est exactement le plancher sans contexte : "
             "il ne s'agit pas d'un plafond d'apprentissage mais d'un défaut "
             "d'usage du contexte, localisé dans l'agrégation et la lecture.",
         )
     if data["long"]["verdict"] == "A":
-        return ("🐢 A", "MYCELIA apprend plus lentement mais progresse encore : la route des 90 % s'ouvre avec plus de pas.")
+        return ("🐢 A", "NUMENIA apprend plus lentement mais progresse encore : la route des 90 % s'ouvre avec plus de pas.")
     if data["long"]["verdict"] == "B":
         return ("🧱 B", "plafond structurel confirmé à ce dimensionnement : le receveur doit être agrandi.")
     return ("❓ AMBIGU", "les mesures ne tranchent pas.")
@@ -96,14 +96,14 @@ def section_floors(floors: dict) -> str:
             f"**L_ref = {fr(floors['L_ref'])} nats/token** — c'est le plancher d'un modèle "
             "qui prédit chaque mot sans regarder ce qui précède.",
             "",
-            f"MYCELIA S2 mesure **{fr(floors['mycelia_s2'])}**, soit "
+            f"NUMENIA S2 mesure **{fr(floors['mycelia_s2'])}**, soit "
             f"**{sign(floors['ecart_mycelia_unigramme'])} nat** de l'unigramme.",
             "",
             f"> **{floors['verdict']}** — {floors['phrase']}.",
             "",
             "La conséquence est brutale et c'est le résultat le plus décisif du projet : "
             "un bigramme lissé vaut 3,05 nats, un trigramme 1,98. Il y a donc **2,03 nats "
-            "de contexte disponibles** que MYCELIA ne prend pas. Son « plafond » de 5,1 "
+            "de contexte disponibles** que NUMENIA ne prend pas. Son « plafond » de 5,1 "
             "n'est pas une limite de capacité : c'est le niveau exact d'un sac de mots.",
             "",
         ]
@@ -179,7 +179,7 @@ def section_long(long: dict) -> str:
     dec_my = my.get("decision", {})
     dec_de = de.get("decision", {})
     rows = [
-        ["MYCELIA (semence 1)", str(my["params"]), fr(my["best_val"]), str(my["best_step"]),
+        ["NUMENIA (semence 1)", str(my["params"]), fr(my["best_val"]), str(my["best_step"]),
          fr(my.get("fit", {}).get("L_inf")), fr(dec_my.get("L_inf_effectif")), dec_my.get("verdict", "—")],
         ["dense jumeau (contrôle)", str(de["params"]), fr(de["best_val"]), str(de["best_step"]),
          fr(de.get("fit", {}).get("L_inf")), fr(dec_de.get("L_inf_effectif")), dec_de.get("verdict", "—")],
@@ -197,7 +197,7 @@ def section_long(long: dict) -> str:
             "",
             f"**VERDICT A/B : {bold.get(ver, ver)}**",
             "",
-            f"- MYCELIA : {dec_my.get('raison', '—')}",
+            f"- NUMENIA : {dec_my.get('raison', '—')}",
             f"- dense : {dec_de.get('raison', '—')}",
             "",
             "**Comment ce B se combine avec le verdict 🐛 du haut.** Ce B répond à la "
@@ -211,11 +211,11 @@ def section_long(long: dict) -> str:
             "ajustée en log-log, mais son minimum tombe **au bord du domaine** pour les deux "
             "bras (3,65 et 2,29 = minimum observé − 1,5), ce qui signifie que la somme des "
             "carrés décroît jusque-là sans jamais remonter : l'asymptote n'est pas identifiable. "
-            f"MYCELIA ne gagne **{fr(dec_my.get('gain_apres_20_pourcent'))} nat** sur les 80 % "
+            f"NUMENIA ne gagne **{fr(dec_my.get('gain_apres_20_pourcent'))} nat** sur les 80 % "
             "finaux du budget. L'asymptote retenue est donc la meilleure validation atteinte, "
             "et son incertitude est ce gain résiduel.",
             "",
-            "Autrement dit : multiplier le budget par dix ne rapproche pas MYCELIA du dense. "
+            "Autrement dit : multiplier le budget par dix ne rapproche pas NUMENIA du dense. "
             "Ce n'est pas de la lenteur.",
             "",
         ]
@@ -277,7 +277,7 @@ def section_fair(fair: dict) -> str:
             "## 5. Le jumeau équitable : paramètres ACTIFS égaux (D5)",
             "",
             "S2 égalisait 23 748 paramètres *totaux*. Ce n'est pas le même travail par token : "
-            "le dense consulte tout, MYCELIA une partie. Estimation mesurée sur la validation :",
+            "le dense consulte tout, NUMENIA une partie. Estimation mesurée sur la validation :",
             "",
             table(["Poste", "Paramètres consultés"], rows),
             "",
@@ -286,10 +286,10 @@ def section_fair(fair: dict) -> str:
             "",
             f"| Bras | Perte |", "|---|---|",
             f"| dense équitable (actifs égaux) | {fr(dense['best_val'])} |",
-            f"| MYCELIA, même budget | {fr(fair['mycelia_meme_budget'])} |",
+            f"| NUMENIA, même budget | {fr(fair['mycelia_meme_budget'])} |",
             f"| dense jumeau S2 (23 748 params) | {fr(fair['dense_jumeau_23748'])} |",
             "",
-            f"Écart MYCELIA − dense équitable : **{sign(fair['ecart'])} nat**.",
+            f"Écart NUMENIA − dense équitable : **{sign(fair['ecart'])} nat**.",
             "",
             "Ils ne s'égalent pas. Le plafond n'est donc pas « le prix attendu du sparse à "
             "calcul égal » : à calcul égal, le dense fait mieux, et le sparse ne compense pas "
@@ -317,7 +317,7 @@ def section_big(big: dict) -> str:
             table(["Plancher sur le gros corpus", "Valeur"], rows),
             "",
             f"| Bras | Meilleure val | Au pas |", "|---|---|---|",
-            f"| MYCELIA | {fr(big['mycelia']['best_val'])} | {big['mycelia']['best_step']} |",
+            f"| NUMENIA | {fr(big['mycelia']['best_val'])} | {big['mycelia']['best_step']} |",
             f"| dense | {fr(big['dense']['best_val'])} | {big['dense']['best_step']} |",
             "",
             f"Écart : **{sign(big['ecart'])} nat**. Le plafond tient : "
@@ -353,7 +353,7 @@ def section_recency(recency: list[dict]) -> str:
             f"Meilleur réglage mesuré : **{fr(best['state_decay'], 2)} → {fr(best['best_val'])}**. "
             + (
                 "La perte tombe sous le plancher historique, donc la récence de la mémoire "
-                "est bien une cause : MYCELIA peut utiliser le contexte, il ne le fait pas "
+                "est bien une cause : NUMENIA peut utiliser le contexte, il ne le fait pas "
                 "parce que son agrégation noie le dernier mot dans les précédents."
                 if float(best["best_val"]) < 4.9
                 else "La récence seule ne suffit pas : l'agrégation n'est pas le seul verrou, "
@@ -377,7 +377,7 @@ def section_conclusion(data: dict, verdict: str, phrase: str) -> str:
             "",
             f"**{verdict} — {phrase}**",
             "",
-            "La perte minimale réellement atteignable par MYCELIA sur ce corpus, telle que "
+            "La perte minimale réellement atteignable par NUMENIA sur ce corpus, telle que "
             f"mesurée aujourd'hui : **{fr(my)} nats/token**. À {fr(my - uni)} nat du plancher "
             f"unigramme ({fr(uni)}), ce n'est pas un plafond d'architecture sparse : la "
             "colonie n'utilise pas l'ordre des mots.",
@@ -387,7 +387,7 @@ def section_conclusion(data: dict, verdict: str, phrase: str) -> str:
             table(
                 ["Niveau", "Perte (nats)", "Ce qu'un cerveau à ce niveau sait faire"],
                 [
-                    ["MYCELIA aujourd'hui", fr(my), "statistiques marginales : aucun contexte"],
+                    ["NUMENIA aujourd'hui", fr(my), "statistiques marginales : aucun contexte"],
                     ["unigramme (L_ref)", fr(uni), "sac de mots"],
                     ["bigramme", fr(bi), "le mot suivant dépend du précédent"],
                     ["trigramme", fr(tri), "deux mots d'histoire"],
@@ -396,11 +396,11 @@ def section_conclusion(data: dict, verdict: str, phrase: str) -> str:
             ),
             "",
             f"La barre du convertisseur est donc **{fr(my)}**, et elle est trop haute : la "
-            f"cible d'un bigramme ({fr(bi)}) est *sous* le dense ({fr(dense)}). Un MYCELIA qui "
+            f"cible d'un bigramme ({fr(bi)}) est *sous* le dense ({fr(dense)}). Un NUMENIA qui "
             "lirait seulement deux mots d'histoire battrait le dense à budget égal. Le "
             "problème n'est pas la sparsité, c'est la mémoire.",
             "",
-            "Tant que MYCELIA reste à ce plancher, **aucun convertisseur ne peut transférer "
+            "Tant que NUMENIA reste à ce plancher, **aucun convertisseur ne peut transférer "
             "mieux que des statistiques marginales** : les 90 % de traduction visés sont "
             "inatteignables, non par manque de pas (D3), non par le routage (D4), mais parce "
             "que le receveur ne voit pas l'ordre des mots (D2).",
@@ -424,7 +424,7 @@ def section_honesty(data: dict) -> str:
             "",
             "- **L'ajustement de puissance n'a rien ajusté.** Sur une courbe plate 445 pas "
             "durant, `L∞` n'est pas identifiable : le minimum de la somme des carrés tombe "
-            "au bord du domaine (3,65 pour MYCELIA, 2,29 pour le dense). Le rapport ne "
+            "au bord du domaine (3,65 pour NUMENIA, 2,29 pour le dense). Le rapport ne "
             "présente donc pas ces chiffres comme des prévisions — il retient la meilleure "
             "validation atteinte et l'écrit.",
             "- **La première sonde de contexte était fausse.** Sans indice de position, la "
@@ -465,7 +465,7 @@ def main() -> None:
     data = load_all()
     verdict, phrase = headline(data)
     parts = [
-        "# RAPPORT S3-bis — pourquoi MYCELIA plafonne à ~5,1",
+        "# RAPPORT S3-bis — pourquoi NUMENIA plafonne à ~5,1",
         "",
         f"**Verdict : {verdict}** — {phrase}",
         "",

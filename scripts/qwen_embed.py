@@ -4,7 +4,7 @@ Le GGUF est déjà sur BIO-1 (md5 vérifié en session O) : `llama-cpp-python`
 tourne en mode embedding, un forward par texte, vecteur 896-d L2-normalisé.
 
 Honnêteté : le *sens* de la recherche est emprunté à un modèle externe. Les
-souvenirs restent les nœuds de MYCELIA ; Qwen est la rétine, pas le cortex.
+souvenirs restent les nœuds de NUMENIA ; Qwen est la rétine, pas le cortex.
 """
 
 from __future__ import annotations

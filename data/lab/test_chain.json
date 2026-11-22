@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-22 21:24:01",
-  "duree_s": 28.4,
+  "date": "2026-11-22 21:38:32",
+  "duree_s": 26.9,
   "contrats": [
     {
       "test": "C1 mycelia_loss = -log p(token courant)",
@@ -24,43 +24,43 @@
       "test": "C5 distillation : mesure F fonctionne",
       "ok": true,
       "detail": "F = 0.0308 (KL(A||MYC)=0.8318, plafond=0.8582)",
-      "t": 4.4
+      "t": 4.3
     },
     {
       "test": "C6 alignement : profils identiques -> 8 paires",
       "ok": true,
       "detail": "paires 8/8",
-      "t": 4.4
+      "t": 4.3
     },
     {
       "test": "C7 dense_loss : predict presque parfait",
       "ok": true,
       "detail": "loss = 0.606504 (< log(V)=2.3026, OK)",
-      "t": 4.4
+      "t": 4.3
     },
     {
       "test": "C8 free_life : perte stable apres 100 pas",
       "ok": true,
       "detail": "5.0340 -> 5.0340 (L_ref 5.0829)",
-      "t": 28.4
+      "t": 26.9
     },
     {
       "test": "A1 audit s6_core : aucun defaut recurrent restant",
       "ok": true,
       "detail": "toutes les operations booleennes sont reaffectees",
-      "t": 28.4
+      "t": 26.9
     },
     {
       "test": "A1 audit s5_distill : relecture visuelle",
       "ok": true,
       "detail": "aucun defaut structurel repere",
-      "t": 28.4
+      "t": 26.9
     },
     {
       "test": "A1 audit lab_common : deux colonnes documentees",
       "ok": true,
       "detail": "mycelia_loss (x[t]) et mycelia_loss_legacy (y[t]) presents",
-      "t": 28.4
+      "t": 26.9
     }
   ],
   "resume": {

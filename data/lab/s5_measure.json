@@ -47,7 +47,7 @@
         3.553,
         3.6247
       ],
-      "note": "MYCELIA repare S4, re-mesure"
+      "note": "NUMENIA repare S4, re-mesure"
     },
     "mycelia/1000/deux_vitesses": {
       "n": 3,
@@ -60,7 +60,7 @@
         3.6715,
         3.7208
       ],
-      "note": "MYCELIA repare S4, re-mesure"
+      "note": "NUMENIA repare S4, re-mesure"
     },
     "mycelia/10k/pleine": {
       "n": 3,
@@ -73,7 +73,7 @@
         3.3451,
         3.3346
       ],
-      "note": "MYCELIA repare S4, re-mesure"
+      "note": "NUMENIA repare S4, re-mesure"
     },
     "mycelia/10k/deux_vitesses": {
       "n": 3,
@@ -86,7 +86,7 @@
         3.3939,
         3.3618
       ],
-      "note": "MYCELIA repare S4, re-mesure"
+      "note": "NUMENIA repare S4, re-mesure"
     },
     "dense/1000": {
       "n": 3,
@@ -151,13 +151,13 @@
   "classement": {
     "nouvelle": [
       "bigramme",
-      "MYCELIA",
+      "NUMENIA",
       "dense"
     ],
     "ancienne": [
       "bigramme",
       "dense",
-      "MYCELIA"
+      "NUMENIA"
     ],
     "mycelia_nouvelle": 3.6672,
     "mycelia_pleine_nouvelle": 3.5936,

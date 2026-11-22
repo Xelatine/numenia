@@ -20,7 +20,7 @@ MLP = 64
 
 
 # ---------------------------------------------------------------------------
-# Scan des deux bacs (meme protocole que MYCELI-SCAN)
+# Scan des deux bacs (meme protocole que NUMENIA-SCAN)
 # ---------------------------------------------------------------------------
 @torch.no_grad()
 def scan_dense(model, corpus: ToyCorpus, texts: list[str]) -> np.ndarray:
@@ -244,7 +244,7 @@ def test_dense(model, corpus: ToyCorpus, sentences: list[str]) -> dict:
 
 @torch.no_grad()
 def test_mycelia(brain, corpus: ToyCorpus, sentences: list[str]) -> dict:
-    """Meme test, avec l'ecriture MYCELIA (il predit le token lu)."""
+    """Meme test, avec l'ecriture NUMENIA (il predit le token lu)."""
     brain.eval()
     rows = []
     total = 0.0

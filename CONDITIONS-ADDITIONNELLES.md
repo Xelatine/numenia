@@ -1,7 +1,7 @@
 # Conditions additionnelles à la licence MIT
 
 Version 1.0 — 20 novembre 2026
-Projet : **Mycelia / Nyra**
+Projet : **Numenia / Nyra**
 Titulaire des droits : Xelatine (`alex.w.portet@gmail.com`)
 
 Ces conditions complètent la licence MIT du fichier [`LICENSE`](LICENSE). Elles
@@ -55,7 +55,7 @@ Contact : `alex.w.portet@gmail.com`
 # Additional terms to the MIT License
 
 Version 1.0 — 20 November 2026
-Project: **Mycelia / Nyra**
+Project: **Numenia / Nyra**
 Rights holder: Xelatine (`alex.w.portet@gmail.com`)
 
 These terms supplement the MIT license in [`LICENSE`](LICENSE) and apply to every
