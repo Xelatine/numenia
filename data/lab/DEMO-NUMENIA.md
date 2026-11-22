@@ -16,7 +16,7 @@ correspond au donneur, avant même qu'il ne commence à vivre.
 | Dense A — lignée S5 | 2 | 0.4638 | 0.0255 | 0.2921 | 3.5427 | 🟢 0.46 |
 | Dense A — lignée S5 | 3 | 0.4635 | 0.0237 | 0.2697 | 3.5582 | 🟢 0.46 |
 | Dense B — variant graine+arch | 1 | 0.4434 | 0.0383 | 0.2697 | 3.4816 | 🟢 0.44 |
-| Dense B — variant graine+arch | 2 | 0.4458 | 0.0000 | 0.0000 | 3.5414 | 🟢 0.45 |
+| Dense B — variant graine+arch | 2 | 0.4453 | 0.0290 | 0.2640 | 3.5359 | 🟢 0.45 |
 | Dense B — variant graine+arch | 3 | 0.4237 | 0.0305 | 0.2584 | 3.5219 | 🟢 0.42 |
 | Dense C — ordre mélangé, contextualisation | 1 | 0.5718 | 0.0007 | 0.2135 | 4.1075 | 🟢 0.57 |
 | Dense C — ordre mélangé, contextualisation | 2 | 0.5719 | 0.0005 | 0.2697 | 4.1068 | 🟢 0.57 |

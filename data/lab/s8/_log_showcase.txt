@@ -1,6 +1,0 @@
-G:\mycelia\scripts\lab\showcase.py:99: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
-Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
-  ent = float(-(p * logp).sum())
-DEMO-NUMENIA.md généré: G:\mycelia\data\lab\DEMO-NUMENIA.md
-Lines: 294
-Size: 11181 bytes

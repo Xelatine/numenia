@@ -1,11 +1,53 @@
 {
+  "note": "Table S8-REPAIR-AD. A/seed1-2 retraduits (mesure du dense alignee) ; D/seed1-3 retraduits (teacher_parts cerveau corrige de [:-1] a [:,1:]) ; B/seed1 temoin et B/seed2 fichier incoherent re-mesures.",
   "donneurs": [
-    "B"
+    "A",
+    "B",
+    "C",
+    "D"
   ],
   "seeds": [
-    1
+    1,
+    2,
+    3
   ],
   "table": [
+    {
+      "donneur": "A",
+      "donneur_label": "Dense A — lignée S5 (2 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 1,
+      "F_avant": 0.4481,
+      "top3_avant": 0.0255,
+      "top3_recouvrement": 0.4488,
+      "top3_neuf": 0.2416,
+      "perte_avant": 3.5237,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "A",
+      "donneur_label": "Dense A — lignée S5 (2 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 2,
+      "F_avant": 0.4638,
+      "top3_avant": 0.0255,
+      "top3_recouvrement": 0.4182,
+      "top3_neuf": 0.2921,
+      "perte_avant": 3.5427,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "A",
+      "donneur_label": "Dense A — lignée S5 (2 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 3,
+      "F_avant": 0.4635,
+      "top3_avant": 0.0237,
+      "top3_recouvrement": 0.4358,
+      "top3_neuf": 0.2697,
+      "perte_avant": 3.5582,
+      "verdict": "VERT"
+    },
     {
       "donneur": "B",
       "donneur_label": "Dense B — variant graine+arch (3 couches)",
@@ -13,8 +55,106 @@
       "seed_receveur": 1,
       "F_avant": 0.4434,
       "top3_avant": 0.0383,
+      "top3_recouvrement": 0.4348,
       "top3_neuf": 0.2697,
-      "perte_avant": 3.4816
+      "perte_avant": 3.4816,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "B",
+      "donneur_label": "Dense B — variant graine+arch (3 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 2,
+      "F_avant": 0.4453,
+      "top3_avant": 0.029,
+      "top3_recouvrement": 0.4523,
+      "top3_neuf": 0.264,
+      "perte_avant": 3.5359,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "B",
+      "donneur_label": "Dense B — variant graine+arch (3 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 3,
+      "F_avant": 0.4237,
+      "top3_avant": 0.0305,
+      "top3_recouvrement": 0.4387,
+      "top3_neuf": 0.2584,
+      "perte_avant": 3.5219,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "C",
+      "donneur_label": "Dense C — ordre mélangé (contextualisation)",
+      "donneur_type": "dense",
+      "seed_receveur": 1,
+      "F_avant": 0.5718,
+      "top3_avant": 0.0007,
+      "top3_recouvrement": 0.2433,
+      "top3_neuf": 0.2135,
+      "perte_avant": 4.1075,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "C",
+      "donneur_label": "Dense C — ordre mélangé (contextualisation)",
+      "donneur_type": "dense",
+      "seed_receveur": 2,
+      "F_avant": 0.5719,
+      "top3_avant": 0.0005,
+      "top3_recouvrement": 0.195,
+      "top3_neuf": 0.2697,
+      "perte_avant": 4.1068,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "C",
+      "donneur_label": "Dense C — ordre mélangé (contextualisation)",
+      "donneur_type": "dense",
+      "seed_receveur": 3,
+      "F_avant": 0.5999,
+      "top3_avant": 0.0002,
+      "top3_recouvrement": 0.205,
+      "top3_neuf": 0.2416,
+      "perte_avant": 4.1295,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "D",
+      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_type": "brain",
+      "seed_receveur": 1,
+      "F_avant": 0.26,
+      "top3_avant": 0.1111,
+      "top3_recouvrement": 0.5282,
+      "top3_neuf": 0.236,
+      "perte_avant": 3.5319,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "D",
+      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_type": "brain",
+      "seed_receveur": 2,
+      "F_avant": 0.2752,
+      "top3_avant": 0.1174,
+      "top3_recouvrement": 0.5261,
+      "top3_neuf": 0.2865,
+      "perte_avant": 3.5353,
+      "verdict": "VERT"
+    },
+    {
+      "donneur": "D",
+      "donneur_label": "MYCELIA pool 24 — cerveau reparatrice (seuil)",
+      "donneur_type": "brain",
+      "seed_receveur": 3,
+      "F_avant": 0.2572,
+      "top3_avant": 0.0939,
+      "top3_recouvrement": 0.5407,
+      "top3_neuf": 0.2416,
+      "perte_avant": 3.5546,
+      "verdict": "VERT"
     }
   ]
 }
