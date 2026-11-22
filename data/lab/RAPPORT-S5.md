@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # RAPPORT S5-MAX — casser les quatre verrous, mesurer le plafond physique
 
 Mission S5-MAX. Quatre verrous : la mesure juste, le receveur vivant au

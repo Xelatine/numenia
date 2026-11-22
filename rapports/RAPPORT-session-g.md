@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # Rapport — session G « le temps »
 
 **Date** : 10 novembre 2026. **Machine** : portable, RTX 3070 Laptop (8 192 Mio),

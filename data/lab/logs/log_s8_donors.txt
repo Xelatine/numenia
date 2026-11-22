@@ -1,0 +1,29 @@
+============================================================
+S8 — Banc multi-donneurs : entraînement donneurs
+============================================================
+Corpus: 1000 phrases, vocab=312, val=59 fenêtres
+Donors dir: G:\mycelia\data\lab\s8\donors
+
+Entraînement des donneurs: ['A', 'B', 'C', 'D']
+[A] dense done: val=3.8335, params=63480
+[B] dense variant done: val=3.8682, params=89992
+[C] dense mélangé done: val=5.3842, params=63480
+[D] MYCELIA pool24 done: val=3.7693, params=63276
+
+============================================================
+D2 — Mesure de la divergence
+============================================================
+[D2] Calcul des logits pour chaque donneur...
+  [A] logits shape: torch.Size([59, 8, 312])
+  [B] logits shape: torch.Size([59, 8, 312])
+  [C] logits shape: torch.Size([59, 8, 312])
+Traceback (most recent call last):
+  File "G:\mycelia\scripts\lab\s8_train_donors.py", line 472, in <module>
+    main()
+  File "G:\mycelia\scripts\lab\s8_train_donors.py", line 404, in main
+    divergence = compute_divergence_matrix(donors_dict, corpus, val)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\mycelia\scripts\lab\s8_train_donors.py", line 296, in compute_divergence_matrix
+    if config["type"] == "dense":
+       ~~~~~~^^^^^^^^
+KeyError: 'type'

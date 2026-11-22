@@ -1,0 +1,3 @@
+usage: s8_run_bench.py [-h] [--donors DONORS [DONORS ...]]
+                       [--seeds SEEDS [SEEDS ...]]
+s8_run_bench.py: error: unrecognized arguments: --all

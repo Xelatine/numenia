@@ -1,0 +1,21 @@
+Voix NUMENIA initialisee: genome.pt n_nodes=532 step=56
+Demarrage Nyra - voix locale NUMENIA
+  /awake     -> verification sante (200 ou erreur)
+  /chat      -> POST JSON {"message": "..."}
+  /api/status|chatlog|metrics -> JSON
+  /api/live|history|eloquence|config -> JSON (panel)
+  /dashboard -> page HTML
+Host: 0.0.0.0:8080 (local ONLY, pas de redirection)
+ * Serving Flask app 'webchat'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.50.222:8080
+Press CTRL+C to quit
+127.0.0.1 - - [22/Nov/2026 21:23:19] "GET /api/status HTTP/1.1" 200 -
+G:\mycelia\scripts\webchat.py:2015: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  ent = float(-(prob * logp).sum())
+127.0.0.1 - - [22/Nov/2026 21:23:19] "POST /api/lab/s8/chat HTTP/1.1" 200 -
+127.0.0.1 - - [22/Nov/2026 21:23:20] "POST /api/lab/s8/chat HTTP/1.1" 200 -

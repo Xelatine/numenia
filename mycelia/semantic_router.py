@@ -6,7 +6,7 @@ ici 768) transforme l'embedding de la question en scores ; les k nœuds les plus
 proches sont éveillés. Des questions proches doivent réveiller des ensembles
 proches — c'est la propriété qu'on mesure, pas celle qu'on suppose.
 
-La clé est gelée : aucun poids de MYCELIA n'est modifié, et le routeur reste
+La clé est gelée : aucun poids de NUMENIA n'est modifié, et le routeur reste
 déterministe pour une question donnée.
 """
 

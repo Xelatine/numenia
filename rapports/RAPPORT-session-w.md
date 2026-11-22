@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # Session W — 2 004 nœuds, la moitié éveillée, et le premier chat
 
 **Deux livraisons, un run en cours :**

@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # Greffe paramétrique Qwen → MYCELIA — extraction, cartographie, verdict
 
 **Résumé : l'étape 1 est faite, l'étape 2 est conçue, l'étape 3 est ROUGE.**

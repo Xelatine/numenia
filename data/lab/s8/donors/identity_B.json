@@ -1,0 +1,20 @@
+{
+  "tag": "B",
+  "label": "dense variant (graine+arch)",
+  "type": "dense",
+  "config": {
+    "vocab": 312,
+    "dim": 16,
+    "layers": 3,
+    "heads": 2,
+    "mlp": 768,
+    "seq": 8
+  },
+  "stats": {
+    "avg_entropy": 3.4413,
+    "avg_max_prob": 0.2151,
+    "top1_confidence": 0.6478,
+    "vocab_size": 312,
+    "total_contextes": 22400
+  }
+}

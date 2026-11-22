@@ -1,0 +1,21 @@
+{
+  "note": "Valeurs remplacees le 2026-11-22 par S8-REPAIR-AD : mesure du dense decalee d'un cran (KL gonfle). Conservées pour l'historique.",
+  "valeurs": {
+    "A_seed1": {
+      "kl_teacher_vers_brain": 4.6669,
+      "top3_identiques": 0.0,
+      "top3_recouvrement": 0.0167,
+      "top3_neuf": 0.2416,
+      "perte": 3.5241,
+      "schema": "ancien (avant_vie/apres_vie/vie)"
+    },
+    "A_seed2": {
+      "kl_teacher_vers_brain": 4.7532,
+      "top3_identiques": 0.0,
+      "top3_recouvrement": 0.0175,
+      "top3_neuf": 0.2809,
+      "perte": 3.5392,
+      "schema": "ancien (avant_vie/apres_vie/vie)"
+    }
+  }
+}

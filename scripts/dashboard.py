@@ -26,7 +26,7 @@ from mycelia.data import load_tokenizer  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="mycelia live cockpit")
+    parser = argparse.ArgumentParser(description="numenia live cockpit")
     parser.add_argument("--train", action="store_true", help="train live (default)")
     parser.add_argument("--checkpoint", type=Path, default=None, help="observe a saved genome instead")
     parser.add_argument("--data", choices=["toy", "text"], default="text")
@@ -77,7 +77,7 @@ def main() -> None:
     host = args.host or config["dashboard"]["host"]
     port = int(args.port or config["dashboard"]["port"])
     brain = runner.trainer.brain
-    print(f"Mycelia cockpit — {nodes_for_scale(args.scale)} nodes planned, pool {brain.n_nodes}")
+    print(f"Numenia cockpit — {nodes_for_scale(args.scale)} nodes planned, pool {brain.n_nodes}")
     print(f"  mode      : {'observation' if observe else 'entraînement en direct'}")
     print(f"  cerveau   : {brain.n_nodes} nœuds, {brain.ne} arêtes utilisées, {brain.max_hops} tours")
     print(f"  corpus    : {data}")

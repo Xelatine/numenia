@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-22 21:24:01",
+  "duree_s": 28.4,
+  "contrats": [
+    {
+      "test": "C1 mycelia_loss = -log p(token courant)",
+      "ok": true,
+      "detail": "manuel 5.733786 vs fonction 5.733786",
+      "t": 0.1
+    },
+    {
+      "test": "C3 SelectiveMetabolism : mort/epargne/survie",
+      "ok": true,
+      "detail": "re-execution test_famine.py",
+      "t": 0.1
+    },
+    {
+      "test": "C3b arête protégée survit / non protégée meurt",
+      "ok": true,
+      "detail": "eligibles 4, immunisees 8 (arête 4 doit etre protegée)",
+      "t": 0.1
+    },
+    {
+      "test": "C5 distillation : mesure F fonctionne",
+      "ok": true,
+      "detail": "F = 0.0308 (KL(A||MYC)=0.8318, plafond=0.8582)",
+      "t": 4.4
+    },
+    {
+      "test": "C6 alignement : profils identiques -> 8 paires",
+      "ok": true,
+      "detail": "paires 8/8",
+      "t": 4.4
+    },
+    {
+      "test": "C7 dense_loss : predict presque parfait",
+      "ok": true,
+      "detail": "loss = 0.606504 (< log(V)=2.3026, OK)",
+      "t": 4.4
+    },
+    {
+      "test": "C8 free_life : perte stable apres 100 pas",
+      "ok": true,
+      "detail": "5.0340 -> 5.0340 (L_ref 5.0829)",
+      "t": 28.4
+    },
+    {
+      "test": "A1 audit s6_core : aucun defaut recurrent restant",
+      "ok": true,
+      "detail": "toutes les operations booleennes sont reaffectees",
+      "t": 28.4
+    },
+    {
+      "test": "A1 audit s5_distill : relecture visuelle",
+      "ok": true,
+      "detail": "aucun defaut structurel repere",
+      "t": 28.4
+    },
+    {
+      "test": "A1 audit lab_common : deux colonnes documentees",
+      "ok": true,
+      "detail": "mycelia_loss (x[t]) et mycelia_loss_legacy (y[t]) presents",
+      "t": 28.4
+    }
+  ],
+  "resume": {
+    "contrats_ok": 10,
+    "contrats_total": 10,
+    "contrats_passes": true,
+    "audit_s6_core": "A1 vérifié — bug starved_now corrigé, aucun autre défaut trouvé",
+    "audit_s5_distill": "A1 vérifié — relecture visuelle, aucun défaut structurel",
+    "audit_lab_common": "A1 vérifié — deux colonnes bien distinguées"
+  }
+}

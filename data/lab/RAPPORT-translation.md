@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # RAPPORT DU TRADUCTEUR — dense ↔ MYCELIA
 
 MYCELI-SCAN v0 + mini-labo de conversion. Toutes les mesures viennent des fichiers de `data/lab/` ; les courbes sont celles relevees pendant l'execution, pas des estimations.

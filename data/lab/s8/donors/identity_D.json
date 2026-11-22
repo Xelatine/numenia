@@ -1,0 +1,18 @@
+{
+  "tag": "D",
+  "label": "MYCELIA pool24 donneur",
+  "type": "brain",
+  "config": {
+    "n_nodes": 24,
+    "ne": 220,
+    "max_edges": 220,
+    "two_speeds": true
+  },
+  "stats": {
+    "avg_entropy": 3.5822,
+    "avg_max_prob": 0.1849,
+    "top1_confidence": 0.5529,
+    "vocab_size": 312,
+    "total_contextes": 22400
+  }
+}

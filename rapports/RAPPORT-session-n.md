@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # Session N — Dérive mémoire : fragmentation glibc, pas fuite Python
 
 **Date** : 12 novembre 2026 — **Machine** : BIO-1 — **Code** : `mycelia/train.py` patché (md5 `05c67c0f…`, serveur = poste).

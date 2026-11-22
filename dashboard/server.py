@@ -51,7 +51,7 @@ class ChatBody(BaseModel):
 
 
 def create_app(runner: TrainingRunner) -> FastAPI:
-    app = FastAPI(title="Mycelia", version="2.0", docs_url="/api/docs")
+    app = FastAPI(title="Numenia", version="2.0", docs_url="/api/docs")
     app.state.runner = runner
 
     if STATIC.exists():

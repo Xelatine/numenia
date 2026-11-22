@@ -1,0 +1,21 @@
+{
+  "donneur_tag": "A",
+  "donneur_label": "Dense A \u2014 lign\u00e9e S5 (2 couches)",
+  "donneur_type": "dense",
+  "donneur_params": 63480,
+  "seed_receveur": 1,
+  "entrainement": {
+    "best_val": 3.8331,
+    "best_step": 500,
+    "seconds": 130.8
+  },
+  "avant_vie": {
+    "kl_teacher_vers_brain": 0.4481,
+    "top3_identiques": 0.0255,
+    "top3_recouvrement": 0.4488,
+    "top3_neuf": 0.2416,
+    "contextes": 22400,
+    "perte": 3.5237,
+    "R": 0.0
+  }
+}

@@ -338,13 +338,34 @@ def make_projector(dim: int, init: str = "identity") -> nn.Linear:
 
 @torch.no_grad()
 def teacher_parts(model, tokens: torch.Tensor, perm: torch.Tensor | None = None):
-    """Logits et etat cache du professeur dense, alignes sur les pas de MYCELIA.
+    """Logits et etat cache du professeur, alignes sur les pas de MYCELIA.
 
     MYCELIA predit le token ``t`` a partir des tokens ``0..t-1`` ; le dense predit
-    ``x[t+1]`` a partir de ``0..t``. Le pas ``t-1`` du dense est donc exactement
-    la prediction du token ``t`` : on rend ``hidden[:, :-1]`` et ``logits[:, :-1]``,
-    de forme [B, seq-1, ...], utilisables contre les pas 1..seq-1 de MYCELIA.
+    ``x[t+1]`` a partir de ``0..t``. Les deux familles n'ont donc pas le meme
+    cran a couper, et c'est le piege que S8-REPAIR-AD a paye :
+
+    * dense : le pas ``t-1`` predit le token ``t`` -> on rend ``logits[:, :-1]``
+      (les pas 0..seq-2, qui predissent les tokens 1..seq-1) ;
+    * cerveau repare : le pas ``t`` predit deja le token ``t`` (il lit avant
+      d'injecter, ``ToyCorpus.targets(x) = x``) -> le pas qui predit ``t`` est
+      ``t`` lui-meme, donc on rend ``logits[:, 1:]`` (les pas 1..seq-1),
+      exactement les lignes que l'eleve lit de son cote.
+
+    Rendre ``[:, :-1]`` pour un cerveau decalait le professeur d'un token : la KL
+    de D restait bloquee vers 0,85-0,95 pour un savoir que le professeur n'avait
+    jamais enseigne. Corrige le 2026-11-22 (S8-REPAIR-AD).
     """
+    if hasattr(model, "_edge_mask"):
+        # Cerveau repare : forward complet, alignment via readout_rows().
+        out = model(tokens, grow=False, trace=False)
+        logits = out[0] if isinstance(out, tuple) else out
+        # Le pas t du cerveau predit le token t : on garde 1..seq-1, comme l'eleve.
+        h = model.readout_rows()
+        hidden = h if h.numel() else torch.zeros_like(logits[..., :1])
+        if perm is not None:
+            logits = logits[..., perm]
+        return logits[:, 1:], hidden[:, 1:]
+    # Dense jouet : model.parts(tokens) -> (hidden, logits).
     hidden, logits = model.parts(tokens)
     if perm is not None:
         # Controle anti-bruit : le meme professeur, etiquettes melangees. La

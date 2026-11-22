@@ -1,0 +1,11 @@
+{
+  "note": "B/seed2 : seul fichier du banc sans la cle 'contextes' et avec top3_identiques = top3_recouvrement = 0.0, alors que la KL (0.4458) est du niveau de B/seed1 (0.43 de recouvrement). Incoherence interne : re-mesure le 2026-11-22 (S8-REPAIR-AD), protocole inchange.",
+  "valeurs": {
+    "kl_teacher_vers_brain": 0.4458,
+    "top3_identiques": 0.0,
+    "top3_recouvrement": 0.0,
+    "top3_neuf": 0.0,
+    "perte": 3.5414,
+    "contextes": null
+  }
+}

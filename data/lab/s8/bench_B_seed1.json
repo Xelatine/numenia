@@ -1,0 +1,21 @@
+{
+  "donneur_tag": "B",
+  "donneur_label": "Dense B \u2014 variant graine+arch (3 couches)",
+  "donneur_type": "dense",
+  "donneur_params": 89992,
+  "seed_receveur": 1,
+  "entrainement": {
+    "best_val": 3.7605,
+    "best_step": 600,
+    "seconds": 139.7
+  },
+  "avant_vie": {
+    "kl_teacher_vers_brain": 0.4434,
+    "top3_identiques": 0.0383,
+    "top3_recouvrement": 0.4348,
+    "top3_neuf": 0.2697,
+    "contextes": 22400,
+    "perte": 3.4816,
+    "R": 0.0
+  }
+}

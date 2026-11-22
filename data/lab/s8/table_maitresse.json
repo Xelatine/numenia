@@ -1,0 +1,20 @@
+{
+  "donneurs": [
+    "B"
+  ],
+  "seeds": [
+    1
+  ],
+  "table": [
+    {
+      "donneur": "B",
+      "donneur_label": "Dense B — variant graine+arch (3 couches)",
+      "donneur_type": "dense",
+      "seed_receveur": 1,
+      "F_avant": 0.4434,
+      "top3_avant": 0.0383,
+      "top3_neuf": 0.2697,
+      "perte_avant": 3.4816
+    }
+  ]
+}

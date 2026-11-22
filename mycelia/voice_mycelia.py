@@ -1,14 +1,4 @@
-"""Voix MYCELIA -- generation locale de texte avec le cerveau + genome.pt + tokenizer.
-
-Ce module NE touche jamais a des modeles externes (Qwen, GGUF, llama, ctranslate2).
-Il utilise UNIQUEMENT :
-  - data/brain.pt (poids du cerveau MYCELIA)
-  - data/genome.pt (configuration + n_nodes, step)
-  - data/tokenizer.json (vocabulaire du projet)
-  - data/genome_myc/self.json (identite, pour le prompt systeme)
-
-Echec de chargement -> refus d'eveil (comportement existant, pas de fallback).
-"""
+"""Voix numenia -- generation locale de texte avec le cerveau + genome.pt + tokenizer."""
 
 import json
 import torch
@@ -16,10 +6,11 @@ import os
 import sys
 from pathlib import Path
 
+
 # Chemins absolus projet racine
 ROOT = Path(__file__).resolve().parent.parent
 
-# Chargement de l'identitepuisque self.json present
+# Chargement de l'identite puisque self.json present
 self_json = ROOT / "data" / "genome_myc" / "self.json"
 if self_json.exists():
     id_data = json.loads(self_json.read_text(encoding="utf-8"))
@@ -35,7 +26,7 @@ gm_path = ROOT / "data" / "genome.pt"
 if not gm_path.exists():
     raise RuntimeError("genome.pt introuvable -- voix impossible")
 genome = torch.load(gm_path, map_location="cpu", weights_only=False)
-# Lecture de n_nodespuisqueidepuis le checkpoint -- jamais en dur 10_020
+# Lecture de n_nodes puisque idepuis le checkpoint -- jamais en dur 10_020
 _n_nodes = genome.get("n_nodes", genome.get("config", {}).get("n_nodes", "N/A"))
 _step = genome.get("config", {}).get("step", genome.get("step", "N/A"))
 
@@ -71,6 +62,7 @@ _UNK_ID = 1  # <unk> from added_tokens -- filtre aussi, sinon la voix le recite
 
 # Initialisation du cerveau avec les paramètres lus du genome
 from mycelia.brain import Brain
+
 
 brain_cfg = {
     "n_nodes": _n_nodes,
@@ -112,15 +104,15 @@ brain_cfg = {
 try:
     brain = Brain(**brain_cfg)
     brain.eval()
-    print("Voix MYCELIA initialisee: genome.pt n_nodes=" + str(_n_nodes) + " step=" + str(_step))
+    print("Voix NUMENIA initialisee: genome.pt n_nodes=" + str(_n_nodes) + " step=" + str(_step))
 except Exception as e:
     raise RuntimeError("Impossible d'initialiser le cerveau: " + str(e))
 
 
 def _encode_prompt(prompt: str) -> list:
-    """Encode un prompt utilisateur en liste d'IDs d'entrée pour le cerveau.
+    """Encode un prompt utilisateur en liste d'IDs d'entree pour le cerveau.
 
-    Construction du format d'entraînement : [BOS] + tokens_du_prompt.
+    Construction du format d'entrainement : [BOS] + tokens_du_prompt.
     Voir brain.generate(prompt_ids: Sequence[int]) -- la fonction lit ces IDs,
    accumule l'etat, puis genere de nouveaux tokens en append.
 
@@ -139,7 +131,7 @@ def _encode_prompt(prompt: str) -> list:
             tid = tokenizer.get(word, 1)  # Inconnu -> ID 1 (fallback)
             tokens.append(tid)
     else:
-        # Fallback: aucun encodage supplémentaire
+        # Fallback: aucun encodage supplementaire
         pass
 
     return tokens
@@ -149,7 +141,7 @@ def _decode_ids(token_ids: list) -> str:
     """Internal: decode a list of token IDs using the reverse vocab.
 
     Maps each ID to its token string via _id_to_token.
-    Special tokens (<pad>, <bos>, <eos>) sont sautés (non affichés)
+    Special tokens (<pad>, <bos>, <eos>) sont sauts (non affichés)
     ou marqués [SP] pour transparence.
     Retourne le texte "propre" -- uniquement les tokens de contenu.
     """
@@ -191,18 +183,18 @@ def generate(prompt: str, max_new_tokens: int = 20) -> str:
         Texte brut généré (décodé depuis les IDs du cerveau via vocab)
 
     Note:
-        Le prompt est encodé en IDs d'entrée via le tokenizer du projet
-        au format d'entraînement [BOS] + tokens_du_prompt, puis passé
+        Le prompt est encodé en IDs d'entree via le tokenizer du projet
+        au format d'entrainement [BOS] + tokens_du_prompt, puis passe
         au cerveau generate(). Les IDs générés par le cerveau sont décodés
         en texte via le vocab inverse de tokenizer.json. Les tokens
-        spéciaux (<pad>, <bos>, <eos>) sont filtrés pour ne montrer que
-        le contenu réel.
+        speciaux (<pad>, <bos>, <eos>) sont filtrés pour ne montrer que
+        le contenu reel.
 
-        Format d'entraînement vérifié dans brain.generate() ligne 1164:
+        Format d'entrainement verifie dans brain.generate() ligne 1164:
         "ids = [int(t) for t in prompt_ids] or [0]"
         -> Le cerveau attend une séquence d'IDs commençant par BOS.
     """
-    # Encodage du prompt au format d'entraînement: [BOS] + tokens_prompt
+    # Encodage du prompt au format d'entrainement: [BOS] + tokens_prompt
     prompt_ids = _encode_prompt(prompt)
 
     with torch.no_grad():
@@ -214,18 +206,18 @@ def generate(prompt: str, max_new_tokens: int = 20) -> str:
             gen_ids, _ = brain.generate([prompt_ids], max_new_tokens=max_new_tokens)
 
     # Décodage en texte via le vocab inverse de tokenizer.json
-    # avec filtrage des tokens spéciaux
+    # avec filtrage des tokens speciaux
     result = _decode_ids(gen_ids)
 
     return result
 
 
 def respond(user_prompt: str, system: bool = True) -> dict:
-    """Generer une réponse à une entrée utilisateur.
+    """Generer une réponse à une entree utilisateur.
 
     Arguments:
         user_prompt: Message de l'utilisateur
-        system: Si True, préfixe le prompt par le système issu de self.json
+        system: Si True, prefixe le prompt par le système issu de self.json
 
     Retourne:
         dictionnaire {réponse_texte, voix_config}
@@ -242,7 +234,7 @@ def respond(user_prompt: str, system: bool = True) -> dict:
     reponse = generate(full_prompt, max_new_tokens=20)
 
     # Loggage honnête : chaque réponse consigne le genome chargé
-    log_entry = "voice=mycelia genome=data/genome.pt nodes=" + str(_n_nodes) + " step=" + str(_step)
+    log_entry = "voice=numenia genome=data/genome.pt nodes=" + str(_n_nodes) + " step=" + str(_step)
 
     return {
         "réponse": reponse,

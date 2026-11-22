@@ -1,0 +1,21 @@
+{
+  "donneur_tag": "D",
+  "donneur_label": "MYCELIA pool 24 \u2014 cerveau reparatrice (seuil)",
+  "donneur_type": "brain",
+  "donneur_params": 63276,
+  "seed_receveur": 2,
+  "entrainement": {
+    "best_val": 3.9299,
+    "best_step": 500,
+    "seconds": 172.8
+  },
+  "avant_vie": {
+    "kl_teacher_vers_brain": 0.2752,
+    "top3_identiques": 0.1174,
+    "top3_recouvrement": 0.5261,
+    "top3_neuf": 0.2865,
+    "contextes": 22400,
+    "perte": 3.5353,
+    "R": 0.0
+  }
+}

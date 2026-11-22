@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # RAPPORT S4 — réparer la lecture, puis distiller
 
 **Verdict 🥉** — le MYCELIA réparé n'atteint pas le dense (3,9039 contre 3,7921) : la réparation fonctionne (la tête lit enfin la mémoire, et le modèle gagne plus d'un nat) mais la porte R3 n'est pas franchie. La distillation a quand même été exécutée, parce que c'est elle qui répond à la question de survie (R8) et que le rapport doit la chiffrer.

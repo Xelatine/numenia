@@ -1,0 +1,20 @@
+{
+  "tag": "C",
+  "label": "dense ordre melange (contextualite)",
+  "type": "dense",
+  "config": {
+    "vocab": 312,
+    "dim": 16,
+    "layers": 2,
+    "heads": 2,
+    "mlp": 768,
+    "seq": 8
+  },
+  "stats": {
+    "avg_entropy": 4.7262,
+    "avg_max_prob": 0.0667,
+    "top1_confidence": 0.0758,
+    "vocab_size": 312,
+    "total_contextes": 22400
+  }
+}

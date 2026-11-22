@@ -1,0 +1,42 @@
+[S8] A_seed1 déjà fait — skip
+[S8] A_seed2 déjà fait — skip
+[S8] traduction A/seed3 — démarrage
+[S8] ERREUR A/seed3: too many values to unpack (expected 3)
+[S8] traduction B/seed1 — démarrage
+[S8] ERREUR B/seed1: too many values to unpack (expected 3)
+[S8] traduction B/seed2 — démarrage
+[S8] ERREUR B/seed2: too many values to unpack (expected 3)
+[S8] traduction B/seed3 — démarrage
+[S8] ERREUR B/seed3: too many values to unpack (expected 3)
+[S8] traduction C/seed1 — démarrage
+[S8] ERREUR C/seed1: too many values to unpack (expected 3)
+[S8] traduction C/seed2 — démarrage
+[S8] ERREUR C/seed2: too many values to unpack (expected 3)
+[S8] traduction C/seed3 — démarrage
+[S8] ERREUR C/seed3: too many values to unpack (expected 3)
+[S8] traduction D/seed1 — démarrage
+[S8] ERREUR D/seed1: Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+[S8] traduction D/seed2 — démarrage
+[S8] ERREUR D/seed2: Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+[S8] traduction D/seed3 — démarrage
+[S8] ERREUR D/seed3: Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+
+=== RÉSULTATS S8 ===
+  A_seed3: ERREUR too many values to unpack (expected 3)
+  B_seed1: ERREUR too many values to unpack (expected 3)
+  B_seed2: ERREUR too many values to unpack (expected 3)
+  B_seed3: ERREUR too many values to unpack (expected 3)
+  C_seed1: ERREUR too many values to unpack (expected 3)
+  C_seed2: ERREUR too many values to unpack (expected 3)
+  C_seed3: ERREUR too many values to unpack (expected 3)
+  D_seed1: ERREUR Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+  D_seed2: ERREUR Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+  D_seed3: ERREUR Error(s) in loading state_dict for Brain:
+	Unexpected key(s) in state_dict: "read_in_norm.weight", "read_in_norm.bias", "read_slow.weight", "read_slow.bias", "read_node1_norm.weight", "read_node1_norm.bias", "read_fast_norm.weight", "read_fast_norm.bias", "fast_embed.weight", "read_mix.weight", "read_mix.bias". 
+
+Rapport synthétique : G:\mycelia\data\lab\s8\bench_synthetique.json

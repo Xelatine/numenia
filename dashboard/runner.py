@@ -150,7 +150,7 @@ class TrainingRunner:
             self.error = None
             self.status = "running"
             self.started_at = self.started_at or time.time()
-            self._thread = threading.Thread(target=self._loop, name="mycelia-train", daemon=True)
+            self._thread = threading.Thread(target=self._loop, name="numenia-train", daemon=True)
         self._thread.start()
         self._publish({}, force=True)
         return self.status

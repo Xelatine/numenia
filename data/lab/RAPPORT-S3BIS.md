@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # RAPPORT S3-bis — pourquoi MYCELIA plafonne à ~5,1
 
 **Verdict : 🐛 BUG** — le plafond de MYCELIA est exactement le plancher sans contexte : il ne s'agit pas d'un plafond d'apprentissage mais d'un défaut d'usage du contexte, localisé dans l'agrégation et la lecture.

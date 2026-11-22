@@ -1,0 +1,21 @@
+{
+  "donneur_tag": "C",
+  "donneur_label": "Dense C \u2014 ordre m\u00e9lang\u00e9 (contextualisation)",
+  "donneur_type": "dense",
+  "donneur_params": 63480,
+  "seed_receveur": 3,
+  "entrainement": {
+    "best_val": 4.3017,
+    "best_step": 600,
+    "seconds": 128.2
+  },
+  "avant_vie": {
+    "kl_teacher_vers_brain": 0.5999,
+    "top3_identiques": 0.0002,
+    "top3_recouvrement": 0.205,
+    "top3_neuf": 0.2416,
+    "contextes": 22400,
+    "perte": 4.1295,
+    "R": 0.0
+  }
+}

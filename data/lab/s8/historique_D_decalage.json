@@ -1,0 +1,26 @@
+{
+  "note": "Valeurs D mesurees AVANT le correctif d'alignement du 2026-11-22 : teacher_parts rendait logits[:, :-1] pour un cerveau, alors qu'un cerveau predit le token t au pas t (targets(x)=x). Le professeur etait decale d'un token.",
+  "valeurs": {
+    "D_seed1": {
+      "kl_teacher_vers_brain": 0.8542,
+      "top3_identiques": 0.0177,
+      "top3_recouvrement": 0.2469,
+      "top3_neuf": 0.2135,
+      "perte": 4.4694
+    },
+    "D_seed2": {
+      "kl_teacher_vers_brain": 0.9455,
+      "top3_identiques": 0.0164,
+      "top3_recouvrement": 0.2425,
+      "top3_neuf": 0.2247,
+      "perte": 4.5024
+    },
+    "D_seed3": {
+      "kl_teacher_vers_brain": 0.899,
+      "top3_identiques": 0.0372,
+      "top3_recouvrement": 0.2637,
+      "top3_neuf": 0.2809,
+      "perte": 4.5435
+    }
+  }
+}

@@ -69,9 +69,13 @@ PANEL_TABS = r"""
   <button type="button" data-tab="history">📈 Évolution</button>
   <button type="button" data-tab="speech">🗣️ Éloquence</button>
   <button type="button" data-tab="labo">🧪 Labo</button>
+  <button type="button" data-tab="s7">🤖 S7</button>
+  <button type="button" data-tab="s8">💬 S8</button>
   <button type="button" data-tab="config">⚙️ Configuration</button>
 </nav>
-<span id="hdr-badge" class="badge" title="état du lanceur">—</span>
+  <span id="hdr-badge" class="badge" title="etat du lanceur">—</span>
+  <span id="s7-badge" class="badge" title="traducteur IA->IA">—</span>
+  <span id="s8-badge" class="badge" title="banc multi-donneurs">—</span>
 """
 
 PANEL_SECTIONS = r"""
@@ -110,8 +114,55 @@ PANEL_SECTIONS = r"""
         </dl>
       </div>
     </div>
-    <p class="note">Rafraîchi toutes les 5 s. Les mesures GPU sont échantillonnées
+         <p class="note">Rafraîchi toutes les 5 s. Les mesures GPU sont échantillonnées
     toutes les 15 s par le lanceur (nvidia-smi, une seule requête).</p>
+  </section>
+
+  <section class="card wide" data-panel="s7">
+    <h2>S7 — Traducteur IA→IA</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Pipeline</h2>
+        <dl class="kv">
+          <dt>État</dt><dd><span id="s7-state">—</span></dd>
+          <dt>Professeur</dt><dd><span id="s7-prof">—</span></dd>
+          <dt>Receveur</dt><dd><span id="s7-recv">—</span></dd>
+          <dt>F avant vie</dt><dd><span id="s7-f-avant">—</span></dd>
+          <dt>F après vie</dt><dd><span id="s7-f-apres">—</span></dd>
+          <dt>Verdict</dt><dd><span id="s7-verdict">—</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Contrats (audit)</h2>
+        <div id="s7-contracts" class="log">—</div>
+      </div>
+    </div>
+    <p class="note">Données live depuis /api/lab/s7 (demo.json + test_chain.json).
+    Rafraîchi toutes les 10 s.</p>
+  </section>
+
+
+  <section class="card wide" data-panel="s7">
+    <h2>S7 — Traducteur IA→IA</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Pipeline</h2>
+        <dl class="kv">
+          <dt>État</dt><dd><span id="s7-state">—</span></dd>
+          <dt>Professeur</dt><dd><span id="s7-prof">—</span></dd>
+          <dt>Receveur</dt><dd><span id="s7-recv">—</span></dd>
+          <dt>F avant vie</dt><dd><span id="s7-f-avant">—</span></dd>
+          <dt>F après vie</dt><dd><span id="s7-f-apres">—</span></dd>
+          <dt>Verdict</dt><dd><span id="s7-verdict">—</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Contrats (audit)</h2>
+        <div id="s7-contracts" class="log">—</div>
+      </div>
+    </div>
+    <p class="note">Données live depuis /api/lab/s7 (demo.json + test_chain.json).
+    Rafraîchi toutes les 10 s.</p>
   </section>
 
   <section class="card wide" data-panel="history">
@@ -209,6 +260,53 @@ PANEL_SECTIONS = r"""
     s'applique à la session suivante, sans redémarrer. Aucun seuil n'est codé en dur.</p>
   </section>
 
+  <section class="card wide" data-panel="s8">
+    <h2>💬 S8 — Banc multi-donneurs : chat donneur ↔ traduit</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Cerveaux disponibles</h2>
+        <p class="note" style="margin:6px 0 10px">Cliquez sur un badge pour l'envoyer au chat.</p>
+        <div class="grid" style="gap:6px">
+          <span id="s8-donor-A" class="pret badge" data-tag="A" title="dense (lignée S5)">A</span>
+          <span id="s8-donor-B" class="pret badge" data-tag="B" title="dense variant (graine+arch)">B</span>
+          <span id="s8-donor-C" class="pret badge" data-tag="C" title="dense ordre mélange">C</span>
+          <span id="s8-donor-D" class="pret badge" data-tag="D" title="NUMENIA sparse entraînée">D</span>
+          <span id="s8-donor-trad_A" class="pret badge" data-tag="trad_A" title="NUMENIA traduite d'A">trad_A</span>
+          <span id="s8-donor-trad_B" class="pret badge" data-tag="trad_B" title="NUMENIA traduite de B">trad_B</span>
+          <span id="s8-donor-trad_C" class="pret badge" data-tag="trad_C" title="NUMENIA traduite de C">trad_C</span>
+          <span id="s8-donor-trad_D" class="pret badge" data-tag="trad_D" title="NUMENIA traduite de D">trad_D</span>
+        </div>
+        <p class="note" id="s8-ready-note">Banc prêt : <span id="s8-ready" class="badge muted">non</span></p>
+      </div>
+      <div class="card">
+        <h2>Cerveau sélectionné</h2>
+        <dl class="kv">
+          <dt>Tag</dt><dd><span id="s8-tag" class="badge ok">A</span></dd>
+          <dt>Label</dt><dd><span id="s8-tag-label">dense (lignée S5)</span></dd>
+          <dt>Température</dt><dd><input id="s8-temp" type="number" step="0.1" min="0.1" max="3" value="1" style="width:70px;background:#0a0c0f;border:1px solid #2a323c;color:#e9edf2;border-radius:7px;padding:6px 9px;font:inherit"></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Chat — compléter un préfixe</h2>
+      <form id="s8-form" class="chatline">
+        <input id="s8-prompt" type="text" placeholder="le chat | je ne veux pas | pourquoi le …" autocomplete="off">
+        <button class="act" type="submit">Envoyer</button>
+      </form>
+      <div id="s8-out" class="log" style="margin-top:10px">prédiction en attente</div>
+      <h2 style="margin-top:16px">Comparaison donneur ↔ traduit</h2>
+      <form id="s8-compare-form" class="chatline">
+        <input id="s8-compare-prompt" type="text" placeholder="même prompt pour A et trad_A" autocomplete="off">
+        <button class="act" type="button" id="s8-compare">Comparer</button>
+      </form>
+      <div id="s8-compare-out" class="log" style="margin-top:10px">comparaison en attente</div>
+      <p class="note">TOP-3 + entropie affichés à côté de chaque réponse.
+      Le traducteur dit-il la même chose que son donneur ?</p>
+    </div>
+    <p class="note">Données live depuis /api/lab/s8 et /api/lab/s8/chat.
+    Aucun modèle externe, aucun CDN.</p>
+  </section>
+
   <section class="card wide" data-panel="labo">
     <h2>🧪 Labo — MYCELI-SCAN et traducteur</h2>
     <div class="grid">
@@ -226,7 +324,7 @@ PANEL_SECTIONS = r"""
         </dl>
       </div>
       <div class="card">
-        <h2>dense → MYCELIA</h2>
+        <h2>dense → NUMENIA</h2>
         <dl class="kv">
           <dt>Avant</dt><dd id="lab-d-avant">—</dd>
           <dt>Après greffe</dt><dd id="lab-d-apres">—</dd>
@@ -235,7 +333,7 @@ PANEL_SECTIONS = r"""
         </dl>
       </div>
       <div class="card">
-        <h2>MYCELIA → dense</h2>
+        <h2>NUMENIA → dense</h2>
         <dl class="kv">
           <dt>Avant</dt><dd id="lab-m-avant">—</dd>
           <dt>Après greffe</dt><dd id="lab-m-apres">—</dd>
@@ -265,7 +363,7 @@ PANEL_SECTIONS = r"""
         <h2>Verdict</h2>
         <dl class="kv">
           <dt>Verdict</dt><dd id="lab-s3-verdict">—</dd>
-          <dt>L∞ MYCELIA</dt><dd id="lab-s3-linf">—</dd>
+          <dt>L∞ NUMENIA</dt><dd id="lab-s3-linf">—</dd>
           <dt>Dense (contrôle)</dt><dd id="lab-s3-dense">—</dd>
           <dt>Suspect D2</dt><dd id="lab-s3-suspect">—</dd>
           <dt>L_ref (unigramme)</dt><dd id="lab-s3-ref">—</dd>
@@ -274,7 +372,7 @@ PANEL_SECTIONS = r"""
       <div class="card">
         <h2>L(t) sur 500 pas</h2>
         <canvas id="lab-curve" class="chart" width="520" height="200"></canvas>
-        <p class="note">Orange : MYCELIA · vert : dense jumeau. Ordonnée : perte de
+        <p class="note">Orange : NUMENIA · vert : dense jumeau. Ordonnée : perte de
         validation (borne basse = meilleure validation atteinte), abscisse : pas.
         Lecture seule, aucun CDN.</p>
       </div>
@@ -285,7 +383,7 @@ PANEL_SECTIONS = r"""
         <h2>Verdict S4</h2>
         <dl class="kv">
           <dt>Verdict</dt><dd id="lab-s4-verdict">—</dd>
-          <dt>Ancien MYCELIA</dt><dd id="lab-s4-avant">—</dd>
+          <dt>Ancien NUMENIA</dt><dd id="lab-s4-avant">—</dd>
           <dt>Réparé (deux vitesses)</dt><dd id="lab-s4-repare">—</dd>
           <dt>Dense / bigramme</dt><dd id="lab-s4-refs">—</dd>
           <dt>Distillation (R)</dt><dd id="lab-s4-dist">—</dd>
@@ -295,7 +393,7 @@ PANEL_SECTIONS = r"""
       <div class="card">
         <h2>Perte de validation, 600 pas</h2>
         <canvas id="lab-s4-curve" class="chart" width="520" height="200"></canvas>
-        <p class="note">Orange : MYCELIA réparé (deux vitesses, semence 1). Gris :
+        <p class="note">Orange : NUMENIA réparé (deux vitesses, semence 1). Gris :
         l'ancien plafond (5,15) ; vert : le dense jumeau (3,79). Lecture seule,
         aucun CDN.</p>
       </div>
@@ -320,16 +418,62 @@ PANEL_SECTIONS = r"""
         rouge : arêtes coupées cumulées. Lecture seule, aucun CDN.</p>
       </div>
     </div>
+    <h2 style="margin-top:16px">Consolidation S6 — F avant/après vie, courbe par cycle</h2>
+    <div class="grid two">
+      <div class="card">
+        <h2>Score F consolidé (front A)</h2>
+        <dl class="kv">
+          <dt>F avant vie S5</dt><dd id="lab-s6-f-s5">—</dd>
+          <dt>F après vie (final)</dt><dd id="lab-s6-f-final">—</dd>
+          <dt>F verdict</dt><dd id="lab-s6-f-verdict">—</dd>
+          <dt>R ratio final</dt><dd id="lab-s6-r-final">—</dd>
+          <dt>R verdict</dt><dd id="lab-s6-r-verdict">—</dd>
+          <dt>Compromis (F × capacité)</dt><dd id="lab-s6-score">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Survie par cycle de consolidation</h2>
+        <canvas id="lab-s6-curve" class="chart" width="520" height="200"></canvas>
+        <p class="note">Orange : F après vie par cycle ; vert : F après ancrage par cycle.
+        Créations/coupes cumulées lues depuis s6_summary.json. Lecture seule, aucun CDN.</p>
+      </div>
+    </div>
+    <h2 style="margin-top:16px">Formats élargies S6 — pool 48 vs membranes 256</h2>
+    <div class="grid two">
+      <div class="card">
+        <h2>Diagnostic de forme (front B)</h2>
+        <dl class="kv">
+          <dt>Perte S5 (a1b1g0)</dt><dd id="lab-s6-s5-loss">—</dd>
+          <dt>Meilleure perte forme</dt><dd id="lab-s6-best-loss">—</dd>
+          <dt>Forme retenue</dt><dd id="lab-s6-best-shape">—</dd>
+          <dt>Verdict forme</dt><dd id="lab-s6-shape-verdict">—</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2>Faim sélective (A1)</h2>
+        <dl class="kv">
+          <dt>R avant</dt><dd id="lab-s6-faim-avant">—</dd>
+          <dt>R après</dt><dd id="lab-s6-faim-apres">—</dd>
+          <dt>Ratio</dt><dd id="lab-s6-faim-ratio">—</dd>
+          <dt>Créations</dt><dd id="lab-s6-faim-creations">—</dd>
+          <dt>Coupes</dt><dd id="lab-s6-faim-cuts">—</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 """
 
 PANEL_SCRIPT = r"""
 // --- Onglets -----------------------------------------------------------
-const NYRA_TABS = ['home', 'live', 'history', 'speech', 'labo', 'config'];
+const NYRA_TABS = ['home', 'live', 'history', 'speech', 'labo', 's7', 's8', 'config'];
+const CHAT_S8 = { tag: 'A' };
 let CFG_CACHE = {};
 
 function showTab(name) {
   if (NYRA_TABS.indexOf(name) < 0) name = 'home';
+  if (name === 's8') {
+    setS8Tag(CHAT_S8.tag || 'A');
+  }
   document.querySelectorAll('nav.tabs button').forEach(b => {
     b.classList.toggle('on', b.dataset.tab === name);
   });
@@ -624,6 +768,11 @@ async function loadSpeech() {
 }
 
 document.addEventListener('submit', async ev => {
+  if (ev.target.id === 's8-form') {
+    ev.preventDefault();
+    s8ChatSend();
+    return;
+  }
   if (ev.target.id !== 'elo-form') return;
   ev.preventDefault();
   const input = document.getElementById('elo-input');
@@ -943,7 +1092,7 @@ function paintS5() {
       + ' · densité ' + (s.densite === null || s.densite === undefined
         ? '—' : Math.round(Number(s.densite) * 100) + ' %'));
   setText('lab-s5-mesure', (s.mesure_mycelia === undefined || s.mesure_mycelia === null)
-    ? '—' : 'MYCELIA ' + Number(s.mesure_mycelia).toFixed(3)
+    ? '—' : 'NUMENIA ' + Number(s.mesure_mycelia).toFixed(3)
       + ' · dense ' + fmt(s.mesure_dense) + ' · bigramme ' + fmt(s.mesure_bigramme));
   drawS5();
 }
@@ -1029,15 +1178,27 @@ async function loadLab() {
   try { LAB.s3bis = await (await fetch('/api/lab/s3bis')).json(); } catch (e) { LAB.s3bis = null; }
   try { LAB.s4 = await (await fetch('/api/lab/s4')).json(); } catch (e) { LAB.s4 = null; }
   try { LAB.s5 = await (await fetch('/api/lab/s5')).json(); } catch (e) { LAB.s5 = null; }
+  try { LAB_S6 = await (await fetch('/api/lab/s6')).json(); } catch (e) { LAB_S6 = null; }
+  try { LAB_S7 = await (await fetch('/api/lab/s7')).json(); } catch (e) { LAB_S7 = null; }
+  try { LAB_S8 = await (await fetch('/api/lab/s8')).json(); } catch (e) { LAB_S8 = null; }
   paintAtlas();
   paintScan();
   paintS3bis();
   paintS4();
   paintS5();
+  paintS6();
+  paintS7();
+  paintS8();
   paintFilmOptions();
 }
 
 document.addEventListener('click', ev => {
+  if (ev.target && ev.target.id && ev.target.id.startsWith('s8-donor-')) {
+    const tag = ev.target.id.replace('s8-donor-', '');
+    setS8Tag(tag);
+    return;
+  }
+  if (ev.target.id === 's8-compare') { s8Compare(); return; }
   if (ev.target.id !== 'lab-play') return;
   const sel = document.getElementById('lab-film');
   const items = (LAB.film && LAB.film.stimuli) || [];
@@ -1060,6 +1221,239 @@ document.addEventListener('click', ev => {
 document.addEventListener('change', ev => {
   if (ev.target.id === 'lab-film') drawFilm(Number(ev.target.value || 0));
 });
+
+// --- 🧪 S6 — consolidation ------------------------------------------
+let LAB_S6 = null;
+
+// --- 🤖 S7 — traducteur IA→IA ------------------------------------
+let LAB_S7 = null;
+
+function paintS7() {
+  const d = (LAB_S7 && LAB_S7.demo) || {};
+  const tc = (LAB_S7 && LAB_S7.test_chain) || {};
+  setText('s7-state', d.date || 'non exécuté');
+  setText('s7-prof', (d.professeur && d.professeur.val !== undefined)
+    ? 'dense s' + d.professeur.semence + ' val ' + Number(d.professeur.val).toFixed(4)
+    : '—');
+  setText('s7-recv', (d.receveur_vierge && d.receveur_vierge.nouvelle !== undefined)
+    ? 'NUMENIA pool24 vierge · perte ' + Number(d.receveur_vierge.nouvelle).toFixed(4)
+    : '—');
+  setText('s7-f-avant', (d.apres_distillation && d.apres_distillation.F !== undefined)
+    ? Number(d.apres_distillation.F).toFixed(4)
+    : '—');
+  setText('s7-f-apres', (d.apres_vie && d.apres_vie.F !== undefined)
+    ? Number(d.apres_vie.F).toFixed(4)
+    : '—');
+  const verdict = (d.verdict && d.verdict.code) || '—';
+  const el = document.getElementById('s7-verdict');
+  if (el) {
+    el.textContent = verdict;
+    el.className = 'badge ' + (verdict === 'VERT' ? 'ok'
+      : verdict === 'JAUNE' ? 'warn' : 'muted');
+  }
+  const contrats = tc.contrats || [];
+  const n_ok = (tc.resume && tc.resume.contrats_ok) || 0;
+  const n_tot = (tc.resume && tc.resume.contrats_total) || 0;
+  setText('s7-contracts',
+    'Audit : ' + n_ok + '/' + n_tot + ' contrats passés
+' + contrats.slice(0, 8).map(c =>
+      (c.ok ? 'OK ' : 'ECHEC ') + c.test.replace('C', 'Couche ').replace('A1 audit ', 'A1 ')
+      + ' — ' + c.detail.substring(0, 50)).join('
+    '));
+}
+
+// --- 💬 S8 — banc multi-donneurs ------------------------------------
+let LAB_S8 = null;
+
+function paintS8() {
+  const s = (LAB_S8 && LAB_S8.donors) || [];
+  setText('s8-state', LAB_S8 && LAB_S8.date ? LAB_S8.date : 'non dispo');
+  const tags = ['A','B','C','D','trad_A','trad_B','trad_C','trad_D'];
+  tags.forEach(t => {
+    const e = document.getElementById('s8-donor-' + t);
+    if (!e) return;
+    const d = s.find(x => x.tag === t);
+    if (d && d.pret) {
+      e.className = 'pret badge ok';
+      e.title = 'type=' + (d.type||'?') + ' | ' + JSON.stringify(d.config_brut||{});
+    } else {
+      e.className = 'pret badge muted';
+      e.title = 'non entraîne';
+    }
+  });
+  setText('s8-ready', (LAB_S8 && LAB_S8.ready) ? 'oui' : 'non');
+}
+
+function setS8Tag(tag) {
+  CHAT_S8.tag = tag;
+  const eTag = document.getElementById('s8-tag');
+  const eLabel = document.getElementById('s8-tag-label');
+  if (eTag) eTag.textContent = tag;
+  if (eLabel) {
+    const d = (LAB_S8 && LAB_S8.donors) ? LAB_S8.donors.find(x => x.tag === tag) : null;
+    eLabel.textContent = (d && d.label) || tag;
+  }
+}
+
+function s8ChatRender(rows, intoId) {
+  const into = document.getElementById(intoId);
+  if (!into) return;
+  into.innerHTML = (rows || []).length ? (rows).map(r => {
+    const top = r.top3 || [];
+    return '<div class="row s8-r">'
+      + '<span class="ts">' + esc(r.prefixe) + '</span>'
+      + '<span><span class="q">' + esc(r.prefixe) + '</span> '
+      + '<span class="a">→ ' + esc(top.join(' · ')) + '</span>'
+      + ' <span class="muted">H=' + (r.entropie != null ? r.entropie.toFixed(3) : '?') + '</span>'
+      + '</span></div>';
+  }).join('') : '<span class="muted">aucune prédiction</span>';
+}
+
+function s8ChatSend() {
+  const prompt = (document.getElementById('s8-prompt').value || '').trim();
+  if (!prompt) return;
+  const out = document.getElementById('s8-out');
+  if (out) out.innerHTML = '<span class="muted">…</span>';
+  fetch('/api/lab/s8/chat', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      tag: CHAT_S8.tag,
+      prefixes: [prompt],
+      temperature: parseFloat((document.getElementById('s8-temp').value || '1.0')) || 1.0,
+    }),
+  }).then(r => r.json()).then(r => {
+    if (!r.ok) {
+      const e = document.getElementById('s8-out');
+      if (e) e.innerHTML = '<span class="warn">' + esc(String(r.error||'ok')) + '</span>';
+      return;
+    }
+    s8ChatRender(r.predictions, 's8-out');
+  }).catch(err => {
+    const e = document.getElementById('s8-out');
+    if (e) e.innerHTML = '<span class="warn">' + esc(String(err)) + '</span>';
+  });
+}
+
+function s8Compare() {
+  const prompt = (document.getElementById('s8-prompt').value || '').trim();
+  if (!prompt) {
+    const o = document.getElementById('s8-compare-out');
+    if (o) o.innerHTML = '<span class="muted">prompt vide</span>';
+    return;
+  }
+  const t = parseFloat((document.getElementById('s8-temp').value || '1.0')) || 1.0;
+  const out = document.getElementById('s8-compare-out');
+  if (out) out.innerHTML = '<span class="muted">comparaison…</span>';
+  Promise.all([
+    fetch('/api/lab/s8/chat', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({tag:'A', prefixes:[prompt], temperature:t}) }).then(r=>r.json()),
+    fetch('/api/lab/s8/chat', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({tag:'trad_A', prefixes:[prompt], temperature:t}) }).then(r=>r.json()),
+  ]).then(([rA, rD]) => {
+    const dA = rA.ok ? (rA.predictions || []) : [{prefixe:prompt, top3:[esc(String(rA.error||'erreur'))], entropie:null}];
+    const dD = rD.ok ? (rD.predictions || []) : [{prefixe:prompt, top3:[esc(String(rD.error||'erreur'))], entropie:null}];
+    const o = document.getElementById('s8-compare-out');
+    if (!o) return;
+    o.innerHTML = '<div class="row">'
+      + '<span class="ts"><b>donneur A</b></span>'
+      + '<span>' + s8MiniHTML(dA[0]) + '</span></div>'
+      + '<div class="row">'
+      + '<span class="ts"><b>traduit d\'A</b></span>'
+      + '<span>' + s8MiniHTML(dD[0]) + '</span></div>';
+  }).catch(err => {
+    const o = document.getElementById('s8-compare-out');
+    if (o) o.innerHTML = '<span class="warn">' + esc(String(err)) + '</span>';
+  });
+}
+
+function s8MiniHTML(r) {
+  const top = r.top3 || [];
+  return '<span class="q">' + esc(r.prefixe) + ' → ' + esc(top.join(' · '))
+    + (r.entropie != null ? ' H=' + r.entropie.toFixed(3) : '') + '</span>';
+}
+
+// --- 📈 Dernières paroles ------------------------------------------
+let LAST_WORDS = null;
+let LAST_WORDS_LOG = null;
+
+function paintLastWords() {
+  // Deux axes : F après vie (orange) et F après ancrage (vert) par cycle.
+  const cv = document.getElementById('lab-s6-curve');
+  const s = (LAB_S6 && LAB_S6.consolidation) || null;
+  if (!cv || !s) return;
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, padL = 34, padB = 18, padT = 8, padR = 6;
+  ctx.clearRect(0, 0, W, H);
+  const cycles = (s.cycles || []).filter(c => c);
+  if (!cycles.length) {
+    ctx.fillStyle = '#8b939e';
+    ctx.font = '11px ui-monospace, monospace';
+    ctx.fillText('S6 non exécuté', padL, H / 2);
+    return;
+  }
+  const fn = cycles.map(c => Number(c.apres_vie.F));
+  const fa = cycles.map(c => Number(c.apres_ancrage.F));
+  const vals = fn.concat(fa);
+  const lo = Math.min.apply(null, vals) - 0.1, hi = Math.max.apply(null, vals) + 0.1;
+  const span = (hi - lo) || 1;
+  const end = cycles.length || 1;
+  const x = i => padL + (W - padL - padR) * (i + 1) / end;
+  const y = v => padT + (H - padT - padB) * (1 - (Number(v) - lo) / span);
+  ctx.font = '10px ui-monospace, monospace';
+  ctx.lineWidth = 1;
+  [lo, (lo + hi) / 2, hi].forEach(v => {
+    const py = y(v);
+    ctx.strokeStyle = '#1a1f26';
+    ctx.beginPath(); ctx.moveTo(padL, py); ctx.lineTo(W - padR, py); ctx.stroke();
+    ctx.fillStyle = '#5d656f';
+    ctx.fillText(v.toFixed(2), 6, py + 3);
+  });
+  ctx.strokeStyle = '#f5a86b'; ctx.lineWidth = 1.8; ctx.beginPath();
+  cycles.forEach((c, i) => {
+    const px = x(i), py = y(Number(c.apres_vie.F));
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.strokeStyle = '#6ee7a8'; ctx.lineWidth = 1.8; ctx.beginPath();
+  cycles.forEach((c, i) => {
+    const px = x(i), py = y(Number(c.apres_ancrage.F));
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.fillStyle = '#8b939e';
+  ctx.fillText('cycle 1', padL, H - 4);
+  ctx.fillText('cycle ' + cycles.length, W - 52, H - 4);
+  ctx.fillText('F', padL - 10, padT + 8);
+}
+
+function paintS6() {
+  const s = (LAB_S6 && LAB_S6.summary) || {};
+  const fmt = v => (v === undefined || v === null) ? '—' : Number(v).toFixed(3);
+  const fmtF = v => (v === undefined || v === null) ? '—' : (Number(v) >= 0
+    ? '+' : '') + Number(v).toFixed(3);
+  const fA = s.front_A || {};
+  const fB = s.front_B || {};
+  const cons = fA.consolidation || {};
+  setText('lab-s6-f-s5', fmt(s.F_avant_S5 !== undefined ? s.F_avant_S5 : 0.0478));
+  setText('lab-s6-f-final', fmtF(cons.final_F));
+  setText('lab-s6-f-verdict', (cons.final_F_verdict || '—') + ' — ' + (cons.final_F_phrase || ''));
+  setText('lab-s6-r-final', fmt(cons.final_R));
+  setText('lab-s6-r-verdict', (cons.final_R_verdict || '—') + ' — ' + (cons.final_R_phrase || ''));
+  setText('lab-s6-score', fmt(s.compromis ? s.compromis.score : null));
+  const faim = fA.faim_selective || {};
+  const f1 = faim['1'] || faim[1] || {};
+  setText('lab-s6-faim-avant', fmt(f1.R_avant));
+  setText('lab-s6-faim-apres', fmt(f1.R_apres));
+  setText('lab-s6-faim-ratio', fmt(f1.ratio));
+  setText('lab-s6-faim-creations', fmt(f1.creees));
+  setText('lab-s6-faim-cuts', fmt(f1.coupees));
+  setText('lab-s6-s5-loss', fmt(fB.perte_S5 !== undefined ? fB.perte_S5 : 3.5281));
+  setText('lab-s6-best-loss', fmt(fB.meilleure_perte));
+  setText('lab-s6-best-shape', (fB.meilleure_forme || '—'));
+  setText('lab-s6-shape-verdict', (fB.verdict_forme ? (fB.verdict_forme[0] + ' — ' + fB.verdict_forme[1])
+    : '—'));
+  drawS6();
+}
 
 // --- Démarrage ---------------------------------------------------------
 let savedTab = 'home';

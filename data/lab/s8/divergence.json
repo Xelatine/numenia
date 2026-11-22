@@ -1,0 +1,108 @@
+{
+  "donneurs": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "kl_matrix": {
+    "A_vers_B": 3.9938,
+    "B_vers_A": 4.0063,
+    "A_vers_C": 1.9367,
+    "C_vers_A": 2.613,
+    "A_vers_D": 3.7913,
+    "D_vers_A": 3.9404,
+    "B_vers_C": 1.9213,
+    "C_vers_B": 2.5679,
+    "B_vers_D": 3.7899,
+    "D_vers_B": 3.942,
+    "C_vers_D": 2.386,
+    "D_vers_C": 1.8638
+  },
+  "top3_matrix": {
+    "A_vers_B": {
+      "identiques": 0.001,
+      "recouvrement": 0.054
+    },
+    "B_vers_A": {
+      "identiques": 0.001,
+      "recouvrement": 0.054
+    },
+    "A_vers_C": {
+      "identiques": 0.0005,
+      "recouvrement": 0.0947
+    },
+    "C_vers_A": {
+      "identiques": 0.0005,
+      "recouvrement": 0.0947
+    },
+    "A_vers_D": {
+      "identiques": 0.0017,
+      "recouvrement": 0.0515
+    },
+    "D_vers_A": {
+      "identiques": 0.0017,
+      "recouvrement": 0.0515
+    },
+    "B_vers_C": {
+      "identiques": 0.0,
+      "recouvrement": 0.0904
+    },
+    "C_vers_B": {
+      "identiques": 0.0,
+      "recouvrement": 0.0904
+    },
+    "B_vers_D": {
+      "identiques": 0.0011,
+      "recouvrement": 0.0516
+    },
+    "D_vers_B": {
+      "identiques": 0.0011,
+      "recouvrement": 0.0516
+    },
+    "C_vers_D": {
+      "identiques": 0.0002,
+      "recouvrement": 0.0915
+    },
+    "D_vers_C": {
+      "identiques": 0.0002,
+      "recouvrement": 0.0915
+    }
+  },
+  "stats": {
+    "A": {
+      "avg_entropy": 3.4602,
+      "avg_max_prob": 0.2171,
+      "top1_confidence": 0.6672,
+      "vocab_size": 312,
+      "total_contextes": 22400
+    },
+    "B": {
+      "avg_entropy": 3.4413,
+      "avg_max_prob": 0.2151,
+      "top1_confidence": 0.6478,
+      "vocab_size": 312,
+      "total_contextes": 22400
+    },
+    "C": {
+      "avg_entropy": 4.7262,
+      "avg_max_prob": 0.0667,
+      "top1_confidence": 0.0758,
+      "vocab_size": 312,
+      "total_contextes": 22400
+    },
+    "D": {
+      "avg_entropy": 3.5822,
+      "avg_max_prob": 0.1849,
+      "top1_confidence": 0.5529,
+      "vocab_size": 312,
+      "total_contextes": 22400
+    }
+  },
+  "plafond": {
+    "A_vers_D": 0.858,
+    "B_vers_D": 0.858,
+    "C_vers_D": 0.858
+  },
+  "samples": 50
+}

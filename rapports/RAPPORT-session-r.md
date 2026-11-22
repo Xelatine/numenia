@@ -1,3 +1,8 @@
+> **Renommage —** Ce projet s'appelle désormais **Numenia** (auparavant référencé
+> comme Mycelia dans les titres et la documentation). Session, chiffres, fichiers de
+> données et cerveau **Nyra** inchangés. Ce document est historique : son contenu est
+> conservé tel quel, et seul le nom du projet passe à Numenia.
+
 # Session R — architecture tiercée out-of-core : ce qui tient, et ce qui casse
 
 **Honnêteté en tête** : MYCELIA n'est pas Claude ni GPT-4. Ces modèles doivent

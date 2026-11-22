@@ -1,0 +1,2 @@
+a=new URL(location.href).pathname;
+ancellorMatch=/^\/ws$/.test(a);
